@@ -31,7 +31,7 @@
 								{% if session['current_case'] %}
 								<a class="text-light" title="{{ session['current_case'].case_name }}" onclick="load_context_switcher();return false;" href="#">{{ session['current_case'].case_name }}</a> {{ session['current_case'].access|safe }}
 								{% else %}
-								<div class="text-warning" style="cursor:pointer;" title="Switch case" onclick="load_context_switcher();return false;">No context</div>
+								<div class="text-warning" style="cursor:pointer;" title="切换案例" onclick="load_context_switcher();return false;">无上下文</div>
 								{% endif %}
 						</div>
 					</div>
@@ -43,27 +43,27 @@
 							</a>
 						</li>
 						<li class="nav-item hidden-caret">
-							<a class="nav-link" title="Switch case" onclick="load_context_switcher();return false;" href="#" role="button">
+							<a class="nav-link" title="切换案例" onclick="load_context_switcher();return false;" href="#" role="button">
 								<i class="flaticon-repeat"></i>
 							</a>
 						</li>
 						<li class="nav-item hidden-caret">
-							<a class="nav-link" data-toggle="modal" title="Add task log" data-target="#modal_add_tasklog" href="#">
+							<a class="nav-link" data-toggle="modal" title="添加任务日志" data-target="#modal_add_tasklog" href="#">
 								<i class="flaticon-interface-1"></i>
 							</a>
 						</li>
 						<li class="nav-item hidden-caret">
-							<a href="#" title="Datastore" class="nav-link ds-sidebar-toggler" onclick="load_datastore();">
+							<a href="#" title="数据存储" class="nav-link ds-sidebar-toggler" onclick="load_datastore();">
 								<i class="flaticon-database"></i>
 							</a>
 						</li>
 						<li class="nav-item hidden-caret">
-							<a class="nav-link" data-toggle="modal" title="Create case" onclick="load_add_case();">
+							<a class="nav-link" data-toggle="modal" title="创建案例" onclick="load_add_case();">
 								<i class="flaticon-add"></i>
 							</a>
 						</li>
 						<li class="nav-item hidden-caret">
-							<a href="#" title="Quick actions" class="nav-link quick-sidebar-toggler">
+							<a href="#" title="快捷动作" class="nav-link quick-sidebar-toggler">
 								<i class="flaticon-shapes-1"></i>
 							</a>
 						</li>
