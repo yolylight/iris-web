@@ -3,17 +3,17 @@
               <ul class="navbar-nav rounded" style="background-color:#4c72a130;">
             <li class="nav-item {{ active if page == 'case' }}">
                 <a class="nav-link" href="/case?cid={{session['current_case'].case_id}}">
-                    <span class="menu-title">Summary</span>
+                    <span class="menu-title">摘要</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/case/notes?cid={{session['current_case'].case_id}}">
-                    <span class="menu-title">Notes</span>
+                    <span class="menu-title">笔记</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/case/assets?cid={{session['current_case'].case_id}}">
-                    <span class="menu-title">Assets</span>
+                    <span class="menu-title">资产</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -23,22 +23,22 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/case/timeline?cid={{session['current_case'].case_id}}">
-                    <span class="menu-title">Timeline</span>
+                    <span class="menu-title">时间线</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/case/graph?cid={{session['current_case'].case_id}}">
-                    <span class="menu-title">Graph</span>
+                    <span class="menu-title">图</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/case/tasks?cid={{session['current_case'].case_id}}">
-                    <span class="menu-title">Tasks</span>
+                    <span class="menu-title">任务</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/case/evidences?cid={{session['current_case'].case_id}}">
-                    <span class="menu-title">Evidence</span>
+                    <span class="menu-title">证据</span>
                 </a>
             </li>
               </ul>
