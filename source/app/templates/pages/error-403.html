@@ -16,15 +16,15 @@
          <div class="row d-flex justify-content-center mb-4">
             <div class="col-12">
                 <h1 class="text-center mb-2"><i class="fa-solid fa-otter" style="font-size:60px;"></i></h1>
-                <h2 class="text-danger mt-2 mx-5 text-center">ACCESS DENIED</h2>
-                <h3 class="font-weight-light mx-5 text-center">Seems like you shouldn't be here</h3>
+                <h2 class="text-danger mt-2 mx-5 text-center">拒绝访问</h2>
+                <h3 class="font-weight-light mx-5 text-center">好像你不应该在这里</h3>
             </div>
          </div>
         {% if caseid %}
         <div class="mt-4 row d-flex text-center">
             <div class="col-12">
                 <button class="btn btn-dark btn-sm" onclick="load_context_switcher();return false;">
-                    <span class="menu-title" id="manage_group_cac_button">Get back on track</span>
+                    <span class="menu-title" id="manage_group_cac_button">返回</span>
                 </button>
             </div>
         </div>
@@ -32,10 +32,10 @@
         <div class="mt-4 row d-flex justify-content-center">
             <div class="col-12">
                 {% if caseid %}
-                <p class="text-muted mb-4 text-center"><small>Access denied while trying to access case #{{ caseid }}<br />
+                <p class="text-muted mb-4 text-center"><small>尝试访问案件#{{ caseid }}时被拒绝<br />
                 {% else %}
-                <p class="text-muted mb-4 text-center"><small>Access denied while trying to access the resource<br />
-                Error UUID {{ error_uuid }}</small></p>
+                <p class="text-muted mb-4 text-center"><small>在尝试访问资源时拒绝访问<br />
+                错误UUID {{ error_uuid }}</small></p>
                 {% endif %}
             </div>
         </div>
