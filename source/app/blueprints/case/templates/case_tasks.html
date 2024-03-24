@@ -1,6 +1,6 @@
 {% extends "layouts/default_ext.html" %}
 
-{% block title %} Case Tasks {% endblock title %}
+{% block title %} 案例任务 {% endblock title %}
 
 {% block stylesheets %}
 {% include 'includes/header_case.html' %}
@@ -27,16 +27,16 @@
                      </div>
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center page-navigation page-navigation-style-2 page-navigation-secondary">
                         <li class="nav-item ml-2">
-                            <span class="text-white text-sm mr-2" id="last_resfresh">Loading</span>
+                            <span class="text-white text-sm mr-2" id="last_resfresh">加载中</span>
                         </li>
                         <li class="nav-item">
                             <button class="btn btn-primary btn-sm" onclick="get_tasks();">
-                                <span class="menu-title">Refresh</span>
+                                <span class="menu-title">刷新</span>
                             </button>
                         </li>
                         <li class="nav-item">
                             <button class="btn btn-dark btn-sm" onclick="add_task();">
-                                <span class="menu-title">Add task</span>
+                                <span class="menu-title">添加任务</span>
                             </button>
                         </li>
 					</ul>
@@ -45,7 +45,7 @@
         <div class="page-inner ">
             <div class="row ">
                  <div class="col-md-12">
-                        <div class="loader1 text-center ml-mr-auto" id="loading_msg">Loading...</div>
+                        <div class="loader1 text-center ml-mr-auto" id="loading_msg">加载中...</div>
                         <section class="card" id="card_main_load" style="display:none;">
 
                             <div class="card-body">
@@ -54,22 +54,22 @@
                                         cellspacing="0" id="tasks_table">
                                         <thead>
                                             <tr>
-                                                <th>Title</th>
-                                                <th>Description</th>
-                                                <th>Status</th>
-                                                <th>Assigned to</th>
-                                                <th>Open date</th>
-                                                <th>Tags</th>
+                                                <th>标题</th>
+                                                <th>描述</th>
+                                                <th>状态</th>
+                                                <th>已分配给</th>
+                                                <th>创建日期</th>
+                                                <th>标签</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>Title</th>
-                                                <th>Description</th>
-                                                <th>Status</th>
-                                                <th>Assigned to</th>
-                                                <th>Open date</th>
-                                                <th>Tags</th>
+                                                <th>标题</th>
+                                                <th>描述</th>
+                                                <th>状态</th>
+                                                <th>已分配给</th>
+                                                <th>创建日期</th>
+                                                <th>标签</th>
                                             </tr>
                                         </tfoot>
                                     </table>
