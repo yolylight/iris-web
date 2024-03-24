@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title mt-2 mr-4">Datastore File</h4>
+    <h4 class="modal-title mt-2 mr-4">数据存储文件</h4>
     <div class="row text-right">
          <button type="button" class="pull-right btn bg-transparent" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true"><i class="fa fa-times"></i></span></button>
@@ -12,37 +12,37 @@
                 {{ form.hidden_tag() }}
                 {% if file.file_id %}
                 <div class="row ml-2">
-                    <p>The file is currently saved in virtual folder <code>{{ dsp.path_name }}</code>.</p>
+                    <p>文件目前保存在虚拟文件夹<code>{{ dsp.path_name }}</code>.</p>
                 </div>
                 {% else %}
                 <div class="row ml-2">
-                     <p>The file will be saved in virtual folder <code>{{ dsp.path_name }}</code>.</p>
+                     <p>文件将保存在虚拟文件夹<code>{{ dsp.path_name }}</code>.</p>
                  </div>
                 {% endif %}
                 <div class="form-row ml-2">
                     <div class="form-group col-12">
-                        <label for="input_upload_ds_file" class="form-label">Choose file to upload : </label>
+                        <label for="input_upload_ds_file" class="form-label">选择上传文件 : </label>
                         <input id="input_upload_ds_file" class="form-control" type="file">
                     </div>
                 </div>
                 <div class="form-row ml-2">
                     <div class="form-group col-12">
-                        <label for="file_original_name" class="placeholder">Filename *</label>
+                        <label for="file_original_name" class="placeholder">文件名 *</label>
                         {{ form.file_original_name(class='form-control',  autocomplete="off") }}
                     </div>
                 </div>
                 <div class="form-row ml-2">
                     <div class="form-group col-12">
-                            <label for="file_description" class="placeholder">Description</label>
+                            <label for="file_description" class="placeholder">描述</label>
                             {{ form.file_description(class='form-control col-md-12 col-sm-12 sizable-textarea', autocomplete="off") }}
                     </div>
                 </div>
                 <div class="form-row ml-2">
                     <div class="form-group col-6 col-xs-12">
-                        <label for="file_password" class="placeholder">Password<i class="ml-1 mt-1 fa-regular text-dark fa-circle-question"
+                        <label for="file_password" class="placeholder">密码<i class="ml-1 mt-1 fa-regular text-dark fa-circle-question"
                                                                                   title="Help" data-toggle="popover" data-html="true"
                                                                                   data-trigger="hover" style="cursor: pointer;"
-                                                                                  data-content="If set, the file is locally encrypted with this password.<br/><b class='text-danger'>Passwords are stored in clear text server side. Do not put sensitive password here.</b><br/>Encrypted files cannot be used in notes.<br/>IOC are automatically encrypted with password <code>infected</code> unless specified otherwise here.">
+                                                                                  data-content="如果设置了该密码,文件将在本地使用该密码加密.<br/><b class='text-danger'>密码在服务器端以明文存储.请勿在此处输入敏感密码.</b><br/>加密文件不能再笔记中使用.<br/>除非此处另有说明，否则 IOC 会自动使用密码<code>infected</code> 进行加密.">
 
                         </i></label>
                          <div class="input-group mb-2 mr-sm-2">
@@ -53,7 +53,7 @@
                          </div>
                     </div>
                     <div class="form-group col-6 col-xs-12">
-                        <label for="file_tags">File tags</label>
+                        <label for="file_tags">文件标签</label>
                         <input type="text" id="file_tags" name="file_tags"
                             class="form-control col-md-12" {% if file.file_tags %} value="{{ file.file_tags }}" {% endif %}/>
                     </div>
@@ -63,10 +63,10 @@
                         <div class="form-check">
                             <label class="form-check-label">
                                 {{ form.file_is_ioc(class="form-check-input", type="checkbox") }}
-                                <span class="form-check-sign"> File is IOC <i class="ml-1 mt-1 fa-regular text-dark fa-circle-question"
+                                <span class="form-check-sign"> 文件是IOC <i class="ml-1 mt-1 fa-regular text-dark fa-circle-question"
                                                                                   title="Help" data-toggle="popover" data-html="true"
                                                                                   data-trigger="hover" style="cursor: pointer;"
-                                                                                  data-content="If set, the file is stored in a dedicated IOC folder on the server and is encrypted with password <code>infected</code> unless specified otherwise in the password field.<br/> The file is also added to the case IOC.">
+                                                                                  data-content="如果设置，文件将存储在服务器上的专用 IOC 文件夹中，并使用密码<code>infected</code>加密，除非在密码字段中另有指定。<br/> 该文件也被添加到案例IOC中.">
 
                                 </i></span>
                             </label>
@@ -79,7 +79,7 @@
                                 <span class="form-check-sign"> File is Evidence <i class="ml-1 mt-1 fa-regular text-dark fa-circle-question"
                                                                                   title="Help" data-toggle="popover" data-html="true"
                                                                                   data-trigger="hover" style="cursor: pointer;"
-                                                                                  data-content="If set, the file is stored in a dedicated Evidence folder on the server and added to the case Evidence.">
+                                                                                  data-content="如果设置，文件将存储在服务器上的专用证据文件夹中，并添加到案例证据中。">
 
                                 </i></span>
                             </label>
@@ -89,9 +89,9 @@
             </div>
             {% if file.file_id %}
                 <button type="button" class="btn btn-outline-danger ml-4 mt-5"
-                onclick="delete_ds_file({{ file.file_id }});">Delete</button>
+                onclick="delete_ds_file({{ file.file_id }});">删除</button>
             {% endif %}
-            <button type="button" class="btn btn-outline-success ml-4 mt-5 float-right"  onclick="save_ds_file({{dsp.path_id}}, {{ file.file_id }});return false;">Save</button>
+            <button type="button" class="btn btn-outline-success ml-4 mt-5 float-right"  onclick="save_ds_file({{dsp.path_id}}, {{ file.file_id }});return false;">保存</button>
         </form>
     </div>
 </div>
