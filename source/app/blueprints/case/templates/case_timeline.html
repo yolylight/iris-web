@@ -1,6 +1,6 @@
 {% extends "layouts/default_ext.html" %}
 
-{% block title %} Case Timeline {% endblock title %}
+{% block title %} 案例时间线 {% endblock title %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="/static/assets/css/bootstrap-datetime.css">
@@ -28,33 +28,33 @@
                             <div class="row">
                                 <div id='timeline_filtering' class="col-9 pt-2 pl-2" style="border-radius:3px;" ></div>
                                 <button class="btn btn-sm btn-light ml-2 pt-2" onclick="filter_timeline();">
-                                   Apply filter
+                                   应用过滤器
                                 </button>
                                 <button class="btn btn-sm btn-light ml-1 pt-2" onclick="reset_filters();">
-                                   Reset
+                                   重置
                                 </button>
-                                <i class="ml-1 mt-1 fa-regular text-white fa-circle-question" title="Filter help" style="cursor:pointer;" onclick="show_timeline_filter_help();"></i>
+                                <i class="ml-1 mt-1 fa-regular text-white fa-circle-question" title="过滤器帮助" style="cursor:pointer;" onclick="show_timeline_filter_help();"></i>
                             </div>
                         </li>
                      </ul>
                     <ul class="navbar-nav topbar-nav ml-md-auto align-items-center page-navigation page-navigation-style-2 page-navigation-secondary">
                         <li class="nav-item ml-2">
-                            <span class="text-white text-sm mr-2" id="last_resfresh">Loading</span>
+                            <span class="text-white text-sm mr-2" id="last_resfresh">加载中</span>
                         </li>
                         <li class="nav-item hidden-caret">
                             <button class="btn btn-primary btn-sm" onclick="get_or_filter_tm();">
-                                <span class="menu-title">Refresh</span>
+                                <span class="menu-title">刷新</span>
                             </button>
                         </li>
 
                         <li class="nav-item hidden-caret">
                             <button class="btn btn-dark btn-sm" onclick="add_event();">
-                                <span class="menu-title">Add event</span>
+                                <span class="menu-title">添加事件</span>
                             </button>
                         </li>
                          <li class="nav-item hidden-caret">
                             <button class="btn btn-dark btn-sm" onclick="toggle_tree_view();">
-                                <span class="menu-title">Toggle view</span>
+                                <span class="menu-title">切换视图</span>
                             </button>
                         </li>
                         <li class="nav-item">
@@ -63,17 +63,17 @@
                                   <span class="menu-title"><i class="fas fa-ellipsis-v"></i></span>
                               </button>
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a class="dropdown-item" href="javascript:void(0);" onclick="toggle_tree_view();"> Toggle tree view</a>
-                                  <a class="dropdown-item" href="javascript:void(0);" onclick="toggle_compact_view();"> Toggle compact view</a>
+                                  <a class="dropdown-item" href="javascript:void(0);" onclick="toggle_tree_view();"> 切换树状视图</a>
+                                  <a class="dropdown-item" href="javascript:void(0);" onclick="toggle_compact_view();"> 切换紧凑型视图</a>
                                   <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item" href="timeline/visualize?cid={{session['current_case'].case_id}}"> Visualize</a>
-                                  <a class="dropdown-item" href="timeline/visualize?cid={{session['current_case'].case_id}}&group-by=asset"> Visualize by asset</a>
-                                  <a class="dropdown-item" href="timeline/visualize?cid={{session['current_case'].case_id}}&group-by=category">Visualize by category</a>
+                                  <a class="dropdown-item" href="timeline/visualize?cid={{session['current_case'].case_id}}"> 可视化</a>
+                                  <a class="dropdown-item" href="timeline/visualize?cid={{session['current_case'].case_id}}&group-by=asset"> 依据资产可视化</a>
+                                  <a class="dropdown-item" href="timeline/visualize?cid={{session['current_case'].case_id}}&group-by=category">依据分类可视化</a>
                                   <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item" href="#" onclick="timelineToCsv();"><small class="fa fa-download mr-2"></small> Download as CSV</a>
-                                  <a class="dropdown-item" href="#" onclick="timelineToCsvWithUI();"><small class="fa fa-download mr-2"></small> Download as CSV with user info</a>
+                                  <a class="dropdown-item" href="#" onclick="timelineToCsv();"><small class="fa fa-download mr-2"></small> 下载为CSV</a>
+                                  <a class="dropdown-item" href="#" onclick="timelineToCsvWithUI();"><small class="fa fa-download mr-2"></small> 下载含用户信息的CSV</a>
                                   <div class="dropdown-divider"></div>
-                                  <a class="dropdown-item" href="#" onclick="fire_upload_csv_events();"><small class="fa fa-upload mr-2"></small> Upload CSV of events</a>
+                                  <a class="dropdown-item" href="#" onclick="fire_upload_csv_events();"><small class="fa fa-upload mr-2"></small> 上传CSV格式事件</a>
                               </div>
                             </div>
                         </li>
@@ -85,7 +85,7 @@
 
         <div class="page-inner">
             <div class="row">
-                <div class="loader1 text-center ml-mr-auto" id="loading_msg">Loading...</div>
+                <div class="loader1 text-center ml-mr-auto" id="loading_msg">加载中...</div>
                 <div class="col-md-12" id="card_main_load" style="display:none;">
                     <div id="paginator"></div>
                     <ul class="timeline" id="timeline_list">
@@ -94,27 +94,27 @@
                 </div>
             </div>
             <div id="side_timeline">
-                <button class="btn btn-round bg-transparent btn_over_page_a btn_over_page_delete btn-conditional" title="Delete selected events" onclick="events_bulk_delete();"><i class="fas fa-trash text-danger"></i></button>
+                <button class="btn btn-round bg-transparent btn_over_page_a btn_over_page_delete btn-conditional" title="删除选中的事件" onclick="events_bulk_delete();"><i class="fas fa-trash text-danger"></i></button>
 
             <div class="btn_over_page_b">
-                <button class="btn btn-round btn-light btn-conditional-2 colorinput-color bg-white" title="color1" onclick="events_set_attribute('event_color', '#fff')"></button>
-                <button class="btn btn-round btn-light btn-conditional-2 colorinput-color bg-primary" title="color2" onclick="events_set_attribute('event_color', '#1572E899')"></button>
-                <button class="btn btn-round btn-light btn-conditional-2 colorinput-color bg-secondary" title="color3" onclick="events_set_attribute('event_color', '#6861CE99')"></button>
-                <button class="btn btn-round btn-light btn-conditional-2 colorinput-color bg-info" title="color4" onclick="events_set_attribute('event_color', '#48ABF799')"></button>
-                <button class="btn btn-round btn-light btn-conditional-2 colorinput-color bg-success" title="color5" onclick="events_set_attribute('event_color', '#31CE3699')"></button>
-                <button class="btn btn-round btn-light btn-conditional-2 colorinput-color bg-danger" title="color5" onclick="events_set_attribute('event_color', '#F2596199')"></button>
-                <button class="btn btn-round btn-light btn-conditional-2 colorinput-color bg-warning" title="color5" onclick="events_set_attribute('event_color', '#FFAD4699')"></button>
-                <button class="btn btn-round bg-transparent  btn-conditional" title="Change color" onclick="toggle_colors()"><i class="fas fa-tint"></i></button>
+                <button class="btn btn-round btn-light btn-conditional-2 colorinput-color bg-white" title="颜色1" onclick="events_set_attribute('event_color', '#fff')"></button>
+                <button class="btn btn-round btn-light btn-conditional-2 colorinput-color bg-primary" title="颜色2" onclick="events_set_attribute('event_color', '#1572E899')"></button>
+                <button class="btn btn-round btn-light btn-conditional-2 colorinput-color bg-secondary" title="颜色3" onclick="events_set_attribute('event_color', '#6861CE99')"></button>
+                <button class="btn btn-round btn-light btn-conditional-2 colorinput-color bg-info" title="颜色4" onclick="events_set_attribute('event_color', '#48ABF799')"></button>
+                <button class="btn btn-round btn-light btn-conditional-2 colorinput-color bg-success" title="颜色5" onclick="events_set_attribute('event_color', '#31CE3699')"></button>
+                <button class="btn btn-round btn-light btn-conditional-2 colorinput-color bg-danger" title="颜色5" onclick="events_set_attribute('event_color', '#F2596199')"></button>
+                <button class="btn btn-round btn-light btn-conditional-2 colorinput-color bg-warning" title="颜色5" onclick="events_set_attribute('event_color', '#FFAD4699')"></button>
+                <button class="btn btn-round bg-transparent  btn-conditional" title="改变颜色" onclick="toggle_colors()"><i class="fas fa-tint"></i></button>
             </div>
             <div class="btn_over_page_i" style="display: flex; flex-direction: column;">
-                <button class="btn btn-round bg-transparent  btn-conditional" title="Toggle Summary" onclick="events_set_attribute('event_in_summary')"><i class="fas fa-newspaper"></i></button>
-                <button class="btn btn-round bg-transparent  btn-conditional" title="Toggle Graph" onclick="events_set_attribute('event_in_graph')"><i class="fas fa-share-alt"></i></button>
-                <button class="btn btn-round bg-transparent " title="Select events" onclick="toggle_selector();" id="selector-btn"><i class="fas fa-check-double"></i></button>
-                <button class="btn btn-round bg-transparent " title="Add new event" onclick="add_event();"><i class="fas fa-plus-circle"></i></button>
-                <button class="btn btn-round bg-transparent " title="Toggle child events" onclick="toggle_child_events();"><i class="fas fa-folder-tree"></i></button>
-                <button class="btn btn-round bg-transparent  " title="Refresh" onclick="get_or_filter_tm();"><i class="fas fa-redo-alt"></i></button>
-                <button class="btn btn-round bg-transparent " title="Go at the top" onclick="to_page_up();"><i class="fas fa-arrow-up"></i></button>
-                <button class="btn btn-round bg-transparent" title="Go at the bottom" onclick="to_page_down();"><i class="fas fa-arrow-down"></i></button>
+                <button class="btn btn-round bg-transparent  btn-conditional" title="切换摘要" onclick="events_set_attribute('event_in_summary')"><i class="fas fa-newspaper"></i></button>
+                <button class="btn btn-round bg-transparent  btn-conditional" title="切换图形" onclick="events_set_attribute('event_in_graph')"><i class="fas fa-share-alt"></i></button>
+                <button class="btn btn-round bg-transparent " title="选择事件" onclick="toggle_selector();" id="selector-btn"><i class="fas fa-check-double"></i></button>
+                <button class="btn btn-round bg-transparent " title="添加新事件" onclick="add_event();"><i class="fas fa-plus-circle"></i></button>
+                <button class="btn btn-round bg-transparent " title="切换子事件" onclick="toggle_child_events();"><i class="fas fa-folder-tree"></i></button>
+                <button class="btn btn-round bg-transparent  " title="刷新" onclick="get_or_filter_tm();"><i class="fas fa-redo-alt"></i></button>
+                <button class="btn btn-round bg-transparent " title="返回顶部" onclick="to_page_up();"><i class="fas fa-arrow-up"></i></button>
+                <button class="btn btn-round bg-transparent" title="到底部" onclick="to_page_down();"><i class="fas fa-arrow-down"></i></button>
             </div>
         
         </div>
@@ -139,15 +139,15 @@
 
           <div class="modal-content">
             <div class="modal-header">
-              <h5>Upload events list (CSV format)</h5>
+              <h5>上传事件列表 (CSV 格式)</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                   aria-hidden="true">&times;</span></button>
             </div>
 
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="csv_format" class="placeholder">Expected Events CSV File format</label>
-                    <textarea id="csv_format" class="form-control col-md-12 col-sm-12 sizable-textarea" rows="2" disabled>event_timestamp,event_title,event_description,linked_assets,linked_IoCs,event_tags (separated with &quot;|&quot;),event_color,event_raw_data</textarea>
+                    <label for="csv_format" class="placeholder">预期事件CSV文件格式</label>
+                    <textarea id="csv_format" class="form-control col-md-12 col-sm-12 sizable-textarea" rows="2" disabled>event_timestamp,event_title,event_description,linked_assets,linked_IoCs,event_tags (由&quot;|&quot;分隔),event_color,event_raw_data</textarea>
                 </div>
                 <div class="form-group">
                     <label class="placeholder">Events CSV File format example</label>
@@ -158,14 +158,14 @@ event_date,event_tz,event_title,event_category,event_content,event_raw,event_sou
                     </textarea>
                 </div>
                   <div class="form-group">
-                      <label class="placeholder">Choose CSV file to import : </label>
+                      <label class="placeholder">选择要导入的CSV文件 : </label>
                       <input id="input_upload_csv_events" type="file" accept="text/csv">
                   </div>
             </div>
             <div class='invalid-feedback' id='ioc-invalid-msg'></div>
             <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-dark mr-auto" onclick="generate_events_sample_csv();">Download sample CSV</button>
-                    <button type="button" class="btn btn-outline-success" onclick="upload_csv_events();">Upload</button>
+                    <button type="button" class="btn btn-outline-dark mr-auto" onclick="generate_events_sample_csv();">下载样例CSV</button>
+                    <button type="button" class="btn btn-outline-success" onclick="upload_csv_events();">上传</button>
             </div>
           </div><!-- /.modal-content -->
         </form>
