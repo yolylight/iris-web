@@ -1,7 +1,7 @@
 
 {% extends "layouts/default.html" %}
 
-{% block title %} Dashboard {% endblock title %}
+{% block title %} 仪表盘 {% endblock title %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="/static/assets/css/suggestags.css">
@@ -15,14 +15,14 @@
       <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row ">
           <div>
-            <h2 class="text-white pb-2 fw-bold">Dashboard</h2>
+            <h2 class="text-white pb-2 fw-bold">仪表盘</h2>
           </div>
           <div class="ml-md-auto py-2 py-md-0">
             <a href="javascript:void(0);" onclick="load_add_case();" class="btn btn-white btn-sm btn-border btn-round mr-2">
               <span class="btn-label">
                 <i class="fa fa-plus"></i>
               </span>
-              Create new case
+              创建新案例
             </a>
           </div>
         </div>
@@ -44,7 +44,7 @@
                         </div>
                         <div class="col-7 col-stats">
                             <div class="numbers">
-                                <p class="card-category">Cases (open / all)</p>
+                                <p class="card-category">案例 (处理中 / 全部)</p>
                                 <h4 class="card-title">{{ data.cases_open_count }} / {{ data.cases_count }}</h4>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="col-7 col-stats">
                             <div class="numbers">
-                                <p class="card-category">Attributed open cases</p>
+                                <p class="card-category">归属处理中案例</p>
                                 <h4 class="card-title">{{ data.user_open_count }}</h4>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                         </div>
                         <div class="col-7 col-stats">
                             <div class="numbers">
-                                <p class="card-category">Attributed open tasks</p>
+                                <p class="card-category">归属处理中任务</p>
                                 <h4 class="card-title" id="user_attr_count"></h4>
                             </div>
                         </div>
@@ -95,11 +95,11 @@
       <div class="col-md-12">
             <section class="card">
                 <div class="card-header">
-                  <div class="card-title">Attributed cases review
+                  <div class="card-title">归属案例审核
                     <div class="text-faded float-right">
                       <small id="ureviews_last_updated"></small>
                       <button type="button" class="btn btn-xs btn-dark ml-2"
-                          onclick="update_ureviews_list();">Refresh
+                          onclick="update_ureviews_list();">刷新
                         </button>
                     </div>
                   </div>
@@ -109,14 +109,14 @@
                       <table class="table display table-striped table-hover" width="100%" cellspacing="0" id="ureview_table" >
                         <thead>
                           <tr>
-                              <th>Case name</th>
-                              <th>Review Status</th>
+                              <th>案例名称</th>
+                              <th>审核状态</th>
                           </tr>
                         </thead>
                         <tfoot>
                           <tr>
-                              <th>Case name</th>
-                              <th>Review Status</th>
+                              <th>案例名称</th>
+                              <th>审核状态</th>
                           </tr>
                         </tfoot>
                       </table>
@@ -130,11 +130,11 @@
             {{ form.hidden_tag() }}
             <section class="card">
                 <div class="card-header">
-                  <div class="card-title">Attributed open tasks
+                  <div class="card-title">归属处理中任务
                     <div class="text-faded float-right">
                       <small id="utasks_last_updated"></small>
                       <button type="button" class="btn btn-xs btn-dark ml-2"
-                          onclick="update_utasks_list();">Refresh
+                          onclick="update_utasks_list();">刷新
                         </button>
                     </div>
                   </div>
@@ -144,22 +144,22 @@
                       <table class="table display table-striped table-hover" width="100%" cellspacing="0" id="utasks_table" >
                         <thead>
                           <tr>
-                              <th>Title</th>
-                              <th>Description</th>
-                              <th>Status</th>
-                              <th>Case</th>
-                              <th>Last update</th>
-                              <th>Tags</th>
+                              <th>标题</th>
+                              <th>描述</th>
+                              <th>状态</th>
+                              <th>案例</th>
+                              <th>最后更新</th>
+                              <th>标签</th>
                           </tr>
                         </thead>
                         <tfoot>
                           <tr>
-                              <th>Title</th>
-                              <th>Description</th>
-                              <th>Status</th>
-                              <th>Case</th>
-                              <th>Last update</th>
-                              <th>Tags</th>
+                              <th>标题</th>
+                              <th>描述</th>
+                              <th>状态</th>
+                              <th>案例</th>
+                              <th>最后更新</th>
+                              <th>标签</th>
                           </tr>
                         </tfoot>
                       </table>
@@ -173,14 +173,14 @@
         <div class="col-md-12">
             <section class="card">
                 <div class="card-header">
-                  <div class="card-title">Attributed open cases
+                  <div class="card-title">归属处理中案例
                     <div class="text-faded float-right">
                       <small id="ucases_last_updated"></small>
                         <button type="button" class="btn btn-xs btn-dark ml-2"
-                          onclick="update_ucases_list(true);">Show closed cases
+                          onclick="update_ucases_list(true);">显示已处理完案例
                         </button>
                       <button type="button" class="btn btn-xs btn-dark ml-2"
-                          onclick="update_ucases_list();">Refresh
+                          onclick="update_ucases_list();">刷新
                         </button>
                     </div>
                   </div>
@@ -190,20 +190,20 @@
                       <table class="table display table-striped table-hover" width="100%" cellspacing="0" id="ucases_table" >
                         <thead>
                           <tr>
-                              <th>Title</th>
-                              <th>Description</th>
-                              <th>Client</th>
-                              <th>Opening date</th>
-                              <th>Tags</th>
+                              <th>标题</th>
+                              <th>描述</th>
+                              <th>客户</th>
+                              <th>处理日期</th>
+                              <th>标签</th>
                           </tr>
                         </thead>
                         <tfoot>
                           <tr>
-                              <th>Title</th>
-                              <th>Description</th>
-                              <th>Client</th>
-                              <th>Opening date</th>
-                              <th>Tags</th>
+                              <th>标题</th>
+                              <th>描述</th>
+                              <th>客户</th>
+                              <th>处理日期</th>
+                              <th>标签</th>
                           </tr>
                         </tfoot>
                       </table>
@@ -218,15 +218,15 @@
 
 				<section class="card">
                     <div class="card-header">
-                      <div class="card-title">Global tasks
+                      <div class="card-title">全局任务
                         <div class="text-faded float-right">
                           <small id="tasks_last_updated"></small>
                             <button type="button" class="btn btn-xs btn-dark ml-2"
                               onclick="add_gtask();">
-                              Add global task
+                              添加全局任务
                             </button>
                             <button type="button" class="btn btn-xs btn-dark ml-2"
-                              onclick="update_gtasks_list();">Refresh
+                              onclick="update_gtasks_list();">刷新
                             </button>
                         </div>
                       </div>
@@ -236,22 +236,22 @@
                           <table class="table display table-striped table-hover" width="100%" cellspacing="0" id="gtasks_table" >
                             <thead>
                               <tr>
-                                  <th>Title</th>
-                                  <th>Description</th>
-                                  <th>Status</th>
-                                  <th>Assigned to</th>
-                                  <th>Last update</th>
-                                  <th>Tags</th>
+                                  <th>标题</th>
+                                  <th>描述</th>
+                                  <th>状态</th>
+                                  <th>分配给</th>
+                                  <th>最后更新</th>
+                                  <th>标签</th>
                               </tr>
                             </thead>
                             <tfoot>
                               <tr>
-                                  <th>Title</th>
-                                  <th>Description</th>
-                                  <th>Status</th>
-                                  <th>Assigned to</th>
-                                  <th>Last update</th>
-                                  <th>Tags</th>
+                                  <th>标题</th>
+                                  <th>描述</th>
+                                  <th>状态</th>
+                                  <th>分配给</th>
+                                  <th>最后更新</th>
+                                  <th>标签</th>
                               </tr>
                             </tfoot>
                           </table>
@@ -312,7 +312,7 @@
                         data: {
                             labels: jsdata.data[0],
                             datasets: [  {
-                                label: "Open case",
+                                label: "处理中案例",
                                 borderColor: gradientStroke,
                                 pointBackgroundColor: gradientStroke,
                                 pointRadius: 0,
