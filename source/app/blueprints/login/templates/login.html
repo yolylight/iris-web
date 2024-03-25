@@ -1,5 +1,5 @@
 {% extends "layouts/static-default.html" %}
-{% block title %} {{ organisation_name }} Login {% endblock title %}
+{% block title %} {{ organisation_name }} 登录 {% endblock title %}
 
 {% block stylesheets %}
 
@@ -20,17 +20,17 @@
             <span class="text-white text-center mt-4">{{ login_banner|replace('\n', '<br>')|safe }}</span>
         </div>
         <div class="login__right_part col-xs-12 col-md-4">
-            <h3 class="login__form_title">Sign In</h3>
+            <h3 class="login__form_title">登录</h3>
 
             <form method="post" action="" class="login__form">
                 {{ form.hidden_tag() }}
                 <div class="login__form">
                     <div class="login__form_field_container">
-                        <label for="username"><b>Username</b></label>
+                        <label for="username"><b>用户名</b></label>
                         <input id="username" name="username" type="text" class="form-control" required="">
                     </div>
                     <div class="login__form_field_container">
-                        <label for="password"><b>Password</b></label>
+                        <label for="password"><b>密码</b></label>
                         <div class="login__form_input">
                             <input id="password" name="password" type="password" class="form-control" required="">
                             <div class="login__show_password" id="togglePassword">
@@ -39,17 +39,17 @@
                         </div>
                     </div>
                     {% if msg %}
-                        <div class="alert alert-danger"> <b>Error:</b> {{ msg }} </div>
+                        <div class="alert alert-danger"> <b>错误:</b> {{ msg }} </div>
                     {% endif %}
                     <div class="login__form_field_container">
-                        <button type="submit" class="btn btn-primary login__submit_button">Sign In</button>
+                        <button type="submit" class="btn btn-primary login__submit_button">登录</button>
                     </div>
                 </div>
             </form>
 
             <div class="login__contact_container">
                 {% if ptfm_contact %}
-                    <span>Don't have an account yet ?</span><br/>
+                    <span>还没有账户?</span><br/>
                     {{ ptfm_contact }}
                 {% endif %}
             </div>
