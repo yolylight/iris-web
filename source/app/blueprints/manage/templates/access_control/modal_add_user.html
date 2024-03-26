@@ -2,29 +2,29 @@
     <div class="modal-content" id="modal_access_control_content">
         <div class="modal-header">
             <div class="row w-100 d-flex justify-content-center">
-                <h4 class="modal-title ml-4 mt-3">{% if not user.user_id %}Add User{% else %} Edit user {% endif %}</h4>
+                <h4 class="modal-title ml-4 mt-3">{% if not user.user_id %} 添加用户 {% else %} 编辑用户 {% endif %}</h4>
 
                 <div class="col">
                     {% if user.user_id %}
                     <ul class="nav nav-pills nav-default justify-content-center" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active show" data-toggle="pill" href="#user_details_tab" role="tab" aria-controls="user_details_tab" aria-selected="false">Info</a>
+                            <a class="nav-link active show" data-toggle="pill" href="#user_details_tab" role="tab" aria-controls="user_details_tab" aria-selected="false">信息</a>
                         </li>
 
                         <li class="nav-item submenu">
-                            <a class="nav-link"  data-toggle="pill" href="#user_permissions_tab" role="tab" aria-controls="user_permissions_tab" aria-selected="false">Permissions</a>
+                            <a class="nav-link"  data-toggle="pill" href="#user_permissions_tab" role="tab" aria-controls="user_permissions_tab" aria-selected="false">权限</a>
                         </li>
 
                         <li class="nav-item submenu">
-                            <a class="nav-link"  data-toggle="pill" href="#user_groups_tab" role="tab" aria-controls="user_groups_tab" aria-selected="false">Groups</a>
+                            <a class="nav-link"  data-toggle="pill" href="#user_groups_tab" role="tab" aria-controls="user_groups_tab" aria-selected="false">组</a>
                         </li>
 
                         <li class="nav-item submenu">
-                            <a class="nav-link"  data-toggle="pill" href="#user_clients_tab" role="tab" aria-controls="user_clients_tab" aria-selected="false">Customers</a>
+                            <a class="nav-link"  data-toggle="pill" href="#user_clients_tab" role="tab" aria-controls="user_clients_tab" aria-selected="false">客户</a>
                         </li>
 
                         <li class="nav-item submenu">
-                            <a class="nav-link"  data-toggle="pill" href="#user_cac_tab" role="tab" aria-controls="user_cac_tab" aria-selected="false">Cases access</a>
+                            <a class="nav-link"  data-toggle="pill" href="#user_cac_tab" role="tab" aria-controls="user_cac_tab" aria-selected="false">案例访问</a>
                         </li>
 
                     </ul>
@@ -44,18 +44,18 @@
                                 <div class="col-md-12 col-lg-12 col-sm-12">
                                     {{ form.hidden_tag() }}
                                     {% if not user.user_id %}
-                                        <p class="ml-3"><i class="fa-solid fa-circle-info mr-2"></i>Permissions and groups memberships can be set once the user is created.</p>
+                                        <p class="ml-3"><i class="fa-solid fa-circle-info mr-2"></i>创建用户后，即可设置权限和群组成员资格.</p>
                                     {% endif %}
                                     {% if user.user_is_service_account %}
-                                        <p class="ml-3 text-warning-high"><i class="fa-solid fa-circle-info mr-2"></i>This is a service account. It cannot login interactively nor have a password.</p>
+                                        <p class="ml-3 text-warning-high"><i class="fa-solid fa-circle-info mr-2"></i>这是一个服务账户。它不能交互登录，也没有密码.</p>
                                     {% endif %}
                                     <div class="form-group">
-                                        <label for="user_name" class="mr-4">Full name
+                                        <label for="user_name" class="mr-4">全名
                                         </label>
                                         {{ form.user_name(class='form-control',  autocomplete="off") }}
                                     </div>
                                     <div class="form-group mt-3">
-                                        <label for="user_login" class="placeholder">Login</label>
+                                        <label for="user_login" class="placeholder">登录</label>
                                         {{ form.user_login(class='form-control',  autocomplete="off") }}
                                     </div>
                                     <div class="form-group mt-3">
@@ -64,20 +64,20 @@
                                     </div>
                                      {% if not user.user_is_service_account %}
                                     <div class="form-group mt-3" id="formGroupUserPassword">
-                                        <label for="user_pwd" class="placeholder">Password (optional for service accounts)</label>
+                                        <label for="user_pwd" class="placeholder">密码 (服务账户可选)</label>
                                         <ul>
-                                            <li><small>Must contain at least {{ server_settings.password_policy_min_length }} chars</small></li>
+                                            <li><small>至少包含{{ server_settings.password_policy_min_length }} 个字符</small></li>
                                             {% if server_settings.password_policy_upper_case %}
-                                                <li class="text-sm"><small>Must contain at least an upper case</small></li>
+                                                <li class="text-sm"><small>必须至少包含一个大写字母</small></li>
                                             {% endif %}
                                             {% if server_settings.password_policy_lower_case %}
-                                                <li class="text-sm"><small>Must contain at least a lower case</small></li>
+                                                <li class="text-sm"><small>必须至少包含一个小写字母</small></li>
                                             {% endif %}
                                             {% if server_settings.password_policy_digit %}
-                                                <li class="text-sm"><small>Must contain at least a digit</small></li>
+                                                <li class="text-sm"><small>必须至少包含一个数字</small></li>
                                             {% endif %}
                                             {% if server_settings.password_policy_special_chars %}
-                                                <li class="text-sm"><small>Must contain at least one of : {{ server_settings.password_policy_special_chars }}</small></li>
+                                                <li class="text-sm"><small>必须包含以下至少一项 : {{ server_settings.password_policy_special_chars }}</small></li>
                                             {% endif %}
                                         </ul>
 
@@ -98,8 +98,8 @@
                                         <div class="form-check">
                                             <label class="form-check-label mt-3" >
                                                 {{ form.user_is_service_account(class="form-check-input", type="checkbox") }}
-                                                <span class="form-check-sign" id="formCheckIsServiceAccount">  Use as service account
-                                                    <i class="ml-1 mt-1 fa-regular fa-circle-question" title="If checked, the user won't appear in the attribution suggestions and won't be able to connect on the UI" style="cursor:pointer;"></i>
+                                                <span class="form-check-sign" id="formCheckIsServiceAccount">  作为服务账户使用
+                                                    <i class="ml-1 mt-1 fa-regular fa-circle-question" title="如果选中，用户将不会出现在归属建议中，也无法在用户界面上连接" style="cursor:pointer;"></i>
                                                 </span>
                                             </label>
                                         </div>
@@ -107,19 +107,19 @@
                                     {% endif %}
                                     {% if user.user_id %}
                                         <div class="form-group mt-3">
-                                            <label for="user_id" class="placeholder">User ID</label>
+                                            <label for="user_id" class="placeholder">用户 ID</label>
                                             <input autocomplete="off" class="form-control" type="text" value="{{ user.user_id }}" disabled>
                                         </div>
                                         <div class="form-group mt-3">
-                                            <label for="user_uuid" class="placeholder">User UUID</label>
+                                            <label for="user_uuid" class="placeholder">用户 UUID</label>
                                             <input autocomplete="off" class="form-control" type="text" value="{{ user.user_uuid }}" disabled>
                                         </div>
                                         <div class="form-group mt-3">
-                                            <label for="userApiKey" class="placeholder">User API Key</label>
+                                            <label for="userApiKey" class="placeholder">用户 API 密钥</label>
                                             <div class="input-group">
                                                 <input autocomplete="off" class="form-control" type="text" value="{{ user.user_api_key }}" id="userApiKey" disabled>
                                                 <div class="input-group-append">
-                                                    <button class="btn btn-sm btn-dark" type="button" onclick="renew_api_for_user({{ user.user_id }})">Renew</button>
+                                                    <button class="btn btn-sm btn-dark" type="button" onclick="renew_api_for_user({{ user.user_id }})">更新</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -127,25 +127,25 @@
                                 </div>
                                 {% if user.user_id %}
                                     <button type="button" class="btn btn-danger mt-5"
-                                    onclick="delete_user('{{ user.user_id }}');">Delete</button>
+                                    onclick="delete_user('{{ user.user_id }}');">删除</button>
                                     {% if user.user_active %}
                                     <button type="button" class="btn btn-outline-danger mt-5"
-                                    onclick="deactivate_user('{{ user.user_id }}');">Deactivate</button>
+                                    onclick="deactivate_user('{{ user.user_id }}');">停用</button>
                                     {% else %}
                                     <button type="button" class="btn btn-outline-success mt-5"
-                                    onclick="activate_user('{{ user.user_id }}');">Activate</button>
+                                    onclick="activate_user('{{ user.user_id }}');">激活</button>
                                     {% endif %}
 
                                     <button type="button" class="btn btn-outline-success ml-1 mt-5 float-right"
-                                    id="submit_new_user">Update</button>
+                                    id="submit_new_user">更新</button>
 
                                     <button type="button" class="btn btn-dark mt-5 float-right"
-                                    onclick="refresh_user_ac('{{ user.user_id }}');" id="users_refresh_ac_btn">Refresh access</button>
+                                    onclick="refresh_user_ac('{{ user.user_id }}');" id="users_refresh_ac_btn">刷新访问</button>
 
                                 {% else %}
 
                                     <button type="button" class="btn btn-outline-success ml-4 mt-5 float-right"
-                                    id="submit_new_user">Save</button>
+                                    id="submit_new_user">保存</button>
 
                                 {% endif %}
                             </form>
@@ -153,13 +153,13 @@
                     </div>
                     <div class="tab-pane" id="user_permissions_tab">
                         <div class="container col-md-12">
-                            <p class="mb-4"><i class="fa-solid fa-circle-info mr-2"></i>Permissions are inherited from the groups the user belongs to. The table shows the effective permissions the user has on the platform.</p>
+                            <p class="mb-4"><i class="fa-solid fa-circle-info mr-2"></i>权限由用户所属的组继承。下表显示了用户在平台上拥有的有效权限。</p>
                             <table class="table table-striped" id="user_permissions_table">
                                 <thead>
                                     <tr>
-                                        <th>Permission</th>
-                                        <th>Value</th>
-                                        <th>Inherited from groups</th>
+                                        <th>权限</th>
+                                        <th>值</th>
+                                        <th>从组继承</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -177,9 +177,9 @@
                     <div class="tab-pane" id="user_groups_tab">
                         <div class="row">
                             <div class="container col-md-12">
-                                <span class="ml-2 mt-3">Groups the user is member of.</span>
+                                <span class="ml-2 mt-3">用户所属的组.</span>
                                 <button class="btn btn-dark btn-sm pull-right mr-2" onclick="manage_user_groups({{ user.user_id }});">
-                                    <span class="menu-title">Manage</span>
+                                    <span class="menu-title">管理</span>
                                 </button>
                             </div>
                         </div>
@@ -188,9 +188,9 @@
                                 <table class="table table-striped" id="user_groups_table">
                                     <thead>
                                         <tr>
-                                            <th>Group name</th>
-                                            <th>Group ID</th>
-                                            <th>Group UUID</th>
+                                            <th>组名</th>
+                                            <th>组 ID</th>
+                                            <th>组 UUID</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -209,9 +209,9 @@
                     <div class="tab-pane" id="user_clients_tab">
                         <div class="row">
                             <div class="container col-md-12">
-                                <span class="ml-2 mt-3">Customers the user belongs to.</span>
+                                <span class="ml-2 mt-3">用户所属的客户.</span>
                                 <button class="btn btn-dark btn-sm pull-right mr-2" onclick="manage_user_clients({{ user.user_id }});">
-                                    <span class="menu-title">Manage</span>
+                                    <span class="menu-title">管理</span>
                                 </button>
                             </div>
                         </div>
@@ -220,8 +220,8 @@
                                 <table class="table table-striped" id="user_clients_table">
                                     <thead>
                                         <tr>
-                                            <th>Customer</th>
-                                            <th>Customer ID</th>
+                                            <th>客户</th>
+                                            <th>客户 ID</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -240,14 +240,14 @@
                         <div class="container col-md-12" >
                               <div class="row d-flex mb-4">
                                 <div class="col-8">
-                                    <span>Cases accesses are usually inherited from groups memberships. These are not displayed here. This tab allows to add granular case access if necessary.</span>
+                                    <span>案例访问权限通常是从组的成员资格中继承的。这里不显示。该选项卡允许在必要时添加细粒度的案例访问权限.</span>
                                 </div>
                                 <div class="col-4 pull-right">
                                     <button class="btn btn-dark btn-sm pull-right" onclick="refresh_user_cac({{ user.user_id }});">
-                                        <span class="menu-title">Refresh</span>
+                                        <span class="menu-title">刷新</span>
                                     </button>
                                     <button class="btn btn-dark btn-sm pull-right mr-2" onclick="manage_user_cac({{ user.user_id  }});">
-                                        <span class="menu-title" id="manage_user_cac_button">Set case access</span>
+                                        <span class="menu-title" id="manage_user_cac_button">设置案例访问</span>
                                     </button>
                                 </div>
                               </div>
@@ -255,16 +255,16 @@
                               <table class="table display table-striped table-hover responsive" width="100%" cellspacing="0" id="user_cac_table" >
                                 <thead>
                                   <tr>
-                                      <th>Case ID</th>
-                                      <th>Case Name</th>
-                                      <th>Access</th>
+                                      <th>案例 ID</th>
+                                      <th>案例名称</th>
+                                      <th>访问</th>
                                   </tr>
                                 </thead>
                                 <tfoot>
                                   <tr>
-                                    <th>Case ID</th>
-                                    <th>Case Name</th>
-                                    <th>Access</th>
+                                    <th>案例 ID</th>
+                                    <th>案例名称</th>
+                                    <th>访问</th>
                                   </tr>
                                 </tfoot>
                               </table>
@@ -292,7 +292,7 @@
                     "title": "Group name",
                     "render": function ( data, type, row, meta ) {
                         if (type === 'display' ) {
-                            return `<i class="fa-solid fa-trash-can mr-2 text-danger" style="cursor:pointer;" title="Remove from group" href="javascript:void(0)" onclick="remove_member_from_group_wrap('${row[1]}','{{ user.user_id }}')"></i>${sanitizeHTML(data)}`;
+                            return `<i class="fa-solid fa-trash-can mr-2 text-danger" style="cursor:pointer;" title="从组移除" href="javascript:void(0)" onclick="remove_member_from_group_wrap('${row[1]}','{{ user.user_id }}')"></i>${sanitizeHTML(data)}`;
                         }
                         return data;
                     }},
@@ -308,7 +308,7 @@
                   {
                     "data": "case_id",
                     "render": function ( data, type, row ) {
-                        return `<i class="fa-solid fa-trash-can mr-2 text-danger" style="cursor:pointer;" title="Remove access to case" href="javascript:void(0)" onclick="remove_case_access_from_user('{{ user.user_id }}',${data})"></i>${data}`;
+                        return `<i class="fa-solid fa-trash-can mr-2 text-danger" style="cursor:pointer;" title="移除案例访问" href="javascript:void(0)" onclick="remove_case_access_from_user('{{ user.user_id }}',${data})"></i>${data}`;
                     },
                     "className": "dt-center"
                 },
