@@ -1,6 +1,6 @@
 {% extends "layouts/default.html" %}
 
-{% block title %} Manage Case Templates {% endblock title %}
+{% block title %} 管理案例模版 {% endblock title %}
 
 {% block stylesheets %}
 {% endblock stylesheets %}
@@ -16,17 +16,17 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col">
-                            <div class="card-title">Case Templates</div>
+                            <div class="card-title">案例模板</div>
                         </div>
                         <div class="col">
                             <button type="button" class="btn btn-sm btn-dark float-right ml-2" onclick="refresh_case_template_table();">
-                                Refresh
+                                刷新
                             </button>
                             <button class="btn btn-sm btn-dark float-right ml-2" onclick="add_case_template();">
-                                Add case template
+                                添加案例模板
                             </button>
                             <button class="btn btn-sm btn-dark float-right ml-2" onclick="fire_upload_case_template();">
-                                Upload case template
+                                上传案例模板
                             </button>
                         </div>
                     </div>
@@ -37,27 +37,27 @@
                         <div class="selectgroup">
                             <span id="table_buttons"></span>
                         </div>
-                        <table aria-describedby="Case template list"
+                        <table aria-describedby="案例模板列表"
                                class="table display table table-striped table-hover"
                                style="width: 100%; border-spacing: 0;" id="case_templates_table">
                             <thead>
                                 <tr>
                                     <th scope="col">#ID</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Added by</th>
-                                    <th scope="col">Created at</th>
-                                    <th scope="col">Updated at</th>
+                                    <th scope="col">名称</th>
+                                    <th scope="col">描述</th>
+                                    <th scope="col">添加人</th>
+                                    <th scope="col">创建于</th>
+                                    <th scope="col">更新于</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th scope="col">#ID</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Added by</th>
-                                    <th scope="col">Created at</th>
-                                    <th scope="col">Updated at</th>
+                                    <th scope="col">名称</th>
+                                    <th scope="col">描述</th>
+                                    <th scope="col">添加人</th>
+                                    <th scope="col">创建于</th>
+                                    <th scope="col">更新于</th>
                                 </tr>
                             </tfoot>
                         </table>
