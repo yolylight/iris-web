@@ -1,7 +1,7 @@
 <div class="modal-lg modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title mt-2 mr-4">Set case access via groups</h4>
+            <h4 class="modal-title mt-2 mr-4">通过组设置案例访问</h4>
             <div class="row text-right">
                 <button type="button" class="pull-right btn bg-transparent" data-dismiss="modal" aria-label="Close"><span
                     aria-hidden="true"><i class="fa fa-times"></i></span></button>
@@ -11,7 +11,8 @@
             <div class="container col-md-12" >
                 <div class="row">
                     <div class="form-group" data-select2-id="7">
-                        <label>Set groups case access</label>
+                        <label>设置组案例访问
+                        </label>
                         <div class="row">
                             <div class="col-12">
                                 <select id="group_case_access_select" name="group_case_access_select" class="form-control select2-hidden-accessible ml-12" multiple="multiple"
@@ -25,7 +26,7 @@
                     </div>
                 </div>
                 <button type="button" class="btn btn-outline-success ml-4 mt-5 float-right"
-                        onclick="set_case_access_via_group('{{ caseid }}')">Set access</button>
+                        onclick="set_case_access_via_group('{{ caseid }}')">设置访问</button>
             </div>
         </div>
     </div><!-- /.modal-content -->
@@ -35,8 +36,8 @@ var data = [];
 
 $('#group_case_access_select').multiselect({
     buttonWidth: 400,
-    nonSelectedText: 'Select group(s)',
-    emptyText: 'No groups available to set',
+    nonSelectedText: '选择组',
+    emptyText: '没有可设置的组',
     includeSelectAllOption: true,
     enableFiltering: true,
     enableCaseInsensitiveFiltering: true,
@@ -52,7 +53,7 @@ $('#group_case_access_select').multiselect('dataprovider', [{% for ocs in groups
 $('#group_case_access_select').multiselect('refresh')
 
 $('#group_case_ac_select').multiselect({
-    nonSelectedText: 'Select access level',
+    nonSelectedText: '选择访问级别',
     includeSelectAllOption: true,
     enableFiltering: true,
     enableCaseInsensitiveFiltering: true,
