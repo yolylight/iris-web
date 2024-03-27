@@ -1,6 +1,6 @@
 {% extends "layouts/default.html" %}
 
-{% block title %} Manage Customers {% endblock title %}
+{% block title %} 管理客户 {% endblock title %}
 
 {% block stylesheets %}
 
@@ -13,12 +13,12 @@
     {% if current_user.is_authenticated %}
     {{ form.hidden_tag() }}
 		<div class="page-inner">
-			<a class="mb-2 ml-1 text-dark" href="/manage/customers?cid={{ session['current_case'].case_id }}"><i class="fa-solid fa-arrow-left"></i> Back</a>
+			<a class="mb-2 ml-1 text-dark" href="/manage/customers?cid={{ session['current_case'].case_id }}"><i class="fa-solid fa-arrow-left"></i> 返回</a>
 			<div class="mt-2 mb-4">
 				<div class="row ml-2 mr-2">
 					<h2 class="pb-2">
-						<a href="/manage/customers?cid={{ session['current_case'].case_id }}" class="text-dark">Customers</a> > {{ customer.customer_name }} (#{{customer.customer_id}})</h2>
-					<button class="btn btn-light btn-sm ml-auto" onclick="customer_detail('{{ customer.customer_id }}');">Edit customer</button>
+						<a href="/manage/customers?cid={{ session['current_case'].case_id }}" class="text-dark">客户</a> > {{ customer.customer_name }} (#{{customer.customer_id}})</h2>
+					<button class="btn btn-light btn-sm ml-auto" onclick="customer_detail('{{ customer.customer_id }}');">编辑客户</button>
 				</div>
 			</div>
 			<input id="customer_id" style="display:none;" value="{{ customer.customer_id }}"/>
@@ -28,7 +28,7 @@
 							<div class="card-body pb-0">
 								<div class="h1 fw-bold float-right"></div>
 								<h2 id="current_open_cases" class="mb-2">0</h2>
-								<p>Current open cases</p>
+								<p>当前待处理案例</p>
 								<div class="pull-in sparkline-fix chart-as-background">
 									<div id="chart_current_open_cases"></div>
 								</div>
@@ -40,7 +40,7 @@
 							<div class="card-body pb-0">
 								<div class="h5 fw-bold float-right"><span id="ratio_month"></span></div>
 								<h2 id="cases_current_month" class="mb-2"></h2>
-								<p>Current month</p>
+								<p>当前月</p>
 								<div class="pull-in sparkline-fix chart-as-background">
 									<div id="chart_month_cases"></div>
 								</div>
@@ -52,7 +52,7 @@
 							<div class="card-body pb-0">
 								<div class="h1 fw-bold float-right"></div>
 								<h2 id="cases_last_month" class="mb-2">0</h2>
-								<p>Last month</p>
+								<p>最后月</p>
 								<div class="pull-in sparkline-fix chart-as-background">
 									<div id=""></div>
 								</div>
@@ -64,7 +64,7 @@
 							<div class="card-body pb-0">
 								<div class="h5 fw-bold float-right"><span id="ratio_year"></span></div>
 								<h2 id="cases_current_year" class="mb-2">0</h2>
-								<p>Current year </p>
+								<p>当前年 </p>
 								<div class="pull-in sparkline-fix chart-as-background">
 									<div id="chart_year_cases"></div>
 								</div>
@@ -76,7 +76,7 @@
 							<div class="card-body pb-0">
 								<div class="h3 fw-bold float-right"></div>
 								<h2 id="cases_last_year" class="mb-2">0</h2>
-								<p>Last year (<span id="last_year"></span>)</p>
+								<p>最后年 (<span id="last_year"></span>)</p>
 								<div class="pull-in sparkline-fix chart-as-background">
 									<div></div>
 								</div>
@@ -88,7 +88,7 @@
 							<div class="card-body pb-0">
 								<div class="h1 fw-bold float-right"></div>
 								<h2 id="cases_total" class="mb-2">0</h2>
-								<p>Total</p>
+								<p>总计</p>
 								<div class="pull-in sparkline-fix chart-as-background">
 									<div></div>
 								</div>
@@ -102,19 +102,19 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col-md-3 info-customer">
-										<h5 class="sub"><b>Customer name</b></h5>
+										<h5 class="sub"><b>客户名称</b></h5>
 										<p>{{ customer.customer_name }}</p>
 									</div>
 									<div class="col-md-3 info-customer">
-										<h5 class="sub"><b>Customer Description</b></h5>
+										<h5 class="sub"><b>客户描述</b></h5>
 										<p>{{ customer.customer_description }}</p>
 									</div>
 									<div class="col-md-3 info-customer">
-										<h5 class="sub  text-bold"><b>Customer SLAs</b></h5>
+										<h5 class="sub  text-bold"><b>客户SLA</b></h5>
 										<p>{{ customer.customer_sla }}</p>
 									</div>
 									<div class="col-md-3 info-customer">
-										<h5 class="sub  text-bold"><b>Average case duration</b></h5>
+										<h5 class="sub  text-bold"><b>平均案例持续时间</b></h5>
 										<p><span id="average_case_duration"></span> days</p>
 									</div>
 								</div>
@@ -129,8 +129,8 @@
 								<div class="row">
 									<div class="col-12">
 										<div class="row">
-											<h3><strong><i class="ml-1 fa-regular fa-address-book mr-1"></i> Contacts</strong></h3>
-											<button class="btn btn-light btn-sm ml-auto" onclick="add_new_contact({{ customer.customer_id }});">Add Contact</button>
+											<h3><strong><i class="ml-1 fa-regular fa-address-book mr-1"></i> 联系方式</strong></h3>
+											<button class="btn btn-light btn-sm ml-auto" onclick="add_new_contact({{ customer.customer_id }});">添加联系方式</button>
 										</div>
 									</div>
 								</div>
@@ -140,23 +140,23 @@
 									{% for contact in contacts %}
 									<div class="contact-list-item">
 										<div class="contact-list-detail">
-											<span class="date float-right"><button class="btn btn-light btn-sm" onclick="edit_contact('{{ contact.id }}','{{ customer.customer_id }}');">Edit</button></span>
+											<span class="date float-right"><button class="btn btn-light btn-sm" onclick="edit_contact('{{ contact.id }}','{{ customer.customer_id }}');">编辑</button></span>
 											<span class="h4">{{ contact.contact_name }}</span>
 											<p class="ml-2">
 											{% if contact.contact_role %}
-												<b>Role: </b>{{ contact.contact_role }}<br/>
+												<b>角色: </b>{{ contact.contact_role }}<br/>
 											{% endif %}
 											{% if contact.contact_email %}
 												<b>Email: </b>{{ contact.contact_email }}<br/>
 											{% endif %}
 											{% if contact.contact_work_phone %}
-												<b>Work phone: </b>{{ contact.contact_work_phone }}<br/>
+												<b>工作电话: </b>{{ contact.contact_work_phone }}<br/>
 											{% endif %}
 											{% if contact.contact_mobile_phone %}
-												<b>Mobile phone: </b>{{ contact.contact_mobile_phone }}<br/>
+												<b>移动电话: </b>{{ contact.contact_mobile_phone }}<br/>
 											{% endif %}
 											{% if contact.contact_note %}
-												<b>Notes: </b>{{ contact.contact_note }}<br/>
+												<b>备注: </b>{{ contact.contact_note }}<br/>
 											{% endif %}
 										</div>
 									</div>
@@ -173,20 +173,19 @@
 								<div class="row">
 									<div class="col-12">
 										<div class="row">
-											<div class="col col-heading collapsed" href="#collapse_client_users_view" title="Click to unfold"  data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapse_client_users_view">
+											<div class="col col-heading collapsed" href="#collapse_client_users_view" title="点击展开"  data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapse_client_users_view">
 												<span class="accicon float-left mr-3"><i class="fas fa-angle-right rotate-icon"></i></span>
-												<div class="card-title">Associated Users</div>
+												<div class="card-title">关联用户</div>
 											</div>
 											<div class="col">
-												<a class="btn btn-light btn-sm float-right" href="/manage/access-control">Manage</a>
+												<a class="btn btn-light btn-sm float-right" href="/manage/access-control">管理</a>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="card-body collapse" id="collapse_client_users_view">
-								The users below are associated with this customer and have by default access to the customer's related data, including
-								alerts and cases.
+								以下用户与该客户相关联，默认情况下可访问该客户的相关数据，包括警报和案例。
 								<div class="table-responsive" id="client_users_table_wrapper">
 									<div class="selectgroup">
 										<span id="table_buttons"></span>
@@ -197,17 +196,17 @@
 										<tr>
 
 											<th>#ID</th>
-											<th>Name</th>
-											<th>Login Name</th>
-											<th>Service Account</th>
+											<th>名称</th>
+											<th>登录名</th>
+											<th>服务账户</th>
 										</tr>
 										</thead>
 										<tfoot>
 										<tr>
 											<th>#ID</th>
-											<th>Name</th>
-											<th>Login Name</th>
-											<th>Service Account</th>
+											<th>名称</th>
+											<th>登录名</th>
+											<th>服务账户</th>
 										</tr>
 										</tfoot>
 									</table>
@@ -223,33 +222,33 @@
 								<div class="row">
 									<div class="col-12">
 										<div class="row">
-											<div class="col col-heading collapsed" href="#collapse_client_cases_view" title="Click to unfold"  data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapse_client_cases_view">
+											<div class="col col-heading collapsed" href="#collapse_client_cases_view" title="点击展开"  data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapse_client_cases_view">
 												<span class="accicon float-left mr-3"><i class="fas fa-angle-right rotate-icon"></i></span>
-												<div class="card-title">Cases</div>
+												<div class="card-title">案例</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="card-body collapse" id="collapse_client_cases_view">
-								The cases below have been opened for this customer. Click on a case to view its details.
+								已为该客户创建下列案例.点击案例查看详情.
 								<div class="table-responsive" id="client_cases_table_wrapper">
 									<table class="table display table table-striped table-hover" width="100%"
 										   cellspacing="0" id="client_cases_table">
 										<thead>
 										<tr>
-											<th>Name</th>
-											<th>Opening date</th>
-											<th>State</th>
-											<th>Owner</th>
+											<th>名称</th>
+											<th>创建日期</th>
+											<th>状态</th>
+											<th>所有者</th>
 										</tr>
 										</thead>
 										<tfoot>
 										<tr>
-											<th>Name</th>
-											<th>Opening date</th>
-											<th>State</th>
-											<th>Owner</th>
+											<th>名称</th>
+											<th>创建日期</th>
+											<th>状态</th>
+											<th>所有者</th>
 										</tr>
 										</tfoot>
 									</table>
@@ -265,35 +264,35 @@
 								<div class="row">
 									<div class="col-12">
 										<div class="row">
-											<div class="col col-heading collapsed" href="#collapse_client_assets_view" title="Click to unfold"  data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapse_client_assets_view">
+											<div class="col col-heading collapsed" href="#collapse_client_assets_view" title="点击展开"  data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapse_client_assets_view">
 												<span class="accicon float-left mr-3"><i class="fas fa-angle-right rotate-icon"></i></span>
-												<div class="card-title">Assets</div>
+												<div class="card-title">资产</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="card-body collapse" id="collapse_client_assets_view">
-								The assets below have been seen for this customer.
+								下列资产属于该客户.
 								<div class="table-responsive" id="client_assets_table_wrapper">
 									<table class="table display table table-striped table-hover" width="100%"
 										   cellspacing="0" id="client_assets_table">
 										<thead>
 										<tr>
-											<th>Name</th>
-											<th>Description</th>
-											<th>Type</th>
+											<th>资产名称</th>
+											<th>描述</th>
+											<th>类型</th>
 											<th>IP</th>
-											<th>Seen in case</th>
+											<th>发现于案例</th>
 										</tr>
 										</thead>
 										<tfoot>
 										<tr>
-											<th>Asset name</th>
-											<th>Description</th>
-											<th>Type</th>
+											<th>资产名称</th>
+											<th>描述</th>
+											<th>类型</th>
 											<th>IP</th>
-											<th>Seen in case</th>
+											<th>发现于案例</th>
 										</tr>
 										</tfoot>
 									</table>
