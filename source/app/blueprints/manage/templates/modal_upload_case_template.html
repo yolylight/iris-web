@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4>Upload case template</h4>
+    <h4>删除案例模板</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
 </div>
@@ -11,10 +11,10 @@
           <div class="modal-content">
             <div class="modal-body">
                 <div class="accordion accordion-primary">
-                        <p>Case templates allow to prefill case objects such as tasks, tags, and notes.<br/>
-                            It could be used to add procedures defining how to react against a specific kind of incident (phishing, ransomware, APT...)</p>
+                        <p>案例模板允许预填案例对象，如任务、标签和备注.<br/>
+                            它可用于添加程序，定义如何应对特定类型的事件（网络钓鱼、勒索软件、APT......）.</p>
                         <div class="alert-std alert-warning" role="alert">
-                             Case templates can be uploaded as JSON files, or they can be added and edited in the Add/Edit case template UI.<br/>
+                             案例模板可以 JSON 文件形式上传，也可以在添加/编辑案例模板用户界面中添加和编辑.<br/>
                         </div>
                         <label class="placeholder">JSON File format example</label>
                         <div class="card">
@@ -23,58 +23,58 @@
                                     <div class="flaticon-pencil"></div>
                                 </div>
                                 <div class="span-title">
-                                    Case Template taxonomy
+                                    案例模板分类
                                 </div>
                                 <div class="span-mode"></div>
                             </div>
 
                             <div id="drop_up_tax_case_template" class="collapse" aria-labelledby="drop_up_tax_case_template" style="">
                                 <div class="card-body">
-                                    A case template is defined as below.
+                                    案例模板的定义如下.
                                     <pre>
 
 {
     "name": "ransomware_infection",
-    "display_name": "Ransomware Infection Template",
-    "description": "This case template describes first-response tasks to handle information system compromised by a ransomware.",
+    "display_name": "勒索病毒感染模板",
+    "description": "本案例模板描述了处理受到勒索软件攻击的信息系统的第一反应任务.",
     "author": "DFIR-IRIS",
     "title_prefix": "RANS",
     "summary": "# Context \n\n\n # Contact \n\n\n # Actions \n\n\n",
     "tags": ["ransomware","malware"],
     "tasks": [
         {
-            "title": "Identify the perimeter",
-            "description": "The perimeter of compromise must be identified",
+            "title": "识别边界",
+            "description": "必须确定入侵范围",
             "tags": ["identify"]
         },
         {
-            "title": "Collect compromised hosts",
-            "description": "Deploy Velociraptor and start collecting evidence",
+            "title": "收集被入侵的主机",
+            "description": "部署Velociraptor并开始收集证据",
             "tags": ["collect", "velociraptor"]
         },
         {
-            "title": "Contain"
+            "title": "包含"
         }
     ],
     "note_directories": [
         {
-            "title": "Identify",
+            "title": "识别",
             "notes": [
                 {
-                    "title": "Identify the compromised accounts",
-                    "content": "# Observations\n\n"
+                    "title": "识别被入侵的账户",
+                    "content": "# 观察\n\n"
                 }
             ]
         },
         {
-            "title": "Collect",
+            "title": "收集",
             "notes": [
                 {
-                    "title": "Velociraptor deployment"
+                    "title": "Velociraptor部署"
                 },
                 {
-                    "title": "Assets collected",
-                    "content": "# Assets collected\n\n# Assets not collected"
+                    "title": "资产已收集",
+                    "content": "# 资产已收集\n\n# 资产未收集"
                 }
             ]
         }
@@ -82,25 +82,25 @@
 }
                                 </pre>
 
-                                <h4>Field types</h4>
-                                The supported fields types are:
+                                <h4>字段类型</h4>
+                                支持的字段类型有:
                                 <ul>
-                                    <li>name: The name of the case template (required).</li>
-                                    <li>display_name: The displayed name of the case template.</li>
-                                    <li>description: The description of the case template.</li>
-                                    <li>author: The author of the case template (not related to the current user).</li>
-                                    <li>title_prefix: A prefix to add to case title.</li>
-                                    <li>summary: content to prefill the summary.</li>
-                                    <li>tags: A list of case tags.</li>
-                                    <li>tasks: A list of dictionaries defining tasks. Tasks are defined by title (required), description, and list of tags.</li>
-                                    <li>note_groups: A list of dictionaries defining note groups. Note groups are defined by title (required), and list of notes. Notes have title (required) and content</li>
+                                    <li>name: 案例模板名称（必填）.</li>
+                                    <li>display_name: 案例模板的显示名称.</li>
+                                    <li>description: 案例模板说明.</li>
+                                    <li>author: 案例模板的作者（与当前用户无关）.</li>
+                                    <li>title_prefix: 为案例标题添加前缀.</li>
+                                    <li>summary: 填充摘要的内容.</li>
+                                    <li>tags: 案例标签列表.</li>
+                                    <li>tasks: 定义任务的字典列表。任务由标题（必填）、描述和标记列表定义。</li>
+                                    <li>note_groups: 定义备注组的词典列表。备注组由标题（必填）和注释列表定义。备注有标题（必填）和内容</li>
                                 </ul>
                             </div>
                         </div>
                      </div>
                 </div>
                 <div class="form-group">
-                      <label class="placeholder">Choose JSON file to import : </label>
+                      <label class="placeholder">选择要导入的 JSON 文件 : </label>
                       <input id="input_upload_case_template" type="file" accept="text/json">
                 </div>
             </div>
@@ -110,12 +110,12 @@
     </div>
     <div class="alert alert-warning" style="display:none;" role="alert" id="alert_upload_case_template_details">
         <span id="alert_upload_case_template"></span><br/>
-        <b>Logs:</b>
+        <b>日志:</b>
         <ul id="upload_case_template_err_details_list">
         </ul>
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-outline-success" onclick="upload_case_template();">Upload</button>
+    <button type="button" class="btn btn-outline-success" onclick="upload_case_template();">上传</button>
 </div>
 
