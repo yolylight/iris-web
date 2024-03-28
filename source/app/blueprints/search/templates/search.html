@@ -1,6 +1,6 @@
 {% extends "layouts/default.html" %}
 
-{% block title %} Search {% endblock title %}
+{% block title %} 搜索 {% endblock title %}
 
 {% block stylesheets %}
 <link href="/static/assets/css/dataTables.buttons.min.css" rel="stylesheet">
@@ -14,19 +14,19 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">Search across cases</div>
+                    <div class="card-title">跨案例搜索</div>
                 </div>
                 <div class="card-body">
                     <form method="post" action="" id="form_search">
                         {{ form.hidden_tag() }}
                         <div class="input-group">
-                            {{ form.search_value(placeholder="Search term - You can use % as a wilcard.   Search is context-free." , class="form-control", type="text") }}
+                            {{ form.search_value(placeholder="搜索词 - 可以使用 % 作为通配符。  搜索无上下文限制。" , class="form-control", type="text") }}
                             <div class="input-group-append">
-                                <button type="button" class="btn btn-sm btn-outline-success" id="submit_search">Search</button>
+                                <button type="button" class="btn btn-sm btn-outline-success" id="submit_search">搜索</button>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label mr-3">Set to search within</label>
+                            <label class="form-label mr-3">设置为在</label>
                             <div class="selectgroup selectgroup-pills">
                                 <label class="selectgroup-item">
                                     <input type="radio" name="search_type" value="ioc" class="selectgroup-input" checked="">
@@ -34,11 +34,11 @@
                                 </label>
                                 <label class="selectgroup-item">
                                     <input type="radio" name="search_type" value="notes" class="selectgroup-input">
-                                    <span class="selectgroup-button">Notes</span>
+                                    <span class="selectgroup-button">备注</span>
                                 </label>
                                 <label class="selectgroup-item">
                                     <input type="radio" name="search_type" value="comments" class="selectgroup-input">
-                                    <span class="selectgroup-button">Comments</span>
+                                    <span class="selectgroup-button">评论</span>
                                 </label>
                             </div>
                         </div>
@@ -51,26 +51,26 @@
                         <thead>
                           <tr>
                             <th>MD5</th>
-                            <th>Filename</th>
-                            <th>Path</th>
-                            <th>VT Score</th>
-                            <th>Case seen</th>
-                            <th>Seen count</th>
+                            <th>文件名</th>
+                            <th>路径</th>
+                            <th>VT 得分</th>
+                            <th>案例发现</th>
+                            <th>查看次数</th>
                             <th>Flag</th>
-                            <th>Comment</th>
+                            <th>评论</th>
                             <th>VT</th>
                           </tr>
                         </thead>
                         <tfoot>
                           <tr>
                             <th>MD5</th>
-                            <th>Filename</th>
-                            <th>Path</th>
-                            <th>VT Score</th>
-                            <th>Case seen</th>
-                            <th>Seen count</th>
+                            <th>文件名</th>
+                            <th>路径</th>
+                            <th>VT 得分</th>
+                            <th>发现日期</th>
+                            <th>查看计数</th>
                             <th>Flag</th>
-                            <th>Comment</th>
+                            <th>评论</th>
                             <th>VT</th>
                           </tr>
                         </tfoot>
@@ -83,21 +83,21 @@
                       <table class="table display table table-striped table-hover" width="100%" cellspacing="0" id="file_search_table_1" >
                         <thead>
                           <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Type</th>
-                            <th>Case</th>
-                            <th>Customer</th>
+                            <th>名称</th>
+                            <th>描述</th>
+                            <th>类型</th>
+                            <th>案例</th>
+                            <th>客户</th>
                             <th>TLP</th>
                           </tr>
                         </thead>
                         <tfoot>
                           <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Type</th>
-                            <th>Case</th>
-                            <th>Customer</th>
+                            <th>名称</th>
+                            <th>描述</th>
+                            <th>类型</th>
+                            <th>案例</th>
+                            <th>用户</th>
                             <th>TLP</th>
                           </tr>
                         </tfoot>
@@ -116,17 +116,17 @@
                         <thead>
                           <tr>
                             <th>#ID</th>
-                            <th>Comment text</th>
-                            <th>Case</th>
-                            <th>Customer</th>
+                            <th>评论文本</th>
+                            <th>案例</th>
+                            <th>客户</th>
                           </tr>
                         </thead>
                         <tfoot>
                           <tr>
                             <th>#ID</th>
-                            <th>Comment text</th>
-                            <th>Case</th>
-                            <th>Customer</th>
+                            <th>评论文本</th>
+                            <th>案例</th>
+                            <th>客户</th>
                           </tr>
                         </tfoot>
                       </table>
