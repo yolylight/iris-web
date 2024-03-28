@@ -1,6 +1,6 @@
 {% extends "layouts/default.html" %}
 
-{% block title %} Manage Templates {% endblock title %}
+{% block title %} 管理模板 {% endblock title %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="/static/assets/css/suggestags.css">
@@ -17,13 +17,13 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col">
-                            <div class="card-title">Report Templates Management</div>
+                            <div class="card-title">报告模板管理</div>
                         </div>
                         <div class="col">
                             <button type="button" class="btn btn-sm btn-dark float-right ml-2" onclick="refresh_template_table();">
-                                Refresh
+                                刷新
                             </button>
-                            <button class="btn btn-sm btn-dark float-right ml-2" onclick="add_report_template();">Add template</button>
+                            <button class="btn btn-sm btn-dark float-right ml-2" onclick="add_report_template();">添加模板</button>
                         </div>
                     </div>
                 </div>
@@ -37,26 +37,26 @@
                             cellspacing="0" id="reports_table">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Naming format</th>
-                                    <th>Date created</th>
-                                    <th>Created by</th>
-                                    <th>Language</th>
-                                    <th>Type</th>
-                                    <th>Download</th>
+                                    <th>名称</th>
+                                    <th>描述</th>
+                                    <th>命名格式</th>
+                                    <th>创建日期</th>
+                                    <th>创建人</th>
+                                    <th>语言</th>
+                                    <th>类型</th>
+                                    <th>下载</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Naming format</th>
-                                    <th>Date created</th>
-                                    <th>Created by</th>
-                                    <th>Language</th>
-                                    <th>Type</th>
-                                    <th>Download</th>
+                                    <th>名称</th>
+                                    <th>描述</th>
+                                    <th>命名格式</th>
+                                    <th>创建日期</th>
+                                    <th>创建人</th>
+                                    <th>语言</th>
+                                    <th>类型</th>
+                                    <th>下载</th>
                                 </tr>
                             </tfoot>
                         </table>
