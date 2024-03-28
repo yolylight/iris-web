@@ -2,7 +2,7 @@
     <div class="col md-12">
         <div class="row">
             <div class="col">
-                <h4 class="modal-title mt-2 mr-4">{% if contact.id %}Edit contact #{{ contact.id }}{% else %}Add contact{% endif %}</h4>
+                <h4 class="modal-title mt-2 mr-4">{% if contact.id %}修改联系人 #{{ contact.id }}{% else %}添加联系人{% endif %}</h4>
                 <small><a class="text-muted">{% if contact.contact_uuid %}#{{ contact.contact_uuid }}{% endif %}</a></small>
             </div>
             <div class="col ">
@@ -22,46 +22,46 @@
                         <form method="post" action="" id="form_new_contact" enctype="multipart/form-data">
                              {{ form.hidden_tag() }}
                             <div class="form-group  row">
-                                <label for="contact_name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Contact name *</label>
+                                <label for="contact_name" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">联系人名称 *</label>
                                 <div class="col-lg-8 col-md-9 col-sm-8">
                                     {{ form.contact_name(class='form-control',  autocomplete="off") }}
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="contact_role" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Contact Role</label>
+                                <label for="contact_role" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">联系人角色</label>
                                 <div class="col-lg-8 col-md-9 col-sm-8">
                                     {{ form.contact_role(class='form-control',  autocomplete="off", list="contact_roles_list") }}
                                 </div>
                                 <datalist id="contact_roles_list">
                                     <option value="CISO">
                                     <option value="CEO">
-                                    <option value="Manager">
-                                    <option value="Sales">
-                                    <option value="Support">
-                                    <option value="Billing">
-                                    <option value="Other">
+                                    <option value="经理">
+                                    <option value="销售">
+                                    <option value="支持">
+                                    <option value="采购">
+                                    <option value="其他">
                                 </datalist>
                             </div>
                             <div class="form-group row">
-                                <label for="email" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Contact email</label>
+                                <label for="email" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">联系人email</label>
                                 <div class="col-lg-8 col-md-9 col-sm-8">
                                     {{ form.contact_email(class='form-control',  autocomplete="off") }}
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="work_phone" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Contact work phone</label>
+                                <label for="work_phone" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">联系人工作电话</label>
                                 <div class="col-lg-8 col-md-9 col-sm-8">
                                     {{ form.contact_work_phone(class='form-control',  autocomplete="off") }}
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="mobile_phone" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Contact mobile phone</label>
+                                <label for="mobile_phone" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">联系人移动电话</label>
                                 <div class="col-lg-8 col-md-9 col-sm-8">
                                     {{ form.contact_mobile_phone(class='form-control',  autocomplete="off") }}
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="notes" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">Additional notes</label>
+                                <label for="notes" class="col-lg-3 col-md-3 col-sm-4 mt-sm-2 text-right">附加备注</label>
                                 <div class="col-lg-8 col-md-9 col-sm-8">
                                     {{ form.contact_note(class='form-control',  autocomplete="off") }}
                                 </div>
@@ -76,14 +76,14 @@
                     class="btn btn-outline-danger mt-5"
                      id="submit_delete_contact"
             >
-                Delete
+                删除
             </button>
             <button
                     type="button"
                     class="btn btn-outline-success ml-4 mt-5 float-right"
                     id="submit_new_contact"
             >
-                Update
+                更新
             </button>
 
         {% else %}
@@ -93,7 +93,7 @@
                     class="btn btn-outline-success ml-4 mt-5 float-right"
                     id="submit_new_contact"
             >
-                Save
+                保存
             </button>
 
         {% endif %}
