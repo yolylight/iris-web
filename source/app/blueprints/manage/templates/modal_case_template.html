@@ -1,8 +1,8 @@
 <div class="modal-header">
     {% if case_template.id %}
-    <h4>Edit case template {{ case_template.display_name }}</h4>
+    <h4>修改案例模板 {{ case_template.display_name }}</h4>
     {% else %}
-    <h4>Add case template</h4>
+    <h4>添加案例模板</h4>
     {% endif %}
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
@@ -15,15 +15,15 @@
                 <div class="col-6">
                     <div class="accordion accordion-primary">
                         {% if case_template.id %}
-                        <h2>{{ case_template.display_name }} template</h2>
+                        <h2>{{ case_template.display_name }} 模板</h2>
                         {% else %}
-                        <h2>New template</h2>
+                        <h2>新模板</h2>
                         {% endif %}
-                        <p>Case templates allow to prefill case objects such as tasks, tags, and notes.<br/>
-                            It can be used to add procedures defining how to react against a specific kind of incident (phishing, ransomware, APT...)</p>
+                        <p>案例模板允许预填案例对象，如任务、标签和备注.<br/>
+                            它可用于添加程序，定义如何应对特定类型的事件（网络钓鱼、勒索软件、APT...）</p>
                         <div class="alert-std alert-warning" role="alert">
-                             Case templates can be added and edited in this UI, or they can be uploaded as JSON files.<br/>
-                            <p>IRIS will attempt to validate the contents of the case template before committing.</p>
+                             案例模板可以在此用户界面中添加和编辑，也可以作为 JSON 文件上传.<br/>
+                            <p>IRIS 将尝试在提交之前验证案例模板的内容.</p>
                         </div>
 
                         <div class="card">
@@ -32,25 +32,25 @@
                                     <div class="flaticon-pencil"></div>
                                 </div>
                                 <div class="span-title">
-                                    Case Template taxonomy
+                                    案例模板分类
                                 </div>
                                 <div class="span-mode"></div>
                             </div>
                             <div id="drop_tax_case_template" class="collapse" aria-labelledby="drop_tax_case_template" style="">
                                 <div class="card-body">
-                                    <h4>Field types</h4>
-                                    The supported fields types are:
+                                    <h4>字段类型</h4>
+                                    支持的字段类型有:
                                     <ul>
-                                        <li>name: The name of the case template (required).</li>
-                                        <li>display_name: The displayed name of the case template.</li>
-                                        <li>description: The description of the case template.</li>
-                                        <li>author: The author of the case template (not related to the current user).</li>
-                                        <li>classification: The classification of the case template. Should be a lowercase name matching an existing classification in IRIS.</li>
-                                        <li>title_prefix: A prefix to add to case title.</li>
-                                        <li>summary: content to prefill the summary.</li>
-                                        <li>tags: A list of case tags.</li>
-                                        <li>tasks: A list of dictionaries defining tasks. Tasks are defined by title (required), description, and list of tags.</li>
-                                        <li>note_directories: A list of dictionaries defining note directories. Note directories are defined by title (required), and list of notes. Notes have title (required) and content</li>
+                                        <li>name: 案例模板名称（必填）.</li>
+                                        <li>display_name: 案例模板的显示名称.</li>
+                                        <li>description: 案例模板描述.</li>
+                                        <li>author: 案例模板的作者（与当前用户无关）.</li>
+                                        <li>classification: 案例模板的分类。应为小写名称，与 IRIS 现有分类相匹配.</li>
+                                        <li>title_prefix: 为案例标题添加前缀.</li>
+                                        <li>summary: 使用内容来预填摘要。</li>
+                                        <li>tags: 案例标签列表.</li>
+                                        <li>tasks: 定义任务的字典列表。任务由标题（必填）、描述和标记列表定义.</li>
+                                        <li>note_directories: 定义注释目录的词典列表。注释目录由标题（必填）和注释列表定义。注释有标题（必填）和内容</li>
                                     </ul>
                                 </div>
                             </div>
@@ -61,19 +61,19 @@
                                     <div class="flaticon-pencil"></div>
                                 </div>
                                 <div class="span-title">
-                                    Case Template Example
+                                    案例模板示例
                                 </div>
                                 <div class="span-mode"></div>
                             </div>
                             <div id="drop_case_template_example" class="collapse" aria-labelledby="drop_tax_case_template" style="">
                                 <div class="card-body">
-                                    A case template is defined as below.
+                                    案例模板的定义如下.
                                     <pre>
 
 {
     "name": "ransomware_infection",
-    "display_name": "Ransomware Infection Template",
-    "description": "This case template describes first-response tasks to handle information system compromised by a ransomware.",
+    "display_name": "勒索软件感染模板",
+    "description": "本案例模板介绍了处理受勒索软件入侵的信息系统的第一反应任务.",
     "author": "DFIR-IRIS",
     "classification": "malicious-code:ransomware",
     "title_prefix": "[RANS]",
@@ -81,38 +81,38 @@
     "tags": ["ransomware","malware"],
     "tasks": [
         {
-            "title": "Identify the perimeter",
-            "description": "The perimeter of compromise must be identified",
+            "title": "识别范围",
+            "description": "必须确定入侵范围",
             "tags": ["identify"]
         },
         {
-            "title": "Collect compromised hosts",
-            "description": "Deploy Velociraptor and start collecting evidence",
+            "title": "收集被入侵主机",
+            "description": "部署Velociraptor并开始收集证据",
             "tags": ["collect", "velociraptor"]
         },
         {
-            "title": "Containment"
+            "title": "遏制"
         }
     ],
     "note_directories": [
         {
-            "title": "Identify",
+            "title": "识别",
             "notes": [
                 {
-                    "title": "Identify the compromised accounts",
-                    "content": "# Observations\n\n"
+                    "title": "识别被入侵的账户",
+                    "content": "# 观察\n\n"
                 }
             ]
         },
         {
-            "title": "Collect",
+            "title": "收集",
             "notes": [
                 {
-                    "title": "Velociraptor deployment"
+                    "title": "Velociraptor部署"
                 },
                 {
-                    "title": "Assets collected",
-                    "content": "# Assets collected\n\n# Assets not collected"
+                    "title": "资产已收集",
+                    "content": "# 资产已收集\n\n# 资产未收集"
                 }
             ]
         }
@@ -129,8 +129,8 @@
                     {{ form.hidden_tag() }}
                     <div class="form-group">
                         <div class="row">
-                            <label for="editor_detail" class="mr-4">Case template definition
-                            </label><button type="button" class="btn btn-sm ml-auto" onclick="downloadCaseTemplateDefinition();">Download definition</button>
+                            <label for="editor_detail" class="mr-4">案例模板定义
+                            </label><button type="button" class="btn btn-sm ml-auto" onclick="downloadCaseTemplateDefinition();">下载定义</button>
                         </div>
                         <div id="editor_detail">{{ form.case_template_json.data|tojsonsafe }}</div>
                     </div>
@@ -140,7 +140,7 @@
     </div>
     <div class="alert alert-warning" style="display:none;" role="alert" id="alert_case_template_details">
         <span id="alert_case_template_edit"></span><br/>
-        <b>Logs:</b>
+        <b>日志:</b>
         <ul id="case_template_err_details_list">
         </ul>
     </div>
@@ -152,14 +152,14 @@
             class="btn btn-outline-danger mr-auto"
              id="submit_delete_case_template"
     >
-        Delete
+        删除
     </button>
     <button
             type="button"
             class="btn btn-outline-success ml-4 float-right"
             id="submit_new_case_template"
     >
-        Update
+        更新
     </button>
 
     {% else %}
@@ -169,7 +169,7 @@
             class="btn btn-outline-success ml-4 float-right"
             id="submit_new_case_template"
     >
-        Save
+        保存
     </button>
 
     {% endif %}
