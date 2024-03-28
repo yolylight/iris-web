@@ -2,7 +2,7 @@
     <div class="col md-12">
         <div class="row">
             <div class="col">
-                <h4 class="modal-title mt-1 mr-4">{% if customer.client_id %}Edit customer #{{ customer.client_id }}{% else %}Add customer{% endif %}</h4>
+                <h4 class="modal-title mt-1 mr-4">{% if customer.client_id %}修改客户 #{{ customer.client_id }}{% else %}添加客户{% endif %}</h4>
                 <small><a class="text-muted">{% if customer.client_uuid %}#{{ customer.client_uuid }}{% endif %}</a></small>
             </div>
             {% include 'modals/modal_attributes_nav.html' %}
@@ -24,15 +24,15 @@
                             <div class="col-md-12 col-lg-12 col-sm-12">
                                 {{ form.hidden_tag() }}
                                 <div class="form-group">
-                                    <label for="customer" class="mr-4">Name *</label>
+                                    <label for="customer" class="mr-4">名称 *</label>
                                     {{ form.customer_name(class='form-control',  autocomplete="off") }}
                                 </div>
                                 <div class="form-group">
-                                    <label for="description" class="mr-4">Description</label>
+                                    <label for="description" class="mr-4">描述</label>
                                     {{ form.customer_description(class='form-control',  autocomplete="off") }}
                                 </div>
                                 <div class="form-group">
-                                    <label for="sla" class="mr-4">SLAs</label>
+                                    <label for="sla" class="mr-4">SLA</label>
                                     {{ form.customer_sla(class='form-control',  autocomplete="off") }}
                                 </div>
                             </div>
@@ -47,14 +47,14 @@
                     class="btn btn-outline-danger mt-5"
                     onclick="delete_customer('{{ customer.client_id }}');"
             >
-                Delete
+                删除
             </button>
             <button
                     type="button"
                     class="btn btn-outline-success ml-4 mt-5 float-right"
                     id="submit_new_customer"
             >
-                Update
+                更新
             </button>
 
         {% else %}
@@ -64,7 +64,7 @@
                     class="btn btn-outline-success ml-4 mt-5 float-right"
                     id="submit_new_customer"
             >
-                Save
+                保存
             </button>
 
         {% endif %}
