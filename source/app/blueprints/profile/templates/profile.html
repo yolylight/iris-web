@@ -1,6 +1,6 @@
 {% extends "layouts/default.html" %}
 
-{% block title %} Dashboard {% endblock title %}
+{% block title %} 仪表盘 {% endblock title %}
 
 {% block stylesheets %}
 
@@ -24,7 +24,7 @@
                 <div class="card-body">
                     <div class="user-profile text-center">
                         <div class="name">{{ current_user.name }}</div>
-                        <div class="desc">Forensicator</div>
+                        <div class="desc">取证员</div>
                     </div>
                 </div>
                 <div class="card-footer">
@@ -34,7 +34,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="icon-token"></i>
-                                        Name
+                                        名称
                                     </span>
                                 </div>
                                 <input class="form-control" value="{{ current_user.name }}" readonly>
@@ -45,7 +45,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="icon-token"></i>
-                                        Username
+                                        用户名
                                     </span>
                                 </div>
                                 <input class="form-control disable" value="{{ current_user.user }}" readonly>
@@ -99,7 +99,7 @@
                                 </div>
                                 <input class="form-control disable" value="{{ current_user.api_key }}" readonly>
                                 <div class="input-group-append">
-                                    <button class="btn btn-sm btn-dark" type="button" onclick="renew_api()">Renew</button>
+                                    <button class="btn btn-sm btn-dark" type="button" onclick="renew_api()">续期</button>
                                 </div>
                             </div>
                         </div>
@@ -108,7 +108,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <label class="form-label d-block">IRIS Theme</label>
+                                <label class="form-label d-block">IRIS 主体</label>
                                 <div class="selectgroup selectgroup-primary selectgroup-pills">
                                     <label class="selectgroup-item" title="Light mode">
                                         <input type="radio" name="iris-theme" value="false" class="selectgroup-input" {% if not current_user.in_dark_mode %}checked{% endif %}>
@@ -123,13 +123,13 @@
                         </div>
                         <div class="col">
                             <div class="form-group">
-                                <label class="form-label d-block">Prompt a confirmation box before deleting objects</label>
+                                <label class="form-label d-block">删除对象前提示确认框</label>
                                 <div class="selectgroup selectgroup-primary selectgroup-pills">
-                                    <label class="selectgroup-item" title="Do not prompt a confirmation popup and delete objects directly">
+                                    <label class="selectgroup-item" title="不弹出确认提示，直接删除对象">
                                         <input type="radio" name="user-has-deletion-prompt" value="false" class="selectgroup-input" {% if not current_user.has_deletion_confirmation %}checked{% endif %}>
                                         <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-comment-slash"></i></span>
                                     </label>
-                                    <label class="selectgroup-item" title="Prompt a confirmation popup before deleting objects">
+                                    <label class="selectgroup-item" title="删除对象前弹出确认提示">
                                         <input type="radio" name="user-has-deletion-prompt" value="true" class="selectgroup-input" {% if current_user.has_deletion_confirmation %}checked{% endif %}>
                                         <span class="selectgroup-button selectgroup-button-icon"><i class="fa fa-comment"></i></span>
                                     </label>
@@ -139,10 +139,10 @@
                     </div>
                     <div class="row">
                         <div class="col-6 float-left mt-4">
-                            <button class="btn btn-dark" type="button" onclick="refresh_user_permissions();" id="user_refresh_perms_btn">Refresh access</button>
+                            <button class="btn btn-dark" type="button" onclick="refresh_user_permissions();" id="user_refresh_perms_btn">刷新访问</button>
                         </div>
                         <div class="col-6 float-right mt-4">
-                                <button class="btn btn-primary float-right" type="button" onclick="update_password();">Change password</button>
+                                <button class="btn btn-primary float-right" type="button" onclick="update_password();">修改密码</button>
                         </div>
                     </div>
                 </div>
