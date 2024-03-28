@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4>Evidence Type</h4>
+    <h4>证据类型</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
 </div>
@@ -10,25 +10,25 @@
             <div class="col-md-12 col-lg-12 col-sm-12">
                 {{ form.hidden_tag() }}
                 <div class="form-group">
-                    <label for="name" class="mr-4">Name
+                    <label for="name" class="mr-4">名称
                     </label>
                     {{ form.name(class='form-control',  autocomplete="off") }}
                 </div>
                 <div class="form-group mt-3">
-                    <label for="description" class="placeholder">Description</label>
+                    <label for="description" class="placeholder">描述</label>
                     {{ form.description(class='form-control',  autocomplete="off") }}
                 </div>
 
             {% if evidence_type.id %}
                 <button type="button" class="btn btn-outline-danger mt-5"
-                onclick="delete_evidence_type('{{ evidence_type.id }}');">Delete</button>
+                onclick="delete_evidence_type('{{ evidence_type.id }}');">删除</button>
                 <button type="button" class="btn btn-outline-success ml-4 mt-5 float-right"
-                id="submit_new_evidence_type">Update</button>
+                id="submit_new_evidence_type">更新</button>
 
             {% else %}
 
                 <button type="button" class="btn btn-outline-success ml-4 mt-5 float-right"
-                id="submit_new_evidence_type">Save</button>
+                id="submit_new_evidence_type">保存</button>
 
             {% endif %}
             </div>
