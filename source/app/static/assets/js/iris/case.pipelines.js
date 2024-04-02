@@ -27,7 +27,7 @@ var dropUpdate = new Dropzone("div#files_drop_1", {
     timeout: 0,
     complete: function () {
         if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0 && this.getErroredFiles().length === 0) {
-            $('#submit_update_case').text('Notifying for new import')
+            $('#submit_update_case').text('通知新的导入')
             send_update_case_data();
         }
     },
@@ -70,17 +70,17 @@ function send_update_case_data() {
     .done((data) => {
         if (notify_auto_api(data, true)) {
             $('#submit_update_case').text('Saved');
-            swal("That's done !",
-                "Files are being processed in background.\nYou can follow the progress in DIM Tasks",
+            swal("已完成 !",
+                "文件正在后台处理。.\n您可以在 DIM 任务中跟踪进度",
                 "success",
                 {
                     buttons: {
                         again: {
-                            text: "Import files again",
+                            text: "再次导入文件",
                             value: "again"
                         },
                         dash: {
-                            text: "Go to dashboard",
+                            text: "转到仪表盘",
                             value: "dash",
                         }
                     }
@@ -101,7 +101,7 @@ function send_update_case_data() {
                 }
             });
         } else {
-            $('#submit_update_case').text('Save');
+            $('#submit_update_case').text('保存');
             mdata = ""
             for (element in data.data) {
                 mdata += data.data[element]
@@ -118,11 +118,11 @@ function send_update_case_data() {
                 },
                 time: 5000,
             });
-            swal("Oh no !", data.message, "error")
+            swal("Oh no !", data.message, "错误")
         }
     })
     .fail(() => {
-        $('#submit_new_case_btn').text('Save');
+        $('#submit_new_case_btn').text('保存');
     })
     .always(() => {
         $('#submit_update_case')
@@ -139,7 +139,7 @@ function submit_update_casefn() {
     for (var elm=0; elm < $(dse).length; elm++) {
         if($(dse[elm]).find('input').attr('required')) {
             if ( ! $(dse[elm]).find('input').val() ) {
-                notify_error("Required fields are not set");
+                notify_error("必填字段未填写");
                 return false;
             }
         }
