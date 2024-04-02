@@ -268,7 +268,7 @@ $(document).ready(function() {
                         a_anchor.attr('href', '/case?cid='+ row['case_id']);
                         a_anchor.attr('target', '_blank');
                         a_anchor.attr('rel', 'noopener');
-                        a_anchor.title="Go to case";
+                        a_anchor.title="转到案例";
                         a_anchor.text(data);
                     return a_anchor[0].outerHTML;
                   }
@@ -352,7 +352,7 @@ $(document).ready(function() {
                     a_anchor.attr('href', `case/tasks?cid=${row['case_id']}&shared=${row['task_id']}`);
                     a_anchor.attr('target', '_blank');
                     a_anchor.attr('rel', 'noopener');
-                    a_anchor.title="Go to task";
+                    a_anchor.title="转到任务";
 
                 if (isWhiteSpace(data)) {
                     data = '#' + row['task_id'];
@@ -389,7 +389,7 @@ $(document).ready(function() {
                     let a_anchor = $('<a>');
                     a_anchor.attr('href', '/case?cid='+ row['case_id']);
                     a_anchor.text(data);
-                    a_anchor.title="Go to case";
+                    a_anchor.title="转到案例";
                     return a_anchor[0].outerHTML;
                 }
                 return data;
@@ -449,7 +449,7 @@ $(document).ready(function() {
                   let a_anchor = $('<a>');
                   a_anchor.attr('onclick', `edit_gtask(${row['task_id']});return false;`);
                   a_anchor.attr('href', 'javascript:void(0);');
-                  a_anchor.title="Edit task";
+                  a_anchor.title="编辑任务";
 
                 if (isWhiteSpace(data)) {
                     data = '#' + row['task_id'];
