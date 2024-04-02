@@ -112,9 +112,9 @@ function toggleSelectDeselect(toggleButton, listSelector) {
     });
 
     if (allChecked) {
-        toggleButton.text("Select All");
+        toggleButton.text("选择所有");
     } else {
-        toggleButton.text("Deselect All");
+        toggleButton.text("取消全选");
     }
 }
 
@@ -144,7 +144,7 @@ function mergeMultipleAlertsModal() {
     const selectedAlerts = getBatchAlerts();
     const escalateButton = $("#escalateOrMergeButton");
     if (selectedAlerts.length === 0) {
-        notify_error('Please select at least one alert to perform this action on.');
+        notify_error('请选择至少一个警报，对其执行此操作.');
         return;
     }
     fetchMultipleAlerts(selectedAlerts)
@@ -154,11 +154,11 @@ function mergeMultipleAlertsModal() {
                     const assetsList = $("#assetsList");
 
                     // Configure the modal for both escalation and merging
-                    $('#escalateModalLabel').text('Merge multiple alerts in a new case');
-                    $('#escalateModalExplanation').text('These alerts will be merged into a new case. Set the case title and select the IOCs and Assets to escalate into the case.');
+                    $('#escalateModalLabel').text('在新案例中合并多个警报');
+                    $('#escalateModalExplanation').text('这些警报将合并为一个新案例。设置案例标题并选择要升级到案件中的 IOC 和资产.');
                     $('#modalAlertTitleContainer').hide();
 
-                    $('#modalEscalateCaseTitle').val(`[ALERT] Escalation of ${selectedAlerts.length} alerts`);
+                    $('#modalEscalateCaseTitle').val(`[ALERT] 升级 ${selectedAlerts.length} 警报`);
                     $('#modalEscalateCaseTitleContainer').show();
 
                     escalateButton.attr("data-merge", false);
@@ -183,7 +183,7 @@ function mergeMultipleAlertsModal() {
                         clearOnEmpty: false,
                         emptyRequest: true,
                         locale: {
-                            emptyTitle: 'Select and Begin Typing',
+                            emptyTitle: '选择并开始输入',
                             statusInitialized: '',
                         },
                         preprocessData: function (data) {
@@ -203,7 +203,7 @@ function mergeMultipleAlertsModal() {
                                         dataTemplate = dataTemplate.data;
                                         const templateSelect = $('#mergeAlertCaseTemplateSelect');
                                         templateSelect.html('');
-                                        templateSelect.append('<option value="">Select a template</option>');
+                                        templateSelect.append('<option value="">选择一个模板</option>');
                                         for (let i = 0; i < dataTemplate.length; i++) {
                                             templateSelect.append(`<option value="${dataTemplate[i].id}">${filterXSS(dataTemplate[i].display_name)}</option>`);
                                         }
@@ -221,7 +221,7 @@ function mergeMultipleAlertsModal() {
                                                 appendLabels(ioCsList, alertData.iocs, 'ioc');
                                             }
                                             if (alertData.assets.length !== 0) {
-                                                appendLabels(assetsList, alertData.assets, 'asset');
+                                                appendLabels(assetsList, alertData.assets, '资产');
                                             }
                                         }
 
@@ -236,8 +236,8 @@ function mergeMultipleAlertsModal() {
 
                                         $("input[type='radio'][name='mergeOption']").off('change').on("change", function () {
                                             if ($(this).val() === "existing_case") {
-                                                $('#escalateModalLabel').text(`Merge ${selectedAlerts.length} alerts in an existing case`);
-                                                $('#escalateModalExplanation').text('These alerts will be merged into the selected case. Select the IOCs and Assets to merge into the case.');
+                                                $('#escalateModalLabel').text(`合并 ${selectedAlerts.length} 警报到已有案例`);
+                                                $('#escalateModalExplanation').text('这些警报将合并到所选案例中。选择要合并到案例中的 IOC 和资产.');
                                                 $('#mergeAlertCaseSelectSection').show();
                                                 $('#mergeAlertCaseTemplateSection').hide();
                                                 $('#modalEscalateCaseTitleContainer').hide();
@@ -246,8 +246,8 @@ function mergeMultipleAlertsModal() {
                                                 escalateButton.data("merge", true);
                                             } else {
                                                 console.log('change')
-                                                $('#escalateModalLabel').text(`Merge ${selectedAlerts.length} alerts in new case`);
-                                                $('#escalateModalExplanation').text('This alert will be merged into a new case. Set the case title and select the IOCs and Assets to merge into the case.');
+                                                $('#escalateModalLabel').text(`合并 ${selectedAlerts.length} 警报到新案例`);
+                                                $('#escalateModalExplanation').text('该警报将被合并到一个新案例中。设置案例标题并选择要合并到案例中的 IOC 和资产.');
                                                 $('#mergeAlertCaseSelectSection').hide();
                                                 $('#mergeAlertCaseTemplateSection').show();
                                                 $('#modalEscalateCaseTitleContainer').show();
@@ -287,10 +287,10 @@ function mergeAlertModal(alert_id) {
             $("#modalAlertTitle").val(alert_title);
 
             // Configure the modal for both escalation and merging
-            $('#escalateModalLabel').html(`Merge alert #${alert_id} in a new case`);
+            $('#escalateModalLabel').html(`合并 #${alert_id} 到新案例`);
             $('#escalateModalLabel')[0].offsetHeight;
 
-            $('#escalateModalExplanation').text('This alert will be escalated into a new case. Set a title and select the IOCs and Assets to escalate into the case.');
+            $('#escalateModalExplanation').text('该警报将升级为新案例。设置标题并选择要升级为案例的 IOC 和资产.');
 
             $('#modalEscalateCaseTitle').val(`[ALERT] ${alert_title}`);
             $('#modalEscalateCaseTitleContainer').show();
@@ -317,7 +317,7 @@ function mergeAlertModal(alert_id) {
                 clearOnEmpty: false,
                 emptyRequest: true,
                 locale: {
-                    emptyTitle: 'Select and Begin Typing',
+                    emptyTitle: '选择并开始输入',
                     statusInitialized: '',
                 },
                 preprocessData: function (data) {
@@ -338,7 +338,7 @@ function mergeAlertModal(alert_id) {
                             data = data.data;
                             const templateSelect = $('#mergeAlertCaseTemplateSelect');
                             templateSelect.html('');
-                            templateSelect.append('<option value="">Select a template</option>');
+                            templateSelect.append('<option value="">选择一个模板</option>');
                             for (let i = 0; i < data.length; i++) {
                                 templateSelect.append(`<option value="${data[i].id}">${filterXSS(data[i].display_name)}</option>`);
                             }
@@ -379,8 +379,8 @@ function mergeAlertModal(alert_id) {
 
                             $("input[type='radio'][name='mergeOption']").off("change").on("change", function () {
                                 if ($(this).val() === "existing_case") {
-                                    $('#escalateModalLabel').text(`Merge alert #${alert_id} in existing case`);
-                                    $('#escalateModalExplanation').text('This alert will be merged into the selected case. Select the IOCs and Assets to merge into the case.');
+                                    $('#escalateModalLabel').text(`合并警报 #${alert_id}到已有案例`);
+                                    $('#escalateModalExplanation').text('该警报将并入所选案例。选择要并入案例的 IOC 和资产.');
                                     $('#mergeAlertCaseSelectSection').show();
                                     $('#mergeAlertCaseTemplateSection').hide();
                                     $('#modalEscalateCaseTitleContainer').hide();
@@ -388,8 +388,8 @@ function mergeAlertModal(alert_id) {
                                     $('#mergeAlertCaseSelect').selectpicker('val', get_caseid());
                                     escalateButton.data("merge", true);
                                 } else {
-                                    $('#escalateModalLabel').text(`Merge alert #${alert_id} in new case`);
-                                    $('#escalateModalExplanation').text('This alert will be merged into a new case. Set the case title and select the IOCs and Assets to merge into the case.');
+                                    $('#escalateModalLabel').text(`合并警报 #${alert_id} 到新案例`);
+                                    $('#escalateModalExplanation').text('该警报将被合并到一个新案例中。设置案件标题并选择要合并到案例中的 IOC 和资产.');
                                     $('#mergeAlertCaseSelectSection').hide();
                                     $('#mergeAlertCaseTemplateSection').show();
                                     $('#modalEscalateCaseTitleContainer').show();
