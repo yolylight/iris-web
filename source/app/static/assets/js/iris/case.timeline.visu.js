@@ -15,7 +15,7 @@ function visualizeTimeline(group) {
               groups_l = []
               if (data.data.events.length == 0) {
                     $('#card_main_load').show();
-                    $('#visualization').text('No events in summary');
+                    $('#visualization').text('汇总中无事件');
                     hide_loader();
                     return true;
               }
