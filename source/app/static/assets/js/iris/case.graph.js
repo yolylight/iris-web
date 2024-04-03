@@ -6,7 +6,7 @@ function get_case_graph() {
                 redrawAll(data.data);
                 hide_loader();
             } else {
-                $('#submit_new_asset').text('Save again');
+                $('#submit_new_asset').text('再次保存');
                 swal("Oh no !", data.message, "error")
             }
         })
@@ -17,7 +17,7 @@ var network;
 function redrawAll(data) {
   if (data.nodes.length == 0) {
         $('#card_main_load').show();
-        $('#graph-container').text('No events in graph');
+        $('#graph-container').text('图中无事件');
         hide_loader();
         return true;
   }
