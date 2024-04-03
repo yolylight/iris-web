@@ -34,7 +34,7 @@ function Collaborator( session_id ) {
     }.bind() ) ;
 
     this.collaboration_socket.on( "save", function(data) {
-        $("#content_last_saved_by").text("Last saved by " + data.last_saved);
+        $("#content_last_saved_by").text("最后保存 " + data.last_saved);
          sync_editor(true);
     }.bind() ) ;
 }
@@ -89,7 +89,7 @@ function handle_ed_paste(event) {
         if (blob !== null) {
             const reader = new FileReader();
             reader.onload = (e) => {
-                notify_success('The file is uploading in background. Don\'t leave the page');
+                notify_success('文件正在后台上传,不要离开页面');
 
                 if (filename === null) {
                     filename = random_filename(25);
@@ -104,7 +104,7 @@ function handle_ed_paste(event) {
             };
             reader.readAsDataURL(blob);
         } else {
-            notify_error('Unsupported direct paste of this item. Use datastore to upload.');
+            notify_error('不支持直接粘贴此项目,使用数据存储上传.');
         }
       }
     }
@@ -139,13 +139,13 @@ function edit_case_summary() {
     if ($('#container_editor_summary').is(':visible')) {
         $('#ctrd_casesum').removeClass('col-md-12').addClass('col-md-6');
         $('#summary_edition_btn').show(100);
-        $("#sum_refresh_btn").html('Save');
-        $("#sum_edit_btn").html('Close editor');
+        $("#sum_refresh_btn").html('保存');
+        $("#sum_edit_btn").html('关闭编辑器');
     } else {
         $('#ctrd_casesum').removeClass('col-md-6').addClass('col-md-12');
         $('#summary_edition_btn').hide();
-        $("#sum_refresh_btn").html('Refresh');
-        $("#sum_edit_btn").html('Edit');
+        $("#sum_refresh_btn").html('刷新');
+        $("#sum_edit_btn").html('编辑');
     }
 }
 
@@ -168,7 +168,7 @@ function sync_editor(no_check) {
 
                 // Set the CRC in page
                 $('#fetched_crc').val(data.data.crc32.toString());
-                $('#last_saved').text('Changes saved').removeClass('badge-danger').addClass('badge-success');
+                $('#last_saved').text('修改已保存').removeClass('badge-danger').addClass('badge-success');
                 $('#content_last_sync').text("Last synced: " + new Date().toLocaleTimeString());
             }
             else {
@@ -185,13 +185,13 @@ function sync_editor(no_check) {
                         // No local change, we can sync and update local CRC
                         editor.getSession().setValue(data.data.case_description);
                         $('#fetched_crc').val(data.data.crc32);
-                        $('#last_saved').text('Changes saved').removeClass('badge-danger').addClass('badge-success');
-                        $('#content_last_sync').text("Last synced: " + new Date().toLocaleTimeString());
+                        $('#last_saved').text('修改已保存').removeClass('badge-danger').addClass('badge-success');
+                        $('#content_last_sync').text("最后同步: " + new Date().toLocaleTimeString());
                     } else {
                         // We have a conflict
                         $('#last_saved').text('Conflict !').addClass('badge-danger').removeClass('badge-success');
                         swal ( "Oh no !" ,
-                        "We have a conflict with the remote content.\nSomeone may just have changed the description at the same time.\nThe local content will be copied into clipboard and content will be updated with remote." ,
+                        "我们与远程内容有冲突.可能有人同时更改了描述.\n本地内容将被复制到剪贴板\n远程内容将被更新。." ,
                         "error"
                         ).then((value) => {
                             // Old fashion trick
@@ -200,8 +200,8 @@ function sync_editor(no_check) {
                             document.execCommand('copy');
                             editor.getSession().setValue(data.data.desc);
                             $('#fetched_crc').val(data.data.crc32);
-                            notify_success('Content updated with remote. Local changes copied to clipboard.');
-                            $('#content_last_sync').text("Last synced: " + new Date().toLocaleTimeString());
+                            notify_success('内容已远程更新.本地更改已复制到剪贴板.');
+                            $('#content_last_sync').text("最后同步: " + new Date().toLocaleTimeString());
                         });
                     }
                 } else {
@@ -224,21 +224,21 @@ function sync_editor(no_check) {
                             success: function (data) {
                                 if (data.status == 'success') {
                                     collaborator.save();
-                                    $('#content_last_sync').text("Last synced: " + new Date().toLocaleTimeString());
+                                    $('#content_last_sync').text("最后同步: " + new Date().toLocaleTimeString());
                                     $('#fetched_crc').val(data.data);
-                                    $('#last_saved').text('Changes saved').removeClass('badge-danger').addClass('badge-success');
+                                    $('#last_saved').text('变更已保存').removeClass('badge-danger').addClass('badge-success');
                                 } else {
-                                    notify_error("Unable to save content to remote server");
-                                    $('#last_saved').text('Error saving !').addClass('badge-danger').removeClass('badge-success');
+                                    notify_error("无法将内容保存到远程服务器");
+                                    $('#last_saved').text('保存错误 !').addClass('badge-danger').removeClass('badge-success');
                                 }
                             },
                             error: function(error) {
                                 notify_error(error.responseJSON.message);
-                                ('#last_saved').text('Error saving !').addClass('badge-danger').removeClass('badge-success');
+                                ('#last_saved').text('保存错误 !').addClass('badge-danger').removeClass('badge-success');
                             }
                         });
                     }
-                    $('#content_last_sync').text("Last synced: " + new Date().toLocaleTimeString());
+                    $('#content_last_sync').text("最后同步: " + new Date().toLocaleTimeString());
                     $('#last_saved').text('Changes saved').removeClass('badge-danger').addClass('badge-success');
                 }
             }
@@ -397,7 +397,7 @@ $(document).ready(function() {
     //var textarea = $('#case_summary');
     editor.getSession().on("change", function () {
         //textarea.val(do_md_filter_xss(editor.getSession().getValue()));
-        $('#last_saved').text('Changes not saved').addClass('badge-danger').removeClass('badge-success');
+        $('#last_saved').text('变更未保存').addClass('badge-danger').removeClass('badge-success');
         let target = document.getElementById('targetDiv');
         let converter = get_showdown_convert();
         let html = converter.makeHtml(do_md_filter_xss(editor.getSession().getValue()));
@@ -419,7 +419,7 @@ $(document).ready(function() {
             $(".btn-start-review").hide();
             $(".btn-confirm-review").show();
             $(".btn-cancel-review").show();
-            $('#reviewSubtitle').text('You started this review. Press "Confirm review" when you are done.');
+            $('#reviewSubtitle').text('您开始了这次审核。完成后按 "确认审核"');
         } else if (current_review_state === 'Review completed') {
             $(".btn-start-review").hide();
             $(".btn-confirm-review").hide();
@@ -464,8 +464,8 @@ $(document).ready(function() {
 
         if (reviewer_id !== "None") {
             swal({
-                title: "Request review",
-                text: "Request a case review from " + reviewer_name + "?",
+                title: "请求审查",
+                text: "请求由" + reviewer_name + "进行案例审查?",
                 icon: "info",
                 buttons: true,
                 dangerMode: false,
