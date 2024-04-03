@@ -76,7 +76,7 @@ function add_assets() {
                 data['custom_attributes'] = attributes;
 
                 post_request_api('assets/add', JSON.stringify(data), true, function () {
-                    $('#submit_new_assets').text('Saving data..')
+                    $('#submit_new_assets').text('保存数据..')
                         .attr("disabled", true)
                         .removeClass('bt-outline-success')
                         .addClass('btn-success', 'text-dark');
@@ -86,10 +86,10 @@ function add_assets() {
                             reload_assets();
                             if (index == (assets_list.length - 1)) {
                                 $('#modal_add_asset').modal('hide');
-                                notify_success("Assets created");
+                                notify_success("资产已创建");
                             }
                         } else {
-                            $('#submit_new_assets').text('Save again');
+                            $('#submit_new_assets').text('再次保存');
                             swal("Oh no !", data.message, "error")
                         }
                     })
@@ -100,7 +100,7 @@ function add_assets() {
                             .removeClass('btn-success', 'text-dark');
                     })
                     .fail(function (error) {
-                        $('#submit_new_assets').text('Save');
+                        $('#submit_new_assets').text('保存');
                         propagate_form_api_errors(error.responseJSON.data);
                     })
             }
@@ -126,7 +126,7 @@ function get_case_assets() {
             if (response.data != null) {
                 jsdata = response.data;
                 if (jsdata.assets.length > 299) {
-                    set_page_warning("Backref disabled due to too many assets in the case");
+                    set_page_warning("由于案例中资产过多,Backref 失效");
                 } else {
                     set_page_warning("");
                 }
@@ -159,7 +159,7 @@ function get_case_assets() {
 
 /* Delete an asset */
 function delete_asset(asset_id) {
-    do_deletion_prompt("You are about to delete asset #" + asset_id)
+    do_deletion_prompt("您即将删除资产 #" + asset_id)
     .then((doDelete) => {
         if (doDelete) {
             post_request_api('assets/delete/' + asset_id)
@@ -167,7 +167,7 @@ function delete_asset(asset_id) {
                 if (data.status == 'success') {
                     reload_assets();
                     $('#modal_add_asset').modal('hide');
-                    notify_success('Asset deleted');
+                    notify_success('资产已删除');
                 } else {
                     swal("Oh no !", data.message, "error")
                 }
@@ -288,9 +288,9 @@ function update_asset(do_close){
             if (do_close) {
                 $('#modal_add_asset').modal('hide');
             }
-            notify_success('Asset updated');
+            notify_success('资产已更新');
         } else {
-            $('#submit_new_asset').text('Save again');
+            $('#submit_new_asset').text('再次保存');
             swal("Oh no !", data.message, "error")
         }
     })
@@ -318,10 +318,10 @@ function upload_assets() {
             if (jsdata.status == "success") {
                 reload_assets();
                 $('#modal_upload_assets').modal('hide');
-                swal("Got news for you", data.message, "success");
+                swal("新消息", data.message, "success");
 
             } else {
-                swal("Got bad news for you", data.message, "error");
+                swal("坏消息", data.message, "error");
             }
         })
 
@@ -380,18 +380,18 @@ $(document).ready(function(){
                         for (let idx in row.link) {
                             if (row.link[idx]['asset_compromise_status_id'] === 1) {
                                 has_compro = true;
-                                datacontent += `<b><a target='_blank' rel='noopener' href='/case/assets?cid=${row.link[idx]['case_id']}&shared=${row.link[idx]['asset_id']}'>Observed <sup><i class='fa-solid fa-arrow-up-right-from-square ml-1 mr-1 text-muted'></i></sup></a></b> as <b class='text-danger'>compromised</b><br/> on <b><a href='/case?cid=${row.link[idx]['case_id']}'>case #${row.link[idx]['case_id']} <sup><i class='fa-solid fa-arrow-up-right-from-square ml-1 mr-1 text-muted'></i></sup></a></a></b> (${row.link[idx]['case_open_date'].replace('00:00:00 GMT', '')}) for the same customer.<br/><br/>`;
+                                datacontent += `<b><a target='_blank' rel='noopener' href='/case/assets?cid=${row.link[idx]['case_id']}&shared=${row.link[idx]['asset_id']}'>观察到 <sup><i class='fa-solid fa-arrow-up-right-from-square ml-1 mr-1 text-muted'></i></sup></a></b> 已被 <b class='text-danger'>入侵</b><br/> on <b><a href='/case?cid=${row.link[idx]['case_id']}'>case #${row.link[idx]['case_id']} <sup><i class='fa-solid fa-arrow-up-right-from-square ml-1 mr-1 text-muted'></i></sup></a></a></b> (${row.link[idx]['case_open_date'].replace('00:00:00 GMT', '')}) 为同一客户.<br/><br/>`;
                             } else {
 
-                                datacontent += `<b><a target='_blank' rel='noopener' href='/case/assets?cid=${row.link[idx]['case_id']}&shared=${row.link[idx]['asset_id']}'>Observed <sup><i class='fa-solid fa-arrow-up-right-from-square ml-1 mr-1 text-muted'></i></sup></a></b> as <b class='text-success'>not compromised</b><br/> on <b><a href='/case?cid=${row.link[idx]['case_id']}'>case #${row.link[idx]['case_id']} <sup><i class='fa-solid fa-arrow-up-right-from-square ml-1 mr-1 text-muted'></i></sup></a></a></b> (${row.link[idx]['case_open_date'].replace('00:00:00 GMT', '')}) for the same customer.<br/><br/>`;
+                                datacontent += `<b><a target='_blank' rel='noopener' href='/case/assets?cid=${row.link[idx]['case_id']}&shared=${row.link[idx]['asset_id']}'>观察到 <sup><i class='fa-solid fa-arrow-up-right-from-square ml-1 mr-1 text-muted'></i></sup></a></b> 未被 <b class='text-success'>入侵</b><br/> on <b><a href='/case?cid=${row.link[idx]['case_id']}'>case #${row.link[idx]['case_id']} <sup><i class='fa-solid fa-arrow-up-right-from-square ml-1 mr-1 text-muted'></i></sup></a></a></b> (${row.link[idx]['case_open_date'].replace('00:00:00 GMT', '')}) 为同一客户.<br/><br/>`;
                             }
                         }
                         if (has_compro) {
                            compro += `<a tabindex="0" class="fas fa-meteor ml-2 text-danger" style="cursor: pointer;" data-html="true"
-                                data-toggle="popover" data-trigger="focus" title="Observed in previous case" `;
+                                data-toggle="popover" data-trigger="focus" title="在前一个案例中观察到" `;
                         } else {
                             compro += `<a tabindex="0" class="fas fa-info-circle ml-2 text-success" style="cursor: pointer;" data-html="true"
-                            data-toggle="popover" data-trigger="focus" title="Observed in previous case" `;
+                            data-toggle="popover" data-trigger="focus" title="在前一个案例中观察到" `;
                         }
 
                         compro += datacontent;
@@ -444,9 +444,9 @@ $(document).ready(function(){
           { "data": "asset_compromise_status_id",
            "render": function(data, type, row) {
                 if (data == 0) { ret = '<span class="badge badge-muted">TBD</span>';}
-                else if (data == 1) { ret = '<span class="badge badge-danger">Yes</span>';}
-                else if (data == 2) { ret = '<span class="badge badge-success">No</span>';}
-                else { ret = '<span class="badge badge-warning">Unknown</span>';}
+                else if (data == 1) { ret = '<span class="badge badge-danger">是</span>';}
+                else if (data == 2) { ret = '<span class="badge badge-success">否</span>';}
+                else { ret = '<span class="badge badge-warning">未知</span>';}
                 return ret;
             }
           },
