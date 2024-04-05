@@ -43,12 +43,12 @@ function preview_comment() {
         let comment_html = do_md_filter_xss(html);
         $('#target_comment_content').html(comment_html);
         $('#container_comment_preview').show();
-        $('#comment_preview_button').html('<i class="fa-solid fa-eye-slash"></i> Edit');
+        $('#comment_preview_button').html('<i class="fa-solid fa-eye-slash"></i> 修改');
         $('#container_comment_content').hide();
     }
     else {
         $('#container_comment_preview').hide();
-        $('#comment_preview_button').html('<i class="fa-solid fa-eye"></i> Preview');
+        $('#comment_preview_button').html('<i class="fa-solid fa-eye"></i> 预览');
         $('#container_comment_content').show();
     }
 }
@@ -209,8 +209,8 @@ function load_comments(element_id, element_type, comment_id, do_notification, is
                 current_user = $('#current_username').text();
 
                 if (current_user === data['data'][i].user.user_login) {
-                    can_edit = '<a href="#" class="btn btn-sm comment-edition-hidden" title="Edit comment" onclick="edit_comment(\'' + data['data'][i].comment_id + '\', \'' + element_id + '\',\''+ element_type +'\'); return false;"><i class="fa-solid fa-edit text-dark"></i></a>';
-                    can_edit += '<a href="#" class="btn btn-sm comment-edition-hidden" title="Delete comment" onclick="delete_comment(\'' + data['data'][i].comment_id + '\', \'' + element_id + '\',\''+ element_type +'\'); return false;"><i class="fa-solid fa-trash text-dark"></i></a>';
+                    can_edit = '<a href="#" class="btn btn-sm comment-edition-hidden" title="编辑评论" onclick="edit_comment(\'' + data['data'][i].comment_id + '\', \'' + element_id + '\',\''+ element_type +'\'); return false;"><i class="fa-solid fa-edit text-dark"></i></a>';
+                    can_edit += '<a href="#" class="btn btn-sm comment-edition-hidden" title="删除评论" onclick="delete_comment(\'' + data['data'][i].comment_id + '\', \'' + element_id + '\',\''+ element_type +'\'); return false;"><i class="fa-solid fa-trash text-dark"></i></a>';
                 }
 
                 comment = `
@@ -242,7 +242,7 @@ function load_comments(element_id, element_type, comment_id, do_notification, is
             $('#comments_list').append('<div id="last-comment"><div>');
 
             if (data['data'].length === 0) {
-                $('#comments_list').html('<div class="text-center">No comments yet</div>');
+                $('#comments_list').html('<div class="text-center">还没有评论</div>');
             } else if (comment_id === undefined || comment_id === null) {
                 offset = document.getElementById("last-comment").offsetTop;
                 if (offset > 20) {
