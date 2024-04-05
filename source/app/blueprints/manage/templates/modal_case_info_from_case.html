@@ -6,8 +6,8 @@
                 <h4 class="modal-title mr-4">{{ data.name|unquote }}
                     {% if data.modification_history %}
                         <i class="fa-solid fa-clock-rotate-left ml-3 mt-2" data-toggle="popover" data-html="true" id="pop_history" style="cursor: pointer;"
-                                title="Modifications history"
-                                data-content="<small>{% for mod in data.modification_history %}<code>{{ mod|format_datetime('%Y-%m-%d %H:%M') }}</code> -  {{ data.modification_history[mod].action }} by {{ data.modification_history[mod].user }}<br/>{% endfor %}</small>">
+                                title="修改历史"
+                                data-content="<small>{% for mod in data.modification_history %}<code>{{ mod|format_datetime('%Y-%m-%d %H:%M') }}</code> -  {{ data.modification_history[mod].action }} 由 {{ data.modification_history[mod].user }}<br/>{% endfor %}</small>">
                         </i>
                     {% endif %}
                 </h4>
@@ -16,10 +16,10 @@
             <div class="row text-center">
                     <ul class="nav nav-pills nav-default mr-4" id="pills-tab-custom-attr" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active show" id="pills-home-tab-nobd" data-toggle="pill" href="#details" role="tab" aria-controls="pills-home-nobd" aria-selected="false">Info</a>
+                        <a class="nav-link active show" id="pills-home-tab-nobd" data-toggle="pill" href="#details" role="tab" aria-controls="pills-home-nobd" aria-selected="false">信息</a>
                     </li>
                     <li class="nav-item submenu">
-                        <a class="nav-link"  data-toggle="pill" href="#case-info-access" role="tab" aria-controls="case-info-access" aria-selected="false">Access</a>
+                        <a class="nav-link"  data-toggle="pill" href="#case-info-access" role="tab" aria-controls="case-info-access" aria-selected="false">访问</a>
                     </li>
                     {% if attributes and attributes|length > 0 %}
                         {% for ca in attributes %}
@@ -45,23 +45,23 @@
           <div class="tab-content">
               <div class="tab-pane active" id="details">
                 <div id="case_gen_info_content">
-                    <h4>General info <button class="ml-2 btn btn-sm float-right" onclick="edit_case_info();">Edit</button></h4>
+                    <h4>基本信息 <button class="ml-2 btn btn-sm float-right" onclick="edit_case_info();">修改</button></h4>
                     <div class="row">
                         <div class="col-6 col-xs-12 col-md-6">
                             <div class="form-group">
-                                <label>Case name :</label>
+                                <label>案例名称 :</label>
                                 <span type="text" class="">{{ data.name|unquote }}</span>
                             </div>
                             <div class="form-group mt--3">
-                                <label>Case description :</label>
+                                <label>案例描述 :</label>
                                 <span type="text" class="">{{ data.description[0:50] }}</span>
                             </div>
                             <div class="form-group mt--3">
-                                <label>Customer :</label>
+                                <label>客户 :</label>
                                 <span type="text" class="text-faded">{{ data.client.customer_name }}</span>
                             </div>
                             <div class="form-group mt--3">
-                                <label>Case tags :</label>
+                                <label>案例标签 :</label>
                                 <span type="text" class="text-faded">{% if data.tags %} {% for tag in data.tags %}
                                     <span class="badge badge-pill badge-light ml-1"><i class="fa fa-tag mr-1"></i>{{ tag.tag_title }}</span> {% endfor %}{% endif %}</span>
                             </div>
@@ -70,58 +70,58 @@
                                 <span type="text" class="text-faded">{{ data.soc_id }}</span>
                             </div>
                             <div class="form-group mt--3">
-                                <label>Case ID :</label>
+                                <label>案例 ID :</label>
                                 <span type="text" class="text-faded">{{ data.case_id }}</span>
                             </div>
                             <div class="form-group mt--3">
-                                <label>Case UUID :</label>
+                                <label>案例 UUID :</label>
                                 <span type="text" class="text-faded">{{ data.case_uuid }}</span>
                             </div>
                         </div>
                         <div class="col-6 col-xs-12 col-md-6">
                             <div class="form-group mt--3">
-                                <label>Classification :</label>
+                                <label>分类 :</label>
                                 {% if data.classification %}
                                     <span type="text" class="text-faded">{{ data.classification.name }}</span>
                                     {% else %}
-                                    <span type="text" class="text-faded">Unknown</span>
+                                    <span type="text" class="text-faded">未知</span>
                                 {% endif %}
                             </div>
                             <div class="form-group mt--3">
-                                <label>State :</label>
+                                <label>状态 :</label>
                                 <span type="text" class="text-faded">{{ data.state.state_name }}</span>
                             </div>
                             <div class="form-group mt--3">
-                                <label>Severity :</label>
+                                <label>严重性 :</label>
                                 <span type="text" class="text-faded">{{ data.severity.severity_name }}</span>
                             </div>
                             <div class="form-group mt--3">
-                                <label>Open date :</label>
+                                <label>创建日期 :</label>
                                 <span type="text" class="">{{ data.open_date }}</span>
                             </div>
                             <div class="form-group mt--3">
-                                <label>Opening user :</label>
+                                <label>创建用户 :</label>
                                 <span type="text" class="">{{ data.user.user_name }}</span>
                             </div>
                             <div class="form-group mt--3">
-                                <label>Owner :</label>
+                                <label>拥有者 :</label>
                                 <span type="text" class="">{{ data.owner.user_name }}</span>
                             </div>
                             {% if data.reviewer %}
                                 <div class="form-group mt--3">
-                                    <label>Reviewer :</label>
+                                    <label>审核人 :</label>
                                     <span type="text" class="">{{ data.reviewer.user_name }}</span>
                                 </div>
                             {% endif %}
                             {% if data.review_status %}
                                 <div class="form-group mt--3">
-                                    <label>Reviewer :</label>
+                                    <label>审核人 :</label>
                                     <span type="text" class="">{{ data.review_status.status_name }}</span>
                                 </div>
                             {% endif %}
                             {% if data.close_date %}
                                 <div class="form-group mt--3">
-                                    <label>Close date :</label>
+                                    <label>关闭日期 :</label>
                                     <span type="text" class="">{{ data.close_date }}</span>
                                 </div>
                             {% endif %}
@@ -138,7 +138,7 @@
                 </div>
                 <div id="case_gen_info_edit" style="display:none;">
                     <form method="post" action='' id="form_update_case" autocomplete="off">
-                        <h4 class=" pb-3">Edit case information</h4>
+                        <h4 class=" pb-3">修改案例信息</h4>
                             <div class="col-12">
                             {{ form.hidden_tag() }}
                             <div class="mt-4">
@@ -146,7 +146,7 @@
                                     <div class="col-xs-12 col-6">
                                         <div class="input-group mb-4">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text">Case name  <i class="ml-2">{{"#{} - ".format(data.case_id)}}</i></span>
+                                                <span class="input-group-text">案例名称  <i class="ml-2">{{"#{} - ".format(data.case_id)}}</i></span>
                                             </div>
                                              <input type="text" class="form-control" name="case_name" value="{{ data.name.replace('#{} - '.format(data.case_id), '')}}">
                                         </div>
@@ -154,7 +154,7 @@
                                     <div class="col-xs-12 col-6">
                                         <div class="input-group mb-4">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text">SOC ticket ID</span>
+                                                <span class="input-group-text">SOC 事件ID</span>
                                             </div>
                                             <input type="text" class="form-control" name="case_soc_id" value="{{ data.soc_id }}">
                                         </div>
@@ -164,7 +164,7 @@
                                     <div class="col-xs-12 col-6">
                                         <div class="input-group mb-4">
                                             <div class="input-group-prepend fix-label-item">
-                                                <span class="input-group-text">Classification</span>
+                                                <span class="input-group-text">分类</span>
                                             </div>
                                             <select class="selectpicker form-control"
                                                   id="case_quick_classification" name="classification_id">
@@ -177,7 +177,7 @@
                                     <div class="col-xs-12 col-6">
                                         <div class="input-group mb-4">
                                             <div class="input-group-prepend fix-label-item">
-                                                <span class="input-group-text">Owner</span>
+                                                <span class="input-group-text">拥有者</span>
                                             </div>
                                             <select class="selectpicker form-control"
                                                   id="case_quick_owner" name="owner_id">
@@ -189,7 +189,7 @@
                                      <div class="col-xs-12 col-6">
                                         <div class="input-group mb-4">
                                             <div class="input-group-prepend fix-label-item">
-                                                <span class="input-group-text">State</span>
+                                                <span class="input-group-text">状态</span>
                                             </div>
                                             <select class="selectpicker form-control"
                                                   id="case_state" name="state_id">
@@ -202,15 +202,15 @@
                                     <div class="col-xs-12 col-6">
                                         <div class="input-group mb-4">
                                             <div class="input-group-prepend fix-label-item">
-                                                <span class="input-group-text">Outcome</span>
+                                                <span class="input-group-text">结果</span>
                                             </div>
                                             <select class="form-control selectpicker"
                                                   id="case_quick_status" name="status_id">
-                                              <option value="0" {% if data.status_id == 0 %}selected{% endif %} class="badge-text">Unknown</option>
-                                              <option value="1" {% if data.status_id == 1 %}selected{% endif %} class="badge-text">False Positive</option>
-                                              <option value="2" {% if data.status_id == 2 %}selected{% endif %} class="badge-text">True Positive with impact</option>
-                                              <option value="4" {% if data.status_id == 4 %}selected{% endif %} class="badge-text">True Positive without impact</option>
-                                              <option value="3" {% if data.status_id == 3 %}selected{% endif %} class="badge-text">Not applicable</option>
+                                              <option value="0" {% if data.status_id == 0 %}selected{% endif %} class="badge-text">未知</option>
+                                              <option value="1" {% if data.status_id == 1 %}selected{% endif %} class="badge-text">误报</option>
+                                              <option value="2" {% if data.status_id == 2 %}selected{% endif %} class="badge-text">存在问题有影响</option>
+                                              <option value="4" {% if data.status_id == 4 %}selected{% endif %} class="badge-text">存在问题无影响</option>
+                                              <option value="3" {% if data.status_id == 3 %}selected{% endif %} class="badge-text">不适用</option>
                                           </select>
                                         </div>
                                     </div>
@@ -219,7 +219,7 @@
                                     <div class="col-xs-12 col-6">
                                         <div class="input-group mb-2">
                                             <div class="input-group-prepend fix-label-item">
-                                                <span class="input-group-text">Customer</span>
+                                                <span class="input-group-text">客户</span>
                                             </div>
                                             <select class="selectpicker form-control"
                                                   id="case_quick_customer" name="case_customer">
@@ -232,7 +232,7 @@
                                     <div class="col-xs-12 col-6">
                                         <div class="input-group mb-4">
                                             <div class="input-group-prepend fix-label-item">
-                                                <span class="input-group-text">Reviewer</span>
+                                                <span class="input-group-text">审核人</span>
                                             </div>
                                             <select class="selectpicker form-control"
                                                   id="case_quick_reviewer" name="reviewer_id">
@@ -244,7 +244,7 @@
                                     <div class="col-xs-12 col-6">
                                         <div class="input-group mb-2">
                                             <div class="input-group-prepend fix-label-item">
-                                                <span class="input-group-text">Severity</span>
+                                                <span class="input-group-text">严重性</span>
                                             </div>
                                             <select class="selectpicker form-control"
                                                   id="case_quick_severity" name="severity_id">
@@ -259,14 +259,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group px-0">
-                                    <label for="case_tags">Case tags
+                                    <label for="case_tags">案例标签
                                     </label>
                                     <input type="text" id="case_tags"
                                         class="form-control col-md-12" {% if data.tags %} value="{% for tag in data.tags %}{{ tag.tag_title }},{% endfor %}" {% endif %}/>
                                 </div>
                                 <div class="form-group px-4 py-4 mt-3" id="protagonists_form_group">
                                     {% if protagonists %}
-                                    <label>Protagonists
+                                    <label>主要人员
                                     </label>
                                     {% for iprota in protagonists %}
                                         <div class="input-group mb-2 mt-2" id="protagonist_{{loop.index}}">
@@ -274,26 +274,26 @@
                                                     <h6># {{loop.index}}</h6>
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text" id="ingrole_{{loop.index}}">Role</span>
+                                                            <span class="input-group-text" id="ingrole_{{loop.index}}">角色</span>
                                                         </div>
-                                                        <input type="text" aria-describedby="ingrole_{{loop.index}}" list="roles-list"  class="form-control" name="protagonist_role_{{loop.index}}" value="{{ iprota.role }}" placeholder="Role">
+                                                        <input type="text" aria-describedby="ingrole_{{loop.index}}" list="roles-list"  class="form-control" name="protagonist_role_{{loop.index}}" value="{{ iprota.role }}" placeholder="角色">
                                                     </div>
 
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text" id="ingname_{{loop.index}}">Name</span>
+                                                            <span class="input-group-text" id="ingname_{{loop.index}}">名称</span>
                                                         </div>
-                                                        <input type="text" aria-describedby="ingname_{{loop.index}}" class="form-control" name="protagonist_name_{{loop.index}}" placeholder="Name" list="username-list" value="{{ iprota.name }}">
+                                                        <input type="text" aria-describedby="ingname_{{loop.index}}" class="form-control" name="protagonist_name_{{loop.index}}" placeholder="名称" list="username-list" value="{{ iprota.name }}">
                                                     </div>
 
                                                     <div class="input-group mb-3">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text" id="ingp_{{loop.index}}">Contact</span>
+                                                            <span class="input-group-text" id="ingp_{{loop.index}}">联系方式</span>
                                                         </div>
-                                                        <input type="text" aria-describedby="ingp_{{loop.index}}" class="form-control" name="protagonist_contact_{{loop.index}}" value="{{ iprota.contact }}" placeholder="Contact" list="emails-list">
+                                                        <input type="text" aria-describedby="ingp_{{loop.index}}" class="form-control" name="protagonist_contact_{{loop.index}}" value="{{ iprota.contact }}" placeholder="联系方式" list="emails-list">
                                                     </div>
                                                     <button type="button" class="btn btn-sm  btn-outline-dark mr-2 mt-1" onclick="remove_protagonist('{{loop.index}}');">
-                                                        Remove
+                                                        移除
                                                     </button>
                                                     <hr/>
                                             </div>
@@ -302,7 +302,7 @@
                                     {% endif %}
                                     <div id="protagonist_list_edit">
                                     </div>
-                                    <button type="button" class="btn btn-sm btn-outline-dark mt-2 mr-2" id="add_protagonist_btn"  onclick="add_protagonist();">Add protagonist</button>
+                                    <button type="button" class="btn btn-sm btn-outline-dark mt-2 mr-2" id="add_protagonist_btn"  onclick="add_protagonist();">添加主要人员</button>
                                 </div>
                             </div>
                         </form>
@@ -312,11 +312,11 @@
               <div class="tab-pane" id="case-info-access">
                     <div class="row">
                         <div class="col">
-                            <div class="card-title">Case access</div>
+                            <div class="card-title">案例访问</div>
                         </div>
                         <div class="col">
-                            <button class="btn btn-dark btn-sm ml-3 float-right" onclick="access_case_info_reload('{{ data.case_id }}');">Refresh</button>
-                            <button class="btn btn-dark btn-sm ml-2 float-right" onclick="view_case_access_via_group('{{ data.case_id }}');">Set access via group</button>
+                            <button class="btn btn-dark btn-sm ml-3 float-right" onclick="access_case_info_reload('{{ data.case_id }}');">刷新</button>
+                            <button class="btn btn-dark btn-sm ml-2 float-right" onclick="view_case_access_via_group('{{ data.case_id }}');">通过组设置访问</button>
                         </div>
                     </div>
                       <div class="row mt-4">
@@ -324,18 +324,18 @@
                               <table class="table display table-striped table-hover responsive" width="100%" cellspacing="0" id="case_access_users_list_table" >
                                 <thead>
                                   <tr>
-                                      <th>User ID</th>
-                                      <th>User Name</th>
-                                      <th>User Login</th>
-                                      <th>User Access</th>
+                                      <th>用户ID</th>
+                                      <th>用户名称</th>
+                                      <th>用户登录</th>
+                                      <th>用户访问</th>
                                   </tr>
                                 </thead>
                                 <tfoot>
                                   <tr>
-                                      <th>User ID</th>
-                                      <th>User Name</th>
-                                      <th>User Login</th>
-                                      <th>User Access</th>
+                                      <th>用户ID</th>
+                                      <th>用户名称</th>
+                                      <th>用户登录</th>
+                                      <th>用户访问</th>
                                   </tr>
                                 </tfoot>
                               </table>
@@ -350,29 +350,29 @@
 <div id="protagonist_list_edit_template" style="display:none;">
     <div class="input-group mb-2 mt-2" id="protagonist___PROTAGONIST_ID__">
         <div class="col-6">
-                <h5>Protagonist</h5>
+                <h5>主要人员</h5>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="ingrole___PROTAGONIST_ID__">Role</span>
+                        <span class="input-group-text" id="ingrole___PROTAGONIST_ID__">角色</span>
                     </div>
-                    <input type="text" aria-describedby="ingrole___PROTAGONIST_ID__" list="roles-list"  class="form-control" name="protagonist_role___PROTAGONIST_ID__" value="" placeholder="Role">
+                    <input type="text" aria-describedby="ingrole___PROTAGONIST_ID__" list="roles-list"  class="form-control" name="protagonist_role___PROTAGONIST_ID__" value="" placeholder="角色">
                 </div>
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="ingname___PROTAGONIST_ID__">Name</span>
+                        <span class="input-group-text" id="ingname___PROTAGONIST_ID__">名称</span>
                     </div>
-                    <input type="text" aria-describedby="ingname___PROTAGONIST_ID__" class="form-control" name="protagonist_name___PROTAGONIST_ID__" placeholder="Name" list="username-list" value="">
+                    <input type="text" aria-describedby="ingname___PROTAGONIST_ID__" class="form-control" name="protagonist_name___PROTAGONIST_ID__" placeholder="名称" list="username-list" value="">
                 </div>
 
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="ingp___PROTAGONIST_ID__">Contact</span>
+                        <span class="input-group-text" id="ingp___PROTAGONIST_ID__">联系方式</span>
                     </div>
-                    <input type="text" aria-describedby="ingp___PROTAGONIST_ID__" class="form-control" name="protagonist_contact___PROTAGONIST_ID__" value="" list="emails-list" placeholder="Contact">
+                    <input type="text" aria-describedby="ingp___PROTAGONIST_ID__" class="form-control" name="protagonist_contact___PROTAGONIST_ID__" value="" list="emails-list" placeholder="联系方式">
                 </div>
                 <button type="button" class="btn btn-sm  btn-outline-dark mr-2 mt-1" onclick="remove_protagonist('__PROTAGONIST_ID__');">
-                    Remove
+                    移除
                 </button>
                 <hr/>
         </div>
@@ -380,10 +380,10 @@
 
 </div>
 <datalist id="roles-list">
-    <option value="Analyst">
-    <option value="Lead">
-    <option value="Communication">
-    <option value="Customer contact">
+    <option value="分析师">
+    <option value="主管">
+    <option value="联络人">
+    <option value="客户联系人">
 </datalist>
 
 <datalist id="username-list">
@@ -393,54 +393,54 @@
 
 <div class="modal-footer">
     <button type="button" class="btn btn-outline-danger " onclick="remove_case('{{ data.case_id }}');"
-            id="delete_case_info">Delete case</button>
+            id="delete_case_info">删除案例</button>
 
     {% if not data.close_date %}
         <button type="button" class="btn btn-outline-warning mr-auto" onclick="close_case('{{ data.case_id }}');"
-                id="close_case_info">Close case</button>
+                id="close_case_info">关闭案例</button>
     {% else %}
         <button type="button" class="btn btn-success" onclick="reopen_case('{{ data.case_id }}');"
-                id="reopen_case_info">Reopen case</button>
+                id="reopen_case_info">重新打开案例</button>
     {% endif %}
-    <button type="button" class="btn btn-outline-dark mr-2" style="display:none;" id="cancel_case_info"  onclick="cancel_case_edit();">Cancel</button>
-    <button type="button" class="btn btn-outline-success mr-2" style="display:none;" id="save_case_info" onclick="save_case_edit({{ data.case_id }});">Save</button>
+    <button type="button" class="btn btn-outline-dark mr-2" style="display:none;" id="cancel_case_info"  onclick="cancel_case_edit();">取消</button>
+    <button type="button" class="btn btn-outline-success mr-2" style="display:none;" id="save_case_info" onclick="save_case_edit({{ data.case_id }});">保存</button>
 </div>
 
 <script>
     $('[data-toggle="popover"]').popover();
     $('#case_quick_classification').selectpicker({
         liveSearch: true,
-        title: "Classification",
+        title: "分类",
         style: "btn-outline-white"
     });
     $('#case_quick_owner').selectpicker({
         liveSearch: true,
-        title: "Owner",
+        title: "所有人",
         style: "btn-outline-white"
     });
     $('#case_quick_reviewer').selectpicker({
         liveSearch: true,
-        title: "Reviewer",
+        title: "审核人",
         style: "btn-outline-white"
     });
     $('#case_state').selectpicker({
         liveSearch: true,
-        title: "Case state",
+        title: "案例状态",
         style: "btn-outline-white"
     });
     $('#case_quick_status').selectpicker({
         liveSearch: true,
-        title: "Outcome",
+        title: "结果",
         style: "btn-outline-white"
     });
     $('#case_quick_customer').selectpicker({
         liveSearch: true,
-        title: "Customer",
+        title: "客户",
         style: "btn-outline-white"
     });
     $('#case_quick_severity').selectpicker({
         liveSearch: true,
-        title: "Severity",
+        title: "严重性",
         style: "btn-outline-white"
     });
     access_case_info_reload('{{ data.case_id }}', '{{ data.owner_id }}', '{{ data.reviewer_id }}');

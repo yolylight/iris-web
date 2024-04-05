@@ -25,12 +25,12 @@
 								<ul class="nav">
 									<li>
 										<a href="/user/settings?cid={{session['current_case'].case_id}}">
-											<span class="link-collapse">My settings</span>
+											<span class="link-collapse">我的设置</span>
 										</a>
 									</li>
 									<li>
 										<a href={{ url_for('index.logout') }}>
-											<span class="link-collapse">Logout</span>
+											<span class="link-collapse">退出</span>
 										</a>
 									</li>
 								</ul>
@@ -42,20 +42,20 @@
 						<li class="nav-item">
 							<a href="/dashboard?cid={{session['current_case'].case_id}}">
 								<i class="flaticon-home"></i>
-								<span>Dashboard</span>
+								<span>仪表盘</span>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href="/overview?cid={{session['current_case'].case_id}}">
 								<i class="fa-solid fa-street-view"></i>
-								<span>Overview</span>
+								<span>概览</span>
 							</a>
 						</li>
 						{% if demo_domain %}
 						<li class="nav-item">
 							<a href="/welcome">
 								<i class="fa-solid fa-door-open"></i>
-								<span>Welcome page</span>
+								<span>欢迎页</span>
 							</a>
 						</li>
 						{% endif %}
@@ -63,19 +63,19 @@
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
 							</span>
-							<h4 class="text-section">Investigation</h4>
+							<h4 class="text-section">调查</h4>
 						</li>
 						<li class="nav-item">
 							<a href="/case?cid={{session['current_case'].case_id}}">
 								<i class="flaticon-network"></i>
-								<span>Case</span>
+								<span>案例</span>
 							</a>
 						</li>
 						{% if user_has_perm(std_permissions.alerts_read) %}
 						<li class="nav-item">
 							<a href="/alerts?cid={{session['current_case'].case_id}}">
 								<i class="flaticon-alarm-1"></i>
-								<span>Alerts</span>
+								<span>告警</span>
 							</a>
 						</li>
 						{% endif %}
@@ -83,7 +83,7 @@
 						<li class="nav-item">
 							<a href="/search?cid={{session['current_case'].case_id}}">
 								<i class="flaticon-search-2"></i>
-								<span>Search</span>
+								<span>搜索</span>
 							</a>
 						</li>
 						{% endif %}
@@ -91,14 +91,14 @@
 						<li class="nav-item">
 							<a href="/activities?cid={{session['current_case'].case_id}}">
 								<i class="flaticon-list"></i>
-								<span>Activities</span>
+								<span>活动</span>
 							</a>
 						</li>
 						{% endif %}
 						<li class="nav-item">
 							<a href="/dim/tasks?cid={{session['current_case'].case_id}}">
 								<i class="flaticon-web-1"></i>
-								<span>DIM Tasks</span>
+								<span>DIM任务</span>
 							</a>
 						</li>
 
@@ -107,19 +107,19 @@
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
 							</span>
-							<h4 class="text-section">Manage</h4>
+							<h4 class="text-section">管理</h4>
 						</li>
 						<li class="nav-item">
 							<a href="/manage/cases?cid={{session['current_case'].case_id}}">
 								<i class="flaticon-folder"></i>
-								<span>Manage cases</span>
+								<span>管理案例</span>
 							</a>
 						</li>
 
 						<li class="nav-item submenu nav-advanced">
 							<a data-toggle="collapse" href="#advanced-nav" class="" aria-expanded="false">
 								<i class="flaticon-interface-3"></i>
-								<span class="sub-item">Advanced</span>
+								<span class="sub-item">高级</span>
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="advanced-nav" style="">
@@ -129,7 +129,7 @@
 									<li class="nav-subitem">
 										<a href="/manage/modules?cid={{session['current_case'].case_id}}">
 											<i class="flaticon-technology-1"></i>
-											<span class="subsub-item">Modules</span>
+											<span class="subsub-item">模块</span>
 										</a>
 									</li>
 									{% endif %}
@@ -137,7 +137,7 @@
 									<li class="nav-subitem">
 										<a href="/manage/customers?cid={{session['current_case'].case_id}}">
 											<i class="flaticon-profile"></i>
-											<span class="subsub-item">Customers</span>
+											<span class="subsub-item">用户</span>
 										</a>
 									</li>
 									{% endif %}
@@ -145,14 +145,14 @@
 									<li class="nav-subitem">
 										<a href="/manage/objects?cid={{session['current_case'].case_id}}">
 											<i class="flaticon-box-2"></i>
-											<span>Case Objects</span>
+											<span>案例对象</span>
 										</a>
 									</li>
 
 									<li class="nav-subitem">
 										<a href="/manage/attributes?cid={{session['current_case'].case_id}}">
 											<i class="flaticon-layers-1"></i>
-											<span>Custom Attributes</span>
+											<span>自定义属性</span>
 										</a>
 									</li>
 									{% endif %}
@@ -160,7 +160,7 @@
 									<li class="nav-subitem">
 										<a href="/manage/case-templates?cid={{session['current_case'].case_id}}">
 											<i class="flaticon-interface-7"></i>
-											<span>Case Templates</span>
+											<span>案例模版</span>
 										</a>
 									</li>
 									{% endif %}
@@ -168,21 +168,21 @@
 									<li class="nav-subitem">
 										<a href="/manage/templates?cid={{session['current_case'].case_id}}">
 											<i class="flaticon-interface-6"></i>
-											<span>Report Templates</span>
+											<span>报告模板</span>
 										</a>
 									</li>
 
 									<li class="nav-subitem">
 										<a href="/manage/access-control?cid={{session['current_case'].case_id}}">
 											<i class="flaticon-lock-1"></i>
-											<span>Access control</span>
+											<span>访问控制</span>
 										</a>
 									</li>
 
 									<li class="nav-subitem">
 										<a href="/manage/settings?cid={{session['current_case'].case_id}}">
 											<i class="flaticon-settings"></i>
-											<span>Server settings</span>
+											<span>服务器设置</span>
 										</a>
 									</li>
 									{% endif %}
@@ -193,7 +193,7 @@
 						<li class="nav-item">
 							<a href="https://docs.dfir-iris.org" target="_blank" rel="noopener">
 								<i class="flaticon-round"></i>
-								<span>Help</span>
+								<span>帮助</span>
 							</a>
 						</li>
 					</ul>
@@ -204,7 +204,7 @@
 					</div>
 					<div class="row ml-2 mr-2">
 						<span class="text-dark text-center ml-auto mr-auto"><a href="https://github.com/dfir-iris/iris-web" target="_blank" rel="noopener">IRIS {{ iris_version }}</a> {% if has_updates %}
-								<a href="/manage/settings?cid={{session['current_case'].case_id}}"> <i class="ml-1 text-warning fas fa-exclamation-circle" title="Updates are available for the server"></i></a>{% endif %}
+								<a href="/manage/settings?cid={{session['current_case'].case_id}}"> <i class="ml-1 text-warning fas fa-exclamation-circle" title="服务端有可用更新"></i></a>{% endif %}
 						</span>
 					</div>
 				</div>

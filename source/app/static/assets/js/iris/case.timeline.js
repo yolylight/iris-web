@@ -44,7 +44,7 @@ function add_event(parent_event_id = null) {
         // Add empty option
         let option = $('<option>');
         option.attr('value', '');
-        option.text('No parent event');
+        option.text('无父事件');
         parent_selector.append(option);
 
         // Add all events to the parent selector
@@ -60,9 +60,9 @@ function add_event(parent_event_id = null) {
             liveSearch: true,
             size: 10,
             width: '100%',
-            title: 'Select a parent event',
+            title: '选择一个父事件',
             style: 'btn-light',
-            noneSelectedText: 'No event selected',
+            noneSelectedText: '未选择事件',
         });
 
         if (parent_event_id != null) {
@@ -183,7 +183,7 @@ function update_event_ext(event_id, do_close) {
 /* Delete an event from the timeline thank to its id */ 
 function delete_event(id) {
     window.location.hash = id;
-    do_deletion_prompt("You are about to delete event #" + id)
+    do_deletion_prompt("您即将删除事件 #" + id)
     .then((doDelete) => {
         if (doDelete) {
             post_request_api("timeline/events/delete/" + id)
@@ -225,7 +225,7 @@ function edit_event(id) {
         // Add empty option
         let option = $('<option>');
         option.attr('value', '');
-        option.text('No parent event');
+        option.text('无父事件');
         parent_selector.append(option);
 
         let target_idx = 0;
@@ -248,9 +248,9 @@ function edit_event(id) {
             liveSearch: true,
             size: 10,
             width: '100%',
-            title: 'Select a parent event',
+            title: '选择一个父事件',
             style: 'btn-light',
-            noneSelectedText: 'No event selected',
+            noneSelectedText: '未选择事件',
         });
 
         if (target_idx!= null) {
@@ -472,14 +472,14 @@ function events_bulk_delete() {
     }
 
     swal({
-        title: "Are you sure?",
-        text: "You are about to delete " + selected_rows.length + " events.\nThere is no coming back.",
+        title: "请确认?",
+        text: "你将要删除 " + selected_rows.length + " 事件.\n无法回退.",
         icon: "warning",
         buttons: true,
         dangerMode: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete them'
+        confirmButtonText: '是,删除它们'
     })
     .then((willDelete) => {
         if (willDelete) {
@@ -495,7 +495,7 @@ function events_bulk_delete() {
                 });
             });
         } else {
-            swal("Pfew, that was close");
+            swal("Pfew, 好险");
         }
     });
 }
@@ -503,9 +503,9 @@ function events_bulk_delete() {
 function toggleSeeMore(element) {
     let ariaExpanded = element.getAttribute('aria-expanded');
     if (ariaExpanded === 'false') {
-        element.innerHTML = '&gt; See less';
+        element.innerHTML = '&gt; 查看更少';
     } else {
-        element.innerHTML = '&gt; See more';
+        element.innerHTML = '&gt; 查看更多';
     }
 }
 
@@ -612,11 +612,11 @@ function buildEvent(event_data, compact, comments_map, tree, tesk, tmb, idx, rea
     }
 
     if(evt.event_in_summary) {
-        ori_date += `<i class="fas fa-newspaper mr-1" title="Showed in summary"></i>`
+        ori_date += `<i class="fas fa-newspaper mr-1" title="摘要中显示"></i>`
     }
 
     if(evt.event_in_graph) {
-        ori_date += `<i class="fas fa-share-alt mr-1" title="Showed in graph"></i>`
+        ori_date += `<i class="fas fa-share-alt mr-1" title="图中显示"></i>`
     }
 
 
@@ -674,7 +674,7 @@ function buildEvent(event_data, compact, comments_map, tree, tesk, tmb, idx, rea
             formatted_content = short_content + `<div class="collapse" id="collapseContent-${evt.event_id}">
             ${long_content}
             </div>
-            <a class="btn btn-link btn-sm" data-toggle="collapse" href="#collapseContent-${evt.event_id}" role="button" aria-expanded="false" aria-controls="collapseContent" onclick="toggleSeeMore(this)">&gt; See more</a>`;
+            <a class="btn btn-link btn-sm" data-toggle="collapse" href="#collapseContent-${evt.event_id}" role="button" aria-expanded="false" aria-controls="collapseContent" onclick="toggleSeeMore(this)">&gt; 查看更多</a>`;
         } else {
             let content_parsed = converter.makeHtml(raw_content); // Convert markdown to HTML
             content_parsed = filterXSS(content_parsed);
@@ -686,28 +686,28 @@ function buildEvent(event_data, compact, comments_map, tree, tesk, tmb, idx, rea
 
     let flag = '';
     if (evt.event_is_flagged) {
-        flag = `<i class="fas fa-flag text-warning" title="Flagged"></i>`;
+        flag = `<i class="fas fa-flag text-warning" title="已标记"></i>`;
     } else {
-        flag = `<i class="fa-regular fa-flag" title="Not flagged"></i>`;
+        flag = `<i class="fa-regular fa-flag" title="未标记"></i>`;
     }
 
     if (compact) {
-        entry = `<li class="${inverted} ${mtop_day}" title="Event ID #${evt.event_id}" data-datetime="${evt.event_date}" >
+        entry = `<li class="${inverted} ${mtop_day}" title="事件 ID #${evt.event_id}" data-datetime="${evt.event_date}" >
                 <div class="timeline-panel${timeline_style} ${style}" ${style_s}  id="event_${evt.event_id}">
                     <div class="timeline-heading">
                         <div class="btn-group dropdown float-right">
                             ${cats}
-                            <button type="button" class="btn btn-light btn-xs" onclick="edit_event(${evt.event_id})" title="Edit">
+                            <button type="button" class="btn btn-light btn-xs" onclick="edit_event(${evt.event_id})" title="修改">
                                 <span class="btn-label">
                                     <i class="fa fa-pen"></i>
                                 </span>
                             </button>
-                            <button type="button" class="btn btn-light btn-xs" onclick="flag_event(${evt.event_id})" title="Flag">
+                            <button type="button" class="btn btn-light btn-xs" onclick="flag_event(${evt.event_id})" title="标记">
                                 <span class="btn-label">
                                     ${flag}
                                 </span>
                             </button>
-                            <button type="button" class="btn btn-light btn-xs" onclick="comment_element(${evt.event_id}, 'timeline/events')" title="Comments">
+                            <button type="button" class="btn btn-light btn-xs" onclick="comment_element(${evt.event_id}, 'timeline/events')" title="评论">
                                 <span class="btn-label">
                                     <i class="fa-solid fa-comments"></i><span class="notification" id="object_comments_number_${evt.event_id}">${nb_comments}</span>
                                 </span>
@@ -718,11 +718,11 @@ function buildEvent(event_data, compact, comments_map, tree, tesk, tmb, idx, rea
                                 </span>
                             </button>
                             <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 32px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                    <a href= "#" class="dropdown-item" onclick="copy_object_link(${evt.event_id});return false;"><small class="fa fa-share mr-2"></small>Share</a>
-                                    <a href= "#" class="dropdown-item" onclick="copy_object_link_md('event', ${evt.event_id});return false;"><small class="fa-brands fa-markdown mr-2"></small>Markdown Link</a>
-                                    <a href= "#" class="dropdown-item" onclick="duplicate_event(${evt.event_id});return false;"><small class="fa fa-clone mr-2"></small>Duplicate</a>
+                                    <a href= "#" class="dropdown-item" onclick="copy_object_link(${evt.event_id});return false;"><small class="fa fa-share mr-2"></small>共享</a>
+                                    <a href= "#" class="dropdown-item" onclick="copy_object_link_md('event', ${evt.event_id});return false;"><small class="fa-brands fa-markdown mr-2"></small>Markdown 链接</a>
+                                    <a href= "#" class="dropdown-item" onclick="duplicate_event(${evt.event_id});return false;"><small class="fa fa-clone mr-2"></small>重复</a>
                                     <div class="dropdown-divider"></div>
-                                    <a href= "#" class="dropdown-item text-danger" onclick="delete_event(${evt.event_id});"><small class="fa fa-trash mr-2"></small>Delete</a>
+                                    <a href= "#" class="dropdown-item text-danger" onclick="delete_event(${evt.event_id});"><small class="fa fa-trash mr-2"></small>删除</a>
                             </div>
                         </div>
                         <div class="collapsed" id="dropa_${evt.event_id}" data-toggle="collapse" data-target="#drop_${evt.event_id}" aria-expanded="false" aria-controls="drop_${evt.event_id}" role="button" style="cursor: pointer;">
@@ -748,22 +748,22 @@ function buildEvent(event_data, compact, comments_map, tree, tesk, tmb, idx, rea
                     <div class="timeline-heading">
                         <div class="btn-group dropdown float-right">
 
-                            <button type="button" class="btn btn-light btn-xs" onclick="edit_event(${evt.event_id})" title="Edit">
+                            <button type="button" class="btn btn-light btn-xs" onclick="edit_event(${evt.event_id})" title="修改">
                                 <span class="btn-label">
                                     <i class="fa fa-pen"></i>
                                 </span>
                             </button>
-                            <button type="button" class="btn btn-light btn-xs" onclick="add_event(${evt.event_id})" title="Add child event">
+                            <button type="button" class="btn btn-light btn-xs" onclick="add_event(${evt.event_id})" title="添加子事件">
                                 <span class="btn-label">
                                    <i class="fa-brands fa-hive"></i>
                                 </span>
                             </button>
-                            <button type="button" class="btn btn-light btn-xs" onclick="flag_event(${evt.event_id})" title="Flag">
+                            <button type="button" class="btn btn-light btn-xs" onclick="flag_event(${evt.event_id})" title="标记">
                                 <span class="btn-label">
                                     ${flag}
                                 </span>
                             </button>
-                            <button type="button" class="btn btn-light btn-xs" onclick="comment_element(${evt.event_id}, 'timeline/events')" title="Comments">
+                            <button type="button" class="btn btn-light btn-xs" onclick="comment_element(${evt.event_id}, 'timeline/events')" title="评论">
                                 <span class="btn-label">
                                     <i class="fa-solid fa-comments"></i><span class="notification" id="object_comments_number_${evt.event_id}">${nb_comments}</span>
                                 </span>
@@ -774,11 +774,11 @@ function buildEvent(event_data, compact, comments_map, tree, tesk, tmb, idx, rea
                                 </span>
                             </button>
                             <div class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 32px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                    <a href= "#" class="dropdown-item" onclick="copy_object_link(${evt.event_id});return false;"><small class="fa fa-share mr-2"></small>Share</a>
-                                    <a href= "#" class="dropdown-item" onclick="copy_object_link_md('event', ${evt.event_id});return false;"><small class="fa-brands fa-markdown mr-2"></small>Markdown Link</a>
-                                    <a href= "#" class="dropdown-item" onclick="duplicate_event(${evt.event_id});return false;"><small class="fa fa-clone mr-2"></small>Duplicate</a>
+                                    <a href= "#" class="dropdown-item" onclick="copy_object_link(${evt.event_id});return false;"><small class="fa fa-share mr-2"></small>共享</a>
+                                    <a href= "#" class="dropdown-item" onclick="copy_object_link_md('event', ${evt.event_id});return false;"><small class="fa-brands fa-markdown mr-2"></small>Markdown链接</a>
+                                    <a href= "#" class="dropdown-item" onclick="duplicate_event(${evt.event_id});return false;"><small class="fa fa-clone mr-2"></small>重复</a>
                                     <div class="dropdown-divider"></div>
-                                    <a href= "#" class="dropdown-item text-danger" onclick="delete_event(${evt.event_id});"><small class="fa fa-trash mr-2"></small>Delete</a>
+                                    <a href= "#" class="dropdown-item text-danger" onclick="delete_event(${evt.event_id});"><small class="fa fa-trash mr-2"></small>删除</a>
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -818,21 +818,21 @@ function build_timeline(data) {
     $('#time_timeline_select').empty();
 
     var standard_filters = [
-                {value: 'asset:', score: 10, meta: 'Match assets name of events'},
-                {value: 'asset_id:', score: 10, meta: 'Match assets ID of events'},
-                {value: 'startDate:', score: 10, meta: 'Match end date of events'},
-                {value: 'endDate:', score: 10, meta: 'Match end date of events'},
-                {value: 'tag:', score: 10, meta: 'Match tag of events'},
-                {value: 'description:', score: 10, meta: 'Match description of events'},
-                {value: 'flag', score: 10, meta: 'Match flagged events'},
-                {value: 'category:', score: 10, meta: 'Match category of events'},
-                {value: 'title:', score: 10, meta: 'Match title of events'},
-                {value: 'source:', score: 10, meta: 'Match source of events'},
-                {value: 'raw:', score: 10, meta: 'Match raw data of events'},
-                {value: 'ioc', score: 10, meta: "Match ioc value in events"},
-                {value: 'ioc_id', score: 10, meta: "Match ioc ID in events"},
-                {value: 'event_id', score: 10, meta: "Match event ID in events"},
-                {value: 'AND ', score: 10, meta: 'AND operator'}
+                {value: 'asset:', score: 10, meta: '匹配事件的资产名称'},
+                {value: 'asset_id:', score: 10, meta: '匹配事件的资产 ID'},
+                {value: 'startDate:', score: 10, meta: '匹配事件开始日期'},
+                {value: 'endDate:', score: 10, meta: '匹配事件结束日期'},
+                {value: 'tag:', score: 10, meta: '匹配事件标记'},
+                {value: 'description:', score: 10, meta: '匹配事件描述'},
+                {value: 'flag', score: 10, meta: '匹配标记事件'},
+                {value: 'category:', score: 10, meta: '匹配事件分类'},
+                {value: 'title:', score: 10, meta: '匹配事件名'},
+                {value: 'source:', score: 10, meta: '匹配事件来源'},
+                {value: 'raw:', score: 10, meta: '匹配事件原始数据'},
+                {value: 'ioc', score: 10, meta: "匹配事件ioc值"},
+                {value: 'ioc_id', score: 10, meta: "匹配事件中ioc ID"},
+                {value: 'event_id', score: 10, meta: "匹配事件中的事件ID"},
+                {value: 'AND ', score: 10, meta: '与操作'}
               ]
 
     for (let rid in data.data.assets) {
@@ -843,7 +843,7 @@ function build_timeline(data) {
 
     for (let rid in data.data.categories) {
         standard_filters.push(
-             {value: data.data.categories[rid], score: 1, meta: "Event category"}
+             {value: data.data.categories[rid], score: 1, meta: "事件分类"}
         );
     }
 
@@ -926,7 +926,7 @@ function build_timeline(data) {
         button.attr('type', 'button');
         button.attr('class', 'btn btn-light btn-xs mt-2');
         button.attr('onclick', `toggle_child_events_of_event(${parent_id});`);
-        button.attr('title', 'Toggle child events');
+        button.attr('title', '切换子事件');
         button.html('<span class="btn-label"><i class="fa fa-chevron-down"></i></span>');
 
         parent_event.find('.timeline-body').append(button);
@@ -947,7 +947,7 @@ function build_timeline(data) {
             parent_date = Date.parse(parent_date);
 
             if (child_date < parent_date) {
-                child.find('.bottom-hour-i').append('<span class="ml-2"><i class="fas fa-exclamation-triangle text-warning" title="Child event datetime is earlier than parent event"></i></span>')
+                child.find('.bottom-hour-i').append('<span class="ml-2"><i class="fas fa-exclamation-triangle text-warning" title="子事件日期比父事件早"></i></span>')
             }
 
             child.insertAfter(parent_event.parent());
@@ -959,7 +959,7 @@ function build_timeline(data) {
     $('[data-toggle="popover"]').popover();
 
     if (data.data.tim.length === 0) {
-       $('#card_main_load').append('<h3 class="ml-mr-auto text-center" id="no_events_msg">No events in current view</h3>');
+       $('#card_main_load').append('<h3 class="ml-mr-auto text-center" id="no_events_msg">当前视图中没有事件</h3>');
        $('#timeline_list').hide();
     } else {
         $('#timeline_list').show();
@@ -1003,7 +1003,7 @@ function toggle_child_events() {
             }
             let btn = parent_event.find('button:last');
             if (btn.html().indexOf('fa-chevron-down') !== -1) {
-                btn.html('<span class="btn-label"><i class="fa fa-chevron-right"></i> Child events</span>');
+                btn.html('<span class="btn-label"><i class="fa fa-chevron-right"></i> 子事件</span>');
             }
         }
 
@@ -1032,7 +1032,7 @@ function toggle_child_events_of_event(event_id) {
         child_events.hide();
         let btn = $('#event_' + event_id).find('button:last');
         if (btn.html().indexOf('fa-chevron-down') !== -1) {
-            btn.html('<span class="btn-label"><i class="fa fa-chevron-right"></i> Child events</span>');
+            btn.html('<span class="btn-label"><i class="fa fa-chevron-right"></i> 子事件</span>');
         }
     } else {
         child_events.show();
@@ -1136,7 +1136,7 @@ function time_converter(){
         }
     })
     .fail(function() {
-        $('#convert_bad_feedback').text('Unable to find a matching pattern for the date');
+        $('#convert_bad_feedback').text('无法为日期找到匹配模式');
     });
 }
 
@@ -1328,10 +1328,10 @@ function upload_csv_events() {
             if (notify_auto_api(data)) {
                 apply_filtering();
                 $(modal_dlg).modal('hide');
-                swal("Got news for you", data.message, "success");
+                swal("好消息", data.message, "success");
             } else {
                 //alert( JSON.stringify(data.data,null,2));
-                swal("Got bad news for you", data.message, "error");
+                swal("坏消息", data.message, "error");
             }
         })
 
@@ -1385,7 +1385,7 @@ $(document).ready(function(){
     tm_filter.setOption("displayIndentGuides", true);
     tm_filter.setOption("indentedSoftWrap", true);
     tm_filter.setOption("showLineNumbers", false);
-    tm_filter.setOption("placeholder", "Filter timeline");
+    tm_filter.setOption("placeholder", "筛选时间线");
     tm_filter.setOption("highlightActiveLine", false);
     tm_filter.commands.addCommand({
                         name: "Do filter",

@@ -1,6 +1,6 @@
 {% extends "layouts/default.html" %}
 
-{% block title %} DIM Tasks {% endblock title %}
+{% block title %} DIM 任务 {% endblock title %}
 
 {% block stylesheets %}
 <link href="/static/assets/css/dataTables.buttons.min.css" rel="stylesheet">
@@ -12,10 +12,10 @@
 <div class="page-inner">
     <div class="row">
         <div class="col-md-12">
-            <div class="loader1 text-center ml-mr-auto" id="loading_msg">Loading...</div>
+            <div class="loader1 text-center ml-mr-auto" id="loading_msg">加载中...</div>
             <div class="card" id="card_main_load" style="display:none;">
                 <div class="card-header">
-                    <div class="card-title">DFIR-IRIS Modules Tasks
+                    <div class="card-title">DFIR-IRIS 模块任务
                     <button type="button" class="btn btn-icon btn-round btn-outline-dark float-right ml-2" onclick="get_activities();">
                             <i class="fas fa-sync rotate"></i></button></div>
                 </div>
@@ -27,22 +27,22 @@
                       <table class="table display table-striped table-hover" width="100%" cellspacing="0" id="activities_table" >
                         <thead>
                           <tr>
-                            <th>Task ID</th>
-                            <th>State</th>
-                            <th>Date ended</th>
-                            <th>Case</th>
-                            <th>Processing module</th>
-                            <th>Initiating user</th>
+                            <th>任务 ID</th>
+                            <th>状态</th>
+                            <th>结束日期</th>
+                            <th>案例</th>
+                            <th>处理模块</th>
+                            <th>初始化用户</th>
                           </tr>
                         </thead>
                         <tfoot>
                           <tr>
-                            <th>Task ID</th>
-                            <th>State</th>
-                            <th>Date ended</th>
-                            <th>Case</th>
-                            <th>Processing module</th>
-                            <th>Initiating user</th>
+                            <th>任务 ID</th>
+                            <th>状态</th>
+                            <th>结束日期</th>
+                            <th>案例</th>
+                            <th>处理模块</th>
+                            <th>初始化用户</th>
                           </tr>
                         </tfoot>
                       </table>

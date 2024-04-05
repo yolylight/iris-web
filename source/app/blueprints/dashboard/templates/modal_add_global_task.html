@@ -2,11 +2,11 @@
     <div class="col md-12">
         <div class="row">
             <div class="col">
-                 <h4 class="modal-title mt-1 mr-4">{% if task.id %} Task ID #{{ task.id }}{% else %} Add global task {% endif %}
+                 <h4 class="modal-title mt-1 mr-4">{% if task.id %} 任务ID #{{ task.id }}{% else %} 添加全局任务 {% endif %}
                    {% if task.id %}
                     <i class="fas fa-info-circle ml-3" data-toggle="popover"
-                        title="Task info"
-                        data-content="Last updated {{ task.task_last_update }} by {{ user_name }}."></i>
+                        title="任务信息"
+                        data-content="由{{ user_name }}最后更新于{{ task.task_last_update }} ."></i>
                     {% endif %}
                  </h4>
                  <small><i class="text-muted">{% if task.task_uuid %}#{{ task.task_uuid }}{% endif %}</i></small>
@@ -29,10 +29,10 @@
             <div class="col-md-12 col-lg-12 col-sm-12">
                 {{ form.hidden_tag() }}
                 <div class="form-group mt-3">
-                    <label for="task_assignee" class="placeholder">Assigned to</label>
+                    <label for="task_assignee" class="placeholder">分配给</label>
                     {{ form.task_assignee_id(class="selectpicker pl--6  col-5") }}
 
-                    <label for="task_status" class="placeholder">Status</label>
+                    <label for="task_status" class="placeholder">状态</label>
                     {{ form.task_status_id(class="selectpicker pl--6  col-5") }}
                 </div>
                 <div class="form-group">
@@ -44,7 +44,7 @@
                     {{ form.task_description(class='form-control col-md-12 col-sm-12 sizable-textarea',  autocomplete="off") }}
                 </div>
                 <div class="form-group mt-3">
-                    <label for="task_tags">Task tags
+                    <label for="task_tags">任务标签
                     </label>
                     <input type="text" id="task_tags"
                         class="form-control col-md-12" {% if task.task_tags %} value="{{ task.task_tags }}" {% endif %}/>
@@ -52,15 +52,15 @@
             </div>
             {% if task.id %}
                 <button type="button" class="btn btn-outline-danger mt-5"
-                onclick="delete_gtask({{ task.id }});">Delete</button>
+                onclick="delete_gtask({{ task.id }});">删除</button>
 
                 <button type="button" class="btn btn-outline-success ml-4 mt-5 float-right"
-                onclick="update_gtask({{ task.id }});">Update</button>
+                onclick="update_gtask({{ task.id }});">更新</button>
 
             {% else %}
 
                 <button type="button" class="btn btn-outline-success ml-4 mt-5 float-right"
-                id="submit_new_gtask">Save</button>
+                id="submit_new_gtask">保存</button>
 
             {% endif %}
         </form>
@@ -73,12 +73,12 @@
 
     $('#task_assignee_id').selectpicker({
         liveSearch: true,
-        title: "None",
+        title: "无",
         style: "Bootstrap 4: 'btn-outline-primary'",
     });
     $('#task_status_id').selectpicker({
         liveSearch: true,
-        title: "None",
+        title: "无",
         style: "Bootstrap 4: 'btn-outline-primary'",
     });
     {% if uid %}

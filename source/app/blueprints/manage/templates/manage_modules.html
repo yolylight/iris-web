@@ -1,6 +1,6 @@
 {% extends "layouts/default.html" %}
 
-{% block title %} Manage Modules {% endblock title %}
+{% block title %} 管理模块 {% endblock title %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="/static/assets/css/suggestags.css">
@@ -17,14 +17,14 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col">
-                            <div class="card-title">Modules management</div>
+                            <div class="card-title">模块管理</div>
                             {{ form.hidden_tag() }}
                         </div>
                         <div class="col">
                             <button type="button" class="btn btn-sm btn-dark float-right ml-2" onclick="refresh_modules();">
                                 Refresh
                             </button>
-                            <button class="btn btn-sm btn-dark float-right ml-2" onclick="add_module();">Add module</button>
+                            <button class="btn btn-sm btn-dark float-right ml-2" onclick="add_module();">添加模块</button>
                         </div>
                     </div>
                 </div>
@@ -39,25 +39,25 @@
                             <thead>
                                 <tr>
                                     <th>#ID</th>
-                                    <th>Module name</th>
-                                    <th>Has pipeline</th>
-                                    <th>Module version</th>
-                                    <th>Interface version</th>
-                                    <th>Date added</th>
-                                    <th>Added by</th>
-                                    <th>Active</th>
+                                    <th>模块名称</th>
+                                    <th>是否有管道</th>
+                                    <th>模块版本</th>
+                                    <th>接口版本</th>
+                                    <th>添加日期</th>
+                                    <th>添加人</th>
+                                    <th>激活</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>#ID</th>
-                                    <th>Module name</th>
-                                    <th>Has pipeline</th>
-                                    <th>Module version</th>
-                                    <th>Interface version</th>
-                                    <th>Date added</th>
-                                    <th>Added by</th>
-                                    <th>Active</th>
+                                    <th>模块名称</th>
+                                    <th>是否有管道</th>
+                                    <th>模块版本n</th>
+                                    <th>接口版本</th>
+                                    <th>添加日期</th>
+                                    <th>添加人</th>
+                                    <th>激活</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -72,7 +72,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col">
-                            <div class="card-title">Registered hooks</div>
+                            <div class="card-title">注册钩子</div>
                         </div>
                         <div class="col">
                             <button type="button" class="btn btn-sm btn-icon btn-round btn-outline-black float-right" onclick="refresh_modules_hooks();">
@@ -92,21 +92,21 @@
                             <thead>
                                 <tr>
                                     <th>#ID</th>
-                                    <th>Registrant module</th>
-                                    <th>Hook name</th>
-                                    <th>Hook description</th>
-                                    <th>Automatic trigger</th>
-                                    <th>Active</th>
+                                    <th>注册模块</th>
+                                    <th>钩子名称</th>
+                                    <th>钩子描述</th>
+                                    <th>自动触发器</th>
+                                    <th>激活</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>#ID</th>
-                                    <th>Registrant module</th>
-                                    <th>Hook name</th>
-                                    <th>Hook description</th>
-                                    <th>Automatic trigger</th>
-                                    <th>Active</th>
+                                    <th>注册模块</th>
+                                    <th>钩子名称</th>
+                                    <th>钩子描述</th>
+                                    <th>自动触发器</th>
+                                    <th>激活</th>
                                 </tr>
                             </tfoot>
                         </table>

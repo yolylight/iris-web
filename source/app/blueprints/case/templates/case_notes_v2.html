@@ -1,4 +1,4 @@
-{% extends "layouts/default_ext.html" %} {% block title %} Case notes {% endblock title %} {% block stylesheets %}
+{% extends "layouts/default_ext.html" %} {% block title %}案例笔记{% endblock title %} {% block stylesheets %}
 {% include 'includes/header_case.html' %}
 <link rel="stylesheet" href="/static/assets/css/bootstrap-select.min.css">
 {% endblock stylesheets %}
@@ -17,7 +17,7 @@
 						<div class="row mt-1">
 							<div class="col">
 								<div class="input-group">
-									<input type="text" placeholder="Search in notes" class="form-control" id="search-input">
+									<input type="text" placeholder="搜索笔记" class="form-control" id="search-input">
 									  <div class="input-group-append">
 										<button class="btn btn-sm btn-light" type="button" id="clear-search">
 										  &times;
@@ -28,13 +28,13 @@
 						</div>
 						<div class="row mt-2">
 							<div class="col">
-								<button class="btn btn-light btn-sm" title="Add folder" onclick="add_folder();return false;">
+								<button class="btn btn-light btn-sm" title="添加文件夹" onclick="add_folder();return false;">
 									<i class="fa fa-folder-plus"></i>
 								</button>
-								<button class="btn btn-light btn-sm" title="Fold/unfold directories" onclick="toggleDirectories();return false;">
+								<button class="btn btn-light btn-sm" title="折叠/展开目录" onclick="toggleDirectories();return false;">
 									<i class="fa-solid fa-folder-tree"></i>
 								</button>
-								<button class="btn btn-light btn-sm" title="Refresh list" onclick="refresh_folders();return false;">
+								<button class="btn btn-light btn-sm" title="刷新列表" onclick="refresh_folders();return false;">
 									<i class="fa fa-refresh"></i>
 								</button>
 							</div>
@@ -49,8 +49,8 @@
 				{{ form.csrf_token }}
 				<div class="page-content" id="emptyNoteDisplay">
 					<div class="mt-4">
-						<h4 class="text-dark text-sm text-center ml-mr-auto">It looks pretty empty <i class="fa-solid fa-mug-hot ml-2"></i></h4>
-						<h4 class="text-dark text-sm text-center ml-mr-auto"><a href="#" onclick="add_folder();return false;">Select a note on the left pane or click here to add a directory</a></h4>
+						<h4 class="text-dark text-sm text-center ml-mr-auto">看起来啥也没有 <i class="fa-solid fa-mug-hot ml-2"></i></h4>
+						<h4 class="text-dark text-sm text-center ml-mr-auto"><a href="#" onclick="add_folder();return false;">在左侧窗格中选择笔记，或点击此处添加目录</a></h4>
 						<h4 class="text-dark text-sm text-center ml-mr-auto">Right-click on a directory to add a note</h4>
 
 					</div>
@@ -61,8 +61,8 @@
 							<h4 class="page-title mb-0" id="currentNoteTitle"></h4>
 							<small>
 								<i class="text-muted" id="currentNoteIDLabel"></i>
-								<i class="fa fa-cloud-upload-alt ml-2" title="Auto saving enabled"></i>
-								<a class="bg-transparent" data-toggle="modal" title="Modifications history" data-target="#noteModificationHistoryModal" ><i class="fa-solid fa-clock-rotate-left ml-2 mt-2" style="cursor: pointer;" title="Modifications history"></i></a>
+								<i class="fa fa-cloud-upload-alt ml-2" title="自动保存已启用"></i>
+								<a class="bg-transparent" data-toggle="modal" title="Modifications history" data-target="#noteModificationHistoryModal" ><i class="fa-solid fa-clock-rotate-left ml-2 mt-2" style="cursor: pointer;" title="修改历史"></i></a>
 							</small>
 
 						</div>
@@ -72,27 +72,27 @@
 								<span class="float-right mr-2 mt-1" id="content_last_saved_by"></span>
 								<div class="avatar-group-note mt-1 mr-2 float-right" id="ppl_list_viewing">
 								</div>
-								  <button type="button" class="btn bg-transparent btn-xs" onclick="proxy_comment_element();" title="Comments">
+								  <button type="button" class="btn bg-transparent btn-xs" onclick="proxy_comment_element();" title="评论">
 									<span class="btn-label">
 										<i class="fa-solid fa-comments mr-2"></i><span class="notification" id="object_comments_number"></span>
 									</span>
 								</button>
-								<button type="button" class="btn bg-transparent btn-xs" onclick="proxy_copy_object_link();return false;" title="Copy shared link">
+								<button type="button" class="btn bg-transparent btn-xs" onclick="proxy_copy_object_link();return false;" title="复制分享链接">
 									<span class="btn-label">
 										<i class="fa fa-share mr-2"></i>
 									</span>
 								</button>
-								<button type="button" class="btn bg-transparent btn-xs" onclick="proxy_copy_object_link_md();return false;" title="Copy MD link">
+								<button type="button" class="btn bg-transparent btn-xs" onclick="proxy_copy_object_link_md();return false;" title="拷贝MD链接">
 									<span class="btn-label">
 										<i class="fa-brands fa-markdown mr-2"></i>
 									</span>
 								</button>
-								<button type="button" class="btn bg-transparent btn-xs" onclick="download_note();return false;" title="Download as MD">
+								<button type="button" class="btn bg-transparent btn-xs" onclick="download_note();return false;" title="将下载视为MD">
 									<span class="btn-label">
 										<i class="fa-solid fa-download mr-2"></i>
 									</span>
 								</button>
-								<button type="button" class="btn bg-transparent btn-xs" onclick="delete_note();return false;" title="Delete note">
+								<button type="button" class="btn bg-transparent btn-xs" onclick="delete_note();return false;" title="删除笔记">
 									<span class="btn-label">
 										<i class="fa-solid fa-trash mr-2 text-danger"></i>
 									</span>
@@ -116,13 +116,13 @@
 									<div class="btn btn-sm btn-light mr-1" title="Insert bullet list" onclick="note_editor.insertSnippet('\n- \n- \n- ');note_editor.focus();"><i class="fa-solid fa-list"></i></div>
 									<div class="btn btn-sm btn-light mr-1" title="Insert numbered list" onclick="note_editor.insertSnippet('\n1. a  \n2. b  \n3. c  ');note_editor.focus();"><i class="fa-solid fa-list-ol"></i></div>
 									<div class="btn btn-sm btn-light mr-1" title="Toggle editor expansion" onclick="toggle_max_editor();" id="btn_max_editor"><i class="fa-solid fa-maximize"></i></div>
-									<div class="btn btn-sm btn-transparent mr-1" title="Help" onclick="get_md_helper_modal();"><i class="fa-solid fa-question-circle"></i></div>
+									<div class="btn btn-sm btn-transparent mr-1" title="帮助" onclick="get_md_helper_modal();"><i class="fa-solid fa-question-circle"></i></div>
 							</div>
 							<div class="col">
 								<button type="button" class="float-right icon-note btn btn-light btn-circle btn-sm mr-2" onclick="edit_innote();"></button>
-								<button type="button" class="float-right btn btn-light btn-sm mr-2" onclick="save_note();return false;" title="Save note">
+								<button type="button" class="float-right btn btn-light btn-sm mr-2" onclick="save_note();return false;" title="保存笔记">
 									<span class="btn-label">
-										<i class="fa fa-save mr-2"></i>Save note
+										<i class="fa fa-save mr-2"></i>保存笔记
 									</span>
 								</button>
 							</div>
@@ -146,7 +146,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="moveFolderModalLabel">Move item</h5>
+					<h5 class="modal-title" id="moveFolderModalLabel">移动项目</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -154,7 +154,7 @@
 				<div class="modal-body">
 					<div class="row">
 						<div class="col">
-							<span>Select the directory to move the item to.</span>
+							<span>选择要将项目移动到的目录.</span>
 						</div>
 					</div>
 					<div class="row mt-2">
@@ -172,7 +172,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" >Modifications history</h5>
+					<h5 class="modal-title" >编辑历史</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>

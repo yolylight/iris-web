@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title mt-2 mr-4">Server Updates</h4>
+    <h4 class="modal-title mt-2 mr-4">服务器升级</h4>
     <button type="button" class="pull-right btn btn-white" data-dismiss="modal" aria-label="Close"><span
         aria-hidden="true"><i class="fa fa-times"></i></span></button>
 </div>
@@ -12,10 +12,10 @@
 </div>
 <div class="modal-footer">
 
-    <button type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 
     {% if has_updates %}
-        <a type="button" class="btn btn-success" href="/manage/server/make-update?cid={{session['current_case'].case_id}}">Update server</a>
+        <a type="button" class="btn btn-success" href="/manage/server/make-update?cid={{session['current_case'].case_id}}">更新服务器</a>
     {% endif %}
 
 </div>

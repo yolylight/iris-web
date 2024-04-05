@@ -2,7 +2,7 @@
     <div class="col md-12">
         <div class="row">
             <div class="col align-self-center">
-                <h4 class="modal-title mr-4">{% if task.id %} Task ID #{{ task.id }}{% else %} Add task {% endif %}</h4>
+                <h4 class="modal-title mr-4">{% if task.id %} 任务ID #{{ task.id }}{% else %} 添加任务 {% endif %}</h4>
                 <small><i class="text-muted">#{{ task.task_uuid }}</i></small>
             </div>
             {% include 'modals/modal_attributes_nav.html' %}
@@ -14,17 +14,17 @@
                           <span aria-hidden="true"><i class="fas fa-ellipsis-v"></i></span>
                       </button>
                       <div class="dropdown-menu pull-right" id="task_modal_quick_actions" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#" onclick='copy_object_link({{task.id}});return false;'><i class="fa fa-share mr-2"></i>Share</a>
-                          <a class="dropdown-item" href="#" onclick='copy_object_link_md("task", {{task.id}});return false;'><i class="fa-brands fa-markdown mr-2"></i>Markdown Link</a>
+                          <a class="dropdown-item" href="#" onclick='copy_object_link({{task.id}});return false;'><i class="fa fa-share mr-2"></i>分享</a>
+                          <a class="dropdown-item" href="#" onclick='copy_object_link_md("task", {{task.id}});return false;'><i class="fa-brands fa-markdown mr-2"></i>Markdown链接</a>
                       </div>
                  </div>
-                 <button type="button" class="btn bg-transparent btn-xs" onclick="comment_element({{ task.id }}, 'tasks')" title="Comments">
+                 <button type="button" class="btn bg-transparent btn-xs" onclick="comment_element({{ task.id }}, 'tasks')" title="评价">
                         <span class="btn-label">
                             <i class="fa-solid fa-comments"></i><span class="notification" id="object_comments_number">{{ comments_map|length }}</span>
                         </span>
                 </button>
                 {% endif %}
-                    <button class="float-right btn bg-transparent" title="Minimize" onclick="modal_minimized('modal_add_task', '{% if task.id %} Task ID #{{ task.id }}{% else %} Add task {% endif %}');"> <i class='fa fa-minus'></i> </button>
+                    <button class="float-right btn bg-transparent" title="Minimize" onclick="modal_minimized('modal_add_task', '{% if task.id %} 任务ID #{{ task.id }}{% else %} 添加任务 {% endif %}');"> <i class='fa fa-minus'></i> </button>
                     <button type="button" class="pull-right btn bg-transparent" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true"><i class="fa fa-times"></i></span></button>
                 </div>
@@ -43,12 +43,12 @@
                                 {{ form.hidden_tag() }}
                                 <div class="form-group mt-3 row">
                                     <div class="col-6 col-xs-12">
-                                        <label for="task_assignee_id" class="placeholder">Assigned to *</label>
+                                        <label for="task_assignee_id" class="placeholder">分配给 *</label>
                                         {{ form.task_assignees_id(class="selectpicker col-12", data_actions_box="true", data_dropup_auto="false") }}
 
                                     </div>
                                     <div class="col-6 col-xs-12">
-                                        <label for="task_status_id" class="placeholder">Status *</label>
+                                        <label for="task_status_id" class="placeholder">状态 *</label>
                                         {{ form.task_status_id(class="selectpicker col-12") }}
                                     </div>
                                 </div>
@@ -57,7 +57,7 @@
                                     {{ form.task_title(class='form-control col-md-12 col-sm-12',  autocomplete="off") }}
                                 </div>
                                 <div class="form-group mt-3">
-                                    <label for="task_description" class="placeholder">Description</label>
+                                    <label for="task_description" class="placeholder">描述</label>
                                      <div class="md_description_field">
                                         <div class="form-group mt--2">
                                                 <button type="button" class="float-right icon-note btn btn-circle btn-sm mt-2" onclick="edit_in_task_desc();">
@@ -81,7 +81,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group mt-3">
-                                    <label for="task_tags">Task tags
+                                    <label for="task_tags">任务标签
                                     </label>
                                     <input type="text" id="task_tags"
                                         class="form-control col-md-12" {% if task.task_tags %} value="{{ task.task_tags }}" {% endif %}/>
@@ -95,15 +95,15 @@
     </div>
     {% if task.id %}
         <button type="button" class="btn btn-outline-danger mt-5"
-        onclick="delete_task({{ task.id }});">Delete</button>
+        onclick="delete_task({{ task.id }});">删除</button>
 
         <button type="button" class="btn btn-outline-success ml-4 mt-5 float-right" id="submit_new_task"
-        onclick="update_task({{ task.id }});">Update</button>
+        onclick="update_task({{ task.id }});">更新</button>
 
     {% else %}
 
         <button type="button" class="btn btn-outline-success ml-4 mt-5 float-right"
-        id="submit_new_task">Save</button>
+        id="submit_new_task">保存</button>
 
     {% endif %}
 </div>

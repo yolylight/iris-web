@@ -124,13 +124,13 @@ function update_task_ext(task_id, do_close) {
         }
     })
     .always(() => {
-        $('#update_task_btn').text('Update');
+        $('#update_task_btn').text('更新');
     });
 }
 
 /* Delete an event from the timeline thank to its id */ 
 function delete_task(id) {
-    do_deletion_prompt("You are about to delete task #" + id)
+    do_deletion_prompt("您即将删除任务 #" + id)
     .then((doDelete) => {
         if (doDelete) {
             post_request_api("tasks/delete/" + id)
@@ -280,7 +280,7 @@ function do_list_users(list_users, cur_assignees_id_list) {
 
     $('#task_assignees_id').selectpicker({
         liveSearch: true,
-        title: "Select assignee(s)"
+        title: "选择受让人"
     });
 
     for (let user in list_users) {
@@ -391,7 +391,7 @@ $(document).ready(function(){
                     }
                     else {
                         if (type === 'display') {
-                            names = '<span class="badge badge-light ml-2">' + "Unassigned" + '</span>';
+                            names = '<span class="badge badge-light ml-2">' + "未分配" + '</span>';
                         }
                         else {
                             names = "Unassigned";

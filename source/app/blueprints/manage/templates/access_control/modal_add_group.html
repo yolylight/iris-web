@@ -1,20 +1,20 @@
 <div class="modal-xl modal-dialog" role="document">
     <div class="modal-content" id="modal_access_control_content">
         <div class="modal-header">
-            <h4 class="modal-title mt-2 mr-4">{% if not group.group_id %}Add Group {% else %} Edit {{ group.group_name }} {% endif %}</h4>
+            <h4 class="modal-title mt-2 mr-4">{% if not group.group_id %}Add Group {% else %} 修改 {{ group.group_name }} {% endif %}</h4>
             <div class="row text-center mr-4">
                 {% if group.group_id %}
                 <ul class="nav nav-pills nav-default mr-4" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active show" data-toggle="pill" href="#group_details_tab" role="tab" aria-controls="group_details_tab" aria-selected="false">Info</a>
+                        <a class="nav-link active show" data-toggle="pill" href="#group_details_tab" role="tab" aria-controls="group_details_tab" aria-selected="false">信息</a>
                     </li>
 
                     <li class="nav-item submenu">
-                        <a class="nav-link"  data-toggle="pill" href="#group_members_tab" role="tab" aria-controls="group_members_tab" aria-selected="false">Members</a>
+                        <a class="nav-link"  data-toggle="pill" href="#group_members_tab" role="tab" aria-controls="group_members_tab" aria-selected="false">成员</a>
                     </li>
 
                     <li class="nav-item submenu">
-                        <a class="nav-link"  data-toggle="pill" href="#group_cac_tab" role="tab" aria-controls="group_cac_tab" aria-selected="false">Cases access</a>
+                        <a class="nav-link"  data-toggle="pill" href="#group_cac_tab" role="tab" aria-controls="group_cac_tab" aria-selected="false">案例访问</a>
                     </li>
                 </ul>
                 {% endif %}
@@ -33,7 +33,7 @@
                                 <div class="col-md-12 col-lg-12 col-sm-12">
                                     {{ form.hidden_tag() }}
                                     {% if not group.group_id %}
-                                    <p class="ml-3"><i class="fa-solid fa-circle-info mr-2"></i>Members can be added once the group is created.</p>
+                                    <p class="ml-3"><i class="fa-solid fa-circle-info mr-2"></i>成员可以再组创建的时候添加.</p>
                                     {% endif %}
                                     <div class="form-group">
                                         <label for="group_name" class="mr-4">Group name *
@@ -41,11 +41,11 @@
                                         {{ form.group_name(class='form-control',  autocomplete="off") }}
                                     </div>
                                     <div class="form-group mt-3">
-                                        <label for="group_description" class="placeholder">Description *</label>
+                                        <label for="group_description" class="placeholder">描述 *</label>
                                         {{ form.group_description(class='form-control',  autocomplete="off") }}
                                     </div>
                                     <div class="form-group" data-select2-id="7">
-                                        <label>Permissions *</label>
+                                        <label>权限 *</label>
                                         <div class="select2-input ml-12" data-select2-id="6">
                                             <select id="group_permissions" name="group_permissions" class="form-control select2-hidden-accessible ml-12" multiple="" data-select2-id="group_permissions" tabindex="-1" aria-hidden="true" style="width: 100%">
                                             </select>
@@ -54,13 +54,13 @@
                                 </div>
                                 {% if group.group_id %}
                                     <button type="button" class="btn btn-danger mt-5"
-                                    onclick="delete_group('{{ group.group_id }}');">Delete</button>
+                                    onclick="delete_group('{{ group.group_id }}');">删除</button>
                                     <button type="button" class="btn btn-outline-success ml-4 mt-5 float-right"
-                                    id="submit_new_group">Update</button>
+                                    id="submit_new_group">更新</button>
                                 {% else %}
 
                                     <button type="button" class="btn btn-outline-success ml-4 mt-5 float-right"
-                                    id="submit_new_group">Save</button>
+                                    id="submit_new_group">保存</button>
 
                                 {% endif %}
                             </form>
@@ -71,10 +71,10 @@
                               <div class="row d-flex">
                                 <div class="col pull-right">
                                     <button class="btn btn-dark btn-sm pull-right" onclick="refresh_group_members({{ group.group_id }});">
-                                        <span class="menu-title">Refresh</span>
+                                        <span class="menu-title">刷新</span>
                                     </button>
                                     <button class="btn btn-dark btn-sm pull-right mr-2" onclick="add_members_to_group({{ group.group_id }});">
-                                        <span class="menu-title">Manage</span>
+                                        <span class="menu-title">管理</span>
                                     </button>
                                 </div>
                               </div>
@@ -82,16 +82,16 @@
                               <table class="table display table-bordered table-striped table-hover responsive" width="100%" cellspacing="0" id="group_members_table" >
                                 <thead>
                                   <tr>
-                                      <th>User ID</th>
-                                      <th>User login</th>
-                                      <th>User display name</th>
+                                      <th>用户ID</th>
+                                      <th>用户登录</th>
+                                      <th>用户显示名称</th>
                                   </tr>
                                 </thead>
                                 <tfoot>
                                   <tr>
-                                      <th>User ID</th>
-                                      <th>User login</th>
-                                      <th>User display name</th>
+                                      <th>用户ID</th>
+                                      <th>用户登录</th>
+                                      <th>用户显示名称</th>
                                   </tr>
                                 </tfoot>
                               </table>
@@ -103,15 +103,15 @@
                             <div class="row d-flex mb-2">
                                 <div class="col">
                                     {% if group.group_auto_follow %}
-                                    <b><i class="fa fa-triangle-exclamation text-warning mr-2"></i>This group is set to automatically include all new cases.</b>
+                                    <b><i class="fa fa-triangle-exclamation text-warning mr-2"></i>这个组设置为自动包含所有新案例.</b>
                                     {% endif %}
                                 </div>
                                 <div class="col pull-right">
                                     <button class="btn btn-dark btn-sm pull-right" onclick="refresh_group_cac({{ group.group_id }});">
-                                        <span class="menu-title">Refresh</span>
+                                        <span class="menu-title">刷新</span>
                                     </button>
                                     <button class="btn btn-dark btn-sm pull-right mr-2" onclick="manage_group_cac({{ group.group_id }});">
-                                        <span class="menu-title" id="manage_group_cac_button">Set case access</span>
+                                        <span class="menu-title" id="manage_group_cac_button">设置案例访问</span>
                                     </button>
                                 </div>
                             </div>
@@ -119,16 +119,16 @@
                               <table class="table display table-bordered table-striped table-hover responsive" width="100%" cellspacing="0" id="group_cac_table" >
                                 <thead>
                                   <tr>
-                                      <th>Case ID</th>
-                                      <th>Case Name</th>
-                                      <th>Access</th>
+                                      <th>案例ID</th>
+                                      <th>案例名称</th>
+                                      <th>访问</th>
                                   </tr>
                                 </thead>
                                 <tfoot>
                                   <tr>
-                                    <th>Case ID</th>
-                                    <th>Case Name</th>
-                                    <th>Access</th>
+                                    <th>案例ID</th>
+                                    <th>案例名称</th>
+                                    <th>访问</th>
                                   </tr>
                                 </tfoot>
                               </table>
@@ -180,7 +180,7 @@ var modal_group_table = $("#group_members_table").DataTable({
           {
             "data": "id",
             "render": function ( data, type, row ) {
-                return `<i class="fa-solid fa-trash-can mr-2 text-danger" style="cursor:pointer;" title="Remove from group" href="javascript:void(0)" onclick="remove_members_from_group('{{ group.group_id }}',${data})"></i>${data}`;
+                return `<i class="fa-solid fa-trash-can mr-2 text-danger" style="cursor:pointer;" title="从组移除" href="javascript:void(0)" onclick="remove_members_from_group('{{ group.group_id }}',${data})"></i>${data}`;
             },
             "className": "dt-center"
         },
@@ -218,7 +218,7 @@ var modal_group_cac_table = $("#group_cac_table").DataTable({
           {
             "data": "case_id",
             "render": function ( data, type, row ) {
-                return `<i class="fa-solid fa-trash-can mr-2 text-danger" style="cursor:pointer;" title="Remove access to case" href="javascript:void(0)" onclick="remove_case_access_from_group('{{ group.group_id }}',${data})"></i>${data}`;
+                return `<i class="fa-solid fa-trash-can mr-2 text-danger" style="cursor:pointer;" title="移除对案例的访问" href="javascript:void(0)" onclick="remove_case_access_from_group('{{ group.group_id }}',${data})"></i>${data}`;
             },
             "className": "dt-center"
         },
@@ -275,7 +275,7 @@ var actionOptionsGroup = {
 {% if group.group_id %}
     actionOptionsGroup.items.push({
                 type: 'option',
-                title: 'Remove access',
+                title: '移除访问',
                 multi: true,
                 iconClass: 'fas fa-trash',
                 buttonClasses: ['btn', 'btn-outline-primary'],

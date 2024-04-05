@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/static/assets/css/dropzone.css">
 <div class="modal-header">
-    <h4 class="modal-title mt-2 mr-4">Processing pipelines</h4>
+    <h4 class="modal-title mt-2 mr-4">处理管道</h4>
     <button type="button" class="pull-right btn btn-white" data-dismiss="modal" aria-label="Close"><span
         aria-hidden="true"><i class="fa fa-times"></i></span></button>
 </div>
@@ -8,15 +8,15 @@
     <div class="container col-md-12">
         <div class="row">
             <div class="col-12">
-                <p>Select processing pipeline and drop analysis files below. Press Process to start the processing. Do not close the page until the upload is finished.<br/>
-                Supports up to 40 files and 10GB at once.</p>
+                <p>选择处理管道并将分析文件放在下面。按"处理"开始处理.在上传完成之前不要关闭页面.<br/>
+                最多可同时支持40个文件和10GB容量.</p>
 
                     <div class="form-group">
                         <div class="form-group">
-                         <label for="import_pipeline" class="placeholder">Processing pipeline</label>
+                         <label for="import_pipeline" class="placeholder">处理管道</label>
                             <i class="fas fa-question-circle mr-2" data-toggle="popover"
                                     title="Pipelines"
-                                    data-content="Pipelines are the way files dropped below are processed. Each pipelines handles a different type of file."></i>
+                                    data-content="管道是处理以下文件的方式.每个管道处理不同类型的文件."></i>
 
                         {{ form.pipeline(class="selectpicker pl--6 btn-outline-white", id="update_pipeline_selector") }}
                         </div>
@@ -45,10 +45,10 @@
 </div>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-default float-left" data-dismiss="modal">Dismiss</button>
+    <button type="button" class="btn btn-default float-left" data-dismiss="modal">取消</button>
 
     <button type="button" class="btn btn-outline-success float-right"
-        id="submit_update_case" onclick="submit_update_casefn();">Process</button>
+        id="submit_update_case" onclick="submit_update_casefn();">处理</button>
 </div>
 <script src="/static/assets/js/plugin/dropzone/dropzone.js"></script>
 <script src="/static/assets/js/iris/case.pipelines.js"></script>

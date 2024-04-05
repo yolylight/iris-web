@@ -118,7 +118,7 @@ function send_update_case_data() {
                 },
                 time: 5000,
             });
-            swal("Oh no !", data.message, "error")
+            swal("Oh no !", data.message, "错误")
         }
     })
     .fail(() => {

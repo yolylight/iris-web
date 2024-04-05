@@ -1,6 +1,6 @@
 {% extends "layouts/default.html" %}
 
-{% block title %} Server Settings {% endblock title %}
+{% block title %} 服务器设置 {% endblock title %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="/static/assets/css/suggestags.css">
@@ -14,29 +14,29 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">Server versions</div>
+                    <div class="card-title">服务器版本</div>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
                             <div class="col-12 mb-4">
                                 <dl class="row">
-                                    <dt class="col-sm-3">IRIS server version:</dt>
+                                    <dt class="col-sm-3">IRIS 服务版本:</dt>
                                     <dd class="col-sm-8">{{ versions.iris_current }}</dd>
 
-                                    <dt class="col-sm-3">Database revision:</dt>
+                                    <dt class="col-sm-3">数据库版本:</dt>
                                     <dd class="col-sm-8">{{ versions.db_revision }}</dd>
 
-                                    <dt class="col-sm-3">Min. API version supported:</dt>
+                                    <dt class="col-sm-3">最小API版本支持:</dt>
                                     <dd class="col-sm-8">{{ versions.api_min }}</dd>
 
-                                    <dt class="col-sm-3">Max. API version supported:</dt>
+                                    <dt class="col-sm-3">最大API版本支持:</dt>
                                     <dd class="col-sm-8">{{ versions.api_current }}</dd>
 
-                                    <dt class="col-sm-3">Min. module interface version supported:</dt>
+                                    <dt class="col-sm-3">最小模块接口版本支持:</dt>
                                     <dd class="col-sm-8">{{ versions.interface_min }}</dd>
 
-                                    <dt class="col-sm-3">Max. module interface version supported:</dt>
+                                    <dt class="col-sm-3">最大模块接口版本支持:</dt>
                                     <dd class="col-sm-8">{{ versions.interface_current }}</dd>
                                 </dl>
                             </div>
@@ -45,7 +45,7 @@
 <!--                    <div class="row">-->
 <!--                        <div class="col-12">-->
 <!--                            <div class="float-right mt-4">-->
-<!--                                <button class="btn btn-outline-primary" id="check_updates" type="button" onclick="check_updates()">Check for updates</button>-->
+<!--                                <button class="btn btn-outline-primary" id="check_updates" type="button" onclick="check_updates()">检查更新</button>-->
 <!--                            </div>-->
 <!--                        </div>-->
 <!--                    </div>-->
@@ -57,35 +57,35 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">Global settings</div>
+                    <div class="card-title">全局设置</div>
                 </div>
                 <div class="card-body">
                     <div class="row mt-2">
                         <div class="col-12">
                             <form id="form_srv_settings">
                                 {{ form.hidden_tag() }}
-                                    <h2>Proxy</h2>
+                                    <h2>代理</h2>
                                     <div class="mb-4">
-                                        <p>Proxy settings can be used by modules to access external resources.</p>
+                                        <p>模块可使用代理设置访问外部资源.</p>
                                         <div class="row mb-4">
                                             <div class="col-6">
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">
-                                                            HTTP Proxy
+                                                            HTTP代理
                                                         </span>
                                                     </div>
-                                                    <input class="form-control" name="http_proxy" placeholder="HTTP Proxy" value="{{ settings.http_proxy }}">
+                                                    <input class="form-control" name="http_proxy" placeholder="HTTP代理" value="{{ settings.http_proxy }}">
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">
-                                                            HTTP Proxy
+                                                            HTTPS代理
                                                         </span>
                                                     </div>
-                                                    <input class="form-control" name="https_proxy" placeholder="HTTPS Proxy" value="{{ settings.http_proxy }}">
+                                                    <input class="form-control" name="https_proxy" placeholder="HTTPS代理" value="{{ settings.http_proxy }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -95,30 +95,30 @@
 <!--                                        <div class="form-check">-->
 <!--                                            <label class="form-check-label">-->
 <!--                                                <input class="form-check-input" type="checkbox" id="enable_updates_check" name="enable_updates_check" {% if settings.enable_updates_check %}checked{% endif %}>-->
-<!--                                                <span class="form-check-sign">Enable automatic daily check for updates</span>-->
+<!--                                                <span class="form-check-sign">启用每日自动检查更新</span>-->
 <!--                                            </label>-->
 <!--                                        </div>-->
                                         <div class="form-check">
                                             <label class="form-check-label">
                                                 <input class="form-check-input" type="checkbox" id="prevent_post_mod_repush" name="prevent_post_mod_repush" {% if settings.prevent_post_mod_repush %}checked{% endif %}>
-                                                <span class="form-check-sign">Prevent post-init step to register default modules again during boot</span>
+                                                <span class="form-check-sign">防止启动后步骤在启动过程中再次注册默认模块</span>
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <label class="form-check-label">
                                                 <input class="form-check-input" type="checkbox" id="prevent_post_objects_repush" name="prevent_post_objects_repush" {% if settings.prevent_post_objects_repush %}checked{% endif %}>
-                                                <span class="form-check-sign">Prevent post-init step to register default case objects again during boot</span>
+                                                <span class="form-check-sign">防止启动后步骤在启动过程中再次注册默认案例对象</span>
                                             </label>
                                         </div>
                                     </div>
-                                    <h2 class="mt-4">Password Policy</h2>
-                                    <p>A password policy change applies to new or updated passwords.</p>
+                                    <h2 class="mt-4">密码策略</h2>
+                                    <p>密码政策变更适用于新密码或更新的密码.</p>
                                     <div class="row mb-2">
                                         <div class="col-4">
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
-                                                        Minimum Password Length
+                                                        最小密码长度
                                                     </span>
                                                 </div>
                                                 <input class="form-control" name="password_policy_min_length" placeholder="12" type="number" value="{{ settings.password_policy_min_length }}">
@@ -128,10 +128,10 @@
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
-                                                        Include Special chars
+                                                        包含特殊字符
                                                     </span>
                                                 </div>
-                                                <input class="form-control" name="password_policy_special_chars" placeholder="Set empty to disable" type="text" value="{{ settings.password_policy_special_chars }}">
+                                                <input class="form-control" name="password_policy_special_chars" placeholder="留空以禁用" type="text" value="{{ settings.password_policy_special_chars }}">
                                             </div>
                                         </div>
                                     </div>
@@ -140,26 +140,26 @@
                                             <div class="form-check">
                                                 <label class="form-check-label">
                                                     <input class="form-check-input" type="checkbox" id="password_policy_upper_case" name="password_policy_upper_case" {% if settings.password_policy_upper_case %}checked{% endif %}>
-                                                    <span class="form-check-sign">Must include uppercase char</span>
+                                                    <span class="form-check-sign">必须包含大写字符</span>
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <label class="form-check-label">
                                                     <input class="form-check-input" type="checkbox" id="password_policy_lower_case" name="password_policy_lower_case" {% if settings.password_policy_lower_case %}checked{% endif %}>
-                                                    <span class="form-check-sign">Must include lowercase char</span>
+                                                    <span class="form-check-sign">必须包含小写字符</span>
                                                 </label>
                                             </div>
                                             <div class="form-check">
                                                 <label class="form-check-label">
                                                     <input class="form-check-input" type="checkbox" id="password_policy_digit" name="password_policy_digit" {% if settings.password_policy_digit %}checked{% endif %}>
-                                                    <span class="form-check-sign">Must include digits</span>
+                                                    <span class="form-check-sign">必须包含数字</span>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
                             </form>
                             <div class="float-right mt-4">
-                                <button class="btn btn-outline-primary float-right" id="save_srv_settings" type="button" onclick="update_settings()">Save changes</button>
+                                <button class="btn btn-outline-primary float-right" id="save_srv_settings" type="button" onclick="update_settings()">保存变更</button>
                             </div>
                         </div>
                     </div>
@@ -171,15 +171,15 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">Backups</div>
+                    <div class="card-title">备份</div>
                 </div>
                 <div class="card-body">
                     <div class="row mt-2">
                         <div class="col-12">
-                            <h2>Database</h2>
-                                <p>Initiate a database backup. The backup file is stored on the configured path <code>BACKUP_PATH</code></p>
+                            <h2>数据库</h2>
+                                <p>启动数据库备份。备份文件存储在配置的变量中 <code>BACKUP_PATH</code></p>
                                 <div class="float-right mt-4">
-                                    <button class="btn btn-outline-primary" id="init_db_backup" type="button" onclick="init_db_backup()">Backup database</button>
+                                    <button class="btn btn-outline-primary" id="init_db_backup" type="button" onclick="init_db_backup()">备份数据库</button>
                                 </div>
                         </div>
                     </div>
@@ -192,14 +192,14 @@
     <div class="modal-xl modal-dialog" role="document">
         <div class="modal-content" id="modal_updates_content">
             <div class="modal-header">
-                <h4 class="modal-title mt-2 mr-4">Server Updates</h4>
+                <h4 class="modal-title mt-2 mr-4">服务器更新</h4>
                 <button type="button" class="pull-right btn btn-white" data-dismiss="modal" aria-label="Close"><span
                     aria-hidden="true"><i class="fa fa-times"></i></span></button>
             </div>
             <div class="modal-body">
                 <div class="container col-md-12">
                       <div class="row">
-                          <h3>Please wait while we look for updates</h3>
+                          <h3>请稍候，我们正在查找更新信息</h3>
                       </div>
                 </div>
             </div>

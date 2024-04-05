@@ -1,6 +1,6 @@
 {% extends "layouts/default.html" %}
 
-{% block title %} Manage Customers {% endblock title %}
+{% block title %} 管理客户 {% endblock title %}
 
 {% block stylesheets %}
 
@@ -19,13 +19,13 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col">
-                                    <div class="card-title">Customers management</div>
+                                    <div class="card-title">客户管理</div>
                                 </div>
                                 <div class="col">
                                     <button type="button" class="btn btn-sm btn-dark float-right ml-2" onclick="refresh_customer_table(true);">
                                         Refresh
                                     </button>
-                                    <button class="btn btn-sm btn-dark float-right ml-2" onclick="add_customer();">Add customer</button>
+                                    <button class="btn btn-sm btn-dark float-right ml-2" onclick="add_customer();">添加客户</button>
                                 </div>
                             </div>
                         </div>
@@ -39,14 +39,14 @@
                                        cellspacing="0" id="customers_table">
                                     <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Description</th>
+                                        <th>名称</th>
+                                        <th>描述</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Description</th>
+                                        <th>名称</th>
+                                        <th>描述</th>
                                     </tr>
                                     </tfoot>
                                 </table>

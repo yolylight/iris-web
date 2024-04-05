@@ -1,6 +1,6 @@
 {% extends "layouts/default.html" %}
 
-{% block title %} Manage Cases {% endblock title %}
+{% block title %} 管理案例 {% endblock title %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="/static/assets/css/dataTables.select.min.css">
@@ -16,17 +16,17 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">Cases management</div>
+                    <div class="card-title">案例管理</div>
                 </div>
                 <div class="card-body">
                     <div class="col-md-12">
                         <button type="button" class="btn btn-sm btn-outline-dark float-right mr-3"
                             onclick="load_add_case();">
-                            Create new case
+                            创建新案例
                         </button>
                         <button type="button" class="btn btn-sm btn-outline-dark float-right mr-3"
                             onclick="refresh_case_table();">
-                            Refresh
+                            刷新
                         </button>
                         <div class="table-responsive" id="cases_table_wrapper">
                             <div class="selectgroup">
@@ -36,26 +36,26 @@
                                 cellspacing="0" id="cases_table">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Customer</th>
-                                        <th>State</th>
-                                        <th>Open date</th>
-                                        <th>Close date</th>
-                                        <th>SOC Ticket</th>
-                                        <th>Opening user</th>
+                                        <th>名称</th>
+                                        <th>描述</th>
+                                        <th>客户</th>
+                                        <th>状态</th>
+                                        <th>创建日期</th>
+                                        <th>关闭日期</th>
+                                        <th>SOC 标号</th>
+                                        <th>创建人</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Customer</th>
-                                        <th>State</th>
-                                        <th>Open date</th>
-                                        <th>Close date</th>
-                                        <th>SOC Ticket</th>
-                                        <th>Opening user</th>
+                                        <th>名称</th>
+                                        <th>描述</th>
+                                        <th>客户</th>
+                                        <th>状态</th>
+                                        <th>创建日期</th>
+                                        <th>关闭日期</th>
+                                        <th>SOC 标号</th>
+                                        <th>创建人</th>
                                     </tr>
                                 </tfoot>
                             </table>

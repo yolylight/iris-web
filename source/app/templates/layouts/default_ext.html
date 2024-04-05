@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>IRIS - {% block title %}Case{% endblock %} {% if session['current_case'].case_id %}| {{ session['current_case'].case_name }}  {% endif %} </title>
+	<title>IRIS - {% block title %}案例{% endblock %} {% if session['current_case'].case_id %}| {{ session['current_case'].case_name }}  {% endif %} </title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="/static/assets/img/logo.ico" type="image/x-icon"/>
 	{% if demo_domain %}
@@ -41,7 +41,7 @@
 
 		{% include 'includes/quick-sidebar.html' %}
 		{% include 'includes/datastore-sidebar.html' %}
-		<div id="minimized_modal_box" class="col-10 col-xs-11 col-sm-4 minimized_modal shadow-lg" style="display:none;" title="Maximize modal" onclick="modal_maximize();">
+		<div id="minimized_modal_box" class="col-10 col-xs-11 col-sm-4 minimized_modal shadow-lg" style="display:none;" title="最大化模式" onclick="modal_maximize();">
 			<div class="row mt-3 mb-3">
 				<div class="col-10 d-flex">
 					<span data-notify="title" id="minimized_modal_title" class="align-self-center"></span>

@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4>{{ data.module_human_name|unquote }} - Module Information</h4>
+    <h4>{{ data.module_human_name|unquote }} - 模块信息</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
             aria-hidden="true">&times;</span></button>
 </div>
@@ -7,42 +7,42 @@
     <div class="row">
         <div class="container col-6">
             <div class="form-group">
-                <label>Name :</label>
+                <label>名称 :</label>
                 <span type="text" class="">{{ data.module_human_name|unquote }}</span>
             </div>
             <div class="form-group mt--3">
-                <label>Description :</label>
+                <label>描述 :</label>
                 <span type="text" class="">{{ data.module_description }}</span>
             </div>
             <div class="form-group mt--3">
-                <label>Target package :</label>
+                <label>目标包 :</label>
                 <span type="text" class="text-faded">{{ data.module_name }}</span>
             </div>
             <div class="form-group mt--3">
-                <label>Date added :</label>
+                <label>添加日期 :</label>
                 <span type="text" class="text-faded">{{ data.date_added }}</span>
             </div>
            {% if not is_configured %}
             <div class="form-group">
-                <b class="text-danger">The module was automatically disabled because mandatory parameters are not set.</b>
+                <b class="text-danger">由于未设置强制参数，模块被自动禁用.</b>
             </div>
             {% endif %}
         </div>
         <div class="container col-6">
             <div class="form-group">
-                <label>Module version :</label>
+                <label>模块版本 :</label>
                 <span type="text" class="text-faded">{{ data.module_version }}</span>
             </div>
             <div class="form-group mt--3">
-                <label>Interface version :</label>
+                <label>接口版本 :</label>
                 <span type="text" class="text-faded">{{ data.interface_version }}</span>
             </div>
             <div class="form-group mt--3">
-                <label>Is active :</label>
+                <label>是否激活 :</label>
                 <span type="text" class="text-faded">{{ data.is_active }} </span>
             </div>
             <div class="form-group mt--3">
-                <label>Provides pipeline :</label>
+                <label>提供管道 :</label>
                 <span type="text" class="text-faded">{{ data.has_pipeline }}</span>
             </div>
         </div>
@@ -51,9 +51,9 @@
     <div class="container col-12">
         <hr/>
         <div class="form-group mt-3">
-             <label>Configuration (click on a setting to edit)</label>
-            <button type="button" class="btn btn-sm btn-outline-dark float-right" onclick="export_mod_config('{{ data.id }}');">Export configuration</button>
-            <button type="button" class="btn btn-sm btn-outline-dark float-right mr-2" data-toggle="modal" data-target="#modal_input_config">Import configuration</button>
+             <label>配置（点击设置进行编辑）</label>
+            <button type="button" class="btn btn-sm btn-outline-dark float-right" onclick="export_mod_config('{{ data.id }}');">导出配置</button>
+            <button type="button" class="btn btn-sm btn-outline-dark float-right mr-2" data-toggle="modal" data-target="#modal_input_config">导入配置</button>
         </div>
         <div class="form-group mt-3">
 
@@ -61,10 +61,10 @@
                 cellspacing="0">
                 <thead>
                     <tr role="row">
-                        <th>Section</th>
-                        <th>Parameter</th>
-                        <th>Value</th>
-                        <th>Mandatory</th>
+                        <th>部分</th>
+                        <th>参数</th>
+                        <th>值</th>
+                        <th>必填</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,7 +73,7 @@
                         <td>{{ id["section"] or "Main" }}</td>
                         <td><a href="#" onclick="update_param({{ data.id }}, '{{ data.id }}##{{ id['param_name'] }}');">
                             {% if (id['param_name'] in missing_params) %}
-                              <i class="fa-solid fa-triangle-exclamation text-danger" title="Mandatory parameter not set"></i>
+                              <i class="fa-solid fa-triangle-exclamation text-danger" title="未设置必填参数"></i>
                             {% endif %}
                             {{ id["param_human_name"] }}
                         </a></td>
@@ -87,30 +87,30 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-outline-danger mr-auto" onclick="remove_module('{{ data.id }}');">Remove module</button>
+    <button type="button" class="btn btn-outline-danger mr-auto" onclick="remove_module('{{ data.id }}');">移除模块</button>
     {% if is_configured and not data.is_active %}
-    <button type="button" class="btn btn-outline-success" onclick="enable_module('{{ data.id }}');">Enable module</button>
+    <button type="button" class="btn btn-outline-success" onclick="enable_module('{{ data.id }}');">启用模块</button>
     {% elif is_configured and data.is_active %}
-    <button type="button" class="btn btn-outline-warning" onclick="disable_module('{{ data.id }}');">Disable module</button>
+    <button type="button" class="btn btn-outline-warning" onclick="disable_module('{{ data.id }}');">禁用模块</button>
     {% endif %}
-    <button type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 </div>
 
 <div class="modal bg-shadow-gradient" tabindex="-1" role="dialog" id="modal_input_config" data-backdrop="true">
     <div class="modal-lg modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-              <h5>Import module configuration from file</h5>
+              <h5>从文件导入模块配置</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                   aria-hidden="true">&times;</span></button>
             </div>
 
             <div class="modal-body">
                 <div class="form-group">
-                    <p>Select a configuration file to upload. Existing configuration for this module will be overwritten.</p>
-                    <label class="placeholder">Configuration file : </label>
+                    <p>选择要上传的配置文件。该模块的现有配置将被覆盖。</p>
+                    <label class="placeholder">配置文件 : </label>
                     <input id="input_configuration_file" type="file" accept="text/json">
-                    <button type="button" class="btn  btn-outline-success float-right mr-2" onclick="import_mod_config('{{ data.id }}');">Import</button>
+                    <button type="button" class="btn  btn-outline-success float-right mr-2" onclick="import_mod_config('{{ data.id }}');">导入</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->

@@ -1,30 +1,30 @@
             <div class="modal-xl modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title mt-1 mr-4">Timeline filtering help</h4>
+                        <h4 class="modal-title mt-1 mr-4">时间轴筛选帮助</h4>
                         <button type="button" class="float-right btn bg-transparent" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true"><i class="fa fa-times"></i></span></button>
                     </div>
                     <div class="modal-body mb-2">
                         <div class="row">
                             <div class="col-12">
-                                <p>The timeline can be filtered thanks to simple queries. The query schema is :  <code>target_element:search_value AND target_element2:search_value2</code>.<br/>
-                                There is no <code>OR</code> condition and searching without target does not work.
-                                <p>The following target elements can be used to filter :</p>
+                                <p>时间轴可以通过简单的查询进行筛选. 查询模式为 :  <code>target_element:search_value AND target_element2:search_value2</code>.<br/>
+                                没有 <code>OR</code> 条件，不带目标的搜索不起作用.
+                                <p>可使用以下目标元素进行筛选:</p>
                                 <ul>
-                                    <li><code>asset</code>: Asset linked to the event</li>
-                                    <li><code>ioc</code>: IOC linked to the event</li>
-                                    <li><code>tag</code>: Tag within the event</li>
-                                    <li><code>title</code>: Title of the event</li>
-                                    <li><code>description</code>: Description of the event</li>
-                                    <li><code>raw</code> : Raw event content</li>
-                                    <li><code>category</code>: Category of the event</li>
-                                    <li><code>source</code>: Source of the event</li>
-                                    <li><code>startDate</code>: Start date to filter with</li>
-                                    <li><code>endDate</code>: End date to filter with</li>
+                                    <li><code>资产</code>: 链接到事件的资产</li>
+                                    <li><code>ioc</code>: 链接到事件的IOC</li>
+                                    <li><code>标签</code>: 事件的标签</li>
+                                    <li><code>标题</code>: 事件的标题</li>
+                                    <li><code>描述</code>: 事件的描述</li>
+                                    <li><code>原始内容</code> : 原始事件内容</li>
+                                    <li><code>分类</code>: 事件分类</li>
+                                    <li><code>来源</code>: 事件来源</li>
+                                    <li><code>开始日期</code>: 筛选的开始日期</li>
+                                    <li><code>结束日期</code>: 筛选的结束日期</li>
                                 </ul>
-                                The dates filters uses the same guessing as the date parser in events, so a lots of format are handled.<br/>
-                                Example of filter :
+                                日期筛选器与事件中的日期解析器使用相同的猜测方法，因此可以处理大量格式.<br/>
+                                筛选器示例 :
                                 <code>asset: DESKTOP-X5487 AND description: rdp connection to AND source: Windows Security</code>
                             </div>
                         </div>

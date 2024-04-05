@@ -1,6 +1,6 @@
 {% extends "layouts/default.html" %}
 
-{% block title %} Overview {% endblock title %}
+{% block title %} 概览 {% endblock title %}
 
 {% block stylesheets %}
 
@@ -18,24 +18,24 @@
     {{ form.hidden_tag() }}
         <div class="page-inner">
             <div class="row">
-                <div class="loader1 text-center ml-mr-auto" id="loading_msg">Loading...</div>
+                <div class="loader1 text-center ml-mr-auto" id="loading_msg">加载中...</div>
                 <div class="col-md-12">
                     <div class="card" id="card_main_load">
                         <div class="card-header">
                             <div class="row">
                                 <div class="col">
-                                    <div class="card-title" id="overviewTableTitle">Open cases</div>
+                                    <div class="card-title" id="overviewTableTitle">处理中案例</div>
                                 </div>
                                 <div class="col">
                                     <button type="button" class="btn btn-sm btn-outline-black float-right" onclick="get_cases_overview(false);">
-                                        Refresh
+                                        刷新
                                     </button>
 
                               <div class="selectgroup float-right mt--1">
                                     <div class="form-check float-right">
                                          <label class="form-check-label">
                                              <input class="form-check-input" type="checkbox" id="overviewLoadClosedCase">
-                                                 <span class="form-check-sign"> Show closed cases
+                                                 <span class="form-check-sign"> 显示处理完案例
                                                  </span>
                                          </label>
                                     </div>
@@ -52,18 +52,18 @@
                                         cellspacing="0" id="overview_table">
                                     <thead>
                                         <tr>
-                                            <th>Outcome</th>
-                                            <th>Case ID</th>
-                                            <th>Severity</th>
-                                            <th>Title</th>
-                                            <th>Customer</th>
-                                            <th>Classification</th>
-                                            <th>State</th>
-                                            <th>Tags</th>
-                                            <th>Open since</th>
-                                            <th>Open date</th>
-                                            <th>Tasks</th>
-                                            <th>Owner</th>
+                                            <th>结果</th>
+                                            <th>案例 ID</th>
+                                            <th>严重性</th>
+                                            <th>标题</th>
+                                            <th>客户</th>
+                                            <th>分类</th>
+                                            <th>状态</th>
+                                            <th>标签</th>
+                                            <th>开放时间</th>
+                                            <th>开放日期</th>
+                                            <th>任务</th>
+                                            <th>拥有人</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -71,15 +71,15 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th>Title</th>
-                                            <th>Customer</th>
-                                            <th>Classification</th>
-                                            <th>State</th>
-                                            <th>Tags</th>
-                                            <th>Open since</th>
-                                            <th>Open date</th>
-                                            <th>Tasks</th>
-                                            <th>Owner</th>
+                                            <th>标题</th>
+                                            <th>客户</th>
+                                            <th>分类</th>
+                                            <th>状态</th>
+                                            <th>标签</th>
+                                            <th>开放时间</th>
+                                            <th>开放日期</th>
+                                            <th>任务</th>
+                                            <th>拥有者</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -96,7 +96,7 @@
                         <div class="col md-12">
                             <div class="row">
                                 <div class="col align-self-center">
-                                    <h4 class="modal-title mr-4">Case</h4>
+                                    <h4 class="modal-title mr-4">案例</h4>
                                     <small><a class="text-muted modal-subtitle"></a></small>
                                 </div>
                                 <div class="col">

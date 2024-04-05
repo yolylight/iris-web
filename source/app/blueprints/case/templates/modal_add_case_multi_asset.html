@@ -2,13 +2,13 @@
     <div class="col md-12">
         <div class="row">
             <div class="col align-self-center">
-                <h4 class="modal-title mr-4">Add multiple assets</h4>
+                <h4 class="modal-title mr-4">添加多个资产</h4>
                 <small><a class="text-muted"></a></small>
             </div>
             {% include 'modals/modal_attributes_nav.html' %}
             <div class="col">
                 <div class="row float-right">
-                    <button class="float-right btn bg-transparent" title="Minimize" onclick="modal_minimized('modal_add_asset', 'Add asset');"> <i class='fa fa-minus'></i> </button>
+                    <button class="float-right btn bg-transparent" title="最小化" onclick="modal_minimized('modal_add_asset', '添加资产');"> <i class='fa fa-minus'></i> </button>
                     <button type="button" class="pull-right btn bg-transparent" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true"><i class="fa fa-times"></i></span></button>
                 </div>
@@ -26,16 +26,16 @@
                                 {{ form.hidden_tag() }}
                                 <div class="form-row ml-2">
                                     <div class="form-group col-12">
-                                        <label for="asset_type" class="placeholder">Assets Type *</label>
+                                        <label for="asset_type" class="placeholder">资产类型 *</label>
                                         {{ form.asset_type_id(class="selectpicker form-control") }}
                                     </div>
                                     <div class="form-group col-12">
-                                        <label for="name" class="placeholder">Assets Name *</label>
-                                        <textarea class="form-control sizable-textarea" autocomplete="off" rows="1" name="assets_name" id="assets_name" placeholder="One asset per line"></textarea>
+                                        <label for="name" class="placeholder">资产名称 *</label>
+                                        <textarea class="form-control sizable-textarea" autocomplete="off" rows="1" name="assets_name" id="assets_name" placeholder="每行一个资产"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group mt-3">
-                                    <label for="asset_description" class="placeholder">Description</label>
+                                    <label for="asset_description" class="placeholder">描述</label>
                                      <div class="md_description_field">
                                             <div class="form-group mt--2">
                                                 <button type="button" class="float-right icon-note btn btn-circle btn-sm mt-2" onclick="edit_in_asset_desc();">
@@ -59,7 +59,7 @@
                                 </div>
                                 <div class="form-row ml-2">
                                     <div class="form-group col-6">
-                                            <label for="asset_domain" class="placeholder">Domain</label>
+                                            <label for="asset_domain" class="placeholder">域</label>
                                             {{ form.asset_domain(class='form-control',  autocomplete="off") }}
                                     </div>
                                     <div class="form-group col-6">
@@ -68,32 +68,32 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <a class="btn btn-light btn-sm" data-toggle="collapse" href="#collapseAddInfo" role="button" aria-expanded="false" aria-controls="collapseAddInfo">> Additional information</a>
+                                    <a class="btn btn-light btn-sm" data-toggle="collapse" href="#collapseAddInfo" role="button" aria-expanded="false" aria-controls="collapseAddInfo">> 附加信息</a>
                                     <div class="collapse" id="collapseAddInfo">
                                         <div class="card card-body">
-                                        <label for="asset_info" class="placeholder">Additional information</label>
+                                        <label for="asset_info" class="placeholder">附加信息</label>
                                         {{ form.asset_info(class='form-control col-md-12 col-sm-12 sizable-textarea', autocomplete="off") }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-row ml-2">
                                     <div class="form-group col-6">
-                                        <label for="asset_compromise_status_id" class="placeholder mt-2">Compromise Status  </label>
+                                        <label for="asset_compromise_status_id" class="placeholder mt-2">入侵状态  </label>
                                         {{ form.asset_compromise_status_id(class="selectpicker col-9") }}
                                     </div>
                                     <div class="form-group col-6">
-                                        <label for="analysis_status_id" class="placeholder mt-2">Analysis Status  </label>
+                                        <label for="analysis_status_id" class="placeholder mt-2">分析状态  </label>
                                         {{ form.analysis_status_id(class="selectpicker col-9 float-right") }}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="asset_tags">Asset tags
+                                    <label for="asset_tags">资产标签
                                     </label>
                                     <input type="text" id="asset_tags"
                                         class="form-control col-md-12"/>
                                 </div>
                                 <div class="form-group" data-select2-id="7">
-                                    <label>Related IOC</label>
+                                    <label>相关IOC</label>
                                     <div class="select2-input ml-12" data-select2-id="6">
                                         <select id="ioc_links" name="ioc_links" class="form-control select2-hidden-accessible ml-12" multiple="" data-select2-id="ioc_links" tabindex="-1" aria-hidden="true" style="width: 100%">
 
@@ -107,7 +107,7 @@
                 </div>
                {% include 'modals/modal_attributes_tabs.html' %}
           </div>
-        <button type="button" class="btn btn-outline-success ml-4 mt-5 float-right"  id="submit_new_assets">Save</button>
+        <button type="button" class="btn btn-outline-success ml-4 mt-5 float-right"  id="submit_new_assets">保存</button>
     </div>
 </div>
     <script>
@@ -116,20 +116,20 @@
 
     $('#asset_type_id').selectpicker({
         liveSearch: true,
-        title: "None",
+        title: "无",
         style: "btn-outline-white",
 
     });
     $('#analysis_status_id').selectpicker({
         liveSearch: true,
-        title: "None",
+        title: "无",
         style: "btn-outline-white"
     });
     $('#analysis_status_id').selectpicker('val', '1');
 
     $('#asset_compromise_status_id').selectpicker({
         liveSearch: true,
-        title: "To be determined",
+        title: "待定",
         style: "btn-outline-white"
     });
     $('#asset_compromise_status_id').selectpicker('val', '0');

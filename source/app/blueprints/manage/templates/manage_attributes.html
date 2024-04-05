@@ -1,6 +1,6 @@
 {% extends "layouts/default.html" %}
 
-{% block title %} Manage Attributes {% endblock title %}
+{% block title %} 管理属性 {% endblock title %}
 
 {% block stylesheets %}
 <link rel="stylesheet" href="/static/assets/css/suggestags.css">
@@ -17,11 +17,11 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col">
-                            <div class="card-title">Objects Attributes</div>
+                            <div class="card-title">对象属性</div>
                         </div>
                         <div class="col">
                             <button type="button" class="btn btn-sm btn-dark float-right ml-2" onclick="refresh_attribute_table();">
-                                Refresh
+                                刷新
                             </button>
                         </div>
                     </div>
@@ -37,15 +37,15 @@
                             <thead>
                                 <tr>
                                     <th>#ID</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
+                                    <th>名称</th>
+                                    <th>描述</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>#ID</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
+                                    <th>名称</th>
+                                    <th>描述</th>
                                 </tr>
                             </tfoot>
                         </table>

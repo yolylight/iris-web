@@ -112,9 +112,9 @@ function toggleSelectDeselect(toggleButton, listSelector) {
     });
 
     if (allChecked) {
-        toggleButton.text("Select All");
+        toggleButton.text("选择所有");
     } else {
-        toggleButton.text("Deselect All");
+        toggleButton.text("取消全选");
     }
 }
 
@@ -144,7 +144,7 @@ function mergeMultipleAlertsModal() {
     const selectedAlerts = getBatchAlerts();
     const escalateButton = $("#escalateOrMergeButton");
     if (selectedAlerts.length === 0) {
-        notify_error('Please select at least one alert to perform this action on.');
+        notify_error('请选择至少一个警报，对其执行此操作.');
         return;
     }
     fetchMultipleAlerts(selectedAlerts)
@@ -154,11 +154,11 @@ function mergeMultipleAlertsModal() {
                     const assetsList = $("#assetsList");
 
                     // Configure the modal for both escalation and merging
-                    $('#escalateModalLabel').text('Merge multiple alerts in a new case');
-                    $('#escalateModalExplanation').text('These alerts will be merged into a new case. Set the case title and select the IOCs and Assets to escalate into the case.');
+                    $('#escalateModalLabel').text('在新案例中合并多个警报');
+                    $('#escalateModalExplanation').text('这些警报将合并为一个新案例。设置案例标题并选择要升级到案件中的 IOC 和资产.');
                     $('#modalAlertTitleContainer').hide();
 
-                    $('#modalEscalateCaseTitle').val(`[ALERT] Escalation of ${selectedAlerts.length} alerts`);
+                    $('#modalEscalateCaseTitle').val(`[ALERT] 升级 ${selectedAlerts.length} 警报`);
                     $('#modalEscalateCaseTitleContainer').show();
 
                     escalateButton.attr("data-merge", false);
@@ -183,7 +183,7 @@ function mergeMultipleAlertsModal() {
                         clearOnEmpty: false,
                         emptyRequest: true,
                         locale: {
-                            emptyTitle: 'Select and Begin Typing',
+                            emptyTitle: '选择并开始输入',
                             statusInitialized: '',
                         },
                         preprocessData: function (data) {
@@ -203,7 +203,7 @@ function mergeMultipleAlertsModal() {
                                         dataTemplate = dataTemplate.data;
                                         const templateSelect = $('#mergeAlertCaseTemplateSelect');
                                         templateSelect.html('');
-                                        templateSelect.append('<option value="">Select a template</option>');
+                                        templateSelect.append('<option value="">选择一个模板</option>');
                                         for (let i = 0; i < dataTemplate.length; i++) {
                                             templateSelect.append(`<option value="${dataTemplate[i].id}">${filterXSS(dataTemplate[i].display_name)}</option>`);
                                         }
@@ -221,7 +221,7 @@ function mergeMultipleAlertsModal() {
                                                 appendLabels(ioCsList, alertData.iocs, 'ioc');
                                             }
                                             if (alertData.assets.length !== 0) {
-                                                appendLabels(assetsList, alertData.assets, 'asset');
+                                                appendLabels(assetsList, alertData.assets, '资产');
                                             }
                                         }
 
@@ -236,8 +236,8 @@ function mergeMultipleAlertsModal() {
 
                                         $("input[type='radio'][name='mergeOption']").off('change').on("change", function () {
                                             if ($(this).val() === "existing_case") {
-                                                $('#escalateModalLabel').text(`Merge ${selectedAlerts.length} alerts in an existing case`);
-                                                $('#escalateModalExplanation').text('These alerts will be merged into the selected case. Select the IOCs and Assets to merge into the case.');
+                                                $('#escalateModalLabel').text(`合并 ${selectedAlerts.length} 警报到已有案例`);
+                                                $('#escalateModalExplanation').text('这些警报将合并到所选案例中。选择要合并到案例中的 IOC 和资产.');
                                                 $('#mergeAlertCaseSelectSection').show();
                                                 $('#mergeAlertCaseTemplateSection').hide();
                                                 $('#modalEscalateCaseTitleContainer').hide();
@@ -246,8 +246,8 @@ function mergeMultipleAlertsModal() {
                                                 escalateButton.data("merge", true);
                                             } else {
                                                 console.log('change')
-                                                $('#escalateModalLabel').text(`Merge ${selectedAlerts.length} alerts in new case`);
-                                                $('#escalateModalExplanation').text('This alert will be merged into a new case. Set the case title and select the IOCs and Assets to merge into the case.');
+                                                $('#escalateModalLabel').text(`合并 ${selectedAlerts.length} 警报到新案例`);
+                                                $('#escalateModalExplanation').text('该警报将被合并到一个新案例中。设置案例标题并选择要合并到案例中的 IOC 和资产.');
                                                 $('#mergeAlertCaseSelectSection').hide();
                                                 $('#mergeAlertCaseTemplateSection').show();
                                                 $('#modalEscalateCaseTitleContainer').show();
@@ -287,10 +287,10 @@ function mergeAlertModal(alert_id) {
             $("#modalAlertTitle").val(alert_title);
 
             // Configure the modal for both escalation and merging
-            $('#escalateModalLabel').html(`Merge alert #${alert_id} in a new case`);
+            $('#escalateModalLabel').html(`合并 #${alert_id} 到新案例`);
             $('#escalateModalLabel')[0].offsetHeight;
 
-            $('#escalateModalExplanation').text('This alert will be escalated into a new case. Set a title and select the IOCs and Assets to escalate into the case.');
+            $('#escalateModalExplanation').text('该警报将升级为新案例。设置标题并选择要升级为案例的 IOC 和资产.');
 
             $('#modalEscalateCaseTitle').val(`[ALERT] ${alert_title}`);
             $('#modalEscalateCaseTitleContainer').show();
@@ -317,7 +317,7 @@ function mergeAlertModal(alert_id) {
                 clearOnEmpty: false,
                 emptyRequest: true,
                 locale: {
-                    emptyTitle: 'Select and Begin Typing',
+                    emptyTitle: '选择并开始输入',
                     statusInitialized: '',
                 },
                 preprocessData: function (data) {
@@ -338,7 +338,7 @@ function mergeAlertModal(alert_id) {
                             data = data.data;
                             const templateSelect = $('#mergeAlertCaseTemplateSelect');
                             templateSelect.html('');
-                            templateSelect.append('<option value="">Select a template</option>');
+                            templateSelect.append('<option value="">选择一个模板</option>');
                             for (let i = 0; i < data.length; i++) {
                                 templateSelect.append(`<option value="${data[i].id}">${filterXSS(data[i].display_name)}</option>`);
                             }
@@ -379,8 +379,8 @@ function mergeAlertModal(alert_id) {
 
                             $("input[type='radio'][name='mergeOption']").off("change").on("change", function () {
                                 if ($(this).val() === "existing_case") {
-                                    $('#escalateModalLabel').text(`Merge alert #${alert_id} in existing case`);
-                                    $('#escalateModalExplanation').text('This alert will be merged into the selected case. Select the IOCs and Assets to merge into the case.');
+                                    $('#escalateModalLabel').text(`合并警报 #${alert_id}到已有案例`);
+                                    $('#escalateModalExplanation').text('该警报将并入所选案例。选择要并入案例的 IOC 和资产.');
                                     $('#mergeAlertCaseSelectSection').show();
                                     $('#mergeAlertCaseTemplateSection').hide();
                                     $('#modalEscalateCaseTitleContainer').hide();
@@ -388,8 +388,8 @@ function mergeAlertModal(alert_id) {
                                     $('#mergeAlertCaseSelect').selectpicker('val', get_caseid());
                                     escalateButton.data("merge", true);
                                 } else {
-                                    $('#escalateModalLabel').text(`Merge alert #${alert_id} in new case`);
-                                    $('#escalateModalExplanation').text('This alert will be merged into a new case. Set the case title and select the IOCs and Assets to merge into the case.');
+                                    $('#escalateModalLabel').text(`合并警报 #${alert_id} 到新案例`);
+                                    $('#escalateModalExplanation').text('该警报将被合并到一个新案例中。设置案件标题并选择要合并到案例中的 IOC 和资产.');
                                     $('#mergeAlertCaseSelectSection').hide();
                                     $('#mergeAlertCaseTemplateSection').show();
                                     $('#modalEscalateCaseTitleContainer').show();
@@ -466,20 +466,20 @@ function buildAlertLink(alert_id){
 function copyAlertLink(alert_id) {
     const link = buildAlertLink(alert_id);
     navigator.clipboard.writeText(link).then(function() {
-        notify_success('Link copied');
+        notify_success('链接已拷贝');
     }, function(err) {
-        notify_error('Can\'t copy link. I printed it in console.');
-        console.error('Shared link', err);
+        notify_error('无法拷贝链接,已打印到console.');
+        console.error('共享链接', err);
     });
 }
 
 function copyMDAlertLink(alert_id){
     const link = `[<i class="fa-solid fa-bell"></i> #${alert_id}](${buildAlertLink(alert_id)})`;
     navigator.clipboard.writeText(link).then(function() {
-        notify_success('MD link copied');
+        notify_success('MD链接已拷贝');
     }, function(err) {
-        notify_error('Can\'t copy link. I printed it in console.');
-        console.error('Shared link', err);
+        notify_error('无法拷贝链接,已打印到console.');
+        console.error('共享链接', err);
     });
 }
 
@@ -495,7 +495,7 @@ function createNetwork(alert_id, relatedAlerts, nb_nodes, containerId, container
   const { nodes, edges } = relatedAlerts;
 
   if (nodes.length === 0 || nodes.length === undefined) {
-      $(`#similarAlertsNotify-${alert_id}`).text(`No relationships found for this alert`);
+      $(`#similarAlertsNotify-${alert_id}`).text(`未找到与此警报的关系`);
      return;
   }
 
@@ -592,9 +592,9 @@ function createNetwork(alert_id, relatedAlerts, nb_nodes, containerId, container
               $('#view-alert').data('node-id', node_id);
               $('#view-alert').data('node-type', node_type);
               if (node_type === 'alert' || node_type === 'case') {
-                  $('#view-alert-text').text(`View on ${node_type} #${node_id}`);
+                  $('#view-alert-text').text(`查看 ${node_type} #${node_id}`);
               } else {
-                    $('#view-alert-text').text(`Pivot on ${node_type} ${node_id}`);
+                    $('#view-alert-text').text(`透视 ${node_type} ${node_id}`);
               }
               contextMenu.show();
           }
@@ -607,7 +607,7 @@ function createNetwork(alert_id, relatedAlerts, nb_nodes, containerId, container
     });
 
       if (nodes.length >= nb_nodes) {
-            $(`#similarAlertsNotify-${alert_id}`).text(`Relationships node exceeded the nodes limit. Expect truncated results.`)
+            $(`#similarAlertsNotify-${alert_id}`).text(`关系节点超出节点限制.返回截断结果.`)
       } else {
             $(`#similarAlertsNotify-${alert_id}`).text(``);
       }
@@ -650,7 +650,7 @@ function fetchSimilarAlerts(alert_id,
           'number-of-nodes': nb_nodes
         }).toString();
 
-        $(`#similarAlertsNotify-${alert_id}`).text('Fetching relationships...');
+        $(`#similarAlertsNotify-${alert_id}`).text('获取关系...');
         get_raw_request_api(`/alerts/similarities/${alert_id}?${queryString}&cid=${get_caseid()}`)
           .done((data) => {
             createNetwork(alert_id, data.data, nb_nodes, `similarAlerts-${alert_id}`, `graphConfigure-${alert_id}`);
@@ -797,7 +797,7 @@ function addTagFilter(this_object) {
 
     updateAlerts(page_number, per_page, filters)
         .then(() => {
-            notify_success('Refreshed');
+            notify_success('已刷新');
             $('#newAlertsBadge').text(0).hide();
         });
 }
@@ -813,13 +813,13 @@ function alertResolutionToARC(resolution) {
     }
     switch (resolution.resolution_status_name) {
         case 'True Positive With Impact':
-            return `<span class="badge alert-bade-status badge-pill badge-danger mr-2">True Positive with impact</span>`
+            return `<span class="badge alert-bade-status badge-pill badge-danger mr-2">有影响的真实告警</span>`
         case 'True Positive Without Impact':
-            return `<span class="badge alert-bade-status badge-pill badge-warning mr-2">True Positive without impact</span>`
+            return `<span class="badge alert-bade-status badge-pill badge-warning mr-2">无影响真实告警</span>`
         case 'False Positive':
-            return `<span class="badge alert-bade-status badge-pill badge-success mr-2">False Positive</span>`
+            return `<span class="badge alert-bade-status badge-pill badge-success mr-2">误报</span>`
         case 'Unknown':
-            return `<span class="badge alert-bade-status badge-pill badge-light mr-2">Unknown resolution</span>`
+            return `<span class="badge alert-bade-status badge-pill badge-light mr-2">未知</span>`
     }
 }
 
@@ -844,9 +844,9 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
   if (alert.owner !== null) {
       alert.owner.user_name = filterXSS(alert.owner.user_name);
   }
-  alert.alert_title = alert.alert_title ? filterXSS(alert.alert_title) : 'No title provided';
-  alert.alert_description = alert.alert_description ? filterXSS(alert.alert_description) : 'No description provided';
-  alert.alert_source = alert.alert_description ? filterXSS(alert.alert_source) : 'No source provided';
+  alert.alert_title = alert.alert_title ? filterXSS(alert.alert_title) : '未提供标题';
+  alert.alert_description = alert.alert_description ? filterXSS(alert.alert_description) : '未提供描述';
+  alert.alert_source = alert.alert_description ? filterXSS(alert.alert_source) : '未提供来源';
   alert.alert_source_link = filterXSS(alert.alert_source_link);
   alert.alert_source_ref = filterXSS(alert.alert_source_ref);
   alert.alert_note = filterXSS(alert.alert_note);
@@ -886,7 +886,7 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
                                     <i class="fa-solid fa-fire"></i>
                                   </span>
                                 </div>
-                                ${alert.owner ? get_avatar_initials(alert.owner.user_name, true, `changeAlertOwner(${alert.alert_id})`) : `<div title="Assign to me" class="avatar avatar-sm" onclick="updateAlert(${alert.alert_id}, {alert_owner_id: userWhoami.user_id}, true);"><span class="avatar-title avatar-iris rounded-circle btn-alert-primary" style="cursor:pointer;"><i class="fa-solid fa-hand"></i></span></div>`}
+                                ${alert.owner ? get_avatar_initials(alert.owner.user_name, true, `changeAlertOwner(${alert.alert_id})`) : `<div title="分配给我" class="avatar avatar-sm" onclick="updateAlert(${alert.alert_id}, {alert_owner_id: userWhoami.user_id}, true);"><span class="avatar-title avatar-iris rounded-circle btn-alert-primary" style="cursor:pointer;"><i class="fa-solid fa-hand"></i></span></div>`}
                               </div>
                               <div class="tickbox" style="display:none;">
                                 <input type="checkbox" class="alert-selection-checkbox" data-alert-id="${alert.alert_id}" />
@@ -909,7 +909,7 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
                                         
                         <div class=" d-flex mt-3">
                             <div class="ml-auto">
-                                <button type="button" class="btn bg-transparent btn-sm mt--4" onclick="comment_element(${alert.alert_id}, 'alerts', true)" title="Comments">
+                                <button type="button" class="btn bg-transparent btn-sm mt--4" onclick="comment_element(${alert.alert_id}, 'alerts', true)" title="评论">
                                   <span class="btn-label">
                                     <i class="fa-solid fa-comments"></i><span class="notification" id="object_comments_number_${alert.alert_id}">${alert.comments.length || ''}</span>
                                   </span>
@@ -919,13 +919,13 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
                                   <span aria-hidden="true"><i class="fas fa-ellipsis-v"></i></span>
                                 </button>
                                 <div class="dropdown-menu" role="menu">
-                                  <a href="javascript:void(0)" class="dropdown-item" onclick="copyAlertLink(${alert.alert_id});return false;"><small class="fa fa-share mr-2"></small>Share</a>
-                                  <a href="javascript:void(0)" class="dropdown-item" onclick="copyMDAlertLink(${alert.alert_id});return false;"><small class="fa-brands fa-markdown mr-2"></small>Markdown Link</a>
+                                  <a href="javascript:void(0)" class="dropdown-item" onclick="copyAlertLink(${alert.alert_id});return false;"><small class="fa fa-share mr-2"></small>共享</a>
+                                  <a href="javascript:void(0)" class="dropdown-item" onclick="copyMDAlertLink(${alert.alert_id});return false;"><small class="fa-brands fa-markdown mr-2"></small>Markdown链接</a>
                                   ${menuOptionsHtmlAlert}
                                   <div class="dropdown-divider"></div>
-                                  <a href="javascript:void(0)" class="dropdown-item" onclick="showAlertHistory(${alert.alert_id});return false;"><small class="fa fa-clock-rotate-left mr-2"></small>History</a>
+                                  <a href="javascript:void(0)" class="dropdown-item" onclick="showAlertHistory(${alert.alert_id});return false;"><small class="fa fa-clock-rotate-left mr-2"></small>历史</a>
                                   <div class="dropdown-divider"></div>
-                                  <a href="javascript:void(0)" class="dropdown-item text-danger" onclick="delete_alert(${alert.alert_id});"><small class="fa fa-trash mr-2"></small>Delete alert</a>
+                                  <a href="javascript:void(0)" class="dropdown-item text-danger" onclick="delete_alert(${alert.alert_id});"><small class="fa fa-trash mr-2"></small>删除告警</a>
                                 </div>
                             </div>
                         </div>          
@@ -935,34 +935,34 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
                 </div>
                 
                 <div class="float-right alert-actions mt--4">
-                      <button type="button" class="btn btn-alert-primary btn-sm ml-2" onclick="mergeAlertModal(${alert.alert_id}, false);">Merge</button>
+                      <button type="button" class="btn btn-alert-primary btn-sm ml-2" onclick="mergeAlertModal(${alert.alert_id}, false);">合并</button>
                       
                       <div class="dropdown ml-2 d-inline-block">
                           <button type="button" class="btn btn-alert-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Assign
+                              分配
                           </button>
                           <div class="dropdown-menu">
-                              <a class="dropdown-item" href="javascript:void(0)" onclick="updateAlert(${alert.alert_id}, {alert_owner_id: userWhoami.user_id}, true);">Assign to me</a>
-                              <a class="dropdown-item" href="javascript:void(0)" onclick="changeAlertOwner(${alert.alert_id});">Assign</a>
+                              <a class="dropdown-item" href="javascript:void(0)" onclick="updateAlert(${alert.alert_id}, {alert_owner_id: userWhoami.user_id}, true);">分配给我</a>
+                              <a class="dropdown-item" href="javascript:void(0)" onclick="changeAlertOwner(${alert.alert_id});">分配</a>
                           </div>
                       </div>
                       <div class="dropdown ml-2 d-inline-block">
                           <button type="button" class="btn btn-alert-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Set status
+                              设置状态
                           </button>
                           <div class="dropdown-menu">
-                              <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatusAlert(${alert.alert_id}, 'New');">New</a>
-                              <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatusAlert(${alert.alert_id}, 'In progress');">In progress</a>
-                              <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatusAlert(${alert.alert_id}, 'Pending');">Pending</a>
-                              <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatusAlert(${alert.alert_id}, 'Closed');">Closed</a>
-                              <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatusAlert(${alert.alert_id}, 'Merged');">Merged</a>
+                              <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatusAlert(${alert.alert_id}, 'New');">新建</a>
+                              <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatusAlert(${alert.alert_id}, 'In progress');">处理中</a>
+                              <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatusAlert(${alert.alert_id}, 'Pending');">待定</a>
+                              <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatusAlert(${alert.alert_id}, 'Closed');">关闭</a>
+                              <a class="dropdown-item" href="javascript:void(0)" onclick="changeStatusAlert(${alert.alert_id}, 'Merged');">合并</a>
                             </div>
                       </div>
                       ${alert.status.status_name === 'Closed' ? `
-                          <button type="button" class="btn btn-alert-success btn-sm ml-2" onclick="changeStatusAlert(${alert.alert_id}, 'In progress');">Set in progress</button>
+                          <button type="button" class="btn btn-alert-success btn-sm ml-2" onclick="changeStatusAlert(${alert.alert_id}, 'In progress');">设置中</button>
                       `: ` 
-                      <button type="button" class="btn btn-alert-danger btn-sm ml-2" onclick="editAlert(${alert.alert_id}, true);">Close with note</button>
-                      <button type="button" class="btn btn-alert-danger btn-sm ml-2" onclick="changeStatusAlert(${alert.alert_id}, 'Closed');">Close</button>
+                      <button type="button" class="btn btn-alert-danger btn-sm ml-2" onclick="editAlert(${alert.alert_id}, true);">以注释结束</button>
+                      <button type="button" class="btn btn-alert-danger btn-sm ml-2" onclick="changeStatusAlert(${alert.alert_id}, 'Closed');">关闭</button>
                       `}
                 </div>
                 <span class="mt-4">${alert.alert_description.replaceAll('\n', '<br/>').replaceAll('\t', '  ')}</span>
@@ -973,39 +973,39 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
               <div id="additionalDetails-${alert.alert_id}" class="collapse mt-4 ${expanded? 'show': ''} alert-collapsible">
                 <div class="card-no-pd mt-2">
                     <div class="card-body">
-                    <h3 class="title mb-3"><strong>General info</strong></h3>  
-                        ${alert.alert_source ? `<div class="row"><div class="col-md-3"><b>Source:</b></div>
+                    <h3 class="title mb-3"><strong>基本信息</strong></h3>  
+                        ${alert.alert_source ? `<div class="row"><div class="col-md-3"><b>来源:</b></div>
                         <div class="col-md-9">${alert.alert_source}</div>
                       </div>` : ''}
                       ${alert.alert_source_link ? `<div class="row mt-2">
-                        <div class="col-md-3"><b>Source Link:</b></div>
+                        <div class="col-md-3"><b>来源链接:</b></div>
                         <div class="col-md-9">${
                             alert.alert_source_link && alert.alert_source_link.startsWith('http') 
                             ? `<a href="${alert.alert_source_link}">${alert.alert_source_link}</a>` 
-                            : 'No valid link provided'
+                            : '未提供有效链接'
                           }</div>
                       </div>` : ''}
                       ${alert.alert_source_ref ? `<div class="row mt-2">
-                        <div class="col-md-3"><b>Source Reference:</b></div>
+                        <div class="col-md-3"><b>来源参考:</b></div>
                         <div class="col-md-9">${alert.alert_source_ref}</div>
                       </div>` : ''}
                       ${alert.alert_source_event_time ? `<div class="row mt-2">
-                        <div class="col-md-3"><b>Source Event Time:</b></div>
+                        <div class="col-md-3"><b>源事件时间:</b></div>
                         <div class="col-md-9">${formatTime(alert.alert_source_event_time)} UTC</div>
                       </div>` : ''}
                       ${alert.alert_creation_time ? `<div class="row mt-2">
-                        <div class="col-md-3"><b>IRIS Creation Time:</b></div>
+                        <div class="col-md-3"><b>IRIS 创建时间:</b></div>
                         <div class="col-md-9">${formatTime(alert.alert_creation_time)} UTC</div>
                       </div>` : ''}
                     
                     <div class="separator-solid"></div>
-                    <h3 class="title mb-3"><strong>Alert note</strong></h3>
+                    <h3 class="title mb-3"><strong>警报说明</strong></h3>
                     <pre id=alertNote-${alert.alert_id}>${alert.alert_note}</pre>
                     
                     <!-- Alert Context section -->
                     ${
                         alert.alert_context && Object.keys(alert.alert_context).length > 0
-                            ? `<div class="separator-solid"></div><h3 class="title mt-3 mb-3"><strong>Context</strong></h3>
+                            ? `<div class="separator-solid"></div><h3 class="title mt-3 mb-3"><strong>背景</strong></h3>
                                 <dl class="row">
                                 ${renderNestedObject(alert.alert_context)}
                                 </dl>`
@@ -1015,33 +1015,32 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
                     <div class="separator-solid"></div>
                     <h3 class="title mt-3 mb-3"><strong>Relationships</strong></h3>
                     <button class="btn btn-sm btn-outline-dark" type="button" data-toggle="collapse" data-target="#relationsAlert-${alert.alert_id}" 
-                    aria-expanded="false" aria-controls="relationsAlert-${alert.alert_id}" onclick="fetchSmartRelations(${alert.alert_id});">Toggle Relations</button>
+                    aria-expanded="false" aria-controls="relationsAlert-${alert.alert_id}" onclick="fetchSmartRelations(${alert.alert_id});">切换关系</button>
                     <div class="collapse mt-3" id="relationsAlert-${alert.alert_id}">
-                        The following relationships are automatically generated by IRIS based on the alert's IOCs and assets 
-                        in the system. They are an indication only and may not be accurate. 
+                       以下关系由 IRIS 根据警报的IOC和系统中的资产自动生成。它们仅供参考，不一定准确。 
                         <div class="row ml-1">
                             <div class="selectgroup selectgroup-pills mt-4">
                                 <label class="selectgroup-item">
                                     <input type="checkbox" name="open_alerts_${alert.alert_id}" class="selectgroup-input filter-graph-alert-checkbox" onclick="refreshAlertRelationships(${alert.alert_id});">
-                                    <span class="selectgroup-button">Show open alerts</span>
+                                    <span class="selectgroup-button">显示开放的警报</span>
                                 </label>
                                 <label class="selectgroup-item">
                                     <input type="checkbox" name="closed_alerts_${alert.alert_id}" class="selectgroup-input filter-graph-alert-checkbox" onclick="refreshAlertRelationships(${alert.alert_id})">
-                                    <span class="selectgroup-button">Show closed alerts</span>
+                                    <span class="selectgroup-button">显示关闭的警报</span>
                                 </label>
                                 <label class="selectgroup-item">
                                     <input type="checkbox" name="open_cases_${alert.alert_id}" class="selectgroup-input filter-graph-alert-checkbox" onclick="refreshAlertRelationships(${alert.alert_id})">
-                                    <span class="selectgroup-button">Show open cases</span>
+                                    <span class="selectgroup-button">显示开放案例</span>
                                 </label>
                                 <label class="selectgroup-item">
                                     <input type="checkbox" name="closed_cases_${alert.alert_id}" class="selectgroup-input filter-graph-alert-checkbox" onclick="refreshAlertRelationships(${alert.alert_id})">
-                                    <span class="selectgroup-button">Show closed cases</span>
+                                    <span class="selectgroup-button">显示关闭案例</span>
                                 </label>
                             </div>
                             <div class="mt-4">
                                 <div class="input-group ">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Nodes limit</span>
+                                        <span class="input-group-text">节点限制</span>
                                     </div>
                                     <input type="number" name="value" value="100" class="form-control" id="nbResultsGraphFilter-${alert.alert_id}" onchange="refreshAlertRelationships(${alert.alert_id})">
                                 </div>
@@ -1049,7 +1048,7 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
                             <div class="ml-2 mt-4">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text">Lookback (days)</span>
+                                        <span class="input-group-text">回溯(天数)</span>
                                     </div>
                                     <input type="number" name="value" value="30" class="form-control" id="daysBackGraphFilter-${alert.alert_id}" onchange="refreshAlertRelationships(${alert.alert_id})">
                                 </div>
@@ -1066,17 +1065,17 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
                     <!-- Alert IOCs section -->
                     ${
                       alert.iocs && alert.iocs.length > 0
-                          ? `<div class="separator-solid"></div><h3 class="title mb-3"><strong>IOCs</strong></h3>
+                          ? `<div class="separator-solid"></div><h3 class="title mb-3"><strong>IOC</strong></h3>
                                        <div class="table-responsive">
                                          <table class="table table-sm table-striped">
                                            <thead>
                                              <tr>
-                                               <th>Value</th>
-                                               <th>Description</th>
-                                               <th>Type</th>
+                                               <th>值</th>
+                                               <th>描述</th>
+                                               <th>类型</th>
                                                <th>TLP</th>
-                                               <th>Tags</th>
-                                               <th>Enrichment</th>
+                                               <th>标签</th>
+                                               <th>详情</th>
                                                <th></th>
                                              </tr>
                                            </thead>
@@ -1091,7 +1090,7 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
                                                    <td>${filterXSS(ioc.ioc_tlp) ? ioc.ioc_tlp : '-'}</td>
                                                    <td>${ioc.ioc_tags ? ioc.ioc_tags.split(',').map((tag) => `<span class="badge badge-pill badge-light ml-1"><i class="fa fa-tag mr-1"></i>${filterXSS(tag)}</span>`).join('') : ''}</td>
                                                    <td>${ioc.ioc_enrichment ? `<button type="button" class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target="#enrichmentModal" onclick="showEnrichment(${JSON.stringify(ioc.ioc_enrichment).replace(/"/g, '&quot;')})">
-                                                      View Enrichment
+                                                      显示详情
                                                     </button>` : ''}
                                                     </td>
                                                     <td>
@@ -1099,7 +1098,7 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
                                                           <span aria-hidden="true"><i class="fas fa-ellipsis-v"></i></span>
                                                         </button>
                                                         <div class="dropdown-menu" role="menu">
-                                                        ${ modulesOptionsIocReq.length === 0 ? `<a class="dropdown-item" href="javascript:void(0);"><i class="fas fa-rocket mr-2"></i> No module available</a>` :
+                                                        ${ modulesOptionsIocReq.length === 0 ? `<a class="dropdown-item" href="javascript:void(0);"><i class="fas fa-rocket mr-2"></i> 无可用模块</a>` :
                                                           modulesOptionsIocReq.map((opt) => `
                                                                 <a class="dropdown-item" href="javascript:void(0);" onclick='init_module_processing([${ioc.ioc_id}], "${opt.hook_name}","${opt.manual_hook_ui_name}","${opt.module_name}", "ioc");return false;'><i class="fas fa-rocket mr-2"></i> ${opt.manual_hook_ui_name}</a>`
                                                             ).join('')
@@ -1118,18 +1117,18 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
                     <!-- Alert assets section -->
                     ${
                     alert.assets && alert.assets.length > 0
-              ? `<div class="separator-solid"></div><h3 class="title mb-3"><strong>Assets</strong></h3>
+              ? `<div class="separator-solid"></div><h3 class="title mb-3"><strong>资产</strong></h3>
                            <div class="table-responsive">
                              <table class="table table-sm table-striped">
                                <thead>
                                  <tr>
-                                   <th>Name</th>
-                                   <th>Description</th>
-                                   <th>Type</th>
-                                   <th>Domain</th>
+                                   <th>名称</th>
+                                   <th>描述</th>
+                                   <th>类型</th>
+                                   <th>域名</th>
                                    <th>IP</th>
-                                   <th>Tags</th>
-                                   <th>Enrichment</th>
+                                   <th>标签</th>
+                                   <th>详情</th>
                                  </tr>
                                </thead>
                                <tbody>
@@ -1144,7 +1143,7 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
                                        <td>${asset.asset_ip ? filterXSS(asset.asset_ip) : '-'}</td>
                                        <td>${asset.asset_tags ? asset.asset_tags.split(',').map((tag) => `<span class="badge badge-pill badge-light ml-1"><i class="fa fa-tag mr-1"></i>${filterXSS(tag)}</span>`).join('') : ''}</td>
                                        <td>${asset.asset_enrichment ? `<button type="button" class="btn btn-sm btn-outline-dark" data-toggle="modal" data-target="#enrichmentModal" onclick="showEnrichment(${JSON.stringify(asset.asset_enrichment).replace(/"/g, '&quot;')})">
-                                          View Enrichment
+                                          查看详情
                                         </button>` : ''}
                                         </td>
                                      </tr>`
@@ -1158,9 +1157,9 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
                     
                     ${
           alert.alert_source_content
-              ? `<div class="separator-solid"></div><h3 class="title mt-3 mb-3"><strong>Raw Alert</strong></h3>
+              ? `<div class="separator-solid"></div><h3 class="title mt-3 mb-3"><strong>原始告警</strong></h3>
                            <button class="btn btn-sm btn-outline-dark" type="button" data-toggle="collapse" data-target="#rawAlert-${alert.alert_id}" 
-                           aria-expanded="false" aria-controls="rawAlert-${alert.alert_id}">Toggle Raw Alert</button>
+                           aria-expanded="false" aria-controls="rawAlert-${alert.alert_id}">切换原始告警</button>
                            <div class="collapse mt-3" id="rawAlert-${alert.alert_id}">
                              <pre class="pre-scrollable">${filterXSS(JSON.stringify(alert.alert_source_content, null, 2))}</pre>
                            </div>`
@@ -1176,9 +1175,9 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
                           <span aria-hidden="true"><i class="fa-solid fa-link"></i>#${case_}</span>
                       </a>
                       <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/case?cid=${case_}" target="_blank"><i class="fa-solid fa-eye mr-2"></i> View case #${case_}</a>    
+                        <a class="dropdown-item" href="/case?cid=${case_}" target="_blank"><i class="fa-solid fa-eye mr-2"></i> 显示案例 #${case_}</a>    
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="unlinkAlertFromCase(${alert.alert_id}, ${case_})"><i class="fa-solid fa-unlink mr-2"></i>Unlink alert from case #${case_}</a>
+                        <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="unlinkAlertFromCase(${alert.alert_id}, ${case_})"><i class="fa-solid fa-unlink mr-2"></i>从案例 #${case_}取消关联</a>
                       </div>
                 </div>
               `).join('') + '</div>' : '<div class="mb-4"></div>'}
@@ -1186,16 +1185,16 @@ function renderAlert(alert, expanded=false, modulesOptionsAlertReq,
               <div class="">  
                 ${alert_resolution === undefined ? "": alert_resolution} 
                 ${alert.status ? `<span class="badge alert-bade-status badge-pill badge-light mr-3">${alert.status.status_name}</span>` : ''}                    
-                <span title="Alert source event UTC time"><b><i class="fa-regular fa-calendar-check"></i></b>
+                <span title="警报源事件 UTC 时间"><b><i class="fa-regular fa-calendar-check"></i></b>
                 <small class="text-muted ml-1">${formatTime(alert.alert_source_event_time)}</small></span>
-                <span title="Alert severity"><b class="ml-3"><i class="fa-solid fa-bolt"></i></b>
+                <span title="告警严重性"><b class="ml-3"><i class="fa-solid fa-bolt"></i></b>
                   <small class="text-muted ml-1" id="alertSeverity-${alert.alert_id}" data-severity-id="${alert.severity.severity_id}">${alert.severity.severity_name}</small></span>
-                <span title="Alert source"><b class="ml-3"><i class="fa-solid fa-cloud-arrow-down"></i></b>
-                  <small class="text-muted ml-1">${filterXSS(alert.alert_source) || 'Unspecified'}</small></span>
+                <span title="告警来源"><b class="ml-3"><i class="fa-solid fa-cloud-arrow-down"></i></b>
+                  <small class="text-muted ml-1">${filterXSS(alert.alert_source) || '未指定'}</small></span>
                 <span title="Alert client"><b class="ml-3"><i class="fa-regular fa-circle-user"></i></b>
-                  <small class="text-muted ml-1 mr-2">${filterXSS(alert.customer.customer_name) || 'Unspecified'}</small></span>
-                ${alert.classification && alert.classification.name_expanded ? `<span class="badge badge-pill badge-light" title="Classification" id="alertClassification-${alert.alert_id}" data-classification-id="${alert.classification.id}"><i class="fa-solid fa-shield-virus mr-1"></i>${filterXSS(alert.classification.name_expanded)}</span>`: ''}
-                ${alert.alert_tags ? alert.alert_tags.split(',').map((tag) => `<span class="badge badge-pill badge-light ml-1" title="Add as filter" style="cursor: pointer;" data-tag="${filterXSS(tag)}" onclick="addTagFilter(this);"><i class="fa fa-tag mr-1"></i>${filterXSS(tag)}</span>`).join('') + `<div style="display:none;" id="alertTags-${alert.alert_id}">${filterXSS(alert.alert_tags)}</div>` : ''}
+                  <small class="text-muted ml-1 mr-2">${filterXSS(alert.customer.customer_name) || '未指定'}</small></span>
+                ${alert.classification && alert.classification.name_expanded ? `<span class="badge badge-pill badge-light" title="分类" id="alertClassification-${alert.alert_id}" data-classification-id="${alert.classification.id}"><i class="fa-solid fa-shield-virus mr-1"></i>${filterXSS(alert.classification.name_expanded)}</span>`: ''}
+                ${alert.alert_tags ? alert.alert_tags.split(',').map((tag) => `<span class="badge badge-pill badge-light ml-1" title="添加为筛选器" style="cursor: pointer;" data-tag="${filterXSS(tag)}" onclick="addTagFilter(this);"><i class="fa fa-tag mr-1"></i>${filterXSS(tag)}</span>`).join('') + `<div style="display:none;" id="alertTags-${alert.alert_id}">${filterXSS(alert.alert_tags)}</div>` : ''}
                 
               </div>
 
@@ -1342,7 +1341,7 @@ async function updateAlerts(page, per_page, filters = {}, paging=false){
   alertsContainer.html('');
   if (alerts.length === 0) {
     // Display "No results" message when there are no alerts
-    alertsContainer.append('<div class="ml-auto mr-auto">No results</div>');
+    alertsContainer.append('<div class="ml-auto mr-auto">无结果</div>');
   } else {
 
       // Add the fetched alerts to the alerts container
@@ -1375,7 +1374,7 @@ async function updateAlerts(page, per_page, filters = {}, paging=false){
         filter_tags_info.push(`  
           <span class="badge badge-light">
             <i class="fa-solid fa-magnifying-glass mr-1"></i>${key}: ${filterXSS(filters[key])}
-            <span class="tag-delete-alert-filter" data-filter-key="${key}" style="cursor: pointer;" title="Remove filter"><i class="fa-solid fa-xmark ml-1"></i></span>
+            <span class="tag-delete-alert-filter" data-filter-key="${key}" style="cursor: pointer;" title="移除筛选器"><i class="fa-solid fa-xmark ml-1"></i></span>
           </span>
         `)
       }
@@ -1532,7 +1531,7 @@ function showEnrichment(enrichment) {
 }
 
 function delete_alert(alert_id) {
-    do_deletion_prompt(`Are you sure you want to delete alert #${alert_id}?`, true)
+    do_deletion_prompt(`你确定要删除告警 #${alert_id}?`, true)
         .then((doDelete) => {
             if (doDelete) {
                 post_request_api(`/alerts/delete/${alert_id}`)
@@ -1557,10 +1556,10 @@ async function editAlert(alert_id, close=false) {
     if (close) {
         confirmAlertEdition.text('Close alert');
         $('.alert-edition-part').hide();
-        $('#closeAlertModalLabel').text(`Close alert #${alert_id}`);
+        $('#closeAlertModalLabel').text(`关闭告警 #${alert_id}`);
     } else {
         $('.alert-edition-part').show();
-        $('#closeAlertModalLabel').text(`Edit alert #${alert_id}`);
+        $('#closeAlertModalLabel').text(`修改告警 #${alert_id}`);
         confirmAlertEdition.text('Save')
     }
 
@@ -1607,9 +1606,9 @@ function closeBatchAlerts() {
     $('#editAlertNote').val('');
     alertTag.val('');
 
-    confirmAlertEdition.text('Close alerts');
+    confirmAlertEdition.text('关闭告警');
     $('.alert-edition-part').hide();
-    $('#closeAlertModalLabel').text(`Close multiple alerts`);
+    $('#closeAlertModalLabel').text(`关闭多个告警`);
 
     $('#editAlertModal').modal('show');
 
@@ -1645,13 +1644,13 @@ async function fetchSavedFilters() {
                 savedFiltersDropdown.empty();
 
                 let dropdownHtml = `
-                    <select class="selectpicker ml-2" data-style="btn-sm" data-live-search="true" title="Select preset filter" id="savedFilters">
+                    <select class="selectpicker ml-2" data-style="btn-sm" data-live-search="true" title="选择预设筛选器" id="savedFilters">
                 `;
 
                 data.data.forEach(filter => {
                     let filter_name = filterXSS(filter.filter_name);
                     dropdownHtml += `
-                                <option value="${filter.filter_id}" data-content='<div class="d-flex align-items-center"><span>${filter_name} ${filter.filter_is_private ? '(private)' : ''}</span><div class="trash-wrapper hidden-trash"><i class="fas fa-trash delete-filter text-danger" id="dropfilter-id-${filter.filter_id}" title="Delete filter"></i></div></div>'>${filter_name}</option>
+                                <option value="${filter.filter_id}" data-content='<div class="d-flex align-items-center"><span>${filter_name} ${filter.filter_is_private ? '(private)' : ''}</span><div class="trash-wrapper hidden-trash"><i class="fas fa-trash delete-filter text-danger" id="dropfilter-id-${filter.filter_id}" title="删除筛选器"></i></div></div>'>${filter_name}</option>
                     `;
                 });
 
@@ -1673,7 +1672,7 @@ async function fetchSavedFilters() {
 
                         if (!filterId) return;
 
-                        do_deletion_prompt(`Are you sure you want to delete filter #${filterId}?`, true)
+                        do_deletion_prompt(`您确定要删除筛选器 #${filterId}?`, true)
                             .then((do_delete) => {
                                 if (!do_delete) return;
                                 const url = `/filters/delete/${filterId}`;
@@ -1801,7 +1800,7 @@ async function changeBatchAlertOwner(alertId) {
 
     const selectedAlerts = getBatchAlerts();
     if (selectedAlerts.length === 0) {
-        notify_error('Please select at least one alert to perform this action on.');
+        notify_error('请至少选择一个告警执行此操作.');
         return;
     }
 
@@ -1897,7 +1896,7 @@ function setFormValuesFromUrl() {
       form.trigger('submit');
     })
     .catch(error => {
-      console.error('Error setting form values:', error);
+      console.error('表格数值设置错误:', error);
     });
 }
 
@@ -1907,7 +1906,7 @@ function fetchSelectOptions(selectElementId, configItem) {
     get_request_api(configItem.url)
       .then(function (data) {
         if (!notify_auto_api(data, true)) {
-          reject('Failed to fetch options');
+          reject('获取选项失败');
           return;
         }
         const selectElement = $(`#${selectElementId}`);
@@ -1956,7 +1955,7 @@ function changeStatusBatchAlerts(status_name) {
 async function updateBatchAlerts(data_content= {}) {
     const selectedAlerts = getBatchAlerts();
     if (selectedAlerts.length === 0) {
-        notify_error('Please select at least one alert to perform this action on.');
+        notify_error('请至少选择一个告警执行此操作.');
         return;
     }
 
@@ -1967,8 +1966,8 @@ async function updateBatchAlerts(data_content= {}) {
     };
 
        window.swal({
-          title: "Alerts are being updated, please wait",
-          text: "This window will close automatically when it's done",
+          title: "警报正在更新，请稍候",
+          text: "完成后该Windows将自动关闭",
           icon: "/static/assets/img/loader.gif",
           button: false,
           allowOutsideClick: false
@@ -1988,15 +1987,15 @@ async function updateBatchAlerts(data_content= {}) {
 async function deleteBatchAlerts(data_content= {}) {
     const selectedAlerts = getBatchAlerts();
     if (selectedAlerts.length === 0) {
-        notify_error('Please select at least one alert to perform this action on.');
+        notify_error('请至少选择一个告警执行此操作.');
         return;
     }
 
-    do_deletion_prompt(`You are about to delete ${selectedAlerts.length} alerts`, true)
+    do_deletion_prompt(`您即将删除 ${selectedAlerts.length} 警报`, true)
     .then((doDelete) => {
        window.swal({
-              title: "Alerts are being deleted, please wait",
-              text: "This window will close automatically when it's done",
+              title: "警报正在删除，请稍候",
+              text: "完成后该Windows将自动关闭",
               icon: "/static/assets/img/loader.gif",
               button: false,
               allowOutsideClick: false
@@ -2068,7 +2067,7 @@ $(document).ready(function () {
     const selectionModeActive = $('body').hasClass('selection-mode');
 
     // Update the button text
-    $(this).text(selectionModeActive ? 'Cancel' : 'Select');
+    $(this).text(selectionModeActive ? '取消' : '选择');
 
     // Toggle the display of avatars, tickboxes and selection-related buttons
     $('.alert-card-selectable').each(function() {
@@ -2077,7 +2076,7 @@ $(document).ready(function () {
       avatarTickboxWrapper.find('.tickbox').toggle(selectionModeActive);
     });
 
-    $('#select-deselect-all').toggle(selectionModeActive).text('Select all');
+    $('#select-deselect-all').toggle(selectionModeActive).text('全选');
     $('#alerts-batch-actions').toggle(selectionModeActive);
   });
 
@@ -2085,14 +2084,14 @@ $(document).ready(function () {
     const allSelected = $('.tickbox input[type="checkbox"]:not(:checked)').length === 0;
 
     $('.tickbox input[type="checkbox"]').prop('checked', !allSelected);
-    $(this).text(allSelected ? 'Select all' : 'Deselect all');
+    $(this).text(allSelected ? '全选' : '取消全选');
   });
 
     socket.on('new_alert', function (data) {
         const badge = $('#newAlertsBadge');
         const currentCount = parseInt(badge.text()) || 0;
         badge.text(currentCount + 1).show();
-        badge.attr('title', 'New alerts available');
+        badge.attr('title', '新告警可用');
     });
 
 });
