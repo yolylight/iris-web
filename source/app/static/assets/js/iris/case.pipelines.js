@@ -27,7 +27,7 @@ var dropUpdate = new Dropzone("div#files_drop_1", {
     timeout: 0,
     complete: function () {
         if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0 && this.getErroredFiles().length === 0) {
-            $('#submit_update_case').text('通知新的导入')
+            $('#submit_update_case').text('新导入通知')
             send_update_case_data();
         }
     },
@@ -71,7 +71,7 @@ function send_update_case_data() {
         if (notify_auto_api(data, true)) {
             $('#submit_update_case').text('Saved');
             swal("已完成 !",
-                "文件正在后台处理。.\n您可以在 DIM 任务中跟踪进度",
+                "文件正在后台处理.\n您可以在 DIM 任务中跟踪进度",
                 "success",
                 {
                     buttons: {
@@ -139,7 +139,7 @@ function submit_update_casefn() {
     for (var elm=0; elm < $(dse).length; elm++) {
         if($(dse[elm]).find('input').attr('required')) {
             if ( ! $(dse[elm]).find('input').val() ) {
-                notify_error("必填字段未填写");
+                notify_error("未填写必填字段");
                 return false;
             }
         }

@@ -2,7 +2,7 @@
 function reload_rfiles(notify) {
     get_case_rfiles();
     if (notify !== undefined) {
-        notify_success("Refreshed");
+        notify_success("已刷新");
     }
 }
 
@@ -22,7 +22,7 @@ function edit_in_evidence_desc() {
 
 function get_hash() {
     if (document.getElementById("input_autofill").files[0] === undefined) {
-        $('#btn_rfile_proc').text("Please select a file");
+        $('#btn_rfile_proc').text("请选择一个文件");
         return;
     }
     getMD5(
@@ -35,7 +35,7 @@ function get_hash() {
 }
 
 function on_done_hash(result) {
-    $('#btn_rfile_proc').text('Done processing');
+    $('#btn_rfile_proc').text('处理完成');
     $('form#form_edit_rfile #file_hash').val(result);
     $('form#form_edit_rfile #filename').val(document.getElementById("input_autofill").files[0].name);
     $('form#form_edit_rfile #file_size').val(document.getElementById("input_autofill").files[0].size);
@@ -261,7 +261,7 @@ function time_converter(item){
         }
     })
     .fail(function() {
-        $(`#convert_bad_feedback_${item}`).text('Unable to find a matching pattern for the date');
+        $(`#convert_bad_feedback_${item}`).text('无法为日期找到匹配模式');
     });
 }
 
@@ -278,7 +278,7 @@ function load_evidence_type() {
                 }
                 ftype.selectpicker({
                     liveSearch: true,
-                    title: "Evidence type"
+                    title: "证据类型"
                 });
                 let stored_type_id = $('#store_type_id').data('file-type-id');
                 if (stored_type_id !== undefined || stored_type_id !== "") {

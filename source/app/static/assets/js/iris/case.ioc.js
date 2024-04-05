@@ -74,7 +74,7 @@ function add_ioc() {
 
                     data['ioc_value'] = iocs_list[index];
                     post_request_api('ioc/add', JSON.stringify(data), true, function () {
-                        $('#submit_new_ioc').text('Saving data..')
+                        $('#submit_new_ioc').text('保存数据..')
                             .attr("disabled", true)
                             .removeClass('bt-outline-success')
                             .addClass('btn-success', 'text-dark');
@@ -87,7 +87,7 @@ function add_ioc() {
                                     $('#modal_add_ioc').modal('hide');
                                 }
                         } else {
-                            $('#submit_new_ioc').text('Save again');
+                            $('#submit_new_ioc').text('再次保存');
                             swal("Oh no !", data.message, "error")
                         }
                     })
@@ -114,7 +114,7 @@ function add_ioc() {
                             $('#modal_add_ioc').modal('hide');
 
                     } else {
-                        $('#submit_new_ioc').text('Save again');
+                        $('#submit_new_ioc').text('再次保存');
                         swal("Oh no !", data.message, "error")
                     }
                 })
@@ -280,7 +280,7 @@ function update_ioc_ext(ioc_id, do_close) {
             notify_success(data.message);
 
         } else {
-            $('#submit_new_ioc').text('Save again');
+            $('#submit_new_ioc').text('再次保存');
             swal("Oh no !", data.message, "error")
         }
     })
@@ -289,7 +289,7 @@ function update_ioc_ext(ioc_id, do_close) {
 
 /* Delete an ioc */
 function delete_ioc(ioc_id) {
-    do_deletion_prompt("You are about to delete IOC #" + ioc_id)
+    do_deletion_prompt("您即将删除 IOC #" + ioc_id)
     .then((doDelete) => {
         if (doDelete) {
             post_request_api('ioc/delete/' + ioc_id)
@@ -327,10 +327,10 @@ function upload_ioc() {
             if (jsdata.status == "success") {
                 reload_iocs();
                 $('#modal_upload_ioc').modal('hide');
-                swal("Got news for you", data.message, "success");
+                swal("新消息", data.message, "success");
 
             } else {
-                swal("Got bad news for you", data.message, "error");
+                swal("坏消息", data.message, "error");
             }
         })
     };
@@ -419,7 +419,7 @@ $(document).ready(function(){
               if (type === 'display' && data != null) {
                   links = "";
                   for (link in data) {
-                    links += '<span data-toggle="popover" style="cursor: pointer;" data-trigger="hover" class="text-primary mr-3" href="#" title="Case info" data-content="' + sanitizeHTML(data[link]['case_name']) +
+                    links += '<span data-toggle="popover" style="cursor: pointer;" data-trigger="hover" class="text-primary mr-3" href="#" title="案例信息" data-content="' + sanitizeHTML(data[link]['case_name']) +
                      ' (' + sanitizeHTML(data[link]['client_name']) + ')' + '">#' + data[link]['case_id'] + '</span>'
                   }
                   return links;

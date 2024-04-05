@@ -42,7 +42,7 @@ function Collaborator( session_id, n_id ) {
 
         let delta = JSON.parse(data.delta);
         last_applied_change = delta;
-        $("#content_typing").text(data.last_change + " is typing..");
+        $("#content_typing").text(data.last_change + " 正在输入..");
         if (delta !== null && delta !== undefined) {
             note_editor.session.getDocument().applyDeltas([delta]);
         }
@@ -58,8 +58,8 @@ function Collaborator( session_id, n_id ) {
         if (parseInt(data.note_id) !== parseInt(note_id)) return;
         sync_note(note_id)
             .then(function () {
-                $("#content_last_saved_by").text("Last saved by " + data.last_saved);
-                $('#btn_save_note').text("Saved").addClass('btn-success').removeClass('btn-danger').removeClass('btn-warning');
+                $("#content_last_saved_by").text("最后保存 " + data.last_saved);
+                $('#btn_save_note').text("已保存").addClass('btn-success').removeClass('btn-danger').removeClass('btn-warning');
                 $('#last_saved').removeClass('btn-danger').addClass('btn-success');
                 $('#last_saved > i').attr('class', "fa-solid fa-file-circle-check");
             });
@@ -144,17 +144,17 @@ async function sync_note(node_id) {
     // If the local note is not empty, check if it is different from the remote note
     if (local_note !== remote_note.data.note_content) {
         swal({
-            title: 'Note conflict',
-            text: 'The note has been saved by someone else. Do you want to overwrite your changes?',
+            title: '笔记冲突',
+            text: '该笔记已被他人保存。是否要覆盖您的更改?',
             icon: 'warning',
             buttons: {
                 cancel: {
-                    text: 'Cancel',
+                    text: '取消',
                     value: null,
                     visible: true,
                 },
                 confirm: {
-                    text: 'Overwrite',
+                    text: '覆盖',
                     value: true,
                 }
             },
@@ -180,7 +180,7 @@ function delete_note(_item, cid) {
         _item = $('#currentNoteIDLabel').data('note_id')
     }
 
-    do_deletion_prompt("You are about to delete note #" + _item)
+    do_deletion_prompt("您将删除笔记 #" + _item)
     .then((doDelete) => {
         if (doDelete) {
             post_request_api('/case/notes/delete/' + _item, null, null, cid)
@@ -433,7 +433,7 @@ function save_note() {
         if (data.status == 'success') {
             $('#btn_save_note').text("Saved").addClass('btn-success').removeClass('btn-danger').removeClass('btn-warning');
             $('#last_saved').removeClass('btn-danger').addClass('btn-success');
-             $("#content_last_saved_by").text('Last saved by you');
+             $("#content_last_saved_by").text('最后由您保存');
             $('#last_saved > i').attr('class', "fa-solid fa-file-circle-check");
             collaborator.save(n_id);
             if (previousNoteTitle !== currentNoteTitle) {
@@ -539,7 +539,7 @@ function add_folder(directory_id) {
 
 function refresh_folders() {
     load_directories().then(function() {
-        notify_success('Tree  refreshed');
+        notify_success('树已刷新');
         let note_id = $('#currentNoteIDLabel').data('note_id');
         $('.note').removeClass('note-highlight');
         $('#note-' + note_id).addClass('note-highlight');
@@ -695,17 +695,17 @@ async function move_folder_api(directory_id, new_parent_id) {
 
 function delete_folder(directory_id) {
     swal({
-        title: 'Delete folder',
-        text: 'Are you sure you want to delete this folder? All subfolders and notes will be deleted as well.',
+        title: '删除文件夹',
+        text: '您确定要删除此文件夹吗？所有子文件夹和备注也将被删除.',
         icon: 'warning',
         buttons: {
             cancel: {
-                text: 'Cancel',
+                text: '取消',
                 value: null,
                 visible: true,
             },
             confirm: {
-                text: 'Delete',
+                text: '删除',
                 value: true,
             }
         },
@@ -725,17 +725,17 @@ function rename_folder(directory_id, new_directory=false) {
 
     // Prompt the user for a new name
     swal({
-        title: new_directory?  'Rename directory': "Name the new folder",
-        text: 'Enter a new name for the folder',
+        title: new_directory?  '重命名目录': "为新文件夹命名",
+        text: '输入文件夹的新名称',
         content: 'input',
         buttons: {
             cancel: {
-                text: 'Cancel',
+                text: '取消',
                 value: null,
                 visible: true,
             },
             confirm: {
-                text: new_directory ? 'Ok' : 'Rename',
+                text: new_directory ? '好' : '重命名',
                 value: true,
             }
         },
@@ -834,27 +834,27 @@ function createDirectoryListItem(directory, directoryMap) {
             top: e.pageY
         });
 
-        menu.append($('<a></a>').addClass('dropdown-item').attr('href', '#').text('Add note').on('click', function(e) {
+        menu.append($('<a></a>').addClass('dropdown-item').attr('href', '#').text('添加笔记').on('click', function(e) {
             e.preventDefault();
             add_note(directory.id);
         }));
-        menu.append($('<a></a>').addClass('dropdown-item').attr('href', '#').text('Add directory').on('click', function(e) {
+        menu.append($('<a></a>').addClass('dropdown-item').attr('href', '#').text('添加目录').on('click', function(e) {
             e.preventDefault();
             add_folder(directory.id);
         }));
 
         menu.append($('<div></div>').addClass('dropdown-divider'));
-        menu.append($('<a></a>').addClass('dropdown-item').attr('href', '#').text('Rename').on('click', function(e) {
+        menu.append($('<a></a>').addClass('dropdown-item').attr('href', '#').text('重命名').on('click', function(e) {
             e.preventDefault();
             rename_folder(directory.id);
         }));
-        menu.append($('<a></a>').addClass('dropdown-item').attr('href', '#').text('Move').on('click', function(e) {
+        menu.append($('<a></a>').addClass('dropdown-item').attr('href', '#').text('移动').on('click', function(e) {
             e.preventDefault();
             move_item(directory.id, 'folder');
         }));
 
         menu.append($('<div></div>').addClass('dropdown-divider'));
-        menu.append($('<a></a>').addClass('dropdown-item text-danger').attr('href', '#').text('Delete').on('click', function(e) {
+        menu.append($('<a></a>').addClass('dropdown-item text-danger').attr('href', '#').text('删除').on('click', function(e) {
             e.preventDefault();
             delete_folder(directory.id);
         }));
@@ -906,23 +906,23 @@ function createDirectoryListItem(directory, directoryMap) {
                     top: e.pageY
                 });
 
-                menu.append($('<a></a>').addClass('dropdown-item').attr('href', '#').text('Copy link').on('click', function (e) {
+                menu.append($('<a></a>').addClass('dropdown-item').attr('href', '#').text('复制链接').on('click', function (e) {
                     e.preventDefault();
                     copy_object_link(note.id);
                 }));
 
-                menu.append($('<a></a>').addClass('dropdown-item').attr('href', '#').text('Copy MD link').on('click', function (e) {
+                menu.append($('<a></a>').addClass('dropdown-item').attr('href', '#').text('复制MD链接').on('click', function (e) {
                     e.preventDefault();
                     copy_object_link_md('notes',note.id);
                 }));
 
-                menu.append($('<a></a>').addClass('dropdown-item').attr('href', '#').text('Move').on('click', function (e) {
+                menu.append($('<a></a>').addClass('dropdown-item').attr('href', '#').text('移动').on('click', function (e) {
                     e.preventDefault();
                     move_item(note.id, 'note');
                 }));
 
                 menu.append($('<div></div>').addClass('dropdown-divider'));
-                menu.append($('<a></a>').addClass('dropdown-item text-danger').attr('href', '#').text('Delete').on('click', function (e) {
+                menu.append($('<a></a>').addClass('dropdown-item text-danger').attr('href', '#').text('删除').on('click', function (e) {
                     e.preventDefault();
                     delete_note(note.id, cid);
                 }));
