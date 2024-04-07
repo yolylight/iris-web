@@ -26,17 +26,17 @@ function add_case_template() {
           enableBasicAutocompletion: [{
             getCompletions: (editor, session, pos, prefix, callback) => {
               callback(null, [
-                {value: 'name', score: 1, meta: 'name of the template'},
-                {value: 'display', score: 1, meta: 'display name of the template'},
-                {value: 'description', score: 1, meta: 'description of the template'},
-                {value: 'author', score: 1, meta: 'author of the template'},
-                {value: 'title_prefix', score: 1, meta: 'prefix of instantiated cases'},
-                {value: 'summary', score: 1, meta: 'summary of the case'},
-                {value: 'tags', score: 1, meta: 'tags of the case or the tasks'},
-                {value: 'tasks', score: 1, meta: 'tasks of the case'},
-                {value: 'note_groups', score: 1, meta: 'groups of notes'},
-                {value: 'title', score: 1, meta: 'title of the task or the note group or the note'},
-                {value: 'content', score: 1, meta: 'content of the note'},
+                {value: 'name', score: 1, meta: '模板名称'},
+                {value: 'display', score: 1, meta: '模板显示名'},
+                {value: 'description', score: 1, meta: '模板描述'},
+                {value: 'author', score: 1, meta: '模板作者'},
+                {value: 'title_prefix', score: 1, meta: '案例前缀'},
+                {value: 'summary', score: 1, meta: '案例摘要'},
+                {value: 'tags', score: 1, meta: '案例或任务的标签'},
+                {value: 'tasks', score: 1, meta: '案例的任务'},
+                {value: 'note_groups', score: 1, meta: '笔记组'},
+                {value: 'title', score: 1, meta: '任务或注释组或注释的标题'},
+                {value: 'content', score: 1, meta: '笔记的内容'},
               ]);
             },
           }],
@@ -51,8 +51,8 @@ function add_case_template() {
 
             post_request_api('/manage/case-templates/add', JSON.stringify(data_sent), false, function() {
                 window.swal({
-                      title: "Adding...",
-                      text: "Please wait",
+                      title: "添加中...",
+                      text: "请等待",
                       icon: "/static/assets/img/loader.gif",
                       button: false,
                       allowOutsideClick: false
@@ -66,7 +66,7 @@ function add_case_template() {
             })
             .fail((error) => {
                 let data = error.responseJSON;
-                $('#submit_new_case_template').text('Save');
+                $('#submit_new_case_template').text('保存');
                 $('#alert_case_template_edit').text(data.message);
                 if (data.data && data.data.length > 0) {
 
@@ -134,19 +134,19 @@ $('#case_templates_table').dataTable( {
 
 function refresh_case_template_table() {
   $('#case_templates_table').DataTable().ajax.reload();
-  notify_success("Refreshed");
+  notify_success("已刷新");
 }
 
 function delete_case_template(id) {
     swal({
-        title: "Are you sure ?",
-        text: "You won't be able to revert this !",
+        title: "你确定吗 ?",
+        text: "操作不能恢复!",
         icon: "warning",
         buttons: true,
         dangerMode: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: '是,删除它!'
     })
     .then((willDelete) => {
         if (willDelete) {
@@ -157,7 +157,7 @@ function delete_case_template(id) {
                 }
             });
         } else {
-            swal("Pfew, that was close");
+            swal("Pfew,好险");
         }
     });
 }
@@ -190,17 +190,17 @@ function case_template_detail(ctempl_id) {
           enableBasicAutocompletion: [{
             getCompletions: (editor, session, pos, prefix, callback) => {
               callback(null, [
-                {value: 'name', score: 1, meta: 'name of the template'},
-                {value: 'display_name', score: 1, meta: 'display name of the template'},
-                {value: 'description', score: 1, meta: 'description of the template'},
-                {value: 'author', score: 1, meta: 'author of the template'},
-                {value: 'title_prefix', score: 1, meta: 'prefix of instantiated cases'},
-                {value: 'summary', score: 1, meta: 'summary of the case'},
-                {value: 'tags', score: 1, meta: 'tags of the case or the tasks'},
-                {value: 'tasks', score: 1, meta: 'tasks of the case'},
-                {value: 'note_groups', score: 1, meta: 'groups of notes'},
-                {value: 'title', score: 1, meta: 'title of the task or the note group or the note'},
-                {value: 'content', score: 1, meta: 'content of the note'},
+                {value: 'name', score: 1, meta: '模板名称'},
+                {value: 'display_name', score: 1, meta: '模板显示名'},
+                {value: 'description', score: 1, meta: '模板描述'},
+                {value: 'author', score: 1, meta: '模板作者'},
+                {value: 'title_prefix', score: 1, meta: '案例前缀'},
+                {value: 'summary', score: 1, meta: '案例摘要'},
+                {value: 'tags', score: 1, meta: '案例或任务的标签'},
+                {value: 'tasks', score: 1, meta: '案例的任务'},
+                {value: 'note_groups', score: 1, meta: '笔记组'},
+                {value: 'title', score: 1, meta: '任务或笔记组或笔记的标题'},
+                {value: 'content', score: 1, meta: '笔记的内容'},
               ]);
             },
           }],
@@ -232,8 +232,8 @@ function update_case_template(ctempl_id, editor, partial, complete){
 
     post_request_api('/manage/case-templates/update/' + ctempl_id, JSON.stringify(data_sent), false, function() {
         window.swal({
-              title: "Updating...",
-              text: "Please wait",
+              title: "更新中...",
+              text: "请等待",
               icon: "/static/assets/img/loader.gif",
               button: false,
               allowOutsideClick: false
@@ -244,7 +244,7 @@ function update_case_template(ctempl_id, editor, partial, complete){
     })
     .fail((error) => {
         let data = error.responseJSON;
-        $('#submit_new_case_template').text('Update');
+        $('#submit_new_case_template').text('更新');
         $('#alert_case_template_edit').text(data.message);
         if (data.data && data.data.length > 0) {
             let output='<li>'+ sanitizeHTML(data.data) +'</li>';
@@ -286,8 +286,8 @@ function upload_case_template() {
 
             post_request_api('/manage/case-templates/add', JSON.stringify(data), false, function() {
                 window.swal({
-                      title: "Adding...",
-                      text: "Please wait",
+                      title: "添加中...",
+                      text: "请等待",
                       icon: "/static/assets/img/loader.gif",
                       button: false,
                       allowOutsideClick: false
