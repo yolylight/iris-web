@@ -39,9 +39,9 @@ $(document).ready(function(){
             "render": function (data, type, row, meta) {
                 if (type === 'display') {
                     if (data == 'success'){
-                        data = "<i class='fas fa-check text-success' title='success'></i>";
+                        data = "<i class='fas fa-check text-success' title='成功'></i>";
                     } else {
-                        data = "<i class='fas fa-times text-danger' title='failure'></i>";
+                        data = "<i class='fas fa-times text-danger' title='失败'></i>";
                     }
                 }
                 return data;
@@ -75,8 +75,8 @@ $(document).ready(function(){
             tableFiltering(this.api(), 'activities_table');
         },
         buttons: [
-        { "extend": 'csvHtml5', "text":'Export',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
-        { "extend": 'copyHtml5', "text":'Copy',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
+        { "extend": 'csvHtml5', "text":'导出',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
+        { "extend": 'copyHtml5', "text":'复制',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
         ]
     });
     $("#activities_table").css("font-size", 12);
