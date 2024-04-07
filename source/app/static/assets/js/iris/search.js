@@ -68,8 +68,8 @@ Table_1 = $("#file_search_table_1").DataTable({
     processing: true,
     retrieve: true,
     buttons: [
-    { "extend": 'csvHtml5', "text":'Export',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
-    { "extend": 'copyHtml5', "text":'Copy',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
+    { "extend": 'csvHtml5', "text":'导出',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
+    { "extend": 'copyHtml5', "text":'复制',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
     ]
 });
 $("#file_search_table_1").css("font-size", 12);
@@ -85,7 +85,7 @@ Table_comments = $("#comments_search_table").DataTable({
                 if (row['ioc_misp'] != null) {
                     jse = JSON.parse(row['ioc_misp']);
                     data += `<i class="fas fa-exclamation-triangle ml-2 text-warning" style="cursor: pointer;" data-html="true"
-                       data-toggle="popover" data-trigger="hover" title="Seen on MISP" data-content="Has been seen on  <a href='` + row['misp_link'] + `/events/view/` + jse.misp_id +`'>this event</a><br/><br/><b>Description: </b>`+ jse.misp_desc +`"></i>`;
+                       data-toggle="popover" data-trigger="hover" title="在MISP出现" data-content="这个事件曾在<a href='` + row['misp_link'] + `/events/view/` + jse.misp_id +`'>被发现</a><br/><br/><b>描述: </b>`+ jse.misp_desc +`"></i>`;
                 }
             }
             return data;
@@ -120,8 +120,8 @@ Table_comments = $("#comments_search_table").DataTable({
     processing: true,
     retrieve: true,
     buttons: [
-    { "extend": 'csvHtml5', "text":'Export',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
-    { "extend": 'copyHtml5', "text":'Copy',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
+    { "extend": 'csvHtml5', "text":'导出',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
+    { "extend": 'copyHtml5', "text":'复制',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
     ]
 });
 $("#comments_search_table").css("font-size", 12);
@@ -135,7 +135,7 @@ function search() {
     var data_sent = $('form#form_search').serializeObject();
     data_sent['csrf_token'] = $('#csrf_token').val();
     post_request_api('/search', JSON.stringify(data_sent), true, function (data) {
-            $('#submit_search').text("Searching...");
+            $('#submit_search').text("搜索中...");
     })
     .done((data) => {
         if(notify_auto_api(data, true)) {
@@ -164,7 +164,7 @@ function search() {
                     let span_anchor = $('<span>');
                     span_anchor.addClass('name');
                     span_anchor.attr('style', 'cursor:pointer');
-                    span_anchor.attr('title', 'Click to open note');
+                    span_anchor.attr('title', '点击打开笔记');
                     span_anchor.attr('onclick', 'note_in_details(' + data.data[e]['note_id'] + ', ' + data.data[e]['case_id'] + ');');
                     span_anchor.text(data.data[e]['note_title'] + ' - ' + data.data[e]['case_name'] + ' - ' + data.data[e]['client_name']);
                     li_anchor.append(span_anchor);
@@ -186,7 +186,7 @@ function search() {
         }
     })
     .always(() => {
-        $('#submit_search').text("Search");
+        $('#submit_search').text("搜索");
     });
 }
 
