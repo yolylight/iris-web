@@ -4,7 +4,7 @@
 function get_case_audit_page() {
     us_val = $('#cases_audit_select').val();
     if (!us_val) {
-        notify_error('I really wanna help you but I still can\'t read your mind');
+        notify_error('我真的很想帮你，但我还是无法读懂你的心思');
         return false;
     }
 
@@ -44,7 +44,7 @@ function refresh_cases_list_audit() {
 
             $('#cases_audit_select').selectpicker({
                 liveSearch: true,
-                title: "Select case to audit",
+                title: "选择要审计的案例",
                 style: "btn-outline-white",
                 size: 10
             });
