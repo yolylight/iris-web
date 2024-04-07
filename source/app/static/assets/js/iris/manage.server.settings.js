@@ -21,7 +21,7 @@ function init_db_backup() {
             for (idx in data.data) {
                 msg += data.data[idx] + '\n';
             }
-            swal("Done",
+            swal("完成",
              msg,
             {
                 icon: "success"
@@ -32,7 +32,7 @@ function init_db_backup() {
             msg += data.data[idx] + '\n';
         }
 
-        swal("Error",
+        swal("错误",
          msg,
         {
             icon: "error"
