@@ -81,7 +81,7 @@ $(document).ready(function() {
 function refresh_customer_table(do_notify) {
     $('#customers_table').DataTable().ajax.reload();
     if (do_notify !== undefined) {
-        notify_success("Refreshed");
+        notify_success("已刷新");
     }
 }
 
@@ -124,14 +124,14 @@ function customer_detail(customer_id) {
 
 function delete_customer(id) {
     swal({
-        title: "Are you sure ?",
-        text: "You won't be able to revert this !",
+        title: "你确定吗 ?",
+        text: "您将无法挽回这一点 !",
         icon: "warning",
         buttons: true,
         dangerMode: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: '是,删除它!'
     })
     .then((willDelete) => {
         if (willDelete) {
@@ -142,7 +142,7 @@ function delete_customer(id) {
                 }
             });
         } else {
-            swal("Pfew, that was close");
+            swal("Pfew,好险");
         }
     });
 }
