@@ -76,7 +76,7 @@ let OverviewTable = $("#overview_table").DataTable({
                 span_anchor.addClass('btn-quick-view');
                 span_anchor.addClass('text-link');
                 span_anchor.addClass('mr-2');
-                span_anchor.attr('title', 'Quick view');
+                span_anchor.attr('title', '快捷查看');
                 span_anchor.attr('style', 'cursor: pointer;');
                 span_anchor.text(data);
                 div_anchor.append(a_anchor);
@@ -130,7 +130,7 @@ let OverviewTable = $("#overview_table").DataTable({
                 let review_status = row['review_status'] ? row['review_status'].status_name : 'Not reviewed';
                 datar = `${datar} ${review_status === "Not reviewed"? '' : ' - ' + review_status}`;
                 if (data.state_name === 'Closed') {
-                    datar = `<span class="badge badge-light"> Closed - ${review_status}</span>`;
+                    datar = `<span class="badge badge-light"> 已关闭 - ${review_status}</span>`;
                 }
                 return datar;
             } else if (data != null && (type === 'sort' || type === 'filter')) {
@@ -138,7 +138,7 @@ let OverviewTable = $("#overview_table").DataTable({
                 let review_status = row['review_status'] ? row['review_status'].status_name : 'Not reviewed';
                 datar = `${datar} ${review_status === "Not reviewed"? '' : ' - ' + review_status}`;
                 if (data.state_name === 'Closed') {
-                    datar = `Closed - ${review_status}`;
+                    datar = `已关闭 - ${review_status}`;
                 }
                 return datar;
             } else {
@@ -171,16 +171,16 @@ let OverviewTable = $("#overview_table").DataTable({
         "data": "case_open_since_days",
         "render": function(data, type, row, meta) {
            if (type === 'display') {
-              title = "You\'re not forgetting me, are you?";
+              title = "你没有忘记我,是吧?";
               if (data <= 1) {
-                data = `<i title="Sounds good" class="text-success fw-bold fa-solid fa-stopwatch mr-1"></i>${data} day`;
+                data = `<i title="好像不错" class="text-success fw-bold fa-solid fa-stopwatch mr-1"></i>${data} 天`;
               }
               else if (data <= 7) {
-                data = `<i title="Sounds good" class="text-success fw-bold fa-solid fa-stopwatch mr-1"></i>${data} days`;
+                data = `<i title="好像不错" class="text-success fw-bold fa-solid fa-stopwatch mr-1"></i>${data} 天`;
               } else if (7 < data && data < 14) {
-                data = `<i title="${title}" class="text-warning fw-bold fa-solid fa-stopwatch mr-1"></i>${data} days</div>`;
+                data = `<i title="${title}" class="text-warning fw-bold fa-solid fa-stopwatch mr-1"></i>${data} 天</div>`;
               } else {
-                data = `<i title="${title}" class="text-danger fw-bold fa-solid fa-stopwatch mr-1"></i>${data} days</div>`;
+                data = `<i title="${title}" class="text-danger fw-bold fa-solid fa-stopwatch mr-1"></i>${data} 天</div>`;
               }
           } else if (type === 'sort' || type === 'filter') {
               data = parseInt(data);
@@ -209,7 +209,7 @@ let OverviewTable = $("#overview_table").DataTable({
               }
               data = `<div class="progress progress-sm">
                     <div class="progress-bar bg-success" style="width:${now}%" role="progressbar" aria-valuenow="${now}" aria-valuemin="0" aria-valuemax="100"></div>
-               </div><small class="float-right">${data.closed_tasks} / ${data.closed_tasks + data.open_tasks} ${tasks_text} done</small>`;
+               </div><small class="float-right">${data.closed_tasks} / ${data.closed_tasks + data.open_tasks} ${tasks_text} 完成</small>`;
 		  } else if (data != null && (type === 'sort' || type === 'filter')) {
               data = data.closed_tasks / (data.closed_tasks + data.open_tasks);
           }
@@ -246,17 +246,17 @@ let OverviewTable = $("#overview_table").DataTable({
     },
     language: {
       searchBuilder: {
-        add: "Add filter",
+        add: "添加筛选器",
         title: {
-            _: 'Filters (%d)',
+            _: '筛选 (%d)',
             0: '',
         }
       }
     },
     order: [[ 7, "asc" ]],
     buttons: [
-        { "extend": 'csvHtml5', "text":'Export',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
-        { "extend": 'copyHtml5', "text":'Copy',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
+        { "extend": 'csvHtml5', "text":'导出',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
+        { "extend": 'copyHtml5', "text":'拷贝',"className": 'btn btn-primary btn-border btn-round btn-sm float-left mr-4 mt-2' },
     ],
     responsive: {
         details: {
@@ -282,7 +282,7 @@ function get_cases_overview(silent, show_full=false) {
     show_loader();
     show_full = show_full || $('#overviewLoadClosedCase').prop('checked');
 
-     $('#overviewTableTitle').text(show_full ? 'All cases' : 'Open cases');
+     $('#overviewTableTitle').text(show_full ? '所有案例' : '开放案例');
 
     get_raw_request_api('/overview/filter?cid=' + get_caseid() + (show_full ? '&show_closed=true' : ''))
     .done((data) => {
@@ -312,7 +312,7 @@ function show_case_view(row_index) {
     // Owner Card
     let owner_card = $('<div/>').addClass('card mb-3');
     let owner_body = $('<div/>').addClass('card-body');
-    owner_body.append($('<h2/>').addClass('card-title mb-2').text('Metadata'));
+    owner_body.append($('<h2/>').addClass('card-title mb-2').text('元数据'));
 
     let owner_row = $('<div/>').addClass('row');
     let owner_col1 = $('<div/>').addClass('col-md-6');
@@ -333,16 +333,16 @@ function show_case_view(row_index) {
 
 
         if (timeSinceLastUpdateInSeconds < 60) {
-            timeSinceLastUpdateStr = `${Math.round(timeSinceLastUpdateInSeconds)} second(s) ago`;
+            timeSinceLastUpdateStr = `${Math.round(timeSinceLastUpdateInSeconds)} 秒之前`;
         } else if (timeSinceLastUpdateInMinutes < 60) {
-            timeSinceLastUpdateStr = `${Math.round(timeSinceLastUpdateInMinutes)} minute(s) ago`;
+            timeSinceLastUpdateStr = `${Math.round(timeSinceLastUpdateInMinutes)} 分钟之前`;
         } else if (timeSinceLastUpdateInHours < 24) {
-            timeSinceLastUpdateStr = `${Math.round(timeSinceLastUpdateInHours)} hour(s) ago`;
+            timeSinceLastUpdateStr = `${Math.round(timeSinceLastUpdateInHours)} 小时之前`;
         } else {
-            timeSinceLastUpdateStr = `${Math.round(timeSinceLastUpdateInDays)} day(s) ago`;
+            timeSinceLastUpdateStr = `${Math.round(timeSinceLastUpdateInDays)} 天之前`;
         }
     } else {
-        timeSinceLastUpdateStr = 'Never';
+        timeSinceLastUpdateStr = '从未';
     }
 
     let tagsStr = '';
@@ -360,18 +360,18 @@ function show_case_view(row_index) {
     owner_dl1.append($('<dd class="col-sm-8"/>').text(case_data.open_date));
 
     if (case_data.close_date != null) {
-        owner_dl1.append($('<dt class="col-sm-3"/>').text('Close Date:'));
+        owner_dl1.append($('<dt class="col-sm-3"/>').text('关闭日期:'));
         owner_dl1.append($('<dd class="col-sm-8"/>').text(case_data.close_date))
     }
-    owner_dl1.append($('<dt class="col-sm-3"/>').text('Tags:'));
-    owner_dl1.append($('<dd class="col-sm-8"/>').html(tagsStr !== ''? tagsStr : 'No tags'));
+    owner_dl1.append($('<dt class="col-sm-3"/>').text('标签:'));
+    owner_dl1.append($('<dd class="col-sm-8"/>').html(tagsStr !== ''? tagsStr : '无标签'));
     owner_dl1.append($('<dt class="col-sm-3"/>').text('State:'));
     owner_dl1.append($('<dd class="col-sm-8"/>').text(case_data.state ? case_data.state.state_description: 'None'));
-    owner_dl1.append($('<dt class="col-sm-3"/>').text('Last update:'));
+    owner_dl1.append($('<dt class="col-sm-3"/>').text('最后更新:'));
     owner_dl1.append($('<dd class="col-sm-8"/>').text(timeSinceLastUpdateStr));
-    owner_dl1.append($('<dt class="col-sm-3"/>').text('Severity:'));
-    owner_dl1.append($('<dd class="col-sm-8"/>').text(case_data.severity ? case_data.severity.severity_name: "Unspecified"));
-    owner_dl1.append($('<dt class="col-sm-3"/>').text('Outcome:'));
+    owner_dl1.append($('<dt class="col-sm-3"/>').text('严重性:'));
+    owner_dl1.append($('<dd class="col-sm-8"/>').text(case_data.severity ? case_data.severity.severity_name: "未指定"));
+    owner_dl1.append($('<dt class="col-sm-3"/>').text('摘要:'));
     let statusName = case_data.status_name.replace(/_/g, ' ');
     statusName = statusName.replace(/\b\w/g, function(l){ return l.toUpperCase() });
     owner_dl1.append($('<dd class="col-sm-8"/>').text(statusName));
@@ -381,39 +381,39 @@ function show_case_view(row_index) {
 
 
     let owner_dl2 = $('<dl class="row"/>');
-    owner_dl2.append($('<dt class="col-sm-3"/>').text('Customer Name:'));
+    owner_dl2.append($('<dt class="col-sm-3"/>').text('客户名:'));
     owner_dl2.append($('<dd class="col-sm-8"/>').text(case_data.client.customer_name));
 
-    owner_dl2.append($('<dt class="col-sm-3"/>').text('Classification:'));
-    owner_dl2.append($('<dd class="col-sm-8"/>').text(case_data.classification ? case_data.classification.name_expanded: 'None'));
+    owner_dl2.append($('<dt class="col-sm-3"/>').text('分类:'));
+    owner_dl2.append($('<dd class="col-sm-8"/>').text(case_data.classification ? case_data.classification.name_expanded: '无'));
     owner_dl2.append($('<dt class="col-sm-3"/>').text('SOC ID:'));
     owner_dl2.append($('<dd class="col-sm-8"/>').text(case_data.soc_id !== '' ? case_data.soc_id : 'None'));
-    owner_dl2.append($('<dt class="col-sm-3"/>').text('Related alerts:'));
-    owner_dl2.append($('<dd class="col-sm-8"/>').html(`<a target="_blank" rel="noopener" href='/alerts?case_id=${case_data.case_id}'>${case_data.alerts.length} related alert(s) <i class="fa-solid fa-up-right-from-square ml-2"></i></a>`));
+    owner_dl2.append($('<dt class="col-sm-3"/>').text('相关告警:'));
+    owner_dl2.append($('<dd class="col-sm-8"/>').html(`<a target="_blank" rel="noopener" href='/alerts?case_id=${case_data.case_id}'>${case_data.alerts.length} 相关告警 <i class="fa-solid fa-up-right-from-square ml-2"></i></a>`));
     owner_dl2.append($('<dt class="col-sm-3"/>').text('Tasks:'));
     if (case_data.tasks_status != null) {
-        owner_dl2.append($('<dd class="col-sm-8"/>').html(`<a target="_blank" rel="noopener" href='/case/tasks?cid=${case_data.case_id}'>${case_data.tasks_status.closed_tasks}/${case_data.tasks_status.open_tasks + case_data.tasks_status.closed_tasks} task(s) <i class="fa-solid fa-up-right-from-square ml-2"></i></a>`));
+        owner_dl2.append($('<dd class="col-sm-8"/>').html(`<a target="_blank" rel="noopener" href='/case/tasks?cid=${case_data.case_id}'>${case_data.tasks_status.closed_tasks}/${case_data.tasks_status.open_tasks + case_data.tasks_status.closed_tasks} 任务 <i class="fa-solid fa-up-right-from-square ml-2"></i></a>`));
     } else {
-        owner_dl2.append($('<dd class="col-sm-8"/>').text('No tasks'));
+        owner_dl2.append($('<dd class="col-sm-8"/>').text('无任务'));
     }
-    owner_dl2.append($('<dt class="col-sm-3"/>').text('Review:'));
+    owner_dl2.append($('<dt class="col-sm-3"/>').text('审核:'));
     if (case_data.review_status != null) {
         owner_dl2.append($('<dd class="col-sm-8"/>').text(case_data.review_status.status_name));
     } else {
-        owner_dl2.append($('<dd class="col-sm-8"/>').text('No review'));
+        owner_dl2.append($('<dd class="col-sm-8"/>').text('未审核'));
     }
-    owner_dl2.append($('<dt class="col-sm-3"/>').text('Reviewer:'));
+    owner_dl2.append($('<dt class="col-sm-3"/>').text('审核人:'));
     if (case_data.reviewer != null) {
          owner_dl2.append($('<dd class="col-sm-8"/>').text(case_data.reviewer.user_name));
     } else {
-        owner_dl2.append($('<dd class="col-sm-8"/>').text('No reviewer'));
+        owner_dl2.append($('<dd class="col-sm-8"/>').text('无审核人'));
     }
     owner_col2.append(owner_dl2);
 
     owner_row.append(owner_col1);
     owner_row.append(owner_col2);
     owner_body.append(owner_row);
-    owner_body.append(`<a type="button" class="btn btn-sm btn-dark float-right" target="_blank" rel="noopener" href='/case?cid=${case_data.case_id}'><i class="fa-solid fa-up-right-from-square mr-2"></i> View case</a>`);
+    owner_body.append(`<a type="button" class="btn btn-sm btn-dark float-right" target="_blank" rel="noopener" href='/case?cid=${case_data.case_id}'><i class="fa-solid fa-up-right-from-square mr-2"></i> 查看案例</a>`);
 
     owner_card.append(owner_body);
     body.append(owner_card);
