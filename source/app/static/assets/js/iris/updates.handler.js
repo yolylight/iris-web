@@ -39,11 +39,11 @@ function initiate_update() {
         type: "GET",
         dataType: "json",
         beforeSend : function () {
-            log_msg('Update order sent. Expecting feedback anytime soon');
+            log_msg('更新请求已发送.期待尽快得到反馈');
         },
         success: function (data) {},
         error: function (data) {
-            log_error('Unexpected error starting update');
+            log_error('启动更新时出现意外错误');
         }
     });
 }
@@ -65,22 +65,22 @@ function check_server_version() {
         success: function (data) {
             server_version = data.data.iris_current;
             if (server_version == current_version) {
-                add_update_log('Something was wrong - server is still in the same version', true);
-                add_update_log('Please check server logs', true);
+                add_update_log('出了点问题 - 服务器仍是相同版本', true);
+                add_update_log('请检查服务器日志', true);
                 clearInterval(intervalId);
                 $('#tag_bottom').hide();
                 $('#update_return_button').show();
             } else {
-                add_update_log('Successfully updated from ' + current_version + ' to ' + server_version, false);
-                add_update_log('You can now leave this page', false);
+                add_update_log('成功从' + current_version + ' 更新到 ' + server_version, false);
+                add_update_log('你可以离开此页', false);
                 clearInterval(intervalId);
                 $('#tag_bottom').hide();
                 $('#update_return_button').show();
             }
         },
         error: function (error) {
-            log_error('Something\'s wrong, server is not answering');
-            log_error('Please check server logs')
+            log_error('出问题了,服务器未响应');
+            log_error('请检查服务器日志')
             clearInterval(intervalId);
             $('#tag_bottom').hide();
             $('#update_return_button').show();
@@ -97,20 +97,20 @@ function ping_check_server_online() {
         timeout: 1000,
         success: function (data) {
             $("#offline_time").hide();
-            log_msg('Server is back online');
+            log_msg('服务已重新上线');
             clearInterval(intervalId);
             check_server_version();
         },
         error: function (error) {
             no_resp_time += 1;
             if (no_resp_time > 29) {
-                log_error('Something\'s wrong, server is not answering');
-                log_error('Please check server logs')
+                log_error('出问题了,服务器未响应');
+                log_error('请检查服务器日志')
                 clearInterval(intervalId);
                 $('#tag_bottom').hide();
                 $('#update_return_button').show();
             }
-            $("#offline_time").html('<h4 id="offline_time"><i class="fas fa-clock"></i> Attempt '+ no_resp_time +' / 30</h4><br/>');
+            $("#offline_time").html('<h4 id="offline_time"><i class="fas fa-clock"></i> 尝试 '+ no_resp_time +' / 30</h4><br/>');
             $("#offline_time").show();
         }
     });
@@ -139,25 +139,25 @@ $(document).ready(function(){
     }.bind() );
 
     update_socket.on( "update_ping", function(data) {
-        log_msg('Server connection verified');
-        log_msg('Starting update');
+        log_msg('服务器连接已验证');
+        log_msg('开始更新');
         initiate_update();
     }.bind() );
 
     update_socket.on( "server_has_updated", function(data) {
-        log_msg('Server reported updates applied. Checking . . .');
+        log_msg('服务器报告更新已应用. 检查中 . . .');
         check_server_version();
     }.bind() );
 
     update_socket.on('disconnect', function () {
-        add_update_log('Server is offline, waiting for connection', false);
+        add_update_log('服务器脱机，等待连接', false);
         intervalId = window.setInterval(function(){
             ping_check_server_online();
         }, 1000);
     });
 
     update_socket.on('update_current_version', function (data) {
-        add_update_log('Server reported version ' + data.version , false);
+        add_update_log('服务器报告版本 ' + data.version , false);
         if (current_version == null) {
             current_version = data.version;
         }
