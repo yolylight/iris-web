@@ -35,7 +35,7 @@ manage_groups_table = $('#groups_table').dataTable( {
                     tags = "";
                     for (perm in data) {
                         permstr = sanitizeHTML(data[perm].name);
-                        tags += '<span class="badge badge-pill badge-light" title="Value 0x'+ data[perm].value.toString(16) +'">'+ permstr + '</span> ';
+                        tags += '<span class="badge badge-pill badge-light" title="值 0x'+ data[perm].value.toString(16) +'">'+ permstr + '</span> ';
                     }
                     return tags;
                 }
@@ -63,7 +63,7 @@ function refresh_groups(do_notify) {
             manage_groups_table.api().clear().rows.add(data.data).draw();
 
             if (do_notify !== undefined) {
-                notify_success("Refreshed");
+                notify_success("已刷新");
             }
 
         }
@@ -127,14 +127,14 @@ function add_group() {
 function delete_group(id) {
 
     swal({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!\nPlease make sure a group remains with enough rights to avoid a lockdown!",
+      title: "你确定吗?",
+      text: "操作无法撤销!\n请确保一个小组保留足够的权利，以避免锁定!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: '是, 删除它!'
     })
     .then((willDelete) => {
       if (willDelete) {
@@ -155,14 +155,14 @@ function delete_group(id) {
 function remove_members_from_group(group_id, user_id, on_finish) {
 
     swal({
-      title: "Are you sure?",
-      text: "This will remove the user from the group",
+      title: "你确定吗?",
+      text: "这将会从组中移除用户",
       icon: "warning",
       buttons: true,
       dangerMode: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, remove it!'
+      confirmButtonText: '是, 移除!'
     })
     .then((willDelete) => {
         if (willDelete) {
@@ -264,8 +264,8 @@ function manage_group_cac(group_id) {
             data_sent['csrf_token'] = $('#csrf_token').val();
 
             window.swal({
-                  title: "Updating access",
-                  text: "Please wait. We are updating users access.",
+                  title: "更新访问",
+                  text: "请稍候.我们正在更新用户访问权限.",
                   icon: "/static/assets/img/loader_cubes.gif",
                   button: false,
                   allowOutsideClick: false
@@ -303,21 +303,21 @@ function remove_group_cases_from_group_table(group_id, rows) {
 function remove_cases_access_group(group_id, cases, on_finish) {
 
     swal({
-        title: "Are you sure?",
-        text: "Members of this group won't be able to access these cases anymore",
+        title: "你确定吗?",
+        text: "该组的成员将无法再访问这些案例",
         icon: "warning",
         buttons: true,
         dangerMode: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, remove them!'
+        confirmButtonText: '是, 移除他们!'
     }).then((willDelete) => {
         if (willDelete) {
             url = '/manage/groups/' + group_id + '/cases-access/delete';
 
             window.swal({
-              title: "Updating access",
-              text: "Please wait. We are updating users access.",
+              title: "更新访问",
+              text: "请稍候.我们正在更新用户访问权限.",
               icon: "/static/assets/img/loader_cubes.gif",
               button: false,
               allowOutsideClick: false
