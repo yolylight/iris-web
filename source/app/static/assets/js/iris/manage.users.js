@@ -33,7 +33,7 @@ manage_users_table = $('#users_table').dataTable( {
     "order": [[ 1, "asc" ]],
     "autoWidth": false,
     "language": {
-        "emptyTable": "Loading users..."
+        "emptyTable": "加载用户..."
     },
     "columns": [
         {
@@ -71,9 +71,9 @@ manage_users_table = $('#users_table').dataTable( {
         "render": function (data, type, row, meta) {
             if (type === 'display') {
                 if (data == true) {
-                    data = '<span class="badge ml-2 badge-success">Active</span>';
+                    data = '<span class="badge ml-2 badge-success">激活</span>';
                 } else {
-                    data = '<span class="badge ml-2 badge-warning">Disabled</span>';
+                    data = '<span class="badge ml-2 badge-warning">禁用</span>';
                 }
             }
             return data;
@@ -105,7 +105,7 @@ function refresh_users(do_notify) {
             manage_users_table.api().clear().rows.add(data.data).draw();
 
             if (do_notify !== undefined) {
-                notify_success("Refreshed");
+                notify_success("已刷新");
             }
 
         }
@@ -161,7 +161,7 @@ function refresh_user_ac(user_id) {
 
 function renew_api_for_user(user_id) {
     var ori_txt = $('#users_renew_api_btn').text();
-    $('#users_renew_api_btn').text('Renewing..');
+    $('#users_renew_api_btn').text('续期中..');
     post_request_api('/manage/users/renew-api-key/' + user_id)
     .done((data) => {
         if (notify_auto_api(data)) {
@@ -176,14 +176,14 @@ function renew_api_for_user(user_id) {
 function delete_user(id) {
 
     swal({
-      title: "Are you sure?",
-      text: "You won't be able to revert this !",
+      title: "你确定吗?",
+      text: "操作不能撤销!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: '是,删除!'
     })
     .then((willDelete) => {
       if (willDelete) {
@@ -198,7 +198,7 @@ function delete_user(id) {
             }
         });
       } else {
-        swal("Pfew, that was close");
+        swal("Pfew,好险");
       }
     });
 }
@@ -274,11 +274,11 @@ function update_customers_membership_modal(user_customers) {
 
     us_customer.multiselect({
         buttonWidth: 400,
-        nonSelectedText: 'Select customers',
+        nonSelectedText: '选择客户',
         includeSelectAllOption: true,
         enableFiltering: true,
         enableCaseInsensitiveFiltering: true,
-        filterPlaceholder: 'Search',
+        filterPlaceholder: '搜索',
         filterBehavior: 'both',
         widthSynchronizationMode: 'ifPopupIsSmaller'
     });
@@ -372,10 +372,10 @@ function refresh_user_cac(user_id) {
 function manage_user_cac(user_id) {
     url = 'users/' + user_id + '/cases-access/modal' + case_param();
 
-    $('#manage_user_cac_button').text('Loading manager...');
+    $('#manage_user_cac_button').text('加载管理者...');
 
     $('#modal_ac_additional').load(url, function (response, status, xhr) {
-        $('#manage_user_cac_button').text('Set case access');
+        $('#manage_user_cac_button').text('设置案例访问');
         if (status !== "success") {
              ajax_notify_error(xhr, url);
              return false;
