@@ -6,7 +6,7 @@ const preventFormDefaultBehaviourOnSubmit = (event) => {
 $('#form_new_module').submit(function () {
 
     post_request_api('/manage/modules/add', $('form#form_new_module').serializeArray(), function() {
-        $('#submit_new_module').text('Saving..')
+        $('#submit_new_module').text('保存中..')
             .attr("disabled", true)
             .removeClass('bt-outline-success')
             .addClass('btn-success', 'text-dark');
@@ -55,12 +55,12 @@ function add_module() {
                         $('#alert_mod_details').show();
                     }
                     $('#alert_mod_add').show();
-                    $('#submit_new_module').text("Retry");
+                    $('#submit_new_module').text("重试");
                 }
             })
             .fail((error) => {
                 data = error.responseJSON;
-                $('#submit_new_module').text('Save');
+                $('#submit_new_module').text('保存');
                 $('#alert_mod_add').text(data.message);
                 if (data.data && data.data.length > 0) {
                     $('#details_list').empty();
@@ -73,7 +73,7 @@ function add_module() {
                     $('#alert_mod_details').show();
                 }
                 $('#alert_mod_add').show();
-                $('#submit_new_module').text("Retry");
+                $('#submit_new_module').text("重试");
 
             });
 
@@ -145,7 +145,7 @@ $('#modules_table').dataTable( {
                data = '<i class="fas fa-times text-warning"></i>';
             }
             if (row['configured'] == false) {
-                return data + ' <i class="fas fa-exclamation-triangle text-warning" data-toggle="tooltip" data-placement="top" title="Module was disabled because mandatory settings are not set. Please configure to activate."></i>'
+                return data + ' <i class="fas fa-exclamation-triangle text-warning" data-toggle="tooltip" data-placement="top" title="由于未设置必需设置,模块被禁用.请进行配置以激活."></i>'
             } else { return data; }
             },
             "targets": [7]
@@ -160,7 +160,7 @@ function refresh_modules(silent) {
     $('[data-toggle="tooltip"]').tooltip()
   })
   if (silent === undefined || silent !== true) {
-     notify_success("Modules refreshed");
+     notify_success("模块已刷新");
   }
 }
 
@@ -223,7 +223,7 @@ $('#hooks_table').dataTable( {
 function refresh_modules_hooks(silent) {
   $('#hooks_table').DataTable().ajax.reload();
   if (silent === undefined || silent !== true) {
-         notify_success("Hooks refreshed");
+         notify_success("钩子已刷新");
   }
 }
 
@@ -253,9 +253,9 @@ function import_mod_config(module_id){
             if(notify_auto_api(data, true)) {
                 module_detail(module_id);
                 $('#modal_input_config').modal('hide');
-                swal("Got news for you", data.message, "success");
+                swal("新消息", data.message, "success");
             } else {
-                swal("Got bad news for you", data.data, "error");
+                swal("坏消息", data.data, "error");
             }
         });
     };
@@ -329,14 +329,14 @@ function module_detail(module_id) {
 function remove_module(id) {
 
     swal({
-      title: "Are you sure?",
-      text: "Please note this will only remove the reference of the module in Iris. The module will stay installed on the server.",
+      title: "你确定吗?",
+      text: "请注意,这只会删除 Iris 中的模块引用.模块将继续安装在服务器上.",
       icon: "warning",
       buttons: true,
       dangerMode: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, remove it!'
+      confirmButtonText: '是,移除它!'
     })
     .then((willDelete) => {
       if (willDelete) {
@@ -349,7 +349,7 @@ function remove_module(id) {
             }
         });
       } else {
-        swal("Pfew, that was close");
+        swal("Pfew, 好险");
       }
     });
 }
