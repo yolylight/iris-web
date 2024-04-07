@@ -27,7 +27,7 @@ function add_asset_type() {
                     }
                 },
                 error: function (error) {
-                    $('#modal_add_type').text('Save');
+                    $('#modal_add_type').text('保存');
                     propagate_form_api_errors(error.responseJSON.data);
                 }
             });
@@ -87,7 +87,7 @@ $('#assets_table').dataTable( {
 
 function refresh_asset_table() {
   $('#assets_table').DataTable().ajax.reload();
-  notify_success("Refreshed");
+  notify_success("已刷新");
 }
 
 
@@ -137,14 +137,14 @@ function assettype_detail(asset_id) {
 function delete_asset_type(id) {
 
     swal({
-      title: "Are you sure?",
-      text: "You won't be able to revert this !",
+      title: "你确定吗?",
+      text: "操作不能恢复!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: '是,删除它!'
     })
     .then((willDelete) => {
         if (willDelete) {
@@ -156,7 +156,7 @@ function delete_asset_type(id) {
                 }
             });
         } else {
-            swal("Pfew, that was close");
+            swal("Pfew,好险");
         }
     });
 }
@@ -237,7 +237,7 @@ $('#ioc_table').dataTable({
 
 function refresh_ioc_table() {
   $('#ioc_table').DataTable().ajax.reload();
-  notify_success("Refreshed");
+  notify_success("已刷新");
 }
 
 
@@ -271,14 +271,14 @@ function ioc_type_detail(ioc_id) {
 function delete_ioc_type(id) {
 
     swal({
-      title: "Are you sure?",
-      text: "You won't be able to revert this !",
+      title: "你确定吗?",
+      text: "操作不能恢复!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: '是,删除它!'
     })
     .then((willDelete) => {
       if (willDelete) {
@@ -290,7 +290,7 @@ function delete_ioc_type(id) {
                 }
             });
       } else {
-        swal("Pfew, that was close");
+        swal("Pfew,好险");
       }
     });
 }
@@ -359,7 +359,7 @@ $('#classification_table').dataTable({
 
 function refresh_classification_table() {
   $('#classification_table').DataTable().ajax.reload();
-  notify_success("Refreshed");
+  notify_success("已刷新");
 }
 
 /* Fetch the details of an classification and allow modification */
@@ -392,14 +392,14 @@ function classification_detail(ioc_id) {
 function delete_case_classification(id) {
 
     swal({
-      title: "Are you sure?",
-      text: "You won't be able to revert this !",
+      title: "你确定吗?",
+      text: "操作不能恢复 !",
       icon: "warning",
       buttons: true,
       dangerMode: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: '是, 删除它!'
     })
     .then((willDelete) => {
       if (willDelete) {
@@ -411,7 +411,7 @@ function delete_case_classification(id) {
                 }
             });
       } else {
-        swal("Pfew, that was close");
+        swal("Pfew,好险");
       }
     });
 }
@@ -461,7 +461,7 @@ $('#state_table').dataTable({
             "render": function ( data, type, row ) {
                 if (type === 'display') {
                     if (row['protected'] === true) {
-                        return '<span href="#" "><i class="fa fa-lock mr-2" title="Protected state"></i>' + sanitizeHTML(data) + '</span>';
+                        return '<span href="#" "><i class="fa fa-lock mr-2" title="保护状态"></i>' + sanitizeHTML(data) + '</span>';
                     }
                     return '<a href="#" onclick="state_detail(\'' + row['state_id'] + '\');">' + sanitizeHTML(data) + '</a>';
                 }
@@ -480,7 +480,7 @@ $('#state_table').dataTable({
 
 function refresh_state_table() {
   $('#state_table').DataTable().ajax.reload();
-  notify_success("Refreshed");
+  notify_success("已刷新");
 }
 
 /* Fetch the details of an state and allow modification */
@@ -513,14 +513,14 @@ function state_detail(ioc_id) {
 function delete_case_state(id) {
 
     swal({
-      title: "Are you sure?",
-      text: "You won't be able to revert this !",
+      title: "你确定吗?",
+      text: "操作不能恢复!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: '是,删除它!'
     })
     .then((willDelete) => {
       if (willDelete) {
@@ -532,7 +532,7 @@ function delete_case_state(id) {
                 }
             });
       } else {
-        swal("Pfew, that was close");
+        swal("Pfew,好险");
       }
     });
 }
@@ -596,7 +596,7 @@ $('#evidence_table').dataTable({
 
 function refresh_evidence_table() {
   $('#evidence_table').DataTable().ajax.reload();
-  notify_success("Refreshed");
+  notify_success("已刷新");
 }
 
 function evidence_detail(evidence_id) {
@@ -628,14 +628,14 @@ function evidence_detail(evidence_id) {
 function delete_evidence_type(id) {
 
     swal({
-      title: "Are you sure?",
-      text: "You won't be able to revert this !",
+      title: "你确认吗?",
+      text: "操作不能恢复 !",
       icon: "warning",
       buttons: true,
       dangerMode: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: '是,删除它!'
     })
     .then((willDelete) => {
       if (willDelete) {
@@ -647,7 +647,7 @@ function delete_evidence_type(id) {
                 }
             });
       } else {
-        swal("Pfew, that was close");
+        swal("Pfew,好险");
       }
     });
 }
