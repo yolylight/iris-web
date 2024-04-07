@@ -5,20 +5,20 @@
 /* create the select picker for customer */
 $('#case_customer').selectpicker({
     liveSearch: true,
-    title: "Select customer *",
+    title: "选择客户 *",
     style: "btn-outline-white",
     size: 8
 });
 $('#case_template_id').selectpicker({
     liveSearch: true,
-    title: "Select case template",
+    title: "选择案例模板",
     style: "btn-outline-white",
     size: 8
 });
 $('#case_template_id').prepend(new Option('', ''));
 $('#classification_id').selectpicker({
     liveSearch: true,
-    title: "Select classification",
+    title: "选择分类",
     style: "btn-outline-white",
     size: 8
 });
