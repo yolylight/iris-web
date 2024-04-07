@@ -524,7 +524,7 @@ def renew_user_api_key(cur_id, caseid):
     return response_success(f"API key of user {user.user} renewed", data=user_schema.dump(user))
 
 
-if is_authentication_local():
+if is_authentication_local() or (not is_authentication_local()):
     @manage_users_blueprint.route('/manage/users/delete/<int:cur_id>', methods=['POST'])
     @ac_api_requires(Permissions.server_administrator, no_cid_required=True)
     def view_delete_user(cur_id, caseid):
@@ -539,18 +539,18 @@ if is_authentication_local():
                 return ac_api_return_access_denied(caseid=caseid)
 
             if user.active is True:
-                track_activity(message="tried to delete active user ID {}".format(cur_id), caseid=caseid, ctx_less=True)
-                return response_error("Cannot delete active user")
+                track_activity(message="尝试删除激活的用户ID {}".format(cur_id), caseid=caseid, ctx_less=True)
+                return response_error("不能删除激活用户")
 
             delete_user(user.id)
 
-            track_activity(message="deleted user ID {}".format(cur_id), caseid=caseid, ctx_less=True)
-            return response_success("Deleted user ID {}".format(cur_id))
+            track_activity(message="已删除用户ID {}".format(cur_id), caseid=caseid, ctx_less=True)
+            return response_success("已删除用户ID {}".format(cur_id))
 
         except Exception:
             db.session.rollback()
-            track_activity(message="tried to delete active user ID {}".format(cur_id), caseid=caseid,  ctx_less=True)
-            return response_error("Cannot delete active user")
+            track_activity(message="尝试删除激活用户ID {}".format(cur_id), caseid=caseid,  ctx_less=True)
+            return response_error("不能删除激活用户")
 
 
 # Unrestricted section - non admin available
