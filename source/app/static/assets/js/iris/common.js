@@ -456,8 +456,8 @@ function is_redirect() {
 
 function notify_redirect() {
     if (is_redirect()) {
-        swal("You've been redirected",
-             "The case you attempted to reach wasn't found.\nYou have been redirected to a default case.",
+        swal("您已被重定向",
+             "未找到您试图访问的案例.\n您已被重定向到默认案例.",
              "info", {button: "OK"}
              ).then((value) => {
                     queryString = window.location.search;
@@ -496,13 +496,13 @@ function check_update(url) {
                 },
             error: function (data) {
                 if (data.status == 404) {
-                    swal("Stop everything !",
-                    "The case you are working on was deleted",
+                    swal("停止所有 !",
+                    "您操作的案例已删除",
                     "error",
                     {
                         buttons: {
                             again: {
-                                text: "Go to my default case",
+                                text: "转到我的默认案例",
                                 value: "default"
                             }
                         }
@@ -522,7 +522,7 @@ function check_update(url) {
                 } else if (data.status == 400) {
 
                 } else {
-                    notify_error('Connection with server lost');
+                    notify_error('到服务器连接丢失');
                 }
             }
         });
@@ -601,9 +601,9 @@ function downloadURI(uri, name) {
 function copy_object_link(node_id) {
     link = buildShareLink(node_id);
     navigator.clipboard.writeText(link).then(function() {
-          notify_success('Shared link copied');
+          notify_success('共享链接已拷贝');
     }, function(err) {
-        notify_error('Can\'t copy link. I printed it in console.');
+        notify_error('无法复制链接.已打印到console.');
         console.error('Shared link', err);
     });
 }
@@ -614,9 +614,9 @@ function capitalizeFirstLetter(string) {
 function copy_object_link_md(data_type, node_id){
     let link = `[<i class="fa-solid fa-tag"></i> ${capitalizeFirstLetter(data_type)} #${node_id}](${buildShareLink(node_id)})`
     navigator.clipboard.writeText(link).then(function() {
-        notify_success('MD link copied');
+        notify_success('MD链接已拷贝');
     }, function(err) {
-        notify_error('Can\'t copy link. I printed it in console.');
+        notify_error('无法复制链接.已打印到console');
         console.error('Shared link', err);
     });
 }
@@ -625,7 +625,7 @@ function copy_text_clipboardb(data){
     navigator.clipboard.writeText(fromBinary64(data)).then(function() {
         notify_success('Copied!');
     }, function(err) {
-        notify_error('Can\'t copy link. I printed it in console.');
+        notify_error('无法复制链接.已打印到console');
         console.error(err);
     });
 }
@@ -634,7 +634,7 @@ function copy_text_clipboard(data){
     navigator.clipboard.writeText(data).then(function() {
         notify_success('Copied!');
     }, function(err) {
-        notify_error('Can\'t copy link. I printed it in console.');
+        notify_error('无法复制链接.已打印到console');
         console.error(err);
     });
 }
@@ -648,10 +648,10 @@ function load_case_activity(){
 
             if (js_data[index].is_from_api) {
                 api_flag = 'feed-item-primary';
-                title = 'Activity issued from API';
+                title = '从API发布的活动';
             } else {
                 api_flag = 'feed-item-default';
-                title = 'Activity issued from GUI';
+                title = '从图形用户界面发布的活动';
             }
 
             entry =	`<li class="feed-item ${api_flag}" title='${sanitizeHTML(title)}'>
@@ -672,10 +672,10 @@ function load_dim_limited_tasks(){
 
             if (js_data[index].state == 'success') {
                 api_flag = 'feed-item-success';
-                title = 'Task succeeded';
+                title = '任务成功';
             } else {
                 api_flag = 'feed-item-warning';
-                title = 'Task pending or failed';
+                title = '任务未完成或失败';
             }
 
             entry =	`<li class="feed-item ${api_flag}" title='${title}'>
@@ -711,7 +711,7 @@ function init_module_processing_wrap(rows, data_type, out_hook_name) {
         }
     }
     if (hook_name == null) {
-        notify_error('Error: hook not found');
+        notify_error('错误：未找到钩子');
         return false;
     }
     return init_module_processing(rows, hook_name, hook_ui_name, module_name, data_type);
@@ -1085,10 +1085,10 @@ function load_menu_mod_options(data_type, table, deletion_fn) {
             yoffset: -10,
             headerRenderer: function (rows) {
                 if (rows.length > 1) {
-                    return rows.length + ' items selected';
+                    return rows.length + ' 项目已选中';
                 } else {
                     let row = rows[0];
-                    return 'Quick action';
+                    return '快捷动作';
                 }
             },
         },
@@ -1116,7 +1116,7 @@ function load_menu_mod_options(data_type, table, deletion_fn) {
 
                 actionOptions.items.push({
                     type: 'option',
-                    title: 'Share',
+                    title: '分享',
                     multi: false,
                     iconClass: 'fas fa-share',
                     action: function(rows){
@@ -1127,7 +1127,7 @@ function load_menu_mod_options(data_type, table, deletion_fn) {
 
                 actionOptions.items.push({
                     type: 'option',
-                    title: 'Comment',
+                    title: '评论',
                     multi: false,
                     iconClass: 'fas fa-comments',
                     action: function(rows){
@@ -1140,7 +1140,7 @@ function load_menu_mod_options(data_type, table, deletion_fn) {
 
                 actionOptions.items.push({
                     type: 'option',
-                    title: 'Markdown Link',
+                    title: 'Markdown链接',
                     multi: false,
                     iconClass: 'fa-brands fa-markdown',
                     action: function(rows){
@@ -1151,7 +1151,7 @@ function load_menu_mod_options(data_type, table, deletion_fn) {
 
                 actionOptions.items.push({
                     type: 'option',
-                    title: 'Copy',
+                    title: '复制',
                     multi: false,
                     iconClass: 'fa-regular fa-copy',
                     action: function(rows){
@@ -1188,7 +1188,7 @@ function load_menu_mod_options(data_type, table, deletion_fn) {
 
                     actionOptions.items.push({
                         type: 'option',
-                        title: 'Delete',
+                        title: '删除',
                         multi: false,
                         iconClass: 'fas fa-trash',
                         contextMenuClasses: ['text-danger'],
@@ -1255,7 +1255,7 @@ function get_custom_attributes_fields() {
     })
 
     if (has_error.length > 0) {
-        msg = 'Missing required fields: <br/>';
+        msg = '缺少必填字段: <br/>';
         for (field in has_error) {
             msg += '  - ' + has_error[field] + '<br/>';
         }
@@ -1338,20 +1338,20 @@ function load_add_case() {
         }
         $('#case_customer').selectpicker({
             liveSearch: true,
-            title: "Select customer *",
+            title: "选择客户 *",
             style: "btn-outline-white",
             size: 8
         });
         $('#case_template_id').selectpicker({
             liveSearch: true,
-            title: "Select case template",
+            title: "选择案例模板",
             style: "btn-outline-white",
             size: 8
         });
         $('#case_template_id').prepend(new Option('', ''));
         $('#classification_id').selectpicker({
             liveSearch: true,
-            title: "Select classification",
+            title: "选择分类",
             style: "btn-outline-white",
             size: 8
         });
@@ -1396,7 +1396,7 @@ function set_suggest_tags(anchor_id) {
 function send_add_case(data_sent) {
 
     post_request_api('/manage/cases/add', JSON.stringify(data_sent), true, function () {
-        $('#submit_new_case_btn').text('Checking data..')
+        $('#submit_new_case_btn').text('检查数据..')
             .attr("disabled", true)
             .removeClass('bt-outline-success')
             .addClass('btn-success', 'text-dark');
@@ -1404,18 +1404,18 @@ function send_add_case(data_sent) {
     .done((data) => {
         if (notify_auto_api(data, true)) {
             let case_id = data.data.case_id;
-            swal("That's done !",
-                "Case has been successfully created",
+            swal("已完成 !",
+                "案例已成功创建",
                 "success",
                 {
                     buttons: {
                         dash: {
-                            text: "Go to dashboard",
+                            text: "转到仪表盘",
                             value: "dash",
                             color: '#d33'
                         },
                         go_case: {
-                            text: "Switch to newly created case",
+                            text: "切换到最新创建案例",
                             value: "go_case"
                         }
                     }
@@ -1443,7 +1443,7 @@ function send_add_case(data_sent) {
         .removeClass('btn-success', 'text-dark');
     })
     .fail(() => {
-        $('#submit_new_case_btn').text('Save');
+        $('#submit_new_case_btn').text('保存');
     })
 
 }
@@ -1457,7 +1457,7 @@ function load_context_switcher() {
             dataType: 'json'
         },
         locale: {
-                emptyTitle: 'Select and Begin Typing',
+                emptyTitle: '选择并开始键入',
                 statusInitialized: '',
         },
         minLength: 0,
@@ -1572,7 +1572,7 @@ function createPagination(currentPage, totalPages, per_page, callback, paginatio
               const firstItem = $('<li>', {class: 'page-item'}).appendTo(paginationContainer);
               $('<a>', {
                   href: `javascript:${callback}(1, ${per_page},{}, true)`,
-                  text: 'First page',
+                  text: '第一页',
                   class: 'page-link',
               }).appendTo(firstItem);
           }
@@ -1583,7 +1583,7 @@ function createPagination(currentPage, totalPages, per_page, callback, paginatio
         const prevItem = $('<li>', { class: 'page-item' }).appendTo(paginationContainer);
         $('<a>', {
           href: `javascript:${callback}(${Math.max(1, currentPage - 1)}, ${per_page},{}, true)`,
-          text: 'Previous',
+          text: '上一页',
           class: 'page-link',
         }).appendTo(prevItem);
     }
@@ -1607,7 +1607,7 @@ function createPagination(currentPage, totalPages, per_page, callback, paginatio
         const nextItem = $('<li>', { class: 'page-item' }).appendTo(paginationContainer);
         $('<a>', {
           href: `javascript:${callback}(${Math.min(totalPages, currentPage + 1)}, ${per_page},{}, true)`,
-          text: 'Next',
+          text: '下一页',
           class: 'page-link',
         }).appendTo(nextItem);
     }
@@ -1617,7 +1617,7 @@ function createPagination(currentPage, totalPages, per_page, callback, paginatio
             const lastItem = $('<li>', {class: 'page-item'}).appendTo(paginationContainer);
             $('<a>', {
                href: `javascript:${callback}(${totalPages}, ${per_page},{}, true)`,
-               text: 'Last page',
+               text: '最后一页',
                class: 'page-link',
            }).appendTo(lastItem);
        }
@@ -1659,18 +1659,18 @@ function do_deletion_prompt(message, force_prompt=false) {
     if (userWhoami.has_deletion_confirmation || force_prompt) {
             return new Promise((resolve, reject) => {
                 swal({
-                    title: "Are you sure?",
+                    title: "你确定么?",
                     text: message,
                     icon: "warning",
                     buttons: {
                         cancel: {
-                            text: "Cancel",
+                            text: "取消",
                             value: false,
                             visible: true,
                             closeModal: true
                         },
                         confirm: {
-                           text: "Confirm",
+                           text: "确认",
                            value: true
                         }
                     },
@@ -1764,8 +1764,8 @@ $(document).ready(function(){
             if(notify_auto_api(data, true)) {
                 $('#modal_switch_context').modal('hide');
                 swal({
-                    title: 'Context changed successfully',
-                    text: 'Reloading...',
+                    title: '成功更改上下文',
+                    text: '重新加载...',
                     icon: 'success',
                     timer: 500,
                     buttons: false,
