@@ -27,7 +27,7 @@ async function update_ucases_list(show_all=false) {
             UserCasesTable.columns.adjust().draw();
             UserCasesTable.buttons().container().appendTo($('#ucases_table_info'));
             $('[data-toggle="popover"]').popover();
-            $('#ucases_last_updated').text("Last updated: " + new Date().toLocaleTimeString());
+            $('#ucases_last_updated').text("最后更新: " + new Date().toLocaleTimeString());
         }
     });
 }
@@ -44,7 +44,7 @@ async function update_ureviews_list() {
             UserReviewsTable.rows.add(data.data);
             UserReviewsTable.columns.adjust().draw();
             $('[data-toggle="popover"]').popover();
-            $('#ureviews_last_updated').text("Last updated: " + new Date().toLocaleTimeString());
+            $('#ureviews_last_updated').text("最后更新: " + new Date().toLocaleTimeString());
             $('#rowPendingCasesReview').show();
         }
     });
