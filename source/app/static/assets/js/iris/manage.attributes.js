@@ -60,7 +60,7 @@ $('#attributes_table').dataTable( {
 
 function refresh_attribute_table() {
   $('#attributes_table').DataTable().ajax.reload();
-  notify_success("Refreshed");
+  notify_success("已刷新");
 }
 
 function attribute_detail(attr_id) {
@@ -91,17 +91,17 @@ function attribute_detail(attr_id) {
           enableBasicAutocompletion: [{
             getCompletions: (editor, session, pos, prefix, callback) => {
               callback(null, [
-                {value: 'mandatory', score: 1, meta: 'mandatory tag'},
-                {value: 'type', score: 1, meta: 'type tag'},
-                {value: 'input_string', score: 1, meta: 'An input string field type'},
-                {value: 'input_checkbox', score: 1, meta: 'An input checkbox field type'},
-                {value: 'input_textfield', score: 1, meta: 'An input textfield field type'},
-                {value: 'input_date', score: 1, meta: 'An input date field type'},
-                {value: 'input_datetime', score: 1, meta: 'An input datetime field type'},
-                {value: 'input_select', score: 1, meta: 'An input select field type'},
-                {value: 'raw', score: 1, meta: 'A raw field type'},
-                {value: 'html', score: 1, meta: 'An html field type'},
-                {value: 'value', score: 1, meta: 'default value'},
+                {value: 'mandatory', score: 1, meta: '强制标签'},
+                {value: 'type', score: 1, meta: '类型标签'},
+                {value: 'input_string', score: 1, meta: '输入字符串字段类型'},
+                {value: 'input_checkbox', score: 1, meta: '输入复选框字段类型'},
+                {value: 'input_textfield', score: 1, meta: '输入文本字段类型'},
+                {value: 'input_date', score: 1, meta: '输入日期字段类型'},
+                {value: 'input_datetime', score: 1, meta: '输入日期时间字段类型'},
+                {value: 'input_select', score: 1, meta: '输入选择字段类型'},
+                {value: 'raw', score: 1, meta: '原始字段类型'},
+                {value: 'html', score: 1, meta: 'html 字段类型'},
+                {value: 'value', score: 1, meta: '默认值'},
               ]);
             },
           }],
@@ -154,8 +154,8 @@ function update_attribute(attr_id, editor, partial, complete){
 
     post_request_api('/manage/attributes/update/' + attr_id, JSON.stringify(data_sent), false, function() {
         window.swal({
-              title: "Updating and migrating...",
-              text: "Please wait",
+              title: "更新并合并...",
+              text: "请等待",
               icon: "/static/assets/img/loader.gif",
               button: false,
               allowOutsideClick: false
