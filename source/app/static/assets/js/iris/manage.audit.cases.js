@@ -11,9 +11,9 @@ function get_case_audit_page() {
     $('#get_case_audit_btn').text('Auditing case..');
     url = '/manage/access-control/audit/cases/'+ us_val +'/modal' + case_param();
     $('#case_audit_content').load(url, function (response, status, xhr) {
-        $('#get_case_audit_btn').text('Audit');
+        $('#get_case_audit_btn').text('审核');
         if (status !== "success") {
-             $('#get_case_audit_btn').text('Audit');
+             $('#get_case_audit_btn').text('审核');
              ajax_notify_error(xhr, url);
 
              return false;
