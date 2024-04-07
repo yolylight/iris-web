@@ -77,7 +77,7 @@ def alerts_list_route(caseid) -> Response:
                 alert_ids = [int(alert_ids_str)]
 
         except ValueError:
-            return response_error('Invalid alert id')
+            return response_error('告警ID错误')
 
     alert_assets_str = request.args.get('alert_assets')
     alert_assets = None
@@ -91,7 +91,7 @@ def alerts_list_route(caseid) -> Response:
                 alert_assets = [str(alert_assets_str)]
 
         except ValueError:
-            return response_error('Invalid alert asset')
+            return response_error('告警资产错误')
 
     alert_iocs_str = request.args.get('alert_iocs')
     alert_iocs = None
@@ -105,7 +105,7 @@ def alerts_list_route(caseid) -> Response:
                 alert_iocs = [str(alert_iocs_str)]
 
         except ValueError:
-            return response_error('Invalid alert ioc')
+            return response_error('告警IOC错误')
 
     alert_schema = AlertSchema()
 
@@ -133,7 +133,7 @@ def alerts_list_route(caseid) -> Response:
     )
 
     if filtered_data is None:
-        return response_error('Filtering error')
+        return response_error('筛选错误')
 
     alerts = {
         'total': filtered_data.total,
@@ -160,7 +160,7 @@ def alerts_add_route(caseid) -> Response:
     """
 
     if not request.json:
-        return response_error('No JSON data provided')
+        return response_error('未提供JSON数据')
 
     alert_schema = AlertSchema()
     ioc_schema = IocSchema()
@@ -181,7 +181,7 @@ def alerts_add_route(caseid) -> Response:
 
         # Verify the user is entitled to create an alert for the client
         if not user_has_client_access(current_user.id, new_alert.alert_customer_id):
-            return response_error('User not entitled to create alerts for the client')
+            return response_error('无权为客户端创建告警的用户')
 
         new_alert.alert_creation_time = datetime.utcnow()
 
@@ -239,10 +239,10 @@ def alerts_get_route(caseid, alert_id) -> Response:
 
     # Return the alert as JSON
     if alert is None:
-        return response_error('Alert not found')
+        return response_error('未找到告警')
 
     if not user_has_client_access(current_user.id, alert.alert_customer_id):
-        return response_error('Alert not found')
+        return response_error('未找到告警')
 
     alert_dump = alert_schema.dump(alert)
 
@@ -272,10 +272,10 @@ def alerts_similarities_route(caseid, alert_id) -> Response:
 
     # Return the alert as JSON
     if alert is None:
-        return response_error('Alert not found')
+        return response_error('未找到告警')
 
     if not user_has_client_access(current_user.id, alert.alert_customer_id):
-        return response_error('Alert not found')
+        return response_error('未找到告警')
 
     open_alerts = request.args.get('open-alerts', 'false').lower() == 'true'
     open_cases = request.args.get('open-cases', 'false').lower() == 'true'
@@ -312,14 +312,14 @@ def alerts_update_route(alert_id, caseid) -> Response:
         Response: The response
     """
     if not request.json:
-        return response_error('No JSON data provided')
+        return response_error('未提供JSON数据')
 
     alert = get_alert_by_id(alert_id)
     if not alert:
-        return response_error('Alert not found')
+        return response_error('未找到告警')
 
     if not user_has_client_access(current_user.id, alert.alert_customer_id):
-        return response_error('User not entitled to update alerts for the client', status=403)
+        return response_error('无权为客户端创建警报的用户', status=403)
 
     alert_schema = AlertSchema()
 
@@ -394,7 +394,7 @@ def alerts_batch_update_route(caseid: int) -> Response:
         Response: The response
     """
     if not request.json:
-        return response_error('No JSON data provided')
+        return response_error('未提供JSON数据')
 
     # Load the JSON data from the request
     data = request.get_json()
@@ -404,7 +404,7 @@ def alerts_batch_update_route(caseid: int) -> Response:
     updates = data.get('updates', {})
 
     if not alert_ids:
-        return response_error('No alert IDs provided')
+        return response_error('未提供告警ID')
 
     alert_schema = AlertSchema()
 
@@ -412,7 +412,7 @@ def alerts_batch_update_route(caseid: int) -> Response:
     for alert_id in alert_ids:
         alert = get_alert_by_id(alert_id)
         if not alert:
-            return response_error(f'Alert with ID {alert_id} not found')
+            return response_error(f'告警ID {alert_id} 未找到')
 
         try:
 
@@ -425,7 +425,7 @@ def alerts_batch_update_route(caseid: int) -> Response:
 
             # Check if the user has access to the client
             if not user_has_client_access(current_user.id, alert.alert_customer_id):
-                return response_error('User not entitled to update alerts for the client', status=403)
+                return response_error('无权为客户端创建告警的用户', status=403)
 
             # Deserialize the JSON data into an Alert object
             alert_schema.load(updates, instance=alert, partial=True)
@@ -461,7 +461,7 @@ def alerts_batch_delete_route(caseid: int) -> Response:
         Response: The response
     """
     if not request.json:
-        return response_error('No JSON data provided')
+        return response_error('未提供JSON数据')
 
     # Load the JSON data from the request
     data = request.get_json()
@@ -470,16 +470,16 @@ def alerts_batch_delete_route(caseid: int) -> Response:
     alert_ids: List[int] = data.get('alert_ids', [])
 
     if not alert_ids:
-        return response_error('No alert IDs provided')
+        return response_error('未提供告警ID')
 
     # Check if the user has access to the client
     for alert_id in alert_ids:
         alert = get_alert_by_id(alert_id)
         if not alert:
-            return response_error(f'Alert with ID {alert_id} not found')
+            return response_error(f'告警ID {alert_id}未找到')
 
         if not user_has_client_access(current_user.id, alert.alert_customer_id):
-            return response_error('User not entitled to delete alerts for the client', status=403)
+            return response_error('无权为客户端创建告警的用户', status=403)
 
     success, logs = delete_alerts(alert_ids)
 
@@ -509,13 +509,13 @@ def alerts_delete_route(alert_id, caseid) -> Response:
 
     alert = get_alert_by_id(alert_id)
     if not alert:
-        return response_error('Alert not found')
+        return response_error('告警未找到')
 
     try:
 
         # Check if the user has access to the client
         if not user_has_client_access(current_user.id, alert.alert_customer_id):
-            return response_error('User not entitled to delete alerts for the client', status=403)
+            return response_error('无权为客户端创建告警的用户', status=403)
 
         # Delete the case association
         delete_similar_alert_cache(alert_id=alert_id)
@@ -552,10 +552,10 @@ def alerts_escalate_route(alert_id, caseid) -> Response:
 
     alert = get_alert_by_id(alert_id)
     if not alert:
-        return response_error('Alert not found')
+        return response_error('告警未找到')
 
     if request.json is None:
-        return response_error('No JSON data provided')
+        return response_error('未提供JSON数据')
 
     data = request.get_json()
 
@@ -570,7 +570,7 @@ def alerts_escalate_route(alert_id, caseid) -> Response:
     try:
         # Check if the user has access to the client
         if not user_has_client_access(current_user.id, alert.alert_customer_id):
-            return response_error('User not entitled to escalate alerts for the client', status=403)
+            return response_error('无权为客户端创建告警的用户', status=403)
 
         # Escalate the alert to a case
         alert.alert_status_id = AlertStatus.query.filter_by(status_name='Escalated').first().status_id
@@ -582,7 +582,7 @@ def alerts_escalate_route(alert_id, caseid) -> Response:
                                       template_id=case_template_id)
 
         if not case:
-            return response_error('Failed to create case from alert')
+            return response_error('从告警创建案例失败')
 
         ac_set_new_case_access(None, case.case_id, case.client_id)
 
@@ -621,21 +621,21 @@ def alerts_merge_route(alert_id, caseid) -> Response:
         Response: The response
     """
     if request.json is None:
-        return response_error('No JSON data provided')
+        return response_error('未提供JSON数据')
 
     data = request.get_json()
 
     target_case_id = data.get('target_case_id')
     if target_case_id is None:
-        return response_error('No target case id provided')
+        return response_error('未提供目标案例')
 
     alert = get_alert_by_id(alert_id)
     if not alert:
-        return response_error('Alert not found')
+        return response_error('告警未找到')
 
     case = get_case(target_case_id)
     if not case:
-        return response_error('Target case not found')
+        return response_error('目标案例未找到')
 
     iocs_import_list: List[str] = data.get('iocs_import_list')
     assets_import_list: List[str] = data.get('assets_import_list')
@@ -646,11 +646,11 @@ def alerts_merge_route(alert_id, caseid) -> Response:
     try:
         # Check if the user has access to the client
         if not user_has_client_access(current_user.id, alert.alert_customer_id):
-            return response_error('User not entitled to merge alerts for the client', status=403)
+            return response_error('无权为客户端创建告警的用户', status=403)
 
         # Check if the user has access to the case
         if not check_ua_case_client(current_user.id, target_case_id):
-            return response_error('User not entitled to merge alerts for the case', status=403)
+            return response_error('用户无权为案例合并告警', status=403)
 
         # Merge the alert into a case
         alert.alert_status_id = AlertStatus.query.filter_by(status_name='Merged').first().status_id
@@ -689,28 +689,28 @@ def alerts_unmerge_route(alert_id, caseid) -> Response:
         Response: The response
     """
     if request.json is None:
-        return response_error('No JSON data provided')
+        return response_error('未提供JSON数据')
 
     target_case_id = request.json.get('target_case_id')
     if target_case_id is None:
-        return response_error('No target case id provided')
+        return response_error('未提供目标案例ID')
 
     alert = get_alert_by_id(alert_id)
     if not alert:
-        return response_error('Alert not found')
+        return response_error('告警未找到')
 
     case = get_case(target_case_id)
     if not case:
-        return response_error('Target case not found')
+        return response_error('目标案例未找到')
 
     try:
         # Check if the user has access to the client
         if not user_has_client_access(current_user.id, alert.alert_customer_id):
-            return response_error('User not entitled to unmerge alerts for the client', status=403)
+            return response_error('用户无权从客户端取消合并告警', status=403)
 
         # Check if the user has access to the case
         if not check_ua_case_client(current_user.id, target_case_id):
-            return response_error('User not entitled to unmerge alerts for the case', status=403)
+            return response_error('用户无权取消案例告警', status=403)
 
         # Unmerge alert from the case
         success, message = unmerge_alert_from_case(alert, case)
@@ -744,21 +744,21 @@ def alerts_batch_merge_route(caseid) -> Response:
         Response: The response
     """
     if request.json is None:
-        return response_error('No JSON data provided')
+        return response_error('未提供JSON数据')
 
     data = request.get_json()
 
     target_case_id = data.get('target_case_id')
     if target_case_id is None:
-        return response_error('No target case id provided')
+        return response_error('未提供目标案例ID')
 
     alert_ids = data.get('alert_ids')
     if not alert_ids:
-        return response_error('No alert ids provided')
+        return response_error('未提供告警ID')
 
     case = get_case(target_case_id)
     if not case:
-        return response_error('Target case not found')
+        return response_error('目标案例未找到')
 
     iocs_import_list: List[str] = data.get('iocs_import_list')
     assets_import_list: List[str] = data.get('assets_import_list')
@@ -768,7 +768,7 @@ def alerts_batch_merge_route(caseid) -> Response:
 
     # Check if the user has access to the case
     if not check_ua_case_client(current_user.id, target_case_id):
-        return response_error('User not entitled to merge alerts for the case', status=403)
+        return response_error('用户无权合并案例的警报', status=403)
 
     try:
         # Merge the alerts into a case
@@ -781,7 +781,7 @@ def alerts_batch_merge_route(caseid) -> Response:
 
             # Check if the user has access to the client
             if not user_has_client_access(current_user.id, alert.alert_customer_id):
-                return response_error('User not entitled to merge alerts for the client', status=403)
+                return response_error('用户无权从客户端合并告警', status=403)
 
             alert.alert_status_id = AlertStatus.query.filter_by(status_name='Merged').first().status_id
             db.session.commit()
@@ -790,12 +790,12 @@ def alerts_batch_merge_route(caseid) -> Response:
             merge_alert_in_case(alert, case, iocs_list=iocs_import_list, assets_list=assets_import_list, note=None,
                                 import_as_event=import_as_event, case_tags=case_tags)
 
-            add_obj_history_entry(alert, f"Alert merged into existing case #{target_case_id}")
+            add_obj_history_entry(alert, f"告警合并到已有案例 #{target_case_id}")
 
             alert = call_modules_hook('on_postload_alert_merge', data=alert, caseid=caseid)
 
         if note:
-            case.description += f"\n\n### Escalation note\n\n{note}\n\n" if case.description else f"\n\n{note}\n\n"
+            case.description += f"\n\n### 升级注释\n\n{note}\n\n" if case.description else f"\n\n{note}\n\n"
             db.session.commit()
 
         track_activity(f"batched merge alerts {alert_ids} into existing case #{target_case_id}",
@@ -823,13 +823,13 @@ def alerts_batch_escalate_route(caseid) -> Response:
         Response: The response
     """
     if request.json is None:
-        return response_error('No JSON data provided')
+        return response_error('未提供JSON数据')
 
     data = request.get_json()
 
     alert_ids = data.get('alert_ids')
     if not alert_ids:
-        return response_error('No alert ids provided')
+        return response_error('未提供告警ID')
 
     iocs_import_list: List[str] = data.get('iocs_import_list')
     assets_import_list: List[str] = data.get('assets_import_list')
@@ -851,7 +851,7 @@ def alerts_batch_escalate_route(caseid) -> Response:
 
             # Check if the user has access to the client
             if not user_has_client_access(current_user.id, alert.alert_customer_id):
-                return response_error('User not entitled to escalate alerts for the client', status=403)
+                return response_error('用户无权为客户端升级告警', status=403)
 
             alert.alert_status_id = AlertStatus.query.filter_by(status_name='Merged').first().status_id
             db.session.commit()
@@ -865,18 +865,18 @@ def alerts_batch_escalate_route(caseid) -> Response:
                                        case_title=case_title, template_id=case_template_id)
 
         if not case:
-            return response_error('Failed to create case from alert')
+            return response_error('从告警创建案例失败')
 
         ac_set_new_case_access(None, case.case_id, case.client_id)
 
         case = call_modules_hook('on_postload_case_create', data=case, caseid=caseid)
 
         add_obj_history_entry(case, 'created')
-        track_activity("new case {case_name} created from alerts".format(case_name=case.name),
+        track_activity("从告警创建了新案例 {case_name} ".format(case_name=case.name),
                        caseid=case.case_id)
 
         for alert in alerts_list:
-            add_obj_history_entry(alert, f"Alert escalated into new case #{case.case_id}")
+            add_obj_history_entry(alert, f"告警升级到新案例 #{case.case_id}")
 
         # Return the updated case as JSON
         return response_success(data=CaseSchema().dump(case))
@@ -925,7 +925,7 @@ def alert_comment_modal(cur_id, caseid, url_redir):
 
     alert = get_alert_by_id(cur_id)
     if not alert:
-        return response_error('Invalid alert ID')
+        return response_error('告警ID错误')
 
     if not user_has_client_access(current_user.id, alert.alert_customer_id):
         return response_error('User not entitled to update alerts for the client', status=403)
@@ -950,14 +950,14 @@ def alert_comments_get(alert_id, caseid):
     # Check if the user has access to the client
     alert = get_alert_by_id(alert_id)
     if not alert:
-        return response_error('Invalid alert ID')
+        return response_error('告警ID错误')
 
     if not user_has_client_access(current_user.id, alert.alert_customer_id):
-        return response_error('User not entitled to read alerts for the client', status=403)
+        return response_error('用户无权从客户端读取告警', status=403)
 
     alert_comments = get_alert_comments(alert_id)
     if alert_comments is None:
-        return response_error('Invalid alert ID')
+        return response_error('告警ID错误')
 
     return response_success(data=CommentSchema(many=True).dump(alert_comments))
 
@@ -979,10 +979,10 @@ def alert_comment_delete(alert_id, com_id, caseid):
     # Check if the user has access to the client
     alert = get_alert_by_id(alert_id)
     if not alert:
-        return response_error('Invalid alert ID')
+        return response_error('告警ID错误')
 
     if not user_has_client_access(current_user.id, alert.alert_customer_id):
-        return response_error('User not entitled to read alerts for the client', status=403)
+        return response_error('用户无权从客户端读取告警', status=403)
 
     success, msg = delete_alert_comment(comment_id=com_id, alert_id=alert_id)
     if not success:
@@ -1012,14 +1012,14 @@ def alert_comment_get(alert_id, com_id, caseid):
     # Check if the user has access to the client
     alert = get_alert_by_id(alert_id)
     if not alert:
-        return response_error('Invalid alert ID')
+        return response_error('告警ID错误')
 
     if not user_has_client_access(current_user.id, alert.alert_customer_id):
-        return response_error('User not entitled to read alerts for the client', status=403)
+        return response_error('用户无权从客户端读取告警', status=403)
 
     comment = get_alert_comment(alert_id, com_id)
     if not comment:
-        return response_error("Invalid comment ID")
+        return response_error("评论ID错误")
 
     return response_success(data=CommentSchema().dump(comment))
 
@@ -1040,10 +1040,10 @@ def alert_comment_edit(alert_id, com_id, caseid):
     """
     alert = get_alert_by_id(alert_id)
     if not alert:
-        return response_error('Invalid alert ID')
+        return response_error('告警ID错误')
 
     if not user_has_client_access(current_user.id, alert.alert_customer_id):
-        return response_error('User not entitled to read alerts for the client', status=403)
+        return response_error('用户无权从客户端读取告警', status=403)
 
     return case_comment_update(com_id, 'events', caseid=None)
 
@@ -1065,10 +1065,10 @@ def case_comment_add(alert_id, caseid):
     try:
         alert = get_alert_by_id(alert_id=alert_id)
         if not alert:
-            return response_error('Invalid alert ID')
+            return response_error('告警ID错误')
 
         if not user_has_client_access(current_user.id, alert.alert_customer_id):
-            return response_error('User not entitled to read alerts for the client', status=403)
+            return response_error('用户无权从客户端读取告警', status=403)
 
         comment_schema = CommentSchema()
 
@@ -1091,7 +1091,7 @@ def case_comment_add(alert_id, caseid):
         call_modules_hook('on_postload_alert_commented', data=hook_data, caseid=caseid)
 
         track_activity(f"alert \"{alert.alert_id}\" commented", ctx_less=True)
-        return response_success("Alert commented", data=comment_schema.dump(comment))
+        return response_success("告警已评论", data=comment_schema.dump(comment))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.normalized_messages(), status=400)
+        return response_error(msg="数据错误", data=e.normalized_messages(), status=400)
