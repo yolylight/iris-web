@@ -79,29 +79,29 @@ def _authenticate_ldap(form, username, password, local_fallback=True):
             
             track_activity("wrong login password for user '{}' using LDAP auth".format(username),
                            ctx_less=True, display_in_ui=False)
-            return _render_template_login(form, 'Wrong credentials. Please try again.')
+            return _render_template_login(form, '密码或用户名错误. 请重试.')
 
         user = _retrieve_user_by_username(username)
         if not user:
-            return _render_template_login(form, 'Wrong credentials. Please try again.')
+            return _render_template_login(form, '密码或用户名错误. 请重试.')
 
         return wrap_login_user(user)
     except Exception as e:
         log.error(e.__str__())
-        return _render_template_login(form, 'LDAP authentication unavailable. Check server logs')
+        return _render_template_login(form, 'LDAP 认证不可用. 检查服务器日志')
 
 
 def _authenticate_password(form, username, password):
     user = _retrieve_user_by_username(username)
     if not user or user.is_service_account:
-        return _render_template_login(form, 'Wrong credentials. Please try again.')
+        return _render_template_login(form, '密码或用户名错误. 请重试.')
 
     if bc.check_password_hash(user.password, password):
         return wrap_login_user(user)
 
     track_activity("wrong login password for user '{}' using local auth".format(username), ctx_less=True,
                    display_in_ui=False)
-    return _render_template_login(form, 'Wrong credentials. Please try again.')
+    return _render_template_login(form, '密码或用户名错误. 请重试.')
 
 
 # CONTENT ------------------------------------------------
