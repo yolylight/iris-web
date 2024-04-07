@@ -4,7 +4,7 @@ function refresh_case_table() {
     }
     $('#cases_table').DataTable().ajax.reload();
     $('#cases_table').DataTable().columns.adjust().draw();
-    notify_success('Cases list refreshed');
+    notify_success('案例列表已刷新');
     return true;
 }
 
@@ -26,14 +26,14 @@ function case_detail(id) {
 /* Close case function */
 function close_case(id) {
     swal({
-        title: "Are you sure?",
-        text: "Case ID " + id + " will be closed and will not appear in contexts anymore",
+        title: "你确定吗?",
+        text: "案例ID " + id + "将被关闭并且将不会在上下文中出现",
         icon: "warning",
         buttons: true,
         dangerMode: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, close it!'
+        confirmButtonText: '是, 关闭它!'
     })
     .then((willClose) => {
         if (willClose) {
@@ -63,14 +63,14 @@ function reopen_case(id) {
 function remove_case(id) {
 
     swal({
-        title: "Are you sure?",
-        text: "You are about to delete this case forever. This cannot be reverted.\nAll associated data will be deleted",
+        title: "你确定吗?",
+        text: "您将永久删除此案例. 该操作不可恢复.\n所有相关数据将被删除",
         icon: "warning",
         buttons: true,
         dangerMode: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: '是, 删除它!'
     })
         .then((willDelete) => {
             if (willDelete) {
@@ -79,8 +79,8 @@ function remove_case(id) {
                     if (notify_auto_api(data)) {
                         if (!refresh_case_table()) {
                             swal({
-                                title: "Done!",
-                                text: "You will be redirected in 5 seconds",
+                                title: "完成!",
+                                text: "您将在 5 秒内重新定向",
                                 icon: "success",
                                 buttons: false,
                                 dangerMode: false
@@ -95,7 +95,7 @@ function remove_case(id) {
                     }
                 });
             } else {
-                swal("Pfew, that was close");
+                swal("Pfew, 好险");
             }
         });
 }
@@ -179,14 +179,14 @@ function remove_protagonist(id) {
 
 function remove_case_access_from_user(user_id, case_id, on_finish) {
     swal({
-      title: "Are you sure?",
-      text: "This user might not be able access this case anymore",
+      title: "你确定吗?",
+      text: "该用户可能无法再访问此案例",
       icon: "warning",
       buttons: true,
       dangerMode: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, remove it!'
+      confirmButtonText: '是,移除它!'
     })
     .then((willDelete) => {
         if (willDelete) {
@@ -374,14 +374,14 @@ function access_case_info_reload(case_id, owner_id, reviewer_id) {
 function remove_cases_access_user(user_id, cases, on_finish) {
 
     swal({
-      title: "Are you sure?",
-      text: "This user might not be able access these cases anymore",
+      title: "你确定吗?",
+      text: "该用户可能无法再访问此案例",
       icon: "warning",
       buttons: true,
       dangerMode: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, remove it!'
+      confirmButtonText: '是, 移除它!'
     })
     .then((willDelete) => {
         if (willDelete) {
