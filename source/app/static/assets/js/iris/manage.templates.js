@@ -9,12 +9,12 @@ function add_report_template() {
         /* create the select picker for language  */
         $('#report_language').selectpicker({
             liveSearch: true,
-            title: "Language",
+            title: "语言",
             style: "Bootstrap 4: 'btn-outline-primary'"
         });
         $('#report_type').selectpicker({
             liveSearch: true,
-            title: "Report type",
+            title: "报告类型",
             style: "Bootstrap 4: 'btn-outline-primary'"
         });
         $('#form_new_report_template').submit("click", function (event) {
@@ -154,14 +154,14 @@ function report_detail(report_id) {
 function delete_report(id) {
 
     swal({
-      title: "This will delete the report template\nAre you sure?",
-      text: "You won't be able to revert this !",
+      title: "这将删除报告模板\n你确定吗?",
+      text: "操作不能撤销!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: '是,删除它!'
     })
     .then((willDelete) => {
       if (willDelete) {
@@ -173,7 +173,7 @@ function delete_report(id) {
                 }
           });
       } else {
-        swal("Pfew, that was close");
+        swal("Pfew,好险");
       }
     });
 }
