@@ -40,17 +40,17 @@ function load_datastore() {
 function build_ds_tree(data, tree_node) {
 
     var standard_files_filters = [
-                {value: 'name: ', score: 10, meta: 'Match filename'},
-                {value: 'storage_name: ', score: 10, meta: 'Match local storage filename'},
-                {value: 'tag: ', score: 10, meta: 'Match tag of file'},
-                {value: 'description: ', score: 10, meta: 'Match description of file'},
-                {value: 'is_ioc: ', score: 10, meta: "Match file is IOC"},
-                {value: 'is_evidence: ', score: 10, meta: "Match file is evidence"},
-                {value: 'has_password: ', score: 10, meta: "Match file is password protected"},
-                {value: 'id: ', score: 10, meta: "Match ID of the file"},
-                {value: 'uuid: ', score: 10, meta: "Match UUID of the file"},
-                {value: 'sha256: ', score: 10, meta: "Match sha256 of the file"},
-                {value: 'AND ', score: 10, meta: 'AND operator'}
+                {value: 'name: ', score: 10, meta: '匹配文件名'},
+                {value: 'storage_name: ', score: 10, meta: '匹配本地存储文件名'},
+                {value: 'tag: ', score: 10, meta: '匹配文件标签'},
+                {value: 'description: ', score: 10, meta: '匹配文件描述'},
+                {value: 'is_ioc: ', score: 10, meta: "匹配文件是IOC"},
+                {value: 'is_evidence: ', score: 10, meta: "匹配文件是证据"},
+                {value: 'has_password: ', score: 10, meta: "匹配文件是密码保护"},
+                {value: 'id: ', score: 10, meta: "匹配文件ID"},
+                {value: 'uuid: ', score: 10, meta: "匹配文件UUID"},
+                {value: 'sha256: ', score: 10, meta: "匹配文件sha256"},
+                {value: 'AND ', score: 10, meta: 'AND操作符'}
               ]
 
     for (node in data) {
@@ -63,17 +63,17 @@ function build_ds_tree(data, tree_node) {
             data[node].name = sanitizeHTML(data[node].name);
             can_delete = '';
             if (!data[node].is_root) {
-                can_delete = `<div class="dropdown-divider"></div><a href="#" class="dropdown-item text-danger" onclick="delete_ds_folder('${node}');"><small class="fa fa-trash mr-2"></small>Delete</a>`;
+                can_delete = `<div class="dropdown-divider"></div><a href="#" class="dropdown-item text-danger" onclick="delete_ds_folder('${node}');"><small class="fa fa-trash mr-2"></small>删除</a>`;
             }
             jnode = `<li>
                     <span id='${node}' title='Folder ID ${node}' data-node-id="${node}"><i class="fa-regular fa-folder"></i> ${sanitizeHTML(data[node].name)}</span> <i class="fas fa-plus ds-folder-menu" role="menu" style="cursor:pointer;" data-toggle="dropdown" aria-expanded="false"></i>
                         <div class="dropdown-menu" role="menu">
-                                <a href="#" class="dropdown-item" onclick="add_ds_folder('${node}');return false;"><small class="fa-solid fa-folder mr-2"></small>Add subfolder</a>
-                                <a href="#" class="dropdown-item" onclick="add_ds_file('${node}');return false;"><small class="fa-solid fa-file mr-2"></small>Add file</a>
-                                <a href="#" class="dropdown-item" onclick="add_ds_multi_files('${node}');return false;"><small class="fa-solid fa-file-circle-plus fa-box mr-2"></small>Add multiple files</a>
+                                <a href="#" class="dropdown-item" onclick="add_ds_folder('${node}');return false;"><small class="fa-solid fa-folder mr-2"></small>添加子文件夹</a>
+                                <a href="#" class="dropdown-item" onclick="add_ds_file('${node}');return false;"><small class="fa-solid fa-file mr-2"></small>添加文件</a>
+                                <a href="#" class="dropdown-item" onclick="add_ds_multi_files('${node}');return false;"><small class="fa-solid fa-file-circle-plus fa-box mr-2"></small>添加多个文件</a>
                                 <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item" onclick="move_ds_folder('${node}');return false;"><small class="fa fa-arrow-right-arrow-left mr-2"></small>Move</a>
-                                <a href="#" class="dropdown-item" onclick="rename_ds_folder('${node}', '${sanitizeHTML(data[node].name)}');return false;"><small class="fa-solid fa-pencil mr-2"></small>Rename</a>
+                                <a href="#" class="dropdown-item" onclick="move_ds_folder('${node}');return false;"><small class="fa fa-arrow-right-arrow-left mr-2"></small>移动</a>
+                                <a href="#" class="dropdown-item" onclick="rename_ds_folder('${node}', '${sanitizeHTML(data[node].name)}');return false;"><small class="fa-solid fa-pencil mr-2"></small>重命名</a>
                                 ${can_delete}
                         </div>
                     <ul id='tree-${node}'></ul>
@@ -91,18 +91,18 @@ function build_ds_tree(data, tree_node) {
             });
             icon = '';
             if (data[node].file_is_ioc) {
-                icon += '<i class="fa-solid fa-virus-covid text-danger mr-1" title="File is an IOC"></i>';
+                icon += '<i class="fa-solid fa-virus-covid text-danger mr-1" title="文件是IOC"></i>';
             }
             if (data[node].file_is_evidence) {
-                icon += '<i class="fa-solid fa-file-shield text-success mr-1" title="File is an evidence"></i>';
+                icon += '<i class="fa-solid fa-file-shield text-success mr-1" title="文件是证据"></i>';
             }
             if (icon.length === 0) {
-                icon = '<i class="fa-regular fa-file mr-1" title="Regular file"></i>';
+                icon = '<i class="fa-regular fa-file mr-1" title="常规文件"></i>';
             }
             icon_lock = '';
             has_password = data[node].file_password !== null && data[node].file_password.length > 0;
             if (has_password) {
-                icon_lock = '<i title="Password protected" class="fa-solid fa-lock text-success mr-1"></i>'
+                icon_lock = '<i title="密码保护" class="fa-solid fa-lock text-success mr-1"></i>'
             }
             icn_content = btoa(icon + icon_lock);
             jnode = `<li>
@@ -110,15 +110,15 @@ function build_ds_tree(data, tree_node) {
                       <span role="menu" style="cursor:pointer;" data-toggle="dropdown" aria-expanded="false">${icon}${icon_lock} ${sanitizeHTML(data[node].file_original_name)}</span>
                       <i class="fa-regular fa-circle ds-file-selector" style="cursor:pointer;display:none;" onclick="ds_file_select('${node}');"></i>
                         <div class="dropdown-menu" role="menu">
-                                <a href="#" class="dropdown-item" onclick="get_link_ds_file('${node}');return false;"><small class="fa fa-link mr-2"></small>Link</a>
-                                <a href="#" class="dropdown-item" onclick="get_mk_link_ds_file('${node}', '${toBinary64(data[node].file_original_name)}', '${icn_content}', '${has_password}');return false;"><small class="fa-brands fa-markdown mr-2"></small>Markdown link</a>
-                                <a href="#" class="dropdown-item" onclick="download_ds_file('${node}');return false;"><small class="fa-solid fa-download mr-2"></small>Download</a>
+                                <a href="#" class="dropdown-item" onclick="get_link_ds_file('${node}');return false;"><small class="fa fa-link mr-2"></small>链接</a>
+                                <a href="#" class="dropdown-item" onclick="get_mk_link_ds_file('${node}', '${toBinary64(data[node].file_original_name)}', '${icn_content}', '${has_password}');return false;"><small class="fa-brands fa-markdown mr-2"></small>Markdown链接</a>
+                                <a href="#" class="dropdown-item" onclick="download_ds_file('${node}');return false;"><small class="fa-solid fa-download mr-2"></small>下载</a>
                                 <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item" onclick="info_ds_file('${node}');return false;"><small class="fa fa-eye mr-2"></small>Info</a>
-                                <a href="#" class="dropdown-item" onclick="edit_ds_file('${node}');return false;"><small class="fa fa-pencil mr-2"></small>Edit</a>
-                                <a href="#" class="dropdown-item" onclick="move_ds_file('${node}');return false;"><small class="fa fa-arrow-right-arrow-left mr-2"></small>Move</a>
+                                <a href="#" class="dropdown-item" onclick="info_ds_file('${node}');return false;"><small class="fa fa-eye mr-2"></small>信息</a>
+                                <a href="#" class="dropdown-item" onclick="edit_ds_file('${node}');return false;"><small class="fa fa-pencil mr-2"></small>编辑</a>
+                                <a href="#" class="dropdown-item" onclick="move_ds_file('${node}');return false;"><small class="fa fa-arrow-right-arrow-left mr-2"></small>移动</a>
                                 <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item text-danger" onclick="delete_ds_file('${node}');"><small class="fa fa-trash mr-2"></small>Delete</a>
+                                <a href="#" class="dropdown-item text-danger" onclick="delete_ds_file('${node}');"><small class="fa fa-trash mr-2"></small>删除</a>
                         </div>
                     </span>
                 </li>`;
@@ -146,15 +146,15 @@ function hide_datastore() {
 }
 
 function reparse_activate_tree() {
-    $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+    $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', '折叠此分支');
     $('.tree li.parent_li > span').on('click', function (e) {
         var children = $(this).parent('li.parent_li').find(' > ul > li');
         if (children.is(":visible")) {
             children.hide('fast');
-            $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+            $(this).attr('title', '展开此分支').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
         } else {
             children.show('fast');
-            $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+            $(this).attr('title', '折叠此分支').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
         }
         e.stopPropagation();
     });
@@ -177,14 +177,14 @@ function rename_ds_folder(parent_node, name) {
 function delete_ds_folder(node) {
     node = node.replace('d-', '');
     swal({
-        title: "Are you sure?",
-        text: "This will delete all files included and sub-folders",
+        title: "你确定吗?",
+        text: "这将删除包括在内的所有文件和子文件夹",
         icon: "warning",
         buttons: true,
         dangerMode: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: '是,删除它!'
     })
     .then((willDelete) => {
         if (willDelete) {
@@ -199,7 +199,7 @@ function delete_ds_folder(node) {
                 }
             });
         } else {
-            swal("Pfew, that was close");
+            swal("Pfew，好险");
         }
     });
 }
@@ -293,8 +293,8 @@ async function save_ds_multi_files(node, index_i) {
     let uri = '/datastore/file/add/' + node;
     await post_request_data_api(uri, formData, true, function () {
         window.swal({
-            title: `File ${file.name} is uploading. (${index}/${totalFiles} files)`,
-            text: "Please wait. This window will close automatically when the file is uploaded.",
+            title: `文件 ${file.name} 正在上传. (${index}/${totalFiles} 文件)`,
+            text: "请稍候.文件上传后,此窗口将自动关闭",
             icon: "/static/assets/img/loader.gif",
             button: false,
             allowOutsideClick: false
@@ -322,8 +322,8 @@ function save_ds_file(node, file_id) {
 
     post_request_data_api(uri, formData, true, function() {
         window.swal({
-              title: "File is uploading",
-              text: "Please wait. This window will close automatically when the file is uploaded.",
+              title: "文件正在上传",
+              text: "请稍候.文件上传后,此窗口将自动关闭.",
               icon: "/static/assets/img/loader.gif",
               button: false,
               allowOutsideClick: false
@@ -344,7 +344,7 @@ function save_ds_file(node, file_id) {
 function refresh_ds(){
     reset_ds_file_view();
     load_datastore();
-    notify_success('Datastore refreshed');
+    notify_success('数据存储已刷新');
 }
 
 function upload_interactive_data(data_blob, filename, completion_callback) {
@@ -379,7 +379,7 @@ function move_ds_file(file_id) {
 
     reparse_activate_tree_selection();
     $('.ds-file-selector').show();
-    $('#msg_mv_dst_folder').text('unselected destination');
+    $('#msg_mv_dst_folder').text('未选择目标');
     $('#msg_select_destination_folder').show();
 
     ds_file_select(file_id);
@@ -414,11 +414,11 @@ function ds_file_select(file_id) {
 function validate_ds_file_move() {
     var data_sent = Object();
     if ($(".node-selected").length === 0) {
-        notify_error('No destination folder selected');
+        notify_error('未选择目标文件夹');
         return false;
     }
     if ($(".file-selected").length === 0) {
-        notify_error('No file to move selected');
+        notify_error('未选择要移动的文件');
         return false;
     }
 
@@ -445,7 +445,7 @@ function move_ds_folder(node_id) {
      reset_ds_file_view();
 
     $('#msg_mv_folder').text($('#' + node_id).text());
-    $('#msg_mv_dst_folder_folder').text('unselected destination');
+    $('#msg_mv_dst_folder_folder').text('未选择目标');
     $('#msg_select_destination_folder_folder').show();
 
     reparse_activate_tree_selection();
@@ -455,11 +455,11 @@ function move_ds_folder(node_id) {
 function validate_ds_folder_move() {
     var data_sent = Object();
     if ($(".node-selected").length === 0) {
-        notify_error('No destination folder selected');
+        notify_error('未选择目标文件夹');
         return false;
     }
     if ($(".node-source-selected").length === 0) {
-        notify_error('No initial folder to move');
+        notify_error('没有要移动的初始文件夹');
         return false;
     }
 
@@ -479,14 +479,14 @@ function validate_ds_folder_move() {
 function delete_ds_file(file_id) {
     file_id = file_id.replace('f-', '');
     swal({
-        title: "Are you sure?",
-        text: "This will delete the file on the server and any manual reference will become invalid",
+        title: "你确定吗?",
+        text: "这将删除服务器上的文件，任何手动引用都将失效",
         icon: "warning",
         buttons: true,
         dangerMode: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: '是,删除它!'
     })
     .then((willDelete) => {
         if (willDelete) {
@@ -501,7 +501,7 @@ function delete_ds_file(file_id) {
                 }
             });
         } else {
-            swal("Pfew, that was close");
+            swal("Pfew, 好险");
         }
     });
 }
@@ -510,14 +510,14 @@ function delete_bulk_ds_file() {
 
     selected_files = $(".file-selected");
     swal({
-        title: "Are you sure?",
-        text: `Yu are about to delete ${selected_files.length} files\nThis will delete the files on the server and any manual reference will become invalid`,
+        title: "你确定吗?",
+        text: `你要删除 ${selected_files.length} 个文件\n这将删除服务器上的文件，任何手动引用都将失效`,
         icon: "warning",
         buttons: true,
         dangerMode: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: '是,删除它!'
     })
     .then((willDelete) => {
         if (willDelete) {
@@ -538,7 +538,7 @@ function delete_bulk_ds_file() {
                 });
             });
         } else {
-            swal("Pfew, that was close");
+            swal("Pfew, 好险");
         }
     });
 }
@@ -551,9 +551,9 @@ function get_link_ds_file(file_id) {
    link = link + case_param();
 
    navigator.clipboard.writeText(link).then(function() {
-          notify_success('File link copied')
+          notify_success('文件链接已复制')
     }, function(err) {
-        notify_error('Unable to copy link. Error ' + err);
+        notify_error('无法复制链接. 错误 ' + err);
         console.error('File link link', err);
     });
 
@@ -583,9 +583,9 @@ function get_mk_link_ds_file(file_id, filename, file_icon, has_password) {
     }
 
    navigator.clipboard.writeText(mk_link).then(function() {
-          notify_success('Markdown file link copied')
+          notify_success('Markdown文件链接已复制')
     }, function(err) {
-        notify_error('Unable to copy link. Error ' + err);
+        notify_error('无法复制链接. 错误 ' + err);
         console.error(`Markdown file link ${md_link}`, err);
     });
 
@@ -600,8 +600,8 @@ function reparse_activate_tree_selection() {
     $('.tree li.parent_li > span').on('click', function (e) {
         if ($(this).hasClass('node-selected')) {
             $(this).removeClass('node-selected');
-            $('#msg_mv_dst_folder').text('unselected destination');
-            $('#msg_mv_dst_folder_folder').text('unselected destination');
+            $('#msg_mv_dst_folder').text('未选择目标');
+            $('#msg_mv_dst_folder_folder').text('未选择目标');
         } else {
             $(".node-selected").removeClass("node-selected");
             $(this).addClass('node-selected');
@@ -653,7 +653,7 @@ function filter_ds_files() {
     parse_filter(ds_filter.getValue(), ds_keywords);
     filter_query = encodeURIComponent(JSON.stringify(parsed_filter_ds));
 
-    $('#btn_filter_ds_files').text('Searching..');
+    $('#btn_filter_ds_files').text('搜索中..');
     get_request_data_api("/datastore/list/filter",{ 'q': filter_query })
     .done(function (data){
         if(notify_auto_api(data, true)){
