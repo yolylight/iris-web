@@ -93,7 +93,7 @@ def case_rfiles_state(caseid):
     if os:
         return response_success(data=os)
     else:
-        return response_error('No evidences state for this case.')
+        return response_error('此案例无证据状态.')
 
 
 @case_rfiles_blueprint.route('/case/evidences/add', methods=['POST'])
@@ -117,12 +117,12 @@ def case_add_rfile(caseid):
 
         if crf:
             track_activity(f"added evidence \"{crf.filename}\"", caseid=caseid)
-            return response_success("Evidence added", data=evidence_schema.dump(crf))
+            return response_success("证据已添加", data=evidence_schema.dump(crf))
 
-        return response_error("Unable to create task for internal reasons")
+        return response_error("内部原因无法创建任务")
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @case_rfiles_blueprint.route('/case/evidences/<int:cur_id>', methods=['GET'])
@@ -130,7 +130,7 @@ def case_add_rfile(caseid):
 def case_get_evidence(cur_id, caseid):
     crf = get_rfile(cur_id, caseid)
     if not crf:
-        return response_error("Invalid evidence ID for this case")
+        return response_error("证据ID对于此案例无效")
 
     evidence_schema = CaseEvidenceSchema()
     return response_success(data=evidence_schema.dump(crf))
@@ -144,7 +144,7 @@ def case_edit_rfile_modal(cur_id, caseid, url_redir):
 
     crf = get_rfile(cur_id, caseid)
     if not crf:
-        return response_error("Invalid evidence ID for this case")
+        return response_error("证据ID对于此案例无效")
 
     comments_map = get_case_evidence_comments_count([cur_id])
 
@@ -171,7 +171,7 @@ def case_edit_rfile(cur_id, caseid):
 
         crf = get_rfile(cur_id, caseid)
         if not crf:
-            return response_error("Invalid evidence ID for this case")
+            return response_error("证据ID对于此案例无效")
 
         request_data['id'] = cur_id
         evidence = evidence_schema.load(request_data, instance=crf)
@@ -185,12 +185,12 @@ def case_edit_rfile(cur_id, caseid):
 
         if evd:
             track_activity(f"updated evidence \"{evd.filename}\"", caseid=caseid)
-            return response_success("Evidence {} updated".format(evd.filename), data=evidence_schema.dump(evd))
+            return response_success("证据 {} 已更新".format(evd.filename), data=evidence_schema.dump(evd))
 
-        return response_error("Unable to update task for internal reasons")
+        return response_error("由于内部原因无法更新任务")
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @case_rfiles_blueprint.route('/case/evidences/delete/<int:cur_id>', methods=['POST'])
@@ -200,7 +200,7 @@ def case_delete_rfile(cur_id, caseid):
     call_modules_hook('on_preload_evidence_delete', data=cur_id, caseid=caseid)
     crf = get_rfile(cur_id, caseid)
     if not crf:
-        return response_error("Invalid evidence ID for this case")
+        return response_error("证据ID对于此案例无效")
 
     delete_rfile(cur_id, caseid=caseid)
 
@@ -208,7 +208,7 @@ def case_delete_rfile(cur_id, caseid):
 
     track_activity(f"deleted evidence \"{crf.filename}\" from registry", caseid)
 
-    return response_success("Evidence deleted")
+    return response_success("证据已删除")
 
 
 @case_rfiles_blueprint.route('/case/evidences/<int:cur_id>/comments/modal', methods=['GET'])
@@ -219,7 +219,7 @@ def case_comment_evidence_modal(cur_id, caseid, url_redir):
 
     evidence = get_rfile(cur_id, caseid=caseid)
     if not evidence:
-        return response_error('Invalid evidence ID')
+        return response_error('无效证据ID')
 
     return render_template("modal_conversation.html", element_id=cur_id, element_type='evidences',
                            title=evidence.filename)
@@ -231,7 +231,7 @@ def case_comment_evidence_list(cur_id, caseid):
 
     evidence_comments = get_case_evidence_comments(cur_id)
     if evidence_comments is None:
-        return response_error('Invalid evidence ID')
+        return response_error('无效证据ID')
 
     return response_success(data=CommentSchema(many=True).dump(evidence_comments))
 
@@ -243,7 +243,7 @@ def case_comment_evidence_add(cur_id, caseid):
     try:
         evidence = get_rfile(cur_id, caseid=caseid)
         if not evidence:
-            return response_error('Invalid evidence ID')
+            return response_error('无效证据ID')
 
         comment_schema = CommentSchema()
 
@@ -266,10 +266,10 @@ def case_comment_evidence_add(cur_id, caseid):
         call_modules_hook('on_postload_evidence_commented', data=hook_data, caseid=caseid)
 
         track_activity(f"evidence \"{evidence.filename}\" commented", caseid=caseid)
-        return response_success("Event commented", data=comment_schema.dump(comment))
+        return response_success("已评论", data=comment_schema.dump(comment))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.normalized_messages(), status=400)
+        return response_error(msg="数据错误", data=e.normalized_messages(), status=400)
 
 
 @case_rfiles_blueprint.route('/case/evidences/<int:cur_id>/comments/<int:com_id>', methods=['GET'])
@@ -278,7 +278,7 @@ def case_comment_evidence_get(cur_id, com_id, caseid):
 
     comment = get_case_evidence_comment(cur_id, com_id)
     if not comment:
-        return response_error("Invalid comment ID")
+        return response_error("无效评论ID")
 
     return response_success(data=comment._asdict())
 
