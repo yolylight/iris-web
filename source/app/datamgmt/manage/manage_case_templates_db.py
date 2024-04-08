@@ -80,49 +80,49 @@ def validate_case_template(data: dict, update: bool = False) -> Optional[str]:
         if not update:
             # If it's not an update, we check the required fields
             if "name" not in data:
-                return "Name is required."
+                return "名称是必需."
 
             if "display_name" not in data or not data["display_name"].strip():
                 data["display_name"] = data["name"]
         # We check that name is not empty
         if "name" in data and not data["name"].strip():
-            return "Name cannot be empty."
+            return "名称不能为空."
 
         # We check that author length is not above 128 chars
         if "author" in data and len(data["author"]) > 128:
-            return "Author cannot be longer than 128 characters."
+            return "作者不能超过128个字符."
 
         # We check that author length is not above 128 chars
         if "author" in data and len(data["author"]) > 128:
-            return "Author cannot be longer than 128 characters."
+            return "作者不能超过 128 个字符."
 
         # We check that prefix length is not above 32 chars
         if "title_prefix" in data and len(data["title_prefix"]) > 32:
-            return "Prefix cannot be longer than 32 characters."
+            return "前缀不能超过32个字符."
 
         # We check that tags, if any, are a list of strings
         if "tags" in data:
             if not isinstance(data["tags"], list):
-                return "Tags must be a list."
+                return "标签必须是list."
             for tag in data["tags"]:
                 if not isinstance(tag, str):
-                    return "Each tag must be a string."
+                    return "每个标签必须是字符串."
 
         # We check that tasks, if any, are a list of dictionaries with mandatory keys
         if "tasks" in data:
             if not isinstance(data["tasks"], list):
-                return "Tasks must be a list."
+                return "任务必须是list."
             for task in data["tasks"]:
                 if not isinstance(task, dict):
-                    return "Each task must be a dictionary."
+                    return "每个任务必须是dictionary."
                 if "title" not in task:
-                    return "Each task must have a 'title' field."
+                    return "每个任务必需有'title'字段."
                 if "tags" in task:
                     if not isinstance(task["tags"], list):
-                        return "Task tags must be a list."
+                        return "任务标签必须是list."
                     for tag in task["tags"]:
                         if not isinstance(tag, str):
-                            return "Each tag must be a string."
+                            return "每个标签必须是字符串."
 
         # We check that note groups, if any, are a list of dictionaries with mandatory keys
         if "note_groups" in data:
@@ -130,20 +130,20 @@ def validate_case_template(data: dict, update: bool = False) -> Optional[str]:
 
         if "note_directories" in data:
             if not isinstance(data["note_directories"], list):
-                return "Note directories must be a list."
+                return "笔记目录必须是list."
             for note_dir in data["note_directories"]:
                 if not isinstance(note_dir, dict):
-                    return "Each note directory must be a dictionary."
+                    return "每个笔记目录必须是dictionary."
                 if "title" not in note_dir:
-                    return "Each note directory must have a 'title' field."
+                    return "每个笔记目录必须有'title'字段."
                 if "notes" in note_dir:
                     if not isinstance(note_dir["notes"], list):
-                        return "Notes must be a list."
+                        return "笔记必须是list."
                     for note in note_dir["notes"]:
                         if not isinstance(note, dict):
-                            return "Each note must be a dictionary."
+                            return "每个笔记必须是dictionary."
                         if "title" not in note:
-                            return "Each note must have a 'title' field."
+                            return "每个笔记必需有'title'字段."
 
         # If all checks succeeded, we return None to indicate everything is has been validated
         return None
