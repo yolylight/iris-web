@@ -89,7 +89,7 @@ def case_template_modal(cur_id, caseid, url_redir):
 
     case_template = get_case_template_by_id(cur_id)
     if not case_template:
-        return response_error(f"Invalid Case template ID {cur_id}")
+        return response_error(f"无效案例模板ID {cur_id}")
 
     # Temporary : for now we build the full JSON form object based on case templates attributes
     # Next step : add more fields to the form
@@ -117,28 +117,28 @@ def add_template_modal(caseid):
     case_template = CaseTemplate()
     form = CaseTemplateForm()
     form.case_template_json.data = {
-        "name": "Template name",
-        "display_name": "Template Display Name",
-        "description": "Template description",
-        "author": "YOUR NAME",
+        "name": "模板名称",
+        "display_name": "模板显示名",
+        "description": "模板描述",
+        "author": "作者",
         "classification": "known-template-classification",
         "title_prefix": "[PREFIX]",
-        "summary": "Summary to be set",
-        "tags": ["ransomware","malware"],
+        "summary": "待设置摘要",
+        "tags": ["勒索软件","恶意软件"],
         "tasks": [
             {
-                "title": "Task 1",
-                "description": "Task 1 description",
-                "tags": ["tag1", "tag2"]
+                "title": "任务1",
+                "description": "任务1描述",
+                "tags": ["标签1", "标签2"]
             }
         ],
         "note_directories": [
             {
-                "title": "Note group 1",
+                "title": "笔记组1",
                 "notes": [
                     {
-                        "title": "Note 1",
-                        "content": "Note 1 content"
+                        "title": "笔记1",
+                        "content": "笔记1内容"
                     }
                 ]
             }
@@ -159,23 +159,23 @@ def upload_template_modal(caseid):
 def add_case_template(caseid):
     data = request.get_json()
     if not data:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     case_template_json = data.get('case_template_json')
     if not case_template_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     try:
         case_template_dict = json.loads(case_template_json)
     except Exception as e:
-        return response_error("Invalid JSON", data=str(e))
+        return response_error("无效JSON", data=str(e))
 
     try:
         logs = validate_case_template(case_template_dict, update=False)
         if logs is not None:
-            return response_error("Found errors in case template", data=logs)
+            return response_error("案例模板中发现错误", data=logs)
     except Exception as e:
-        return response_error("Found errors in case template", data=str(e))
+        return response_error("案例模板中发现错误", data=str(e))
 
     try:
         case_template_dict["created_by_user_id"] = current_user.id
@@ -184,39 +184,39 @@ def add_case_template(caseid):
         db.session.add(case_template)
         db.session.commit()
     except Exception as e:
-        return response_error("Could not add case template into DB", data=str(e))
+        return response_error("无法添加案例模板到DB", data=str(e))
 
     track_activity(f"Case template '{case_template.name}' added", caseid=caseid, ctx_less=True)
 
-    return response_success("Added successfully", data=CaseTemplateSchema().dump(case_template))
+    return response_success("添加成功", data=CaseTemplateSchema().dump(case_template))
 
 
 @manage_case_templates_blueprint.route('/manage/case-templates/update/<int:cur_id>', methods=['POST'])
 @ac_api_requires(Permissions.case_templates_write)
 def update_case_template(cur_id, caseid):
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     case_template = get_case_template_by_id(cur_id)
     if not case_template:
-        return response_error(f"Invalid Case template ID {cur_id}")
+        return response_error(f"无效案例模板ID {cur_id}")
 
     data = request.get_json()
     updated_case_template_json = data.get('case_template_json')
     if not updated_case_template_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     try:
         updated_case_template_dict = json.loads(updated_case_template_json)
     except Exception as e:
-        return response_error("Invalid JSON", data=str(e))
+        return response_error("无效JSON", data=str(e))
 
     try:
         logs = validate_case_template(updated_case_template_dict, update=True)
         if logs is not None:
-            return response_error("Found errors in case template", data=logs)
+            return response_error("案例模板中发现错误", data=logs)
     except Exception as e:
-        return response_error("Found errors in case template", data=str(e))
+        return response_error("案例模板中发现错误", data=str(e))
 
     case_template_schema = CaseTemplateSchema()
 
@@ -228,9 +228,9 @@ def update_case_template(cur_id, caseid):
         # commit the changes to the database
         db.session.commit()
     except ValidationError as error:
-        return response_error("Could not validate case template", data=str(error))
+        return response_error("无法验证案例模板", data=str(error))
 
-    return response_success("Case template updated")
+    return response_success("案例模板已更新")
 
 
 @manage_case_templates_blueprint.route('/manage/case-templates/delete/<int:case_template_id>', methods=['POST'])
@@ -238,7 +238,7 @@ def update_case_template(cur_id, caseid):
 def delete_case_template(case_template_id, caseid):
     case_template = get_case_template_by_id(case_template_id)
     if case_template is None:
-        return response_error('Case template not found')
+        return response_error('未找到案例模板')
 
     case_template_name = case_template.name
 
@@ -246,4 +246,4 @@ def delete_case_template(case_template_id, caseid):
     db.session.commit()
 
     track_activity(f"Case template '{case_template_name}' deleted", caseid=caseid, ctx_less=True)
-    return response_success("Deleted successfully")
+    return response_success("删除成功")
