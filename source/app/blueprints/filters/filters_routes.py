@@ -81,7 +81,7 @@ def filters_update_route(filter_id, caseid) -> Response:
 
         saved_filter = get_filter_by_id(filter_id)
         if not saved_filter:
-            return response_error('Filter not found')
+            return response_error('筛选器未找到')
 
         saved_filter_schema.load(data, instance=saved_filter, partial=True)
         db.session.commit()
@@ -110,7 +110,7 @@ def filters_delete_route(filter_id, caseid) -> Response:
     try:
         saved_filter = get_filter_by_id(filter_id)
         if not saved_filter:
-            return response_error('Filter not found')
+            return response_error('筛选器未找到')
 
         db.session.delete(saved_filter)
         db.session.commit()
@@ -141,7 +141,7 @@ def filters_get_route(filter_id, caseid) -> Response:
     try:
         saved_filter = get_filter_by_id(filter_id)
         if not saved_filter:
-            return response_error('Filter not found')
+            return response_error('筛选器未找到')
 
         return response_success(data=saved_filter_schema.dump(saved_filter))
 
