@@ -23,6 +23,9 @@
 FROM python:3.9 AS compile-image
 RUN apt-get update
 
+RUN [ ! -d ~/.pip ] && mkdir -p ~/.pip || :
+COPY docker/webApp/pip.conf ~/.pip/pip.conf
+
 RUN python -m venv /opt/venv
 # Make sure we use the virtualenv:
 ENV PATH="/opt/venv/bin:$PATH"
