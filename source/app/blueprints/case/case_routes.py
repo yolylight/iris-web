@@ -123,9 +123,9 @@ def case_r(caseid, url_redir):
 def case_exists_r(caseid):
 
     if case_exists(caseid):
-        return response_success('Case exists')
+        return response_success('案例存在')
     else:
-        return response_error('Case does not exist', 404)
+        return response_error('案例不存在', 404)
 
 
 @case_blueprint.route('/case/pipelines-modal', methods=['GET'])
@@ -179,7 +179,7 @@ def get_message(data):
 
     room = data['channel']
     join_room(room=room)
-    emit('join', {'message': f"{current_user.user} just joined"}, room=room)
+    emit('join', {'message': f"{current_user.user} 已加入"}, room=room)
 
 
 @case_blueprint.route('/case/summary/update', methods=['POST'])
@@ -189,7 +189,7 @@ def desc_fetch(caseid):
     js_data = request.get_json()
     case = get_case(caseid)
     if not case:
-        return response_error('Invalid case ID')
+        return response_error('无效案例ID')
 
     case.description = js_data.get('case_description')
     crc = binascii.crc32(case.description.encode('utf-8'))
@@ -204,7 +204,7 @@ def desc_fetch(caseid):
         }
         socket_io.emit('save', data, to=f"case-{caseid}")
 
-    return response_success("Summary updated", data=crc)
+    return response_success("摘要已更新", data=crc)
 
 
 @case_blueprint.route('/case/summary/fetch', methods=['GET'])
@@ -212,7 +212,7 @@ def desc_fetch(caseid):
 def summary_fetch(caseid):
     desc_crc32, description = case_get_desc_crc(caseid)
 
-    return response_success("Summary fetch", data={'case_description': description, 'crc32': desc_crc32})
+    return response_success("摘要已检索", data={'case_description': description, 'crc32': desc_crc32})
 
 
 @case_blueprint.route('/case/activities/list', methods=['GET'])
@@ -263,9 +263,9 @@ def case_add_tasklog(caseid):
         ua = track_activity(log_data.get('log_content'), caseid, user_input=True)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
-    return response_success("Log saved", data=ua)
+    return response_success("日志已保存", data=ua)
 
 
 @case_blueprint.route('/case/users/list', methods=['GET'])
@@ -295,14 +295,14 @@ def group_cac_set_case(caseid):
 
     data = request.get_json()
     if not data:
-        return response_error("Invalid request")
+        return response_error("请求无效")
 
     if data.get('case_id') != caseid:
-        return response_error("Inconsistent case ID")
+        return response_error("案例ID不一致")
 
     case = get_case(caseid)
     if not case:
-        return response_error("Invalid case ID")
+        return response_error("案例ID无效")
 
     group_id = data.get('group_id')
     access_level = data.get('access_level')
@@ -323,7 +323,7 @@ def group_cac_set_case(caseid):
 
     if success:
         track_activity("case access set to {} for group {}".format(data.get('access_level'), group_id), caseid)
-        add_obj_history_entry(case, "access changed to {} for group {}".format(data.get('access_level'), group_id),
+        add_obj_history_entry(case, "组{}访问权限更改为{}".format( group_id, data.get('access_level')),
                               commit=True)
 
         return response_success(msg=logs)
@@ -337,27 +337,27 @@ def user_cac_set_case(caseid):
 
     data = request.get_json()
     if not data:
-        return response_error("Invalid request")
+        return response_error("请求无效")
 
     if data.get('user_id') == current_user.id:
-        return response_error("I can't let you do that, Dave")
+        return response_error("我不能让你这么做")
 
     user = get_user(data.get('user_id'))
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("用户ID无效")
 
     if data.get('case_id') != caseid:
-        return response_error("Inconsistent case ID")
+        return response_error("案例ID不一致")
 
     case = get_case(caseid)
     if not case:
-        return response_error('Invalid case ID')
+        return response_error('无效案例ID')
 
     try:
 
         success, logs = set_user_case_access(user.id, data.get('case_id'), data.get('access_level'))
         track_activity("case access set to {} for user {}".format(data.get('access_level'), user.name), caseid)
-        add_obj_history_entry(case, "access changed to {} for user {}".format(data.get('access_level'), user.name))
+        add_obj_history_entry(case, "用户{}访问权限更改为{} ".format(user.name, data.get('access_level')))
 
         db.session.commit()
 
@@ -378,7 +378,7 @@ def case_update_status(caseid):
 
     case = get_case(caseid)
     if not case:
-        return response_error('Invalid case ID')
+        return response_error('无效案例ID')
 
     status = request.get_json().get('status_id')
     case_status = set(item.value for item in CaseStatus)
@@ -386,19 +386,19 @@ def case_update_status(caseid):
     try:
         status = int(status)
     except ValueError:
-        return response_error('Invalid status')
+        return response_error('状态无效')
     except TypeError:
-        return response_error('Invalid status. Expected int')
+        return response_error('状态无效. 需要int')
 
     if status not in case_status:
-        return response_error('Invalid status')
+        return response_error('状态无效')
 
     case.status_id = status
-    add_obj_history_entry(case, f'status updated to {CaseStatus(status).name}')
+    add_obj_history_entry(case, f'状态更新为 {CaseStatus(status).name}')
 
     db.session.commit()
 
-    return response_success("Case status updated", data=case.status_id)
+    return response_success("案例状态已更新", data=case.status_id)
 
 
 @case_blueprint.route('/case/md-helper', methods=['GET'])
@@ -414,7 +414,7 @@ def case_review(caseid):
 
     case = get_case(caseid)
     if not case:
-        return response_error('Invalid case ID')
+        return response_error('无效案例ID')
 
     action = request.get_json().get('action')
     reviewer_id = request.get_json().get('reviewer_id')
@@ -430,25 +430,25 @@ def case_review(caseid):
     elif action == 'done':
         review_name = ReviewStatusList.reviewed
     else:
-        return response_error('Invalid action')
+        return response_error('动作无效')
 
     case.review_status_id = get_review_id_from_name(review_name)
     if reviewer_id:
         try:
             reviewer_id = int(reviewer_id)
         except ValueError:
-            return response_error('Invalid reviewer ID')
+            return response_error('审核人ID无效')
 
         if not ac_fast_check_user_has_case_access(reviewer_id, caseid, [CaseAccessLevel.full_access]):
-            return response_error('Invalid reviewer ID')
+            return response_error('审核人ID无效')
 
         case.reviewer_id = reviewer_id
 
     db.session.commit()
 
-    add_obj_history_entry(case, f'review status updated to {review_name}')
+    add_obj_history_entry(case, f'审核状态更新为 {review_name}')
     track_activity(f'review status updated to {review_name}', caseid)
 
     db.session.commit()
 
-    return response_success("Case review updated", data=CaseSchema().dump(case))
+    return response_success("案例审核状态已更新", data=CaseSchema().dump(case))
