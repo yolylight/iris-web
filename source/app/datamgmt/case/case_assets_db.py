@@ -380,7 +380,7 @@ def delete_asset_comment(asset_id, comment_id, case_id):
         Comments.comment_user_id == current_user.id
     ).first()
     if not comment:
-        return False, "You are not allowed to delete this comment"
+        return False, "你无法删除此评论"
 
     AssetComments.query.filter(
         AssetComments.comment_asset_id == asset_id,
@@ -390,7 +390,7 @@ def delete_asset_comment(asset_id, comment_id, case_id):
     db.session.delete(comment)
     db.session.commit()
 
-    return True, "Comment deleted"
+    return True, "评论已删除"
 
 def get_asset_by_name(asset_name, caseid):
     asset = CaseAssets.query.filter(
