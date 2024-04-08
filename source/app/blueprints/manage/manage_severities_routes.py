@@ -66,18 +66,18 @@ def get_case_alert_status(severity_id: int, caseid: int) -> Response:
 @ac_api_requires(no_cid_required=True)
 def search_analysis_status(caseid):
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     severity_name = request.json.get('severity_name')
     if severity_name is None:
-        return response_error("Invalid severity. Got None")
+        return response_error("无效严重性. 为None")
 
     exact_match = request.json.get('exact_match', False)
 
     # Search for severity with a name that contains the specified search term
     severity = search_severity_by_name(severity_name, exact_match=exact_match)
     if not severity:
-        return response_error("No severity found")
+        return response_error("未找到严重性")
 
     # Serialize the severity and return them in a JSON response
     schema = SeveritySchema(many=True)
