@@ -496,17 +496,17 @@ def api_login_required(f):
             if cookie_session:
                 form = FlaskForm()
                 if not form.validate():
-                    return response_error('Invalid CSRF token')
+                    return response_error('无效 CSRF token')
                 elif request.is_json:
                     request.json.pop('csrf_token')
 
         if not is_user_authenticated(request):
-            return response_error("Authentication required", status=401)
+            return response_error("认证失败", status=401)
 
         else:
             redir, caseid, access = get_case_access(request, [], from_api=True)
             if not caseid or redir:
-                return response_error("Invalid case ID", status=404)
+                return response_error("无效案例 ID", status=404)
             kwargs.update({"caseid": caseid})
 
             return f(*args, **kwargs)
@@ -530,7 +530,7 @@ def ac_api_return_access_denied(caseid: int = None):
         'case_id': caseid,
         'error_uuid': error_uuid
     }
-    return response_error('Permission denied', data=data, status=403)
+    return response_error('访问拒绝', data=data, status=403)
 
 
 def ac_case_requires(*access_level):
@@ -612,18 +612,18 @@ def ac_api_case_requires(*access_level):
                 if cookie_session:
                     form = FlaskForm()
                     if not form.validate():
-                        return response_error('Invalid CSRF token')
+                        return response_error('无效CSRF token')
                     elif request.is_json:
                         request.json.pop('csrf_token')
 
             if not is_user_authenticated(request):
-                return response_error("Authentication required", status=401)
+                return response_error("需要认证", status=401)
 
             else:
                 redir, caseid, has_access = get_case_access(request, access_level, from_api=True)
 
                 if not caseid or redir:
-                    return response_error("Invalid case ID", status=404)
+                    return response_error("无效案例ID", status=404)
 
                 if not has_access:
                     return ac_api_return_access_denied(caseid=caseid)
@@ -640,7 +640,7 @@ def endpoint_deprecated(message, version):
     def inner_wrap(f):
         @wraps(f)
         def wrap(*args, **kwargs):
-            return response_error(f"Endpoint deprecated in {version}. {message}.", status=410)
+            return response_error(f"终端在版本已弃用 {version}. {message}.", status=410)
         return wrap
     return inner_wrap
 
@@ -651,7 +651,7 @@ def ac_api_requires_client_access():
         def wrap(*args, **kwargs):
             client_id = kwargs.get('client_id')
             if not user_has_client_access(current_user.id, client_id):
-                return response_error("Permission denied", status=403)
+                return response_error("访问拒绝", status=403)
 
             return f(*args, **kwargs)
         return wrap
@@ -680,22 +680,22 @@ def ac_api_requires(*permissions, no_cid_required=False):
                 if cookie_session:
                     form = FlaskForm()
                     if not form.validate():
-                        return response_error('Invalid CSRF token')
+                        return response_error('无效CSRF token')
                     elif request.is_json:
                         request.json.pop('csrf_token')
 
             if not is_user_authenticated(request):
-                return response_error("Authentication required", status=401)
+                return response_error("需要认证", status=401)
 
             else:
                 try:
                     redir, caseid, _ = get_case_access(request, [], from_api=True, no_cid_required=no_cid_required)
                 except Exception as e:
                     log.exception(e)
-                    return response_error("Invalid data. Check server logs", status=500)
+                    return response_error("无效数据.检查日志", status=500)
 
                 if not (caseid or redir) and not no_cid_required:
-                    return response_error("Invalid case ID", status=404)
+                    return response_error("无效案例ID", status=404)
 
                 kwargs.update({"caseid": caseid})
 
@@ -708,7 +708,7 @@ def ac_api_requires(*permissions, no_cid_required=False):
                         if session['permissions'] & permission.value:
                             return f(*args, **kwargs)
 
-                    return response_error("Permission denied", status=403)
+                    return response_error("访问拒绝", status=403)
 
                 return f(*args, **kwargs)
         return wrap
@@ -773,7 +773,7 @@ def add_obj_history_entry(obj, action, commit=False):
 def page_not_found(e):
     # note that we set the 404 status explicitly
     if request.content_type and 'application/json' in request.content_type:
-        return response_error("Resource not found", status=404)
+        return response_error("资源未找到", status=404)
 
     return render_template('pages/error-404.html', template_folder=TEMPLATE_PATH), 404
 
