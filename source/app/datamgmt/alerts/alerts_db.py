@@ -272,7 +272,7 @@ def create_case_from_alerts(alerts: List[Alert], iocs_list: List[str], assets_li
 
     escalation_note = ""
     if note:
-        escalation_note = f"\n\n### Escalation note\n\n{note}\n\n"
+        escalation_note = f"\n\n### 升级说明\n\n{note}\n\n"
 
     if template_id is not None and template_id != 0 and template_id != '':
         case_template = get_case_template_by_id(template_id)
@@ -414,9 +414,9 @@ def create_case_from_alert(alert: Alert, iocs_list: List[str], assets_list: List
     # Create the case
     case = Cases(
         name=f"[ALERT]{case_template_title_prefix} {alert.alert_title}" if not case_title else f"{case_template_title_prefix} {case_title}",
-        description=f"*Alert escalated by {current_user.name}*\n\n{escalation_note}"
-                    f"### Alert description\n\n{alert.alert_description}"
-                    f"\n\n### IRIS alert link\n\n"
+        description=f"*告警由{current_user.name}升级*\n\n{escalation_note}"
+                    f"### 告警描述\n\n{alert.alert_description}"
+                    f"\n\n### IRIS 告警链接\n\n"
                     f"[<i class='fa-solid fa-bell'></i> #{alert.alert_id}](/alerts?alert_ids={alert.alert_id})",
         soc_id=alert.alert_id,
         client_id=alert.alert_customer_id,
@@ -536,9 +536,9 @@ def merge_alert_in_case(alert: Alert, case: Cases, iocs_list: List[str],
 
     escalation_note = ""
     if note:
-        escalation_note = f"\n\n### Escalation note\n\n{note}\n\n"
+        escalation_note = f"\n\n### 升级事项\n\n{note}\n\n"
 
-    case.description += f"\n\n*Alert [#{alert.alert_id}](/alerts?alert_ids={alert.alert_id}) escalated by {current_user.name}*\n\n{escalation_note}"
+    case.description += f"\n\n*告警 [#{alert.alert_id}](/alerts?alert_ids={alert.alert_id}) 由 {current_user.name}*升级\n\n{escalation_note}"
 
     for tag in case_tags.split(',') if case_tags else []:
         tag = Tags(tag_title=tag).save()
@@ -633,9 +633,9 @@ def unmerge_alert_from_case(alert: Alert, case: Cases):
         alert.cases.remove(case)
         db.session.commit()
     else:
-        return False, f"Case {case.case_id} not linked with alert {alert.alert_id}"
+        return False, f"案例 {case.case_id} 没有链接到告警 {alert.alert_id}"
 
-    return True, f"Alert {alert.alert_id} unlinked from case {case.case_id}"
+    return True, f"告警 {alert.alert_id} 未连接到案例 {case.case_id}"
 
 
 def get_alert_status_list():
@@ -904,7 +904,7 @@ def get_related_alerts_details(customer_id, assets, iocs, open_alerts, closed_al
 
         nodes.append({
             'id': f'alert_{alert_id}',
-            'label': f'[Closed] Alert #{alert_id}' if alert_color != '' else f'Alert #{alert_id}',
+            'label': f'[Closed] 告警 #{alert_id}' if alert_color != '' else f'告警 #{alert_id}',
             'title': alert_info['alert'].alert_title,
             'group': 'alert',
             'shape': 'icon',
@@ -1095,12 +1095,12 @@ def delete_alert_comment(comment_id: int, alert_id: int) -> Tuple[bool, str]:
         Comments.comment_alert_id == alert_id
     ).first()
     if not comment:
-        return False, "You are not allowed to delete this comment"
+        return False, "您不能删除此评论"
 
     db.session.delete(comment)
     db.session.commit()
 
-    return True, "Comment deleted successfully"
+    return True, "评论已成功删除"
 
 
 def remove_alerts_from_assets_by_ids(alert_ids: List[int]) -> None:
