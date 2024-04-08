@@ -69,7 +69,7 @@ def get_case_classification(classification_id: int, caseid: int) -> Response:
     schema = CaseClassificationSchema()
     case_classification = get_case_classification_by_id(classification_id)
     if not case_classification:
-        return response_error(f"Invalid case classification ID {classification_id}")
+        return response_error(f"无效案例分类 ID {classification_id}")
 
     return response_success("", data=schema.dump(case_classification))
 
@@ -95,7 +95,7 @@ def update_case_classification_modal(classification_id: int, caseid: int, url_re
     classification_form = CaseClassificationForm()
     case_classification = get_case_classification_by_id(classification_id)
     if not case_classification:
-        return response_error(f"Invalid case classification ID {classification_id}")
+        return response_error(f"无效案例分类 ID {classification_id}")
 
     classification_form.name.render_kw = {'value': case_classification.name}
     classification_form.name_expanded.render_kw = {'value': case_classification.name_expanded}
@@ -119,11 +119,11 @@ def update_case_classification(classification_id: int, caseid: int) -> Response:
         Flask Response object
     """
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     case_classification = get_case_classification_by_id(classification_id)
     if not case_classification:
-        return response_error(f"Invalid case classification ID {classification_id}")
+        return response_error(f"无效案例分类 ID {classification_id}")
 
     ccl = CaseClassificationSchema()
 
@@ -133,12 +133,12 @@ def update_case_classification(classification_id: int, caseid: int) -> Response:
 
         if ccls:
             track_activity(f"updated case classification {ccls.id}", caseid=caseid)
-            return response_success("Case classification updated", ccl.dump(ccls))
+            return response_success("案例分类已更新", ccl.dump(ccls))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
-    return response_error("Unexpected error server-side. Nothing updated", data=case_classification)
+    return response_error("服务器端出现意外错误.未更新", data=case_classification)
 
 
 @manage_case_classification_blueprint.route('/manage/case-classifications/add/modal', methods=['GET'])
@@ -174,7 +174,7 @@ def add_case_classification(caseid: int) -> Response:
         Flask Response object
     """
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     ccl = CaseClassificationSchema()
 
@@ -190,9 +190,9 @@ def add_case_classification(caseid: int) -> Response:
             return response_success("Case classification added", ccl.dump(ccls))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
-    return response_error("Unexpected error server-side. Nothing added", data=None)
+    return response_error("服务器端错误.未添加", data=None)
 
 
 @manage_case_classification_blueprint.route('/manage/case-classifications/delete/<int:classification_id>',
@@ -210,31 +210,31 @@ def delete_case_classification(classification_id: int, caseid: int) -> Response:
     """
     case_classification = get_case_classification_by_id(classification_id)
     if not case_classification:
-        return response_error(f"Invalid case classification ID {classification_id}")
+        return response_error(f"无效案例分类 ID {classification_id}")
 
     db.session.delete(case_classification)
     db.session.commit()
 
     track_activity(f"deleted case classification {case_classification.name}", caseid=caseid)
-    return response_success("Case classification deleted")
+    return response_success("案例分类已删除")
 
 
 @manage_case_classification_blueprint.route('/manage/case-classifications/search', methods=['POST'])
 @ac_api_requires(no_cid_required=True)
 def search_alert_status(caseid):
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     classification_name = request.json.get('classification_name')
     if classification_name is None:
-        return response_error("Invalid classification name. Got None")
+        return response_error("无效分类名称. 为None")
 
     exact_match = request.json.get('exact_match', False)
 
     # Search for classifications with a name that contains the specified search term
     classification = search_classification_by_name(classification_name, exact_match=exact_match)
     if not classification:
-        return response_error("No classification found")
+        return response_error("未找到分类")
 
     # Serialize the case classification and return them in a JSON response
     schema = CaseClassificationSchema(many=True)
