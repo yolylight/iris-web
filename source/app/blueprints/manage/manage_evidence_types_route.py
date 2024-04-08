@@ -70,7 +70,7 @@ def get_evidence_type(evidence_type_id: int, caseid: int) -> Response:
     evidence_type_schema = EvidenceTypeSchema()
     evidence_type = get_evidence_type_by_id(evidence_type_id)
     if evidence_type is None:
-        return response_error(f"Invalid evidence type ID {evidence_type_id}")
+        return response_error(f"无效证据类型ID {evidence_type_id}")
 
     return response_success("", data=evidence_type_schema.dump(evidence_type))
 
@@ -96,7 +96,7 @@ def update_evidence_type_modal(evidence_type_id: int, caseid: int, url_redir: bo
     evidence_type_form = EvidenceTypeForm()
     evidence_type = get_evidence_type_by_id(evidence_type_id)
     if not evidence_type:
-        return response_error(f"Invalid evidence type ID {evidence_type_id}")
+        return response_error(f"无效证据类型ID {evidence_type_id}")
 
     evidence_type_form.name.render_kw = {'value': evidence_type.name}
     evidence_type_form.description.render_kw = {'value': evidence_type.description}
@@ -119,11 +119,11 @@ def update_case_classification(evidence_type_id: int, caseid: int) -> Response:
         Flask Response object
     """
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     evidence_type = get_evidence_type_by_id(evidence_type_id)
     if not evidence_type:
-        return response_error(f"Invalid evidence type ID {evidence_type_id}")
+        return response_error(f"无效证据类型ID {evidence_type_id}")
 
     ccl = EvidenceTypeSchema()
 
@@ -133,12 +133,12 @@ def update_case_classification(evidence_type_id: int, caseid: int) -> Response:
 
         if ccls:
             track_activity(f"updated evidence type {ccls.id}", caseid=caseid)
-            return response_success("Evidence type updated", ccl.dump(ccls))
+            return response_success("证据类型已更新", ccl.dump(ccls))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
-    return response_error("Unexpected error server-side. Nothing updated", data=evidence_type)
+    return response_error("服务器端出现意外错误.未更新", data=evidence_type)
 
 
 @manage_evidence_types_blueprint.route('/manage/evidence-types/add/modal', methods=['GET'])
@@ -174,7 +174,7 @@ def add_evidence_type(caseid: int) -> Response:
         Flask Response object
     """
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     ccl = EvidenceTypeSchema()
 
@@ -187,12 +187,12 @@ def add_evidence_type(caseid: int) -> Response:
             db.session.commit()
 
             track_activity(f"added evidence type {ccls.name}", caseid=caseid)
-            return response_success("Evidence type added", ccl.dump(ccls))
+            return response_success("证据类型已添加", ccl.dump(ccls))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
-    return response_error("Unexpected error server-side. Nothing added", data=None)
+    return response_error("服务器端出现意外错误.未添加", data=None)
 
 
 @manage_evidence_types_blueprint.route('/manage/evidence-types/delete/<int:evidence_type_id>',
@@ -209,34 +209,34 @@ def delete_evidence_type(evidence_type_id: int, caseid: int) -> Response:
         Flask Response object
     """
     if verify_evidence_type_in_use(evidence_type_id):
-        return response_error("Evidence type is in use. Please delete evidences using this type beforehand.")
+        return response_error("正在使用证据类型。请事先删除使用该类型的证据.")
 
     evidence_type = get_evidence_type_by_id(evidence_type_id)
     if not evidence_type:
-        return response_error(f"Invalid evidence type ID {evidence_type_id}")
+        return response_error(f"无效证据类型ID {evidence_type_id}")
 
     db.session.delete(evidence_type)
     db.session.commit()
 
     track_activity(f"deleted evidence type {evidence_type.name}", caseid=caseid)
-    return response_success("Evidence type deleted")
+    return response_success("证据类型已删除")
 
 
 @manage_evidence_types_blueprint.route('/manage/evidence-types/search', methods=['POST'])
 @ac_api_requires(no_cid_required=True)
 def search_evidence_type(caseid):
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     evidence_type_name = request.json.get('evidence_type_name')
     if evidence_type_name is None:
-        return response_error("Invalid evidence type name. Got None")
+        return response_error("无效证据类型名称. 为None")
 
     exact_match = request.json.get('exact_match', False)
 
     evidence_type = search_evidence_type(evidence_type_name, exact_match=exact_match)
     if not evidence_type:
-        return response_error("No evidence type found")
+        return response_error("未找到证据类型")
 
     schema = EvidenceTypeSchema(many=True)
     return response_success("", data=schema.dump(evidence_type))
