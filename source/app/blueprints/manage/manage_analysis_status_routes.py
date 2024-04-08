@@ -82,7 +82,7 @@ def view_anastatus(cur_id, caseid):
     ).first()
 
     if not lstatus:
-        return response_error(f"Analysis status ID {cur_id} not found")
+        return response_error(f"分析状态ID {cur_id}未找到")
 
     return response_success("", data=lstatus._asdict())
 
@@ -95,14 +95,14 @@ def search_analysis_status(caseid):
 
     analysis_status = request.json.get('analysis_status')
     if analysis_status is None:
-        return response_error("Invalid analysis status. Got None")
+        return response_error("无效分析状态. 为None")
 
     exact_match = request.json.get('exact_match', False)
 
     # Search for analysis status with a name that contains the specified search term
     analysis_status = search_analysis_status_by_name(analysis_status, exact_match=exact_match)
     if not analysis_status:
-        return response_error("No analysis status found")
+        return response_error("未找到分析状态")
 
     # Serialize the analysis status and return them in a JSON response
     schema = AnalysisStatusSchema(many=True)
