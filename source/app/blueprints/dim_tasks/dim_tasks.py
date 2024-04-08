@@ -126,10 +126,10 @@ def dim_hooks_call(caseid):
             try:
                 target = int(target)
             except ValueError:
-                return response_error('Invalid target')
+                return response_error('目标无效')
 
         elif type(target) != int:
-            return response_error('Invalid target')
+            return response_error('目标无效')
 
         if data_type == 'ioc':
             obj = Ioc.query.filter(Ioc.ioc_id == target).first()
@@ -194,10 +194,10 @@ def dim_hooks_call(caseid):
                           caseid=caseid, module_name=module_name)
 
     if len(logs) > 0:
-        return response_error(f"Errors encountered during processing of data. Queued task with {index} objects",
+        return response_error(f"数据处理过程中遇到的错误. 带有{index}对象的排队任务",
                               data=logs)
 
-    return response_success(f'Queued task with {index} objects')
+    return response_success(f'带有 {index} 对象任务已排队')
 
 
 @dim_tasks_blueprint.route('/dim/tasks/list/<int:count>', methods=['GET'])
@@ -267,7 +267,7 @@ def list_dim_tasks(count, caseid):
 @ac_case_requires(CaseAccessLevel.read_only, CaseAccessLevel.full_access)
 def task_status(task_id, caseid, url_redir):
     if url_redir:
-        return response_error("Invalid request")
+        return response_error("请求无效")
 
     task = app.celery.AsyncResult(task_id)
 
