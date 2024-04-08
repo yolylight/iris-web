@@ -104,7 +104,7 @@ def case_get_tasks_state(caseid):
     if os:
         return response_success(data=os)
     else:
-        return response_error(此案例无任务状态.')
+        return response_error('此案例无任务状态.')
 
 
 @case_tasks_blueprint.route('/case/tasks/status/update/<int:cur_id>', methods=['POST'])
