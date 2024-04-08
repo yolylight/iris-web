@@ -42,7 +42,7 @@ def get_tlp_type(cur_id, caseid):
 
     tlp_type = Tlp.query.filter(Tlp.tlp_id == cur_id).first()
     if not tlp_type:
-        return response_error("Invalid TLP ID {type_id}".format(type_id=cur_id))
+        return response_error("无效TLP ID {type_id}".format(type_id=cur_id))
 
     return response_success("", data=tlp_type)
 
