@@ -224,7 +224,7 @@ def add_case_access_to_group(group, cases_list, access_level):
     for case_id in cases_list:
         case = get_case(case_id)
         if not case:
-            return None, "Invalid case ID"
+            return None, "无效案例ID"
 
         access_level_mask = ac_access_level_mask_from_val_list([access_level])
 
@@ -245,12 +245,12 @@ def add_case_access_to_group(group, cases_list, access_level):
 
     db.session.commit()
 
-    return group, "Updated"
+    return group, "已更新"
 
 
 def add_all_cases_access_to_group(group, access_level):
     if not group:
-        return None, "Invalid group"
+        return None, "无效组"
 
     for case_id in list_cases_id():
         access_level_mask = ac_access_level_mask_from_val_list([access_level])
@@ -271,7 +271,7 @@ def add_all_cases_access_to_group(group, access_level):
         db.session.add(oca)
 
     db.session.commit()
-    return group, "Updated"
+    return group, "已更新"
 
 
 def remove_case_access_from_group(group_id, case_id):
@@ -293,10 +293,10 @@ def remove_case_access_from_group(group_id, case_id):
 
 def remove_cases_access_from_group(group_id, cases_list):
     if not group_id or type(group_id) is not int:
-        return False, "Invalid group"
+        return False, "无效组"
 
     if not cases_list or type(cases_list[0]) is not int:
-        return False, "Invalid cases list"
+        return False, "无效案例列表"
 
     GroupCaseAccess.query.filter(
         and_(
