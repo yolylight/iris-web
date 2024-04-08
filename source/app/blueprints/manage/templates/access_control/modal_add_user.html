@@ -189,8 +189,8 @@
                                     <thead>
                                         <tr>
                                             <th>组名</th>
-                                            <th>组 ID</th>
-                                            <th>组 UUID</th>
+                                            <th>组ID</th>
+                                            <th>组UUID</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -289,15 +289,15 @@
             $('#user_groups_table').dataTable({
                 "order": [[ 1, "asc" ]],
                 "columns": [{
-                    "title": "Group name",
+                    "title": "组名",
                     "render": function ( data, type, row, meta ) {
                         if (type === 'display' ) {
                             return `<i class="fa-solid fa-trash-can mr-2 text-danger" style="cursor:pointer;" title="从组移除" href="javascript:void(0)" onclick="remove_member_from_group_wrap('${row[1]}','{{ user.user_id }}')"></i>${sanitizeHTML(data)}`;
                         }
                         return data;
                     }},
-                    {"title": "Group ID"},
-                    {"title": "Group UUID"}
+                    {"title": "组 ID"},
+                    {"title": "组 UUID"}
                     ]
                 });
 
@@ -347,10 +347,10 @@
                 yoffset: -10,
                 headerRenderer: function (rows) {
                     if (rows.length > 1) {
-                        return rows.length + ' items selected';
+                        return rows.length + ' 项目已选择';
                     } else {
                         let row = rows[0];
-                        return 'Quick action';
+                        return '快捷操作';
                     }
                 },
             },
@@ -363,7 +363,7 @@
 
         actionOptionsUser.items.push({
                     type: 'option',
-                    title: 'Remove access',
+                    title: '移除访问',
                     multi: true,
                     iconClass: 'fas fa-trash',
                     buttonClasses: ['btn', 'btn-outline-primary'],
