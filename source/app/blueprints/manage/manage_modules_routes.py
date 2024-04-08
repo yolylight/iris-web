@@ -100,7 +100,7 @@ def manage_modules_list(caseid):
 @ac_api_requires(Permissions.server_administrator, no_cid_required=True)
 def add_module(caseid):
     if request.json is None:
-        return response_error('Invalid request')
+        return response_error('无效请求')
 
     module_name = request.json.get('module_name')
 
@@ -111,20 +111,20 @@ def add_module(caseid):
         class_, logs = instantiate_module_from_name(module_name)
 
         if not class_:
-            return response_error(f"Cannot import module. {logs}")
+            return response_error(f"不能导入模块. {logs}")
 
         # Check the health of the module
         is_ready, logs = check_module_health(class_)
 
         if not is_ready:
-            return response_error("Cannot import module. Health check didn't pass. Please check logs below", data=logs)
+            return response_error("无法导入模块.健康检查未通过.请查看以下日志", data=logs)
 
         # Registers into Iris DB for further calls
         module, message = register_module(module_name)
         if module is None:
             track_activity(f"addition of IRIS module {module_name} was attempted and failed",
                            caseid=caseid, ctx_less=True)
-            return response_error(f'Unable to register module: {message}')
+            return response_error(f'无法注册模块: {message}')
 
         track_activity(f"IRIS module {module_name} was added", caseid=caseid, ctx_less=True)
         module_schema = IrisModuleSchema()
@@ -158,7 +158,7 @@ def getmodule_param(param_name, caseid, url_redir):
     mod_config, mod_id, mod_name, _, parameter = parse_module_parameter(param_name)
 
     if mod_config is None:
-        return response_error('Invalid parameter')
+        return response_error('无效参数')
 
     return render_template("modal_update_parameter.html", parameter=parameter, mod_name=mod_name, mod_id=mod_id,
                            form=form)
@@ -169,12 +169,12 @@ def getmodule_param(param_name, caseid, url_redir):
 def update_module_param(param_name, caseid):
 
     if request.json is None:
-        return response_error('Invalid request')
+        return response_error('无效请求')
 
     mod_config, mod_id, mod_name, mod_iname, parameter = parse_module_parameter(param_name)
 
     if mod_config is None:
-        return response_error('Invalid parameter')
+        return response_error('无效参数')
 
     parameter_value = request.json.get('parameter_value')
 
@@ -184,11 +184,11 @@ def update_module_param(param_name, caseid):
 
         success, logs = iris_update_hooks(mod_iname, mod_id)
         if not success:
-            return response_error("Unable to update hooks", data=logs)
+            return response_error("无法更新钩子", data=logs)
 
-        return response_success("Saved", logs)
+        return response_success("已保存", logs)
 
-    return response_error('Malformed request', status=400)
+    return response_error('畸形请求', status=400)
 
 
 @manage_modules_blueprint.route('/manage/modules/update/<int:mod_id>/modal', methods=['GET'])
@@ -208,7 +208,7 @@ def view_module(mod_id, caseid, url_redir):
         return render_template("modal_module_info.html", form=form, data=module,
                                config=config, is_configured=is_configured, missing_params=missing_params)
 
-    return response_error('Malformed request', status=400)
+    return response_error('畸形请求', status=400)
 
 
 @manage_modules_blueprint.route('/manage/modules/enable/<int:mod_id>', methods=['POST'])
@@ -217,19 +217,19 @@ def enable_module(mod_id, caseid):
 
     module_name = iris_module_name_from_id(mod_id)
     if module_name is None:
-        return response_error('Invalid module ID', status=400)
+        return response_error('无效模块ID', status=400)
 
     if not iris_module_enable_by_id(mod_id):
-        return response_error('Unable to enable module')
+        return response_error('无法启用模块')
 
     success, logs = iris_update_hooks(module_name, mod_id)
     if not success:
-        return response_error("Unable to update hooks when enabling module", data=logs)
+        return response_error("启用模块时无法更新钩子", data=logs)
 
     track_activity(f"IRIS module ({module_name}) #{mod_id} enabled",
                    caseid=caseid, ctx_less=True)
 
-    return response_success('Module enabled', data=logs)
+    return response_success('模块已启用', data=logs)
 
 
 @manage_modules_blueprint.route('/manage/modules/disable/<int:module_id>', methods=['POST'])
@@ -239,9 +239,9 @@ def disable_module(module_id, caseid):
 
         track_activity(f"IRIS module #{module_id} disabled",
                        caseid=caseid, ctx_less=True)
-        return response_success('Module disabled')
+        return response_success('模块已禁用')
 
-    return response_error('Unable to disable module')
+    return response_error('无法禁用模块')
 
 
 @manage_modules_blueprint.route('/manage/modules/remove/<int:module_id>', methods=['POST'])
@@ -252,11 +252,11 @@ def view_delete_module(module_id, caseid):
         delete_module_from_id(module_id=module_id)
         track_activity(f"IRIS module #{module_id} deleted",
                        caseid=caseid, ctx_less=True)
-        return response_success("Deleted")
+        return response_success("已删除")
 
     except Exception as e:
         log.error(e.__str__())
-        return response_error(f"Cannot delete module. Error {e.__str__()}")
+        return response_error(f"无法删除模块. 错误 {e.__str__()}")
 
 
 @manage_modules_blueprint.route('/manage/modules/export-config/<int:module_id>', methods=['GET'])
@@ -271,7 +271,7 @@ def export_mod_config(module_id, caseid):
         }
         return response_success(data=data)
 
-    return response_error(f"Module ID {module_id} not found")
+    return response_error(f"模块ID {module_id}未找到")
 
 
 @manage_modules_blueprint.route('/manage/modules/import-config/<int:module_id>', methods=['POST'])
@@ -286,7 +286,7 @@ def import_mod_config(module_id, caseid):
         try:
             parameters = json.loads(parameters_data)
         except Exception as e:
-            return response_error('Invalid data', data="Not a JSON file")
+            return response_error('无效数据', data="不是JSON文件")
     else:
         parameters = parameters_data
 
@@ -294,15 +294,15 @@ def import_mod_config(module_id, caseid):
         param_name = param.get('param_name')
         parameter_value = param.get('value')
         if not iris_module_save_parameter(module_id, mod_config, param_name, parameter_value):
-            logs.append(f'Unable to save parameter {param_name}')
+            logs.append(f'无法保存参数 {param_name}')
 
     track_activity(f"parameters of mod #{module_id} were updated from config file",
                    caseid=caseid, ctx_less=True)
 
     if len(logs) == 0:
-        msg = "Successfully imported data."
+        msg = "成功导入数据."
     else:
-        msg = "Configuration is partially imported, we got errors with the followings:\n- " + "\n- ".join(logs)
+        msg = "配置已部分导入,但出现以下错误:\n- " + "\n- ".join(logs)
 
     return response_success(msg)
 
