@@ -108,7 +108,7 @@ def details_case(cur_id: int, caseid: int, url_redir: bool) -> Union[str, Respon
         Union[str, Response]: The case details
     """
     if url_redir:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     if not ac_fast_check_current_user_has_case_access(cur_id, [CaseAccessLevel.read_only, CaseAccessLevel.full_access]):
         return ac_api_return_access_denied(caseid=cur_id)
@@ -133,7 +133,7 @@ def details_case(cur_id: int, caseid: int, url_redir: bool) -> Union[str, Respon
                                severities=severities)
 
     else:
-        return response_error("Unknown case")
+        return response_error("未知案例")
 
 
 @manage_cases_blueprint.route('/case/details/<int:cur_id>', methods=['GET'])
@@ -158,7 +158,7 @@ def get_case_api(cur_id, caseid):
     if res:
         return response_success(data=res)
 
-    return response_error(f'Case ID {cur_id} not found')
+    return response_error(f'案例ID {cur_id}未找到')
 
 
 @manage_cases_blueprint.route('/manage/cases/filter', methods=['GET'])
@@ -181,7 +181,7 @@ def manage_case_filter(caseid) -> Response:
                 case_ids_str = [int(case_ids_str)]
 
         except ValueError:
-            return response_error('Invalid case id')
+            return response_error('无效案例id')
 
     case_customer_id = request.args.get('case_customer_id', None, type=str)
     case_name = request.args.get('case_name', None, type=str)
@@ -221,7 +221,7 @@ def manage_case_filter(caseid) -> Response:
         sort_dir=sort_dir
     )
     if filtered_cases is None:
-        return response_error('Filtering error')
+        return response_error('筛选器错误')
 
     cases = {
         'total': filtered_cases.total,
@@ -245,7 +245,7 @@ def api_delete_case(cur_id, caseid):
         track_activity("tried to delete case {}, but case is the primary case".format(cur_id),
                        caseid=caseid, ctx_less=True)
 
-        return response_error("Cannot delete a primary case to keep consistency")
+        return response_error("不能删除主案例以保持一致性")
 
     else:
         try:
@@ -255,17 +255,17 @@ def api_delete_case(cur_id, caseid):
                 call_modules_hook('on_postload_case_delete', data=cur_id, caseid=caseid)
 
                 track_activity("case {} deleted successfully".format(cur_id), ctx_less=True)
-                return response_success("Case successfully deleted")
+                return response_success("案例删除成功")
 
             else:
                 track_activity("tried to delete case {}, but it doesn't exist".format(cur_id),
                                caseid=caseid, ctx_less=True)
 
-                return response_error("Tried to delete a non-existing case")
+                return response_error("尝试删除不存在案例")
 
         except Exception as e:
             app.app.logger.exception(e)
-            return response_error("Cannot delete the case. Please check server logs for additional informations")
+            return response_error("无法删除案例.请查看服务器日志以获取更多信息")
 
 
 @manage_cases_blueprint.route('/manage/cases/reopen/<int:cur_id>', methods=['POST'])
@@ -275,15 +275,15 @@ def api_reopen_case(cur_id, caseid):
         return ac_api_return_access_denied(caseid=cur_id)
 
     if not cur_id:
-        return response_error("No case ID provided")
+        return response_error("未提供案例ID")
 
     case = get_case(cur_id)
     if not case:
-        return response_error("Tried to reopen an non-existing case")
+        return response_error("试图重新打开不存在的案例")
 
     res = reopen_case(cur_id)
     if not res:
-        return response_error("Tried to reopen an non-existing case")
+        return response_error("试图重新打开不存在的案例")
 
     # Reopen the related alerts
     if case.alerts:
@@ -302,7 +302,7 @@ def api_reopen_case(cur_id, caseid):
     track_activity("reopen case ID {}".format(cur_id), caseid=caseid)
     case_schema = CaseSchema()
 
-    return response_success("Case reopen successfully", data=case_schema.dump(res))
+    return response_success("案例重新打开成功", data=case_schema.dump(res))
 
 
 @manage_cases_blueprint.route('/manage/cases/close/<int:cur_id>', methods=['POST'])
@@ -312,15 +312,15 @@ def api_case_close(cur_id, caseid):
         return ac_api_return_access_denied(caseid=cur_id)
 
     if not cur_id:
-        return response_error("No case ID provided")
+        return response_error("未提供案例ID")
 
     case = get_case(cur_id)
     if not case:
-        return response_error("Tried to close an non-existing case")
+        return response_error("试图关闭不存在案例")
 
     res = close_case(cur_id)
     if not res:
-        return response_error("Tried to close an non-existing case")
+        return response_error("试图关闭不存在案例")
 
     # Close the related alerts
     if case.alerts:
@@ -347,7 +347,7 @@ def api_case_close(cur_id, caseid):
     track_activity("closed case ID {}".format(cur_id), caseid=caseid, ctx_less=False)
     case_schema = CaseSchema()
 
-    return response_success("Case closed successfully", data=case_schema.dump(res))
+    return response_success("案例关闭成功", data=case_schema.dump(res))
 
 
 @manage_cases_blueprint.route('/manage/cases/add/modal', methods=['GET'])
@@ -387,7 +387,7 @@ def api_add_case(caseid):
         if case_template_id and len(case_template_id) > 0:
             case = case_template_pre_modifier(case, case_template_id)
             if case is None:
-                return response_error(msg=f"Invalid Case template ID {case_template_id}", status=400)
+                return response_error(msg=f"无效案例模板ID {case_template_id}", status=400)
 
         case.state_id = get_case_state_by_name('Open').state_id
 
@@ -397,10 +397,10 @@ def api_add_case(caseid):
             try:
                 case, logs = case_template_post_modifier(case, case_template_id)
                 if len(logs) > 0:
-                    return response_error(msg=f"Could not update new case with {case_template_id}", data=logs, status=400)
+                    return response_error(msg=f"无法使用{case_template_id}更新新案例", data=logs, status=400)
             except Exception as e:
                 log.error(e.__str__())
-                return response_error(msg=f"Unexpected error when loading template {case_template_id} to new case.",
+                return response_error(msg=f"新案例加载模板{case_template_id}出现未知错误.",
                                       status=400)
 
         ac_set_new_case_access(None, case.case_id, case.client_id)
@@ -411,14 +411,14 @@ def api_add_case(caseid):
         track_activity("new case {case_name} created".format(case_name=case.name), caseid=case.case_id, ctx_less=False)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
     except Exception as e:
         log.error(e.__str__())
         log.error(traceback.format_exc())
-        return response_error(msg="Error creating case - check server logs", status=400)
+        return response_error(msg="创建案例出错-检查服务器日志", status=400)
 
-    return response_success(msg='Case created', data=case_schema.dump(case))
+    return response_success(msg='案例已创建', data=case_schema.dump(case))
 
 
 @manage_cases_blueprint.route('/manage/cases/list', methods=['GET'])
@@ -439,7 +439,7 @@ def update_case_info(cur_id, caseid):
 
     case_i = get_case(cur_id)
     if not case_i:
-        return response_error("Case not found")
+        return response_error("案例未找到")
 
     try:
 
@@ -451,7 +451,7 @@ def update_case_info(cur_id, caseid):
         # If user tries to update the customer, check if the user has access to the new customer
         if request_data.get('case_customer') and request_data.get('case_customer') != case_i.client_id:
             if not user_has_client_access(current_user.id, request_data.get('case_customer')):
-                return response_error("Invalid customer ID. Permission denied.", status=403)
+                return response_error("无效客户ID.权限拒绝.", status=403)
 
         if 'case_name' in request_data:
             short_case_name = request_data.get('case_name').replace(f'#{case_i.case_id} - ', '')
@@ -468,7 +468,7 @@ def update_case_info(cur_id, caseid):
                 track_activity("case closed", caseid=cur_id)
                 res = close_case(cur_id)
                 if not res:
-                    return response_error("Tried to close an non-existing case")
+                    return response_error("尝试关闭不存在案例")
 
                 # Close the related alerts
                 if case.alerts:
@@ -493,7 +493,7 @@ def update_case_info(cur_id, caseid):
                 track_activity("case re-opened", caseid=cur_id)
                 res = reopen_case(cur_id)
                 if not res:
-                    return response_error("Tried to re-open an non-existing case")
+                    return response_error("尝试重新打开不存在案例")
 
         if case_previous_reviewer_id != case.reviewer_id:
             if case.reviewer_id is None:
@@ -511,13 +511,13 @@ def update_case_info(cur_id, caseid):
         track_activity("case updated {case_name}".format(case_name=case.name), caseid=cur_id)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
     except Exception as e:
         log.error(e.__str__())
         log.error(traceback.format_exc())
-        return response_error(msg="Error updating case - check server logs", status=400)
+        return response_error(msg="更新案例时出错 - 检查服务器日志", status=400)
 
-    return response_success(msg='Case updated', data=case_schema.dump(case))
+    return response_success(msg='案例已更新', data=case_schema.dump(case))
 
 
 @manage_cases_blueprint.route('/manage/cases/trigger-pipeline', methods=['POST'])
@@ -531,7 +531,7 @@ def update_case_files(caseid):
         # Create the update task
         jsdata = request.get_json()
         if not jsdata:
-            return response_error('Not a JSON content', status=400)
+            return response_error('不是JSON内容', status=400)
 
         pipeline = jsdata.get('pipeline')
 
@@ -540,11 +540,11 @@ def update_case_files(caseid):
             pipeline_name = pipeline.split("-")[1]
         except Exception as e:
             log.error(e.__str__())
-            return response_error('Malformed request', status=400)
+            return response_error('畸形请求', status=400)
 
         ppl_config = get_pipelines_args_from_name(pipeline_mod)
         if not ppl_config:
-            return response_error('Malformed request', status=400)
+            return response_error('畸形请求', status=400)
 
         pl_args = ppl_config['pipeline_args']
         pipeline_args = {}
@@ -554,7 +554,7 @@ def update_case_files(caseid):
             fetch_arg = jsdata.get('args_' + arg)
 
             if argi[1] == 'required' and (not fetch_arg or fetch_arg == ""):
-                return response_error("Required arguments are not set")
+                return response_error("必需字段未设置")
 
             if fetch_arg:
                 pipeline_args[arg] = fetch_arg
@@ -570,7 +570,7 @@ def update_case_files(caseid):
 
         if status.is_success():
             # The job has been created, so return. The progress can be followed on the dashboard
-            return response_success("Case task created")
+            return response_success("案例任务已创建")
 
         else:
             # We got some errors and cannot continue
@@ -578,7 +578,7 @@ def update_case_files(caseid):
 
     except Exception as e:
         traceback.print_exc()
-        return response_error('Fail to update case', data=traceback.print_exc())
+        return response_error('更新案例失败', data=traceback.print_exc())
 
 
 @manage_cases_blueprint.route('/manage/cases/upload_files', methods=['POST'])
@@ -603,15 +603,15 @@ def manage_cases_uploadfiles(caseid):
         pipeline_mod = pipeline.split("-")[0]
     except Exception as e:
         log.error(e.__str__())
-        return response_error('Malformed request', status=400)
+        return response_error('畸形请求', status=400)
 
     if not iris_module_exists(pipeline_mod):
-        return response_error('Missing pipeline', status=400)
+        return response_error('缺少管道', status=400)
 
     mod, _ = instantiate_module_from_name(pipeline_mod)
     status = configure_module_on_init(mod)
     if status.is_failure():
-        return response_error("Path for upload {} is not built ! Unreachable pipeline".format(
+        return response_error("上传路径{}未构建 ! 管道不可达".format(
             os.path.join(f.filename)), status=400)
 
     case_customer = None
