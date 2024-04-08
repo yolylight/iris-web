@@ -69,7 +69,7 @@ def user_renew_api(caseid):
 
     db.session.commit()
 
-    return response_success("Token renewed")
+    return response_success("Token已续期")
 
 
 @profile_blueprint.route('/user/is-admin', methods=['GET'])
@@ -84,22 +84,22 @@ def user_has_permission(caseid):
 
     req_js = request.json
     if not req_js:
-        return response_error('Invalid request')
+        return response_error('无效请求')
 
     if not req_js.get('permission_name') or not \
             req_js.get('permission_value'):
-        return response_error('Invalid request')
+        return response_error('无效请求')
 
     if req_js.get('permission_value') not in Permissions._value2member_map_:
-        return response_error('Invalid permission')
+        return response_error('权限无效')
 
     if Permissions(req_js.get('permission_value')).name.lower() != req_js.get('permission_name').lower():
-        return response_error('Permission value-name mismatch')
+        return response_error('权限value-name不符')
 
     if ac_current_user_has_permission(Permissions(req_js.get('permission_value'))):
-        return response_success('User has permission')
+        return response_success('用户获得权限')
     else:
-        return response_error('User does not have permission', status=403)
+        return response_error('用户没有权限', status=403)
 
 
 @profile_blueprint.route('/user/update/modal', methods=['GET'])
@@ -121,7 +121,7 @@ def update_user_view(caseid):
     try:
         user = get_user(current_user.id)
         if not user:
-            return response_error("Invalid user ID for this case")
+            return response_error("对于此案例用户ID无效")
 
         # validate before saving
         user_schema = UserSchema()
@@ -138,23 +138,23 @@ def update_user_view(caseid):
 
         if cuser:
             track_activity("user {} updated itself".format(user.user), caseid=caseid)
-            return response_success("User updated", data=user_schema.dump(user))
+            return response_success("用户已更新", data=user_schema.dump(user))
 
-        return response_error("Unable to update user for internal reasons")
+        return response_error("由于内部原因无法更新用户")
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @profile_blueprint.route('/user/theme/set/<string:theme>', methods=['GET'])
 @ac_api_requires(no_cid_required=True)
 def profile_set_theme(theme, caseid):
     if theme not in ['dark', 'light']:
-        return response_error('Invalid data')
+        return response_error('无效数据')
 
     user = get_user(current_user.id)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     user.in_dark_mode = (theme == 'dark')
     db.session.commit()
@@ -166,32 +166,32 @@ def profile_set_theme(theme, caseid):
 @ac_api_requires(no_cid_required=True)
 def profile_set_deletion_prompt(val, caseid):
     if val not in ['true', 'false']:
-        return response_error('Invalid data')
+        return response_error('无效数据')
 
     user = get_user(current_user.id)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     user.has_deletion_confirmation = (val == 'true')
     db.session.commit()
 
-    return response_success('Deletion prompt {}'.format('enabled' if val == 'true' else 'disabled'))
+    return response_success('删除提示 {}'.format('启用' if val == 'true' else '禁用'))
 
 
 @profile_blueprint.route('/user/mini-sidebar/set/<string:val>', methods=['GET'])
 @ac_api_requires(no_cid_required=True)
 def profile_set_minisidebar(val, caseid):
     if val not in ['true', 'false']:
-        return response_error('Invalid data')
+        return response_error('无效数据')
 
     user = get_user(current_user.id)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     user.has_mini_sidebar = (val == 'true')
     db.session.commit()
 
-    return response_success('Mini sidebar {}'.format('enabled' if val == 'true' else 'disabled'))
+    return response_success('侧边栏 {}'.format('启用' if val == 'true' else '禁用'))
 
 
 @profile_blueprint.route('/user/refresh-permissions', methods=['GET'])
@@ -200,12 +200,12 @@ def profile_refresh_permissions_and_ac(caseid):
 
     user = get_user(current_user.id)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     ac_recompute_effective_ac(current_user.id)
     session['permissions'] = ac_get_effective_permissions_of_user(user)
 
-    return response_success('Access control and permissions refreshed')
+    return response_success('已刷新访问控制和权限')
 
 
 @profile_blueprint.route('/user/whoami', methods=['GET'])
@@ -216,7 +216,7 @@ def profile_whoami(caseid):
     """
     user = get_user(current_user.id)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     user_schema = BasicUserSchema()
     return response_success(data=user_schema.dump(user))
