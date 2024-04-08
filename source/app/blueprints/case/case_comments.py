@@ -33,7 +33,7 @@ from app.util import response_success
 def case_comment_update(comment_id, object_type, caseid):
     comment = get_case_comment(comment_id, caseid=caseid)
     if not comment:
-        return response_error("Invalid comment ID")
+        return response_error("评论ID无效")
 
     try:
         rq_t = request.get_json()
@@ -51,7 +51,7 @@ def case_comment_update(comment_id, object_type, caseid):
         call_modules_hook(f'on_postload_{hook}_comment_update', data=comment_schema.dump(comment), caseid=caseid)
 
         track_activity(f"comment {comment.comment_id} on {object_type} edited", caseid=caseid)
-        return response_success("Comment edited", data=comment_schema.dump(comment))
+        return response_success("评论已编辑", data=comment_schema.dump(comment))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.normalized_messages(), status=400)
+        return response_error(msg="数据错误", data=e.normalized_messages(), status=400)
