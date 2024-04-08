@@ -82,7 +82,7 @@ def view_asset_api(cur_id, caseid):
     ).first()
 
     if not asset_type:
-        return response_error(f'Invalid asset type ID {cur_id}')
+        return response_error(f'资产类型ID {cur_id}无效')
 
     # Return the assets
     return response_success("", data=asset_type._asdict())
@@ -97,7 +97,7 @@ def view_assets_modal(cur_id, caseid, url_redir):
     form = AddAssetForm()
     asset = AssetsType.query.filter(AssetsType.asset_id == cur_id).first()
     if not asset:
-        return response_error("Invalid asset type ID")
+        return response_error("资产类型ID无效")
 
     form.asset_name.render_kw = {'value': asset.asset_name}
     form.asset_description.render_kw = {'value': asset.asset_description}
@@ -114,7 +114,7 @@ def view_assets_modal(cur_id, caseid, url_redir):
 def view_assets(cur_id, caseid):
     asset_type = AssetsType.query.filter(AssetsType.asset_id == cur_id).first()
     if not asset_type:
-        return response_error("Invalid asset type ID")
+        return response_error("资产类型ID无效")
 
     asset_schema = AssetTypeSchema()
     try:
@@ -132,12 +132,12 @@ def view_assets(cur_id, caseid):
 
         if asset_sc:
             track_activity("updated asset type {}".format(asset_sc.asset_name), caseid=caseid)
-            return response_success("Asset type updated", asset_sc)
+            return response_success("资产类型已更新", asset_sc)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
-    return response_error("Unexpected error server-side. Nothing updated")
+    return response_error("服务器端出现意外错误.未更新.")
 
 
 @manage_assets_type_blueprint.route('/manage/asset-type/add/modal', methods=['GET'])
@@ -173,12 +173,12 @@ def add_assets(caseid):
             db.session.commit()
 
             track_activity("updated asset type {}".format(asset_sc.asset_name), caseid=caseid)
-            return response_success("Asset type updated", asset_sc)
+            return response_success("资产类型已更新", asset_sc)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
-    return response_error("Unexpected error server-side. Nothing updated")
+    return response_error("服务器端出现意外错误.未更新.")
 
 
 @manage_assets_type_blueprint.route('/manage/asset-type/delete/<int:cur_id>', methods=['POST'])
@@ -186,11 +186,11 @@ def add_assets(caseid):
 def delete_assets(cur_id, caseid):
     asset = AssetsType.query.filter(AssetsType.asset_id == cur_id).first()
     if not asset:
-        return response_error("Invalid asset ID")
+        return response_error("资产ID无效")
 
     case_linked = CaseAssets.query.filter(CaseAssets.asset_type_id == cur_id).first()
     if case_linked:
-        return response_error("Cannot delete a referenced asset type. Please delete any assets of this type first.")
+        return response_error("无法删除引用的资产类型.请先删除该类型的任何资产.")
 
     
     try:
@@ -209,7 +209,7 @@ def delete_assets(cur_id, caseid):
 
     track_activity("Deleted asset type ID {asset_id}".format(asset_id=cur_id), caseid=caseid, ctx_less=True)
 
-    return response_success("Deleted asset type ID {cur_id} successfully".format(cur_id=cur_id))
+    return response_success("删除资产类型ID {cur_id}成功".format(cur_id=cur_id))
 
 
 @manage_assets_type_blueprint.route('/manage/asset-types/search', methods=['POST'])
@@ -228,18 +228,18 @@ def search_assets_type(caseid):
 
     """
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("请求无效")
 
     asset_type = request.json.get('asset_type')
     if asset_type is None:
-        return response_error("Invalid asset type. Got None")
+        return response_error("无效资产类型. 为None")
 
     exact_match = request.json.get('exact_match', False)
 
     # Search for assets types with a name that contains the specified search term
     assets_type = search_asset_type_by_name(asset_type, exact_match=exact_match)
     if not assets_type:
-        return response_error("No asset types found")
+        return response_error("未找到资产类型")
 
     # Serialize the assets types and return them in a JSON response
     assetst_schema = AssetTypeSchema(many=True)
