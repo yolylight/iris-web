@@ -97,7 +97,7 @@ def manage_users_filter(caseid):
                 user_ids_str = [int(user_ids_str)]
 
         except ValueError:
-            return response_error('Invalid user_ids parameter')
+            return response_error('无效user_ids参数')
 
     customer_id = request.args.get('customer_id', None, type=str)
     user_name = request.args.get('user_name', None, type=str)
@@ -112,7 +112,7 @@ def manage_users_filter(caseid):
                                         sort=sort)
 
     if filtered_users is None:
-        return response_error('Filtering error')
+        return response_error('筛选错误')
 
     users = {
         'total': filtered_users.total,
@@ -163,12 +163,12 @@ def add_user(caseid):
 
         if cuser:
             track_activity("created user {}".format(user.user), caseid=caseid,  ctx_less=True)
-            return response_success("user created", data=udata)
+            return response_success("用户已创建", data=udata)
 
-        return response_error("Unable to create user for internal reasons")
+        return response_error("由于内部原因无法创建用户")
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @manage_users_blueprint.route('/manage/users/<int:cur_id>', methods=['GET'])
@@ -178,7 +178,7 @@ def view_user(cur_id, caseid):
     user = get_user_details(user_id=cur_id)
 
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     return response_success(data=user)
 
@@ -193,7 +193,7 @@ def view_user_modal(cur_id, caseid, url_redir):
     user = get_user_details(cur_id, include_api_key=True)
 
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     permissions = get_user_effective_permissions(cur_id)
 
@@ -216,7 +216,7 @@ def manage_user_group_modal(cur_id, caseid, url_redir):
 
     user = get_user_details(cur_id)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     groups = get_groups_list()
 
@@ -228,24 +228,24 @@ def manage_user_group_modal(cur_id, caseid, url_redir):
 def manage_user_group_(cur_id, caseid):
 
     if not request.is_json:
-        return response_error("Invalid request", status=400)
+        return response_error("无效请求", status=400)
 
     if not request.json.get('groups_membership'):
-        return response_error("Invalid request", status=400)
+        return response_error("无效请求", status=400)
 
     if type(request.json.get('groups_membership')) is not list:
-        return response_error("Expected list of groups ID", status=400)
+        return response_error("需要list形式组ID", status=400)
 
     user = get_user_details(cur_id)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户 ID")
 
     update_user_groups(user_id=cur_id,
                        groups=request.json.get('groups_membership'))
 
     track_activity(f"groups membership of user {cur_id} updated", caseid=caseid,  ctx_less=True)
 
-    return response_success("User groups updated", data=user)
+    return response_success("用户组已更新", data=user)
 
 
 @manage_users_blueprint.route('/manage/users/<int:cur_id>/customers/modal', methods=['GET'])
@@ -256,7 +256,7 @@ def manage_user_customers_modal(cur_id, caseid, url_redir):
 
     user = get_user_details(cur_id)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户 ID")
 
     user_is_server_administrator = ac_current_user_has_permission(Permissions.server_administrator)
     groups = get_client_list(current_user_id=current_user.id,
@@ -270,24 +270,24 @@ def manage_user_customers_modal(cur_id, caseid, url_redir):
 def manage_user_customers_(cur_id, caseid):
 
     if not request.is_json:
-        return response_error("Invalid request", status=400)
+        return response_error("无效请求", status=400)
 
     if not request.json.get('customers_membership'):
-        return response_error("Invalid request", status=400)
+        return response_error("无效请求", status=400)
 
     if type(request.json.get('customers_membership')) is not list:
-        return response_error("Expected list of customers ID", status=400)
+        return response_error("需要list形式客户ID", status=400)
 
     user = get_user_details(cur_id)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     update_user_customers(user_id=cur_id,
                           customers=request.json.get('customers_membership'))
 
     track_activity(f"customers membership of user {cur_id} updated", caseid=caseid,  ctx_less=True)
 
-    return response_success("User customers updated", data=user)
+    return response_success("用户客户已更新", data=user)
 
 
 @manage_users_blueprint.route('/manage/users/<int:cur_id>/cases-access/modal', methods=['GET'])
@@ -299,7 +299,7 @@ def manage_user_cac_modal(cur_id, caseid, url_redir):
 
     user = get_user_details(cur_id)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     cases_list = list_cases_dict(current_user.id)
 
@@ -323,24 +323,24 @@ def manage_user_cac_modal(cur_id, caseid, url_redir):
 def manage_user_cac_add_case(cur_id, caseid):
 
     if not request.is_json:
-        return response_error("Invalid request, expecting JSON")
+        return response_error("无效请求, 需要JSON")
 
     data = request.get_json()
     if not data:
-        return response_error("Invalid request, expecting JSON")
+        return response_error("无效请求, 需要JSON")
 
     user = get_user(cur_id)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     if not isinstance(data.get('access_level'), int):
         try:
             data['access_level'] = int(data.get('access_level'))
         except:
-            return response_error("Expecting access_level as int")
+            return response_error("需要access_level为int")
 
     if not isinstance(data.get('cases_list'), list):
-        return response_error("Expecting cases_list as list")
+        return response_error("需要cases_list为list")
 
     user, logs = add_case_access_to_user(user, data.get('cases_list'), data.get('access_level'))
     if not user:
@@ -360,17 +360,17 @@ def manage_user_cac_delete_cases(cur_id,  caseid):
 
     user = get_user(cur_id)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     data = request.get_json()
     if not data:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     if not isinstance(data.get('cases'), list):
-        return response_error("Expecting cases as list")
+        return response_error("需要cases为list")
 
     try:
 
@@ -388,7 +388,7 @@ def manage_user_cac_delete_cases(cur_id,  caseid):
 
         user = get_user_details(cur_id)
 
-        return response_success(msg="User case access updated", data=user)
+        return response_success(msg="用户案例访问已更新", data=user)
 
     return response_error(msg=logs)
 
@@ -399,17 +399,17 @@ def manage_user_cac_delete_case(cur_id,  caseid):
 
     user = get_user(cur_id)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     data = request.get_json()
     if not data:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     if not isinstance(data.get('case'), int):
-        return response_error("Expecting cases as int")
+        return response_error("需要cases为int")
 
     try:
 
@@ -427,7 +427,7 @@ def manage_user_cac_delete_case(cur_id,  caseid):
 
         user = get_user_details(cur_id)
 
-        return response_success(msg="User case access updated", data=user)
+        return response_success(msg="用户案例访问已更新", data=user)
 
     return response_error(msg=logs)
 
@@ -439,7 +439,7 @@ def update_user_api(cur_id, caseid):
     try:
         user = get_user(cur_id)
         if not user:
-            return response_error("Invalid user ID for this case")
+            return response_error("对于此案例用户ID无效")
 
         if protect_demo_mode_user(user):
             return ac_api_return_access_denied(caseid=caseid)
@@ -455,12 +455,12 @@ def update_user_api(cur_id, caseid):
 
         if cuser:
             track_activity("updated user {}".format(user.user), caseid=caseid, ctx_less=True)
-            return response_success("User updated", data=user_schema.dump(user))
+            return response_success("用户已更新", data=user_schema.dump(user))
 
-        return response_error("Unable to update user for internal reasons")
+        return response_error("由于内部原因无法更新用户")
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @manage_users_blueprint.route('/manage/users/deactivate/<int:cur_id>', methods=['GET'])
@@ -469,20 +469,20 @@ def deactivate_user_api(cur_id, caseid):
 
     user = get_user(cur_id)
     if not user:
-        return response_error("Invalid user ID for this case")
+        return response_error("对于此案例用户ID无效")
 
     if protect_demo_mode_user(user):
         return ac_api_return_access_denied(caseid=caseid)
 
     if current_user.id == cur_id:
-        return response_error('We do not recommend deactivating yourself for obvious reasons')
+        return response_error('出于显而易见的原因，我们不建议您停用您自己')
 
     user.active = False
     db.session.commit()
     user_schema = UserSchema()
 
     track_activity(f"user {user.user} deactivated", caseid=caseid,  ctx_less=True)
-    return response_success("User deactivated", data=user_schema.dump(user))
+    return response_success("用户已禁用", data=user_schema.dump(user))
 
 
 @manage_users_blueprint.route('/manage/users/activate/<int:cur_id>', methods=['GET'])
@@ -491,7 +491,7 @@ def activate_user_api(cur_id, caseid):
 
     user = get_user(cur_id)
     if not user:
-        return response_error("Invalid user ID for this case")
+        return response_error("对于此案例用户ID无效")
 
     if protect_demo_mode_user(user):
         return ac_api_return_access_denied(caseid=caseid)
@@ -501,7 +501,7 @@ def activate_user_api(cur_id, caseid):
     user_schema = UserSchema()
 
     track_activity(f"user {user.user} activated", caseid=caseid, ctx_less=True)
-    return response_success("User activated", data=user_schema.dump(user))
+    return response_success("用户已激活", data=user_schema.dump(user))
 
 
 @manage_users_blueprint.route('/manage/users/renew-api-key/<int:cur_id>', methods=['POST'])
@@ -510,7 +510,7 @@ def renew_user_api_key(cur_id, caseid):
 
     user = get_user(cur_id)
     if not user:
-        return response_error("Invalid user ID for this case")
+        return response_error("对于此案例用户ID无效")
 
     if protect_demo_mode_user(user):
         return ac_api_return_access_denied(caseid=caseid)
@@ -521,7 +521,7 @@ def renew_user_api_key(cur_id, caseid):
     user_schema = UserFullSchema()
 
     track_activity(f"API key of user {user.user} renewed", caseid=caseid, ctx_less=True)
-    return response_success(f"API key of user {user.user} renewed", data=user_schema.dump(user))
+    return response_success(f"用户{user.user}的API密钥已更新", data=user_schema.dump(user))
 
 
 if is_authentication_local() or (not is_authentication_local()):
@@ -533,7 +533,7 @@ if is_authentication_local() or (not is_authentication_local()):
 
             user = get_user(cur_id)
             if not user:
-                return response_error("Invalid user ID")
+                return response_error("无效用户ID")
 
             if protect_demo_mode_user(user):
                 return ac_api_return_access_denied(caseid=caseid)
@@ -560,7 +560,7 @@ def exists_user_restricted(cur_id, caseid):
 
     user = get_user(cur_id)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     output = {
         "user_login": user.user,
@@ -576,7 +576,7 @@ def exists_user_restricted(cur_id, caseid):
 def lookup_name_restricted(login, caseid):
     user = get_user_by_username(login)
     if not user:
-        return response_error("Invalid login")
+        return response_error("无效登录")
 
     output = {
         "user_login": user.user,
