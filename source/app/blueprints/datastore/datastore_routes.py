@@ -85,13 +85,13 @@ def datastore_list_filter(caseid):
     except Exception as e:
         logger.error('Error parsing filter: {}'.format(query_filter))
         logger.error(e)
-        return response_error('Invalid query')
+        return response_error('无效查询')
 
     data, log = datastore_filter_tree(filter_d, caseid)
     if data is None:
         logger.error('Error parsing filter: {}'.format(query_filter))
         logger.error(log)
-        return response_error('Invalid query')
+        return response_error('无效查询')
 
     return response_success("", data=data)
 
@@ -105,7 +105,7 @@ def datastore_add_file_modal(cur_id: int, caseid: int, url_redir: bool):
 
     dsp = datastore_get_path_node(cur_id, caseid)
     if not dsp:
-        return response_error('Invalid path node for this case')
+        return response_error('对于此案例路径节点无效')
 
     form = ModalDSFileForm()
 
@@ -121,7 +121,7 @@ def datastore_add_multi_files_modal(cur_id: int, caseid: int, url_redir: bool):
 
     dsp = datastore_get_path_node(cur_id, caseid)
     if not dsp:
-        return response_error('Invalid path node for this case')
+        return response_error('对于此案例路径节点无效')
 
     form = ModalDSFileForm()
 
@@ -146,7 +146,7 @@ def datastore_update_file_modal(cur_id: int, caseid: int, url_redir: bool):
 
     file = datastore_get_file(cur_id, caseid)
     if not file:
-        return response_error('Invalid file ID for this case')
+        return response_error('对于此案例文件ID无效')
 
     dsp = datastore_get_path_node(file.file_parent_id, caseid)
 
@@ -170,7 +170,7 @@ def datastore_info_file_modal(cur_id: int, caseid: int, url_redir: bool):
 
     file = datastore_get_file(cur_id, caseid)
     if not file:
-        return response_error('Invalid file ID for this case')
+        return response_error('对于此案例文件ID无效')
 
     dsp = datastore_get_path_node(file.file_parent_id, caseid)
 
@@ -183,7 +183,7 @@ def datastore_info_file(cur_id: int, caseid: int):
 
     file = datastore_get_file(cur_id, caseid)
     if not file:
-        return response_error('Invalid file ID for this case')
+        return response_error('对于此案例文件ID无效')
 
     file_schema = DSFileSchema()
     file = file_schema.dump(file)
@@ -198,7 +198,7 @@ def datastore_update_file(cur_id: int, caseid: int):
 
     dsf = datastore_get_file(cur_id, caseid)
     if not dsf:
-        return response_error('Invalid file ID for this case')
+        return response_error('对于此案例文件ID无效')
 
     dsf_schema = DSFileSchema()
     try:
@@ -227,17 +227,17 @@ def datastore_update_file(cur_id: int, caseid: int):
         msg_added_as = ''
         if dsf.file_is_ioc:
             datastore_add_file_as_ioc(dsf, caseid)
-            msg_added_as += 'and added in IOC'
+            msg_added_as += '并且添加在IOC'
 
         if dsf.file_is_evidence:
             datastore_add_file_as_evidence(dsf, caseid)
-            msg_added_as += ' and evidence' if len(msg_added_as) > 0 else 'and added in evidence'
+            msg_added_as += ' 和证据' if len(msg_added_as) > 0 else '已添加到证据'
 
         track_activity(f'File \"{dsf.file_original_name}\" updated in DS', caseid=caseid)
-        return response_success('File updated in datastore', data=dsf_schema.dump(dsf_sc))
+        return response_success('数据存储中文件已更新', data=dsf_schema.dump(dsf_sc))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages)
+        return response_error(msg="数据错误", data=e.messages)
 
 
 @datastore_blueprint.route('/datastore/file/move/<int:cur_id>', methods=['POST'])
@@ -245,21 +245,21 @@ def datastore_update_file(cur_id: int, caseid: int):
 def datastore_move_file(cur_id: int, caseid: int):
 
     if not request.json:
-        return response_error("Invalid data")
+        return response_error("无效数据")
 
     dsf = datastore_get_file(cur_id, caseid)
     if not dsf:
-        return response_error('Invalid file ID for this case')
+        return response_error('对于此案例文件ID无效')
 
     dsp = datastore_get_path_node(request.json.get('destination-node'), caseid)
     if not dsp:
-        return response_error('Invalid destination node ID for this case')
+        return response_error('对于此案例目的节点ID无效')
 
     dsf.file_parent_id = dsp.path_id
     db.session.commit()
 
     track_activity(f'File \"{dsf.file_original_name}\" moved to \"{dsp.path_name}\" in DS', caseid=caseid)
-    return response_success(f"File successfully moved to {dsp.path_name}")
+    return response_success(f"文件已移动到{dsp.path_name}")
 
 
 @datastore_blueprint.route('/datastore/folder/move/<int:cur_id>', methods=['POST'])
@@ -267,25 +267,25 @@ def datastore_move_file(cur_id: int, caseid: int):
 def datastore_move_folder(cur_id: int, caseid: int):
 
     if not request.json:
-        return response_error("Invalid data")
+        return response_error("无效数据")
 
     dsp = datastore_get_path_node(cur_id, caseid)
     if not dsp:
-        return response_error('Invalid file ID for this case')
+        return response_error('对于此案例文件ID无效')
 
     dsp_dst = datastore_get_path_node(request.json.get('destination-node'), caseid)
     if not dsp_dst:
-        return response_error('Invalid destination node ID for this case')
+        return response_error('对于此案例目的节点ID无效')
 
     if dsp.path_id == dsp_dst.path_id:
-        return response_error("If that's true, then I've made a mistake, and you should kill me now.")
+        return response_error("好像出问题了")
 
     dsp.path_parent_id = dsp_dst.path_id
     db.session.commit()
 
     dsf_folder_schema = DSPathSchema()
 
-    msg = f"Folder \"{dsp.path_name}\" successfully moved to \"{dsp_dst.path_name}\""
+    msg = f"文件夹 \"{dsp.path_name}\" 成功移动到 \"{dsp_dst.path_name}\""
     track_activity(msg, caseid=caseid)
     return response_success(msg, data=dsf_folder_schema.dump(dsp))
 
@@ -295,7 +295,7 @@ def datastore_move_folder(cur_id: int, caseid: int):
 def datastore_view_file(cur_id: int, caseid: int):
     has_error, dsf = datastore_get_local_file_path(cur_id, caseid)
     if has_error:
-        return response_error('Unable to get requested file ID', data=dsf)
+        return response_error('无法获取请求文件ID', data=dsf)
 
     if dsf.file_is_ioc or dsf.file_password:
         destination_name = dsf.file_original_name + ".zip"
@@ -303,8 +303,8 @@ def datastore_view_file(cur_id: int, caseid: int):
         destination_name = dsf.file_original_name
 
     if not Path(dsf.file_local_name).is_file():
-        return response_error(f'File {dsf.file_local_name} does not exists on the server. '
-                              f'Update or delete virtual entry')
+        return response_error(f'文件 {dsf.file_local_name} 在服务器上不存在. '
+                              f'更新或删除虚拟项')
 
     resp = send_file(dsf.file_local_name, as_attachment=True,
                      download_name=destination_name)
@@ -319,7 +319,7 @@ def datastore_add_file(cur_id: int, caseid: int):
 
     dsp = datastore_get_path_node(cur_id, caseid)
     if not dsp:
-        return response_error('Invalid path node for this case')
+        return response_error('对于此案例路径节点无效')
 
     dsf_schema = DSFileSchema()
     try:
@@ -358,10 +358,10 @@ def datastore_add_file(cur_id: int, caseid: int):
             msg_added_as += ' and evidence' if len(msg_added_as) > 0 else 'and added in evidence'
 
         track_activity(f"File \"{dsf_sc.file_original_name}\" added to DS", caseid=caseid)
-        return response_success(f'File saved in datastore {msg_added_as}', data=dsf_schema.dump(dsf_sc))
+        return response_success(f'文件已保存在数据存储 {msg_added_as}', data=dsf_schema.dump(dsf_sc))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages)
+        return response_error(msg="数据错误", data=e.messages)
 
 
 @datastore_blueprint.route('/datastore/file/add-interactive', methods=['POST'])
@@ -370,7 +370,7 @@ def datastore_add_interactive_file(caseid: int):
 
     dsp = datastore_get_interactive_path_node(caseid)
     if not dsp:
-        return response_error('Invalid path node for this case')
+        return response_error('对于此案例路径节点无效')
 
     dsf_schema = DSFileSchema()
     try:
@@ -385,16 +385,16 @@ def datastore_add_interactive_file(caseid: int):
         dsf_sc, existed = dsf_schema.ds_store_file_b64(filename, file_content, dsp, caseid)
 
         if not existed:
-            msg = "File saved in datastore"
+            msg = "文件已保存在数据存储"
 
         else:
-            msg = "File already existing in datastore. Using it."
+            msg = "文件已存在于数据存储.使用它."
 
         track_activity(f"File \"{dsf_sc.file_original_name}\" added to DS", caseid=caseid)
         return response_success(msg, data={"file_url": f"/datastore/file/view/{dsf_sc.file_id}"})
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages)
+        return response_error(msg="数据错误", data=e.messages)
 
 
 @datastore_blueprint.route('/datastore/folder/add', methods=['POST'])
@@ -402,13 +402,13 @@ def datastore_add_interactive_file(caseid: int):
 def datastore_add_folder(caseid: int):
     data = request.json
     if not data:
-        return response_error('Invalid data')
+        return response_error('无效数据')
 
     parent_node = data.get('parent_node')
     folder_name = data.get('folder_name')
 
     if not parent_node or not folder_name:
-        return response_error('Invalid data')
+        return response_error('无效数据')
 
     has_error, logs, node = datastore_add_child_node(parent_node, folder_name, caseid)
     dsf_folder_schema = DSPathSchema()
@@ -425,16 +425,16 @@ def datastore_add_folder(caseid: int):
 def datastore_rename_folder(cur_id: int, caseid: int):
     data = request.json
     if not data:
-        return response_error('Invalid data')
+        return response_error('无效数据')
 
     parent_node = data.get('parent_node')
     folder_name = data.get('folder_name')
 
     if not parent_node or not folder_name:
-        return response_error('Invalid data')
+        return response_error('无效数据')
 
     if int(parent_node) != cur_id:
-        return response_error('Invalid data')
+        return response_error('无效数据')
 
     has_error, logs, dsp_base = datastore_rename_node(parent_node, folder_name, caseid)
     dsf_folder_schema = DSPathSchema()
