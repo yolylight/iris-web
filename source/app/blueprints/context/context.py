@@ -61,7 +61,7 @@ def set_ctx():
 
     update_user_case_ctx()
 
-    return response_success(msg="Saved")
+    return response_success(msg="已保存")
 
 
 @app.context_processor
