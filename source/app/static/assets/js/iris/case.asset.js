@@ -529,11 +529,11 @@ $(document).ready(function(){
     var buttons = new $.fn.dataTable.Buttons(Table, {
      buttons: [
         { "extend": 'csvHtml5', "text":'<i class="fas fa-cloud-download-alt"></i>',"className": 'btn btn-link text-white'
-        , "titleAttr": 'Download as CSV', "exportOptions": { "columns": ':visible', 'orthogonal':  'export' } } ,
+        , "titleAttr": '下载CSV', "exportOptions": { "columns": ':visible', 'orthogonal':  'export' } } ,
         { "extend": 'copyHtml5', "text":'<i class="fas fa-copy"></i>',"className": 'btn btn-link text-white'
-        , "titleAttr": 'Copy', "exportOptions": { "columns": ':visible', 'orthogonal':  'export' } },
+        , "titleAttr": '复制', "exportOptions": { "columns": ':visible', 'orthogonal':  'export' } },
         { "extend": 'colvis', "text":'<i class="fas fa-eye-slash"></i>',"className": 'btn btn-link text-white'
-        , "titleAttr": 'Toggle columns' }
+        , "titleAttr": '切换列' }
     ]
     }).container().appendTo($('#tables_button'));
 
