@@ -214,9 +214,9 @@ function remove_case_access_from_user(user_id, case_id, on_finish) {
 }
 
 var access_levels = [
-    { "id": 1, "name": "Deny all" },
-    { "id": 2, "name": "Read only" },
-    { "id": 4, "name": "Full access" }
+    { "id": 1, "name": "禁止所有" },
+    { "id": 2, "name": "只读" },
+    { "id": 4, "name": "完全访问" }
 ]
 
 function get_access_level_options(data) {
