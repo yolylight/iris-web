@@ -229,17 +229,17 @@ def get_reviews(caseid):
 def utask_statusupdate(caseid):
     jsdata = request.get_json()
     if not jsdata:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     jsdata = request.get_json()
     if not jsdata:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     case_id = jsdata.get('case_id') if jsdata.get('case_id') else caseid
     task_id = jsdata.get('task_id')
     task = CaseTasks.query.filter(CaseTasks.id == task_id, CaseTasks.task_case_id == case_id).first()
     if not task:
-        return response_error(f"Invalid case task ID {task_id} for case {case_id}")
+        return response_error(f" 案例{case_id}的案例任务ID{task_id}无效")
 
     status_id = jsdata.get('task_status_id')
     status = TaskStatus.query.filter(TaskStatus.id == status_id).first()
@@ -252,7 +252,7 @@ def utask_statusupdate(caseid):
         db.session.commit()
 
     except Exception as e:
-        return response_error(f"Unable to update task. Error {e}")
+        return response_error(f"无法更新任务. 错误 {e}")
 
     task_schema = CaseTaskSchema()
     return response_success("Updated", data=task_schema.dump(task))
@@ -284,7 +284,7 @@ def add_gtask(caseid):
         gtask = gtask_schema.load(request_data)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
     gtask.task_userid_update = current_user.id
     gtask.task_open_date = datetime.utcnow()
@@ -297,12 +297,12 @@ def add_gtask(caseid):
         db.session.commit()
 
     except Exception as e:
-        return response_error(msg="Data error", data=e.__str__(), status=400)
+        return response_error(msg="数据错误", data=e.__str__(), status=400)
 
     gtask = call_modules_hook('on_postload_global_task_create', data=gtask, caseid=caseid)
     track_activity("created new global task \'{}\'".format(gtask.task_title), caseid=caseid)
 
-    return response_success('Task added', data=gtask_schema.dump(gtask))
+    return response_success('任务已添加', data=gtask_schema.dump(gtask))
 
 
 @dashboard_blueprint.route('/global/tasks/update/<int:cur_id>/modal', methods=['GET'])
@@ -333,7 +333,7 @@ def edit_gtask(cur_id, caseid):
     form.task_status_id.choices = [(a.id, a.status_name) for a in get_tasks_status()]
 
     if not task:
-        return response_error(msg="Data error", data="Invalid task ID", status=400)
+        return response_error(msg="数据错误", data="Invalid task ID", status=400)
 
     try:
         gtask_schema = GlobalTasksSchema()
@@ -350,11 +350,11 @@ def edit_gtask(cur_id, caseid):
         gtask = call_modules_hook('on_postload_global_task_update', data=gtask, caseid=caseid)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
     track_activity("updated global task {} (status {})".format(task.task_title, task.task_status_id), caseid=caseid)
 
-    return response_success('Task updated', data=gtask_schema.dump(gtask))
+    return response_success('任务已更新', data=gtask_schema.dump(gtask))
 
 
 @dashboard_blueprint.route('/global/tasks/delete/<int:cur_id>', methods=['POST'])
@@ -364,11 +364,11 @@ def gtask_delete(cur_id, caseid):
     call_modules_hook('on_preload_global_task_delete', data=cur_id, caseid=caseid)
 
     if not cur_id:
-        return response_error("Missing parameter")
+        return response_error("缺少参数")
 
     data = GlobalTasks.query.filter(GlobalTasks.id == cur_id).first()
     if not data:
-        return response_error("Invalid global task ID")
+        return response_error("全局任务ID无效")
 
     GlobalTasks.query.filter(GlobalTasks.id == cur_id).delete()
     db.session.commit()
@@ -376,4 +376,4 @@ def gtask_delete(cur_id, caseid):
     call_modules_hook('on_postload_global_task_delete', data=request.get_json(), caseid=caseid)
     track_activity("deleted global task ID {}".format(cur_id), caseid=caseid)
 
-    return response_success("Task deleted")
+    return response_success("任务已删除")
