@@ -145,9 +145,9 @@ function propagate_form_api_errors(data_error) {
 
 function ajax_notify_error(jqXHR, url) {
     if (jqXHR.status == 403) {
-        message = 'Permission denied';
+        message = '访问拒绝';
     } else {
-        message = `We got error ${jqXHR.status} - ${jqXHR.statusText} requesting ${url}`;
+        message = `遇到错误 ${jqXHR.status} - ${jqXHR.statusText} 请求 ${url}`;
     }
     notify_error(message);
 }
@@ -230,14 +230,14 @@ function notify_auto_api(data, silent_success, silent_failure) {
     if (data.status === 'success') {
         if (silent_success === undefined || silent_success === false) {
             if (data.message.length === 0) {
-                data.message = 'Operation succeeded';
+                data.message = '操作成功';
             }
             notify_success(data.message);
         }
         return true;
     } else {
         if (data.message.length === 0) {
-            data.message = 'Operation failed';
+            data.message = '操作失败';
         }
         if (silent_failure === undefined || silent_failure === false) {
             notify_error(data.message);
@@ -623,7 +623,7 @@ function copy_object_link_md(data_type, node_id){
 
 function copy_text_clipboardb(data){
     navigator.clipboard.writeText(fromBinary64(data)).then(function() {
-        notify_success('Copied!');
+        notify_success('已复制!');
     }, function(err) {
         notify_error('无法复制链接.已打印到console');
         console.error(err);
@@ -632,7 +632,7 @@ function copy_text_clipboardb(data){
 
 function copy_text_clipboard(data){
     navigator.clipboard.writeText(data).then(function() {
-        notify_success('Copied!');
+        notify_success('已复制!');
     }, function(err) {
         notify_error('无法复制链接.已打印到console');
         console.error(err);
