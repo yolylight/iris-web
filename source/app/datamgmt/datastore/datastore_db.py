@@ -181,10 +181,10 @@ def datastore_add_child_node(parent_node, folder_name, cid):
         ).first()
 
     except Exception as e:
-        return True, f'Unable to request datastore for parent node : {parent_node}', None
+        return True, f'无法请求父节点的数据存储 : {parent_node}', None
 
     if dsp_base is None:
-        return True, 'Parent node is invalid for this case', None
+        return True, '父节点对该案例无效', None
 
     dsp = DataStorePath()
     dsp.path_case_id = cid
@@ -195,7 +195,7 @@ def datastore_add_child_node(parent_node, folder_name, cid):
     db.session.add(dsp)
     db.session.commit()
 
-    return False, 'Folder added', dsp
+    return False, '文件夹已添加', dsp
 
 
 def datastore_rename_node(parent_node, folder_name, cid):
@@ -215,7 +215,7 @@ def datastore_rename_node(parent_node, folder_name, cid):
     dsp_base.path_name = folder_name
     db.session.commit()
 
-    return False, 'Folder renamed', dsp_base
+    return False, '文件已重命名', dsp_base
 
 
 def datastore_delete_node(node_id, cid):
@@ -227,14 +227,14 @@ def datastore_delete_node(node_id, cid):
         ).first()
 
     except Exception as e:
-        return True, f'Unable to request datastore for parent node : {node_id}'
+        return True, f'无法请求父节点的数据存储 : {node_id}'
 
     if dsp_base is None:
-        return True, 'Parent node is invalid for this case'
+        return True, '父节点对该案例无效'
 
     datastore_iter_deletion(dsp_base, cid)
 
-    return False, 'Folder and children deleted'
+    return False, '文件夹和子文件夹已删除'
 
 
 def datastore_iter_deletion(dsp, cid):
@@ -335,7 +335,7 @@ def datastore_delete_file(cur_id, cid):
     ).first()
 
     if dsf is None:
-        return True, 'Invalid DS file ID for this case'
+        return True, '此案例的DS 文件 ID 无效'
 
     fln = Path(dsf.file_local_name)
     if fln.is_file():
@@ -344,7 +344,7 @@ def datastore_delete_file(cur_id, cid):
     db.session.delete(dsf)
     db.session.commit()
 
-    return False, f'File {cur_id} deleted'
+    return False, f'文件 {cur_id} 已删除'
 
 
 def datastore_add_file_as_ioc(dsf, caseid):
@@ -363,7 +363,7 @@ def datastore_add_file_as_ioc(dsf, caseid):
     if ioc is None:
         ioc = Ioc()
         ioc.ioc_value = dsf.file_sha256
-        ioc.ioc_description = f"SHA256 of {dsf.file_original_name}. Imported from datastore."
+        ioc.ioc_description = f"{dsf.file_original_name}的SHA256. 从数据存储导入."
         ioc.ioc_type_id = ioc_type_id.type_id
         ioc.ioc_tlp_id = ioc_tlp_id.tlp_id
         ioc.ioc_tags = "datastore"
@@ -385,7 +385,7 @@ def datastore_add_file_as_evidence(dsf, caseid):
     if crf is None:
         crf = CaseReceivedFile()
         crf.file_hash = dsf.file_sha256
-        crf.file_description = f"Imported from datastore. {dsf.file_description}"
+        crf.file_description = f"从数据源导入. {dsf.file_description}"
         crf.case_id = caseid
         crf.date_added = datetime.datetime.now()
         crf.filename = dsf.file_original_name
@@ -405,7 +405,7 @@ def datastore_get_local_file_path(file_id, caseid):
     ).first()
 
     if dsf is None:
-        return True, 'Invalid DS file ID for this case'
+        return True, '此案例的DS文件ID无效'
 
     return False, dsf
 
