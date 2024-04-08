@@ -119,7 +119,7 @@ def case_comment_modal(cur_id, caseid, url_redir):
 
     event = get_case_event(cur_id, caseid=caseid)
     if not event:
-        return response_error('Invalid event ID')
+        return response_error('无效事件ID')
 
     return render_template("modal_conversation.html", element_id=cur_id, element_type='timeline/events',
                            title=event.event_title)
@@ -130,7 +130,7 @@ def case_comment_modal(cur_id, caseid, url_redir):
 def case_comments_get(cur_id, caseid):
     event_comments = get_case_event_comments(cur_id, caseid=caseid)
     if event_comments is None:
-        return response_error('Invalid event ID')
+        return response_error('无效事件ID')
 
     return response_success(data=CommentSchema(many=True).dump(event_comments))
 
@@ -153,7 +153,7 @@ def case_comment_delete(cur_id, com_id, caseid):
 def case_comment_get(cur_id, com_id, caseid):
     comment = get_case_event_comment(cur_id, com_id, caseid=caseid)
     if not comment:
-        return response_error("Invalid comment ID")
+        return response_error("无效评论ID")
 
     return response_success(data=comment._asdict())
 
@@ -170,7 +170,7 @@ def case_comment_add(cur_id, caseid):
     try:
         event = get_case_event(event_id=cur_id, caseid=caseid)
         if not event:
-            return response_error('Invalid event ID')
+            return response_error('无效事件ID')
 
         comment_schema = CommentSchema()
 
@@ -195,10 +195,10 @@ def case_comment_add(cur_id, caseid):
         call_modules_hook('on_postload_event_commented', data=hook_data, caseid=caseid)
 
         track_activity(f"event \"{event.event_title}\" commented", caseid=caseid)
-        return response_success("Event commented", data=comment_schema.dump(comment))
+        return response_success("已评论", data=comment_schema.dump(comment))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.normalized_messages(), status=400)
+        return response_error(msg="数据错误", data=e.normalized_messages(), status=400)
 
 
 @case_timeline_blueprint.route('/case/timeline/state', methods=['GET'])
@@ -208,7 +208,7 @@ def case_get_timeline_state(caseid):
     if os:
         return response_success(data=os)
     else:
-        return response_error('No timeline state for this case. Add an event to begin')
+        return response_error('此案例没有时间线状态。添加事件以开始')
 
 
 @case_timeline_blueprint.route('/case/timeline/visualize/data/by-asset', methods=['GET'])
@@ -267,7 +267,7 @@ def case_getgraph(caseid):
         tmp = {}
 
         tmp['date'] = row.event_date
-        tmp['group'] = row.category[0].name if row.category else 'Uncategorized'
+        tmp['group'] = row.category[0].name if row.category else '未分类'
         tmp['content'] = row.event_title
         if row.event_content:
             content = row.event_content.replace('\n', '<br/>')
@@ -392,7 +392,7 @@ def case_filter_timeline(caseid):
         filter_d = dict(json.loads(urllib.parse.unquote_plus(query_filter)))
 
     except Exception as e:
-        return response_error('Invalid query string')
+        return response_error('查询字符串无效')
 
     assets = filter_d.get('asset')
     assets_id = filter_d.get('asset_id')
@@ -479,7 +479,7 @@ def case_filter_timeline(caseid):
         try:
             event_ids = [int(event_id) for event_id in event_ids]
         except Exception as e:
-            return response_error('Invalid event id')
+            return response_error('无效事件ID')
 
         condition = and_(condition,
                          CasesEvent.event_id.in_(event_ids))
@@ -677,7 +677,7 @@ def case_delete_event(cur_id, caseid):
 
     event = get_case_event(event_id=cur_id, caseid=caseid)
     if not event:
-        return response_error('Not a valid event ID for this case')
+        return response_error('对于此案例不是有效事件ID')
 
     delete_event(event=event, caseid=caseid)
 
@@ -687,7 +687,7 @@ def case_delete_event(cur_id, caseid):
 
     track_activity(f"deleted event \"{event.event_title}\" in timeline", caseid)
 
-    return response_success('Event ID {} deleted'.format(cur_id))
+    return response_success('事件ID {} 已删除'.format(cur_id))
 
 
 @case_timeline_blueprint.route('/case/timeline/events/flag/<int:cur_id>', methods=['GET'])
@@ -695,14 +695,14 @@ def case_delete_event(cur_id, caseid):
 def event_flag(cur_id, caseid):
     event = get_case_event(cur_id, caseid)
     if not event:
-        return response_error("Invalid event ID for this case")
+        return response_error("对于此案例不是有效事件ID")
 
     event.event_is_flagged = not event.event_is_flagged
     db.session.commit()
 
     collab_notify(caseid, 'events', 'flagged' if event.event_is_flagged else "un-flagged", cur_id)
 
-    return response_success("Event flagged" if event.event_is_flagged else "Event unflagged", data=event)
+    return response_success("事件已标记" if event.event_is_flagged else "Event unflagged", data=event)
 
 
 @case_timeline_blueprint.route('/case/timeline/events/<int:cur_id>', methods=['GET'])
@@ -710,7 +710,7 @@ def event_flag(cur_id, caseid):
 def event_view(cur_id, caseid):
     event = get_case_event(cur_id, caseid)
     if not event:
-        return response_error("Invalid event ID for this case")
+        return response_error("对于此案例不是有效事件ID")
 
     event_schema = EventSchema()
 
@@ -734,7 +734,7 @@ def event_view_modal(cur_id, caseid, url_redir):
 
     event = get_case_event(cur_id, caseid)
     if not event:
-        return response_error("Invalid event ID for this case")
+        return response_error("对于此案例不是有效事件ID")
 
     form = CaseEventForm()
     form.event_title.render_kw = {'value': event.event_title}
@@ -768,7 +768,7 @@ def case_edit_event(cur_id, caseid):
     try:
         event = get_case_event(cur_id, caseid)
         if not event:
-            return response_error("Invalid event ID for this case")
+            return response_error("对于此案例不是有效事件ID")
 
         event_schema = EventSchema()
 
@@ -798,13 +798,13 @@ def case_edit_event(cur_id, caseid):
                                            iocs_list=request_data.get('event_iocs'),
                                            sync_iocs_assets=request_data.get('event_sync_iocs_assets'))
         if not success:
-            return response_error('Error while saving linked assets', data=log)
+            return response_error('保存链接资产出错', data=log)
 
         success, log = update_event_iocs(event_id=event.event_id,
                                          caseid=caseid,
                                          iocs_list=request_data.get('event_iocs'))
         if not success:
-            return response_error('Error while saving linked iocs', data=log)
+            return response_error('保存链接的iocs出错', data=log)
 
         event = call_modules_hook('on_postload_event_update', data=event, caseid=caseid)
 
@@ -816,10 +816,10 @@ def case_edit_event(cur_id, caseid):
                       object_id=cur_id,
                       object_data=event_dump)
 
-        return response_success("Event updated", data=event_dump)
+        return response_success("事件已更新", data=event_dump)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.normalized_messages(), status=400)
+        return response_error(msg="数据错误", data=e.normalized_messages(), status=400)
 
 
 @case_timeline_blueprint.route('/case/timeline/events/add/modal', methods=['GET'])
@@ -884,23 +884,23 @@ def case_add_event(caseid):
                                            iocs_list=request_data.get('event_iocs'),
                                            sync_iocs_assets=sync_iocs_assets)
         if not success:
-            return response_error('Error while saving linked assets', data=log)
+            return response_error('保存链接资产出错', data=log)
 
         success, log = update_event_iocs(event_id=event.event_id,
                                          caseid=caseid,
                                          iocs_list=request_data.get('event_iocs'))
         if not success:
-            return response_error('Error while saving linked iocs', data=log)
+            return response_error('保存链接ioc出错', data=log)
 
         setattr(event, 'event_category_id', request_data.get('event_category_id'))
 
         event = call_modules_hook('on_postload_event_create', data=event, caseid=caseid)
 
         track_activity(f"added event \"{event.event_title}\"", caseid=caseid)
-        return response_success("Event added", data=event_schema.dump(event))
+        return response_success("事件已添加", data=event_schema.dump(event))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.normalized_messages(), status=400)
+        return response_error(msg="数据错误", data=e.normalized_messages(), status=400)
 
 
 @case_timeline_blueprint.route('/case/timeline/events/duplicate/<int:cur_id>', methods=['GET'])
@@ -912,7 +912,7 @@ def case_duplicate_event(cur_id, caseid):
         event_schema = EventSchema()
         old_event = get_case_event(event_id=cur_id, caseid=caseid)
         if not old_event:
-            return response_error("Invalid event ID for this case")
+            return response_error("对于此案例不是有效事件ID")
 
         # Create new Event
         event = CasesEvent()
@@ -948,22 +948,22 @@ def case_duplicate_event(cur_id, caseid):
                                            iocs_list=iocs_list,
                                            sync_iocs_assets=False)
         if not success:
-            return response_error('Error while saving linked assets', data=log)
+            return response_error('保存链接资产出错', data=log)
 
         # Update iocs mapping
         success, log = update_event_iocs(event_id=event.event_id,
                                          caseid=caseid,
                                          iocs_list=iocs_list)
         if not success:
-            return response_error('Error while saving linked iocs', data=log)
+            return response_error('保存链接ioc出错', data=log)
 
         event = call_modules_hook('on_postload_event_create', data=event, caseid=caseid)
 
         track_activity(f"added event \"{event.event_title}\"", caseid=caseid)
-        return response_success("Event duplicated", data=event_schema.dump(event))
+        return response_success("事件重复", data=event_schema.dump(event))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.normalized_messages(), status=400)
+        return response_error(msg="数据错误", data=e.normalized_messages(), status=400)
 
 
 @case_timeline_blueprint.route('/case/timeline/events/convert-date', methods=['POST'])
@@ -973,7 +973,7 @@ def case_event_date_convert(caseid):
 
     date_value = jsdata.get('date_value')
     if not date_value:
-        return response_error("Invalid request")
+        return response_error("请求无效")
 
     parsed_date = parse_bf_date_format(date_value)
 
@@ -984,9 +984,9 @@ def case_event_date_convert(caseid):
             "time": parsed_date.strftime("%H:%M:%S.%f")[:-3],
             "tz": tz if tz else "+00:00"
         }
-        return response_success("Date parsed", data=data)
+        return response_success("日期已转换", data=data)
 
-    return response_error("Unable to find a matching date format")
+    return response_error("无法找到匹配的日期格式")
 
 
 # BEGIN_RS_CODE
@@ -1029,7 +1029,7 @@ def case_events_upload_csv(caseid):
 
     if len(missing_fields) > 0:
         csv_fields = list(row0.keys())
-        msg = f"Bad SCV Fields Mapping. Fields missing: [{','.join(missing_fields)}]"
+        msg = f"错误的 SCV 字段映射.字段丢失: [{','.join(missing_fields)}]"
         data = {"error_code": "BAD_FIELDS_MAPPING", "expected": ','.join(event_fields), "found": ','.join(csv_fields),
                 "missing": ','.join(missing_fields)}
         app.logger.warning(data)
@@ -1053,8 +1053,8 @@ def case_events_upload_csv(caseid):
             line += 1
 
             if len(event_title) == 0:
-                return response_error(msg=f"Data error",
-                                      data={"Error": f"Event Title can not be empty.\nrow number: {line}"}, status=400)
+                return response_error(msg=f"数据错误",
+                                      data={"Error": f"事件标题不能为空.\n行号: {line}"}, status=400)
 
             assets = []
             for asset_name in event_assets.split(";"):
@@ -1064,8 +1064,8 @@ def case_events_upload_csv(caseid):
                 if asset:
                     assets.append(asset.asset_id)
                 else:
-                    return response_error(msg=f"Data error", data={
-                        "Error": f"Asset not recognized : {asset_name}.\nrow number: {line}"})
+                    return response_error(msg=f"数据错误", data={
+                        "Error": f"资产无法识别 : {asset_name}.\n行号: {line}"})
 
             row['event_assets'] = assets
 
@@ -1077,8 +1077,8 @@ def case_events_upload_csv(caseid):
                 if ioc:
                     iocs.append(ioc.ioc_id)
                 else:
-                    return response_error(msg=f"Data error",
-                                          data={"Error": f"IoC not recognized : {ioc_value}.\nrow number: {line}"})
+                    return response_error(msg=f"数据错误",
+                                          data={"Error": f"IoC无法识别 : {ioc_value}.\n行号: {line}"})
             row['event_iocs'] = iocs
 
             if (event_category_name is not None) and (event_category_name != ''):
@@ -1086,8 +1086,8 @@ def case_events_upload_csv(caseid):
                 if event_category:
                     row['event_category_id'] = event_category.id
                 else:
-                    return response_error(msg=f"Data error", data={
-                        "Error": f"event_category not recognized : {event_category}.\nrow number: {line}"})
+                    return response_error(msg=f"数据错误", data={
+                        "Error": f"event_category无法识别 : {event_category}.\n行号: {line}"})
             else:
                 row['event_category_id'] = DEFAULT_CAT_ID
 
@@ -1100,7 +1100,7 @@ def case_events_upload_csv(caseid):
 
             csv_lines.append(row)
     except Exception as e:
-        return response_error(msg=f"Data error", data={"Exception": f"Unhandled error {e}.\nrow number: {line}"})
+        return response_error(msg=f"数据错误", data={"Exception": f"未处理错误 {e}.\n行号: {line}"})
 
     # ========================== begin saving data ============================
     session = db.session.begin_nested()
@@ -1134,13 +1134,13 @@ def case_events_upload_csv(caseid):
                                                iocs_list=request_data.get('event_iocs'),
                                                sync_iocs_assets=event_sync_iocs_assets)
             if not success:
-                raise Exception(f'Error while saving linked assets\nlog:{log}')
+                raise Exception(f'保存链接资产出错\nlog:{log}')
 
             success, log = update_event_iocs(event_id=event.event_id,
                                              caseid=caseid,
                                              iocs_list=request_data.get('event_iocs'))
             if not success:
-                raise Exception(f'Error while saving linked iocs\nlog:{log}')
+                raise Exception(f'保存链接ioc出错\nlog:{log}')
 
             setattr(event, 'event_category_id', request_data.get('event_category_id'))
 
@@ -1149,10 +1149,10 @@ def case_events_upload_csv(caseid):
             track_activity("added event {}".format(event.event_id), caseid=caseid)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.normalized_messages())
+        return response_error(msg="数据错误", data=e.normalized_messages())
 
     except Exception as e:
-        return response_error(msg=f"Data error", data={"Error": f"{e}"})
+        return response_error(msg=f"数据错误", data={"Error": f"{e}"})
 
     # db.session.commit()
     try:
@@ -1162,6 +1162,6 @@ def case_events_upload_csv(caseid):
 
     app.logger.info("======================== END_CSV_IMPORT ==========================================")
 
-    return response_success(msg="Events added (CSV File)")
+    return response_success(msg="事件已添加 (CSV 文件)")
 
 # END_RS_CODE
