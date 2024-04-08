@@ -81,7 +81,7 @@ def attributes_modal(cur_id, caseid, url_redir):
 
     attribute = CustomAttribute.query.filter(CustomAttribute.attribute_id == cur_id).first()
     if not attribute:
-        return response_error(f"Invalid Attribute ID {cur_id}")
+        return response_error(f"无效属性ID {cur_id}")
 
     form.attribute_content.data = attribute.attribute_content
 
@@ -96,16 +96,16 @@ def attributes_preview(caseid, url_redir):
 
     data = request.get_json()
     if not data:
-        return response_error(f"Invalid request")
+        return response_error(f"无效请求")
 
     attribute = data.get('attribute_content')
     if not attribute:
-        return response_error(f"Invalid request")
+        return response_error(f"无效请求")
 
     try:
         attribute = json.loads(attribute)
     except Exception as e:
-        return response_error("Invalid JSON", data=str(e))
+        return response_error("无效JSON", data=str(e))
 
     templated = render_template("modal_preview_attribute.html", attributes=attribute)
 
@@ -116,20 +116,20 @@ def attributes_preview(caseid, url_redir):
 @ac_api_requires(Permissions.server_administrator, no_cid_required=True)
 def update_attribute(cur_id, caseid):
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     attribute = CustomAttribute.query.filter(CustomAttribute.attribute_id == cur_id).first()
     if not attribute:
-        return response_error(f"Invalid Attribute ID {cur_id}")
+        return response_error(f"无效属性ID {cur_id}")
 
     data = request.get_json()
     attr_content = data.get('attribute_content')
     if not attr_content:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     attr_contents, logs = validate_attribute(attr_content)
     if len(logs) > 0:
-        return response_error("Found errors in attribute", data=logs)
+        return response_error("属性中出现错误", data=logs)
 
     previous_attribute = attribute.attribute_content
 
@@ -144,4 +144,4 @@ def update_attribute(cur_id, caseid):
     update_all_attributes(attribute.attribute_for, partial_overwrite=partial_overwrite,
                           complete_overwrite=complete_overwrite, previous_attribute=previous_attribute)
 
-    return response_success("Attribute updated")
+    return response_success("属性已更新")
