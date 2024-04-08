@@ -56,7 +56,7 @@ def get_ioc_type(cur_id, caseid):
 
     ioc_type = IocType.query.filter(IocType.type_id == cur_id).first()
     if not ioc_type:
-        return response_error("Invalid ioc type ID {type_id}".format(type_id=cur_id))
+        return response_error("无效ioc类型ID {type_id}".format(type_id=cur_id))
 
     return response_success("", data=ioc_type)
 
@@ -70,7 +70,7 @@ def view_ioc_modal(cur_id, caseid, url_redir):
     form = AddIocTypeForm()
     ioct = IocType.query.filter(IocType.type_id == cur_id).first()
     if not ioct:
-        return response_error("Invalid asset type ID")
+        return response_error("无效资产类型ID")
 
     form.type_name.render_kw = {'value': ioct.type_name}
     form.type_description.render_kw = {'value': ioct.type_description}
@@ -96,7 +96,7 @@ def add_ioc_modal(caseid, url_redir):
 @ac_api_requires(Permissions.server_administrator, no_cid_required=True)
 def add_ioc_type_api(caseid):
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     ioct_schema = IocTypeSchema()
 
@@ -111,7 +111,7 @@ def add_ioc_type_api(caseid):
 
     track_activity("Added ioc type {ioc_type_name}".format(ioc_type_name=ioct_sc.type_name), caseid=caseid, ctx_less=True)
     # Return the assets
-    return response_success("Added successfully", data=ioct_sc)
+    return response_success("添加成功", data=ioct_sc)
 
 
 @manage_ioc_type_blueprint.route('/manage/ioc-types/delete/<int:cur_id>', methods=['POST'])
@@ -124,28 +124,28 @@ def remove_ioc_type(cur_id, caseid):
 
     is_referenced = Ioc.query.filter(Ioc.ioc_type_id == cur_id).first()
     if is_referenced:
-        return response_error("Cannot delete a referenced ioc type. Please delete any ioc of this type first.")
+        return response_error("无法删除引用的 ioc 类型.请先删除该类型的任何 ioc.")
 
     if type_id:
         db.session.delete(type_id)
         track_activity("Deleted ioc type ID {type_id}".format(type_id=cur_id), caseid=caseid, ctx_less=True)
-        return response_success("Deleted ioc type ID {type_id}".format(type_id=cur_id))
+        return response_success("已删除ioc类型ID {type_id}".format(type_id=cur_id))
 
     track_activity("Attempted to delete ioc type ID {type_id}, but was not found".format(type_id=cur_id),
                     caseid=caseid, ctx_less=True)
 
-    return response_error("Attempted to delete ioc type ID {type_id}, but was not found".format(type_id=cur_id))
+    return response_error("尝试删除ioc类型ID {type_id}, 但没有找到".format(type_id=cur_id))
 
 
 @manage_ioc_type_blueprint.route('/manage/ioc-types/update/<int:cur_id>', methods=['POST'])
 @ac_api_requires(Permissions.server_administrator, no_cid_required=True)
 def update_ioc(cur_id, caseid):
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     ioc_type = IocType.query.filter(IocType.type_id == cur_id).first()
     if not ioc_type:
-        return response_error("Invalid ioc type ID {type_id}".format(type_id=cur_id))
+        return response_error("无效ioc类型ID {type_id}".format(type_id=cur_id))
 
     ioct_schema = IocTypeSchema()
 
@@ -155,12 +155,12 @@ def update_ioc(cur_id, caseid):
 
         if ioct_sc:
             track_activity("updated ioc type type {}".format(ioct_sc.type_name), caseid=caseid)
-            return response_success("IOC type updated", ioct_sc)
+            return response_success("IOC类型已更新", ioct_sc)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
-    return response_error("Unexpected error server-side. Nothing updated", data=ioc_type)
+    return response_error("服务器端出现意外错误.未更新", data=ioc_type)
 
 
 @manage_ioc_type_blueprint.route('/manage/ioc-types/search', methods=['POST'])
@@ -179,18 +179,18 @@ def search_ioc_type(caseid):
 
     """
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     ioc_type = request.json.get('ioc_type')
     if ioc_type is None:
-        return response_error("Invalid ioc type. Got None")
+        return response_error("无效ioc类型. 为None")
 
     exact_match = request.json.get('exact_match', False)
     
     # Search for IOC types with a name that contains the specified search term
     ioc_type = search_ioc_type_by_name(ioc_type, exact_match=exact_match)
     if not ioc_type:
-        return response_error("No ioc types found")
+        return response_error("未找到ioc类型")
     
     # Serialize the IOC types and return them in a JSON response
     ioct_schema = IocTypeSchema(many=True)
