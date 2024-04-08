@@ -104,7 +104,7 @@ def case_get_tasks_state(caseid):
     if os:
         return response_success(data=os)
     else:
-        return response_error('No tasks state for this case.')
+        return response_error(此案例无任务状态.')
 
 
 @case_tasks_blueprint.route('/case/tasks/status/update/<int:cur_id>', methods=['POST'])
@@ -112,19 +112,19 @@ def case_get_tasks_state(caseid):
 def case_task_statusupdate(cur_id, caseid):
     task = get_task(task_id=cur_id, caseid=caseid)
     if not task:
-        return response_error("Invalid task ID for this case")
+        return response_error("对于此案例任务ID无效")
 
     if request.is_json:
 
         if update_task_status(request.json.get('task_status_id'), cur_id, caseid):
             task_schema = CaseTaskSchema()
 
-            return response_success("Task status updated", data=task_schema.dump(task))
+            return response_success("任务状态已更新", data=task_schema.dump(task))
         else:
-            return response_error("Invalid status")
+            return response_error("无效状态")
 
     else:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
 
 @case_tasks_blueprint.route('/case/tasks/add/modal', methods=['GET'])
@@ -171,7 +171,7 @@ def case_add_task(caseid):
         return response_error("Unable to create task for internal reasons")
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @case_tasks_blueprint.route('/case/tasks/<int:cur_id>', methods=['GET'])
@@ -179,7 +179,7 @@ def case_add_task(caseid):
 def case_task_view(cur_id, caseid):
     task = get_task_with_assignees(task_id=cur_id, case_id=caseid)
     if not task:
-        return response_error("Invalid task ID for this case")
+        return response_error("对于此案例任务ID无效")
 
     task_schema = CaseTaskSchema()
 
@@ -199,7 +199,7 @@ def case_task_view_modal(cur_id, caseid, url_redir):
     form.task_assignees_id.choices = []
 
     if not task:
-        return response_error("Invalid task ID for this case")
+        return response_error("对于此案例任务ID无效")
 
     form.task_title.render_kw = {'value': task.task_title}
     form.task_description.data = task.task_description
@@ -216,7 +216,7 @@ def case_edit_task(cur_id, caseid):
     try:
         task = get_task_with_assignees(task_id=cur_id, case_id=caseid)
         if not task:
-            return response_error("Invalid task ID for this case")
+            return response_error("对于此案例任务ID无效")
 
         request_data = call_modules_hook('on_preload_task_update', data=request.get_json(), caseid=caseid)
 
@@ -245,12 +245,12 @@ def case_edit_task(cur_id, caseid):
         if task:
             track_activity(f"updated task \"{task.task_title}\" (status {task.task_status_id})",
                            caseid=caseid)
-            return response_success("Task '{}' updated".format(task.task_title), data=task_schema.dump(task))
+            return response_success("任务 '{}' 已更新".format(task.task_title), data=task_schema.dump(task))
 
-        return response_error("Unable to update task for internal reasons")
+        return response_error("由于内部原因无法更新任务")
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @case_tasks_blueprint.route('/case/tasks/delete/<int:cur_id>', methods=['POST'])
@@ -259,7 +259,7 @@ def case_delete_task(cur_id, caseid):
     call_modules_hook('on_preload_task_delete', data=cur_id, caseid=caseid)
     task = get_task_with_assignees(task_id=cur_id, case_id=caseid)
     if not task:
-        return response_error("Invalid task ID for this case")
+        return response_error("对于此案例任务ID无效")
 
     delete_task(task.id)
 
@@ -269,7 +269,7 @@ def case_delete_task(cur_id, caseid):
 
     track_activity(f"deleted task \"{task.task_title}\"")
 
-    return response_success("Task deleted")
+    return response_success("任务已删除")
 
 
 @case_tasks_blueprint.route('/case/tasks/<int:cur_id>/comments/modal', methods=['GET'])
@@ -280,7 +280,7 @@ def case_comment_task_modal(cur_id, caseid, url_redir):
 
     task = get_task(cur_id, caseid=caseid)
     if not task:
-        return response_error('Invalid task ID')
+        return response_error('任务ID无效')
 
     return render_template("modal_conversation.html", element_id=cur_id, element_type='tasks',
                            title=task.task_title)
@@ -292,7 +292,7 @@ def case_comment_task_list(cur_id, caseid):
 
     task_comments = get_case_task_comments(cur_id)
     if task_comments is None:
-        return response_error('Invalid task ID')
+        return response_error('任务ID无效')
 
     return response_success(data=CommentSchema(many=True).dump(task_comments))
 
@@ -304,7 +304,7 @@ def case_comment_task_add(cur_id, caseid):
     try:
         task = get_task(cur_id, caseid=caseid)
         if not task:
-            return response_error('Invalid task ID')
+            return response_error('任务ID无效')
 
         comment_schema = CommentSchema()
 
@@ -327,10 +327,10 @@ def case_comment_task_add(cur_id, caseid):
         call_modules_hook('on_postload_task_commented', data=hook_data, caseid=caseid)
 
         track_activity(f"task \"{task.task_title}\" commented", caseid=caseid)
-        return response_success("Task commented", data=comment_schema.dump(comment))
+        return response_success("任务已评论", data=comment_schema.dump(comment))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.normalized_messages(), status=400)
+        return response_error(msg="数据错误", data=e.normalized_messages(), status=400)
 
 
 @case_tasks_blueprint.route('/case/tasks/<int:cur_id>/comments/<int:com_id>', methods=['GET'])
@@ -339,7 +339,7 @@ def case_comment_task_get(cur_id, com_id, caseid):
 
     comment = get_case_task_comment(cur_id, com_id)
     if not comment:
-        return response_error("Invalid comment ID")
+        return response_error("无效评论ID")
 
     return response_success(data=comment._asdict())
 
