@@ -67,18 +67,18 @@ def get_case_alert_status(classification_id: int, caseid: int) -> Response:
 @ac_api_requires(no_cid_required=True)
 def search_alert_status(caseid):
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("请求无效")
 
     alert_status = request.json.get('alert_status')
     if alert_status is None:
-        return response_error("Invalid alert status. Got None")
+        return response_error("无效告警状态. 为None")
 
     exact_match = request.json.get('exact_match', False)
 
     # Search for alerts status with a name that contains the specified search term
     alert_status = search_alert_status_by_name(alert_status, exact_match=exact_match)
     if not alert_status:
-        return response_error("No alert status found")
+        return response_error("未找到告警状态")
 
     # Serialize the alert status and return them in a JSON response
     schema = AlertStatusSchema(many=True)
@@ -123,18 +123,18 @@ def get_case_alert_resolution(resolution_id: int, caseid: int) -> Response:
 @ac_api_requires(no_cid_required=True)
 def search_alert_resolution(caseid):
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("请求无效")
 
     alert_resolution = request.json.get('alert_resolution_name')
     if alert_resolution is None:
-        return response_error("Invalid alert resolution. Got None")
+        return response_error("无效告警解决方案. 为None")
 
     exact_match = request.json.get('exact_match', False)
 
     # Search for alerts resolution with a name that contains the specified search term
     alert_res = search_alert_resolution_by_name(alert_resolution, exact_match=exact_match)
     if not alert_res:
-        return response_error("No alert resolution found")
+        return response_error("未找到告警解决方案")
 
     # Serialize the alert_res and return them in a JSON response
     schema = AlertResolutionSchema(many=True)
