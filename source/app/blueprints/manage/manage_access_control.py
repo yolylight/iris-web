@@ -53,7 +53,7 @@ def manage_ac_compute_effective_all_ac(caseid):
 
     ac_recompute_all_users_effective_ac()
 
-    return response_success('Updated')
+    return response_success('已更新')
 
 
 @manage_ac_blueprint.route('/manage/access-control/recompute-effective-user-ac/<int:cur_id>', methods=['GET'])
@@ -62,7 +62,7 @@ def manage_ac_compute_effective_ac(cur_id, caseid):
 
     ac_recompute_effective_ac(cur_id)
 
-    return response_success('Updated')
+    return response_success('已更新')
 
 
 @manage_ac_blueprint.route('/manage/access-control/audit/users/<int:cur_id>', methods=['GET'])
