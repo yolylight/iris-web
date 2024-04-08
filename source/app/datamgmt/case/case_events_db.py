@@ -163,7 +163,7 @@ def delete_event_comment(event_id, comment_id):
         Comments.comment_user_id == current_user.id
     ).first()
     if not comment:
-        return False, "You are not allowed to delete this comment"
+        return False, "你没有权利删除评论"
 
     EventComments.query.filter(
         EventComments.comment_event_id == event_id,
@@ -173,7 +173,7 @@ def delete_event_comment(event_id, comment_id):
     db.session.delete(comment)
     db.session.commit()
 
-    return True, "Comment deleted"
+    return True, "评论已删除"
 
 
 def add_comment_to_event(event_id, comment_id):
