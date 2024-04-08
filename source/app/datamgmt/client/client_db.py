@@ -131,7 +131,7 @@ def delete_contact(contact_id: int) -> None:
     ).first()
 
     if not contact:
-        raise ElementNotFoundException('No Contact found with this uuid.')
+        raise ElementNotFoundException('未找到使用此 uuid 的联系人.')
 
     try:
 
@@ -139,7 +139,7 @@ def delete_contact(contact_id: int) -> None:
         db.session.commit()
 
     except Exception as e:
-        raise ElementInUseException('A currently referenced contact cannot be deleted')
+        raise ElementInUseException('无法删除当前引用的联系人')
 
 
 def create_contact(data, customer_id) -> Contact:
@@ -169,7 +169,7 @@ def update_client(client_id: int, data) -> Client:
     client = get_client(client_id)
 
     if not client:
-        raise ElementNotFoundException('No Customer found with this uuid.')
+        raise ElementNotFoundException('没有找到使用该UUID的客户.')
 
     exists = Client.query.filter(
         Client.client_id != client_id,
@@ -196,7 +196,7 @@ def delete_client(client_id: int) -> None:
     ).first()
 
     if not client:
-        raise ElementNotFoundException('No Customer found with this uuid.')
+        raise ElementNotFoundException('没有找到使用该UUID的客户.')
 
     try:
 
@@ -204,7 +204,7 @@ def delete_client(client_id: int) -> None:
         db.session.commit()
 
     except Exception as e:
-        raise ElementInUseException('A currently referenced customer cannot be deleted')
+        raise ElementInUseException('无法删除当前引用的联系人')
 
 
 def get_case_client(case_id: int) -> Client:
