@@ -74,11 +74,11 @@ def download_case_activity(report_id, caseid):
                 fpath, logs = mreport.generate_md_report(doc_type="Activities")
 
             else:
-                return response_error("Report error", "Unknown report format.")
+                return response_error("报告错误", "未知报告格式.")
 
             if fpath is None:
                 track_activity("failed to generate a report")
-                return response_error(msg="Failed to generate the report", data=logs)
+                return response_error(msg="创建报告失败", data=logs)
 
             call_modules_hook('on_postload_activities_report_create', data=report_id, caseid=caseid)
             resp = send_file(fpath, as_attachment=True)
@@ -88,7 +88,7 @@ def download_case_activity(report_id, caseid):
 
             return resp
 
-    return response_error("Unknown report", status=404)
+    return response_error("未知报告", status=404)
 
 
 @reports_blueprint.route("/case/report/generate-investigation/<int:report_id>", methods=['GET'])
@@ -117,11 +117,11 @@ def _gen_report(report_id, caseid):
                 fpath, logs = mreport.generate_doc_report(doc_type="Investigation")
 
             else:
-                return response_error("Report error", "Unknown report format.")
+                return response_error("报告错误", "未知报告格式.")
 
             if fpath is None:
                 track_activity("failed to generate the report")
-                return response_error(msg="Failed to generate the report", data=logs)
+                return response_error(msg="生成报告失败", data=logs)
 
             call_modules_hook('on_postload_report_create', data=fpath, caseid=caseid)
 
@@ -132,5 +132,5 @@ def _gen_report(report_id, caseid):
 
             return resp
 
-    return response_error("Unknown report", status=404)
+    return response_error("未知报告", status=404)
 
