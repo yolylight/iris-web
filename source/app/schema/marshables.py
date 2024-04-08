@@ -123,10 +123,10 @@ def store_icon(file):
 
     """
     if not file:
-        return None, 'Icon file is not valid'
+        return None, 'Icon文件无效'
 
     if not allowed_file_icon(file.filename):
-        return None, 'Icon filetype is not allowed'
+        return None, '不允许的Icon文件类型'
 
     filename = get_random_string(18)
 
@@ -139,9 +139,9 @@ def store_icon(file):
         os.symlink(store_fullpath, show_fullpath)
 
     except Exception as e:
-        return None, f"Unable to add icon {e}"
+        return None, f"无法添加icon{e}"
 
-    return filename, 'Saved'
+    return filename, '已保存'
 
 
 class CaseNoteDirectorySchema(ma.SQLAlchemyAutoSchema):
@@ -162,7 +162,7 @@ class CaseNoteDirectorySchema(ma.SQLAlchemyAutoSchema):
     def verify_parent_id(self, parent_id, case_id, current_id=None):
 
         if current_id is not None and int(parent_id) == int(current_id):
-            raise marshmallow.exceptions.ValidationError("Invalid parent id for the directory",
+            raise marshmallow.exceptions.ValidationError("目录的父 ID 无效",
                                                          field_name="parent_id")
         directory = NoteDirectory.query.filter(
             NoteDirectory.id == parent_id,
@@ -170,11 +170,11 @@ class CaseNoteDirectorySchema(ma.SQLAlchemyAutoSchema):
         ).first()
         if directory:
             if current_id is not None and directory.parent_id == int(current_id):
-                raise marshmallow.exceptions.ValidationError("Invalid parent id for the directory",
+                raise marshmallow.exceptions.ValidationError("目录的父 ID 无效",
                                                              field_name="parent_id")
             return parent_id
 
-        raise marshmallow.exceptions.ValidationError("Invalid parent id for the directory",
+        raise marshmallow.exceptions.ValidationError("目录的父 ID 无效",
                                                      field_name="parent_id")
 
     @pre_load
@@ -269,7 +269,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         ).all()
         for usr in luser:
             if usr.id != user_id:
-                raise marshmallow.exceptions.ValidationError('User name already taken',
+                raise marshmallow.exceptions.ValidationError('用户名已存在',
                                                              field_name="user_login")
 
         return data
@@ -310,7 +310,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         ).all()
         for usr in luser:
             if usr.id != user_id:
-                raise marshmallow.exceptions.ValidationError('User email already taken',
+                raise marshmallow.exceptions.ValidationError('用户邮箱已存在',
                                                              field_name="user_email")
 
         return data
@@ -346,23 +346,23 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         else:
             password_error = ""
             if len(password) < server_settings.password_policy_min_length:
-                password_error += f"Password must be longer than {server_settings.password_policy_min_length} characters. "
+                password_error += f"密码长度必须大于 {server_settings.password_policy_min_length} 字符. "
 
             if server_settings.password_policy_upper_case:
                 if not any(char.isupper() for char in password):
-                    password_error += "Password must contain uppercase char. "
+                    password_error += "密码必须包含大写字符. "
 
             if server_settings.password_policy_lower_case:
                 if not any(char.islower() for char in password):
-                    password_error += "Password must contain lowercase char. "
+                    password_error += "密码必须包含小写字符. "
 
             if server_settings.password_policy_digit:
                 if not any(char.isdigit() for char in password):
-                    password_error += "Password must contain digit. "
+                    password_error += "密码必须包含数字. "
 
             if len(server_settings.password_policy_special_chars) > 0:
                 if not any(char in server_settings.password_policy_special_chars for char in password):
-                    password_error += f"Password must contain a special char [{server_settings.password_policy_special_chars}]. "
+                    password_error += f"密码必须包含特殊字符 [{server_settings.password_policy_special_chars}]. "
 
             if len(password_error) > 0:
                 raise marshmallow.exceptions.ValidationError(password_error,
@@ -503,7 +503,7 @@ class CaseAddNoteSchema(ma.Schema):
         if directory:
             return data
 
-        raise marshmallow.exceptions.ValidationError("Invalid directory id for the case",
+        raise marshmallow.exceptions.ValidationError("案例目录 ID 无效",
                                                      field_name="directory_id")
 
     @post_load
@@ -771,11 +771,11 @@ class CaseTemplateSchema(ma.Schema):
 
         """
         if not isinstance(value, (str, list)):
-            raise ValidationError('Value must be a string or a list of strings')
+            raise ValidationError('值必须是字符串或字符串列表')
         if isinstance(value, list):
             for item in value:
                 if not isinstance(item, str):
-                    raise ValidationError('All items in list must be strings')
+                    raise ValidationError('列表中的所有项目必须是字符串')
         return value
 
     def validate_string_or_list_of_dict(value: Union[str, List[Dict[str, str]]]) -> Union[str, List[Dict[str, str]]]:
@@ -795,14 +795,14 @@ class CaseTemplateSchema(ma.Schema):
 
         """
         if not isinstance(value, (str, list)):
-            raise ValidationError('Value must be a string or a list of strings')
+            raise ValidationError('值必须是字符串或字符串列表')
         if isinstance(value, list):
             for item in value:
                 if not isinstance(item, dict):
-                    raise ValidationError('All items in list must be dict')
+                    raise ValidationError('列表中的所有项目必须是dict')
                 for ivalue in item.values():
                     if not isinstance(ivalue, str):
-                        raise ValidationError('All items in dict must be str')
+                        raise ValidationError('字典中的所有项目都必须是字符串')
         return value
 
     tasks: Optional[List[Dict[str, Union[str, List[str]]]]] = fields.List(
@@ -853,7 +853,7 @@ class IocTypeSchema(ma.SQLAlchemyAutoSchema):
         ).first()
         if client:
             raise marshmallow.exceptions.ValidationError(
-                "IOC type name already exists",
+                "IOC 类型名称已存在",
                 field_name="type_name"
             )
 
@@ -911,18 +911,18 @@ class IocSchema(ma.SQLAlchemyAutoSchema):
 
         tlp_id = Tlp.query.filter(Tlp.tlp_id == data.get('ioc_tlp_id')).count()
         if not tlp_id:
-            raise marshmallow.exceptions.ValidationError("Invalid TLP ID", field_name="ioc_tlp_id")
+            raise marshmallow.exceptions.ValidationError("无效 TLP ID", field_name="ioc_tlp_id")
 
         if ioc_type.type_validation_regex:
             if not re.fullmatch(ioc_type.type_validation_regex, data.get('ioc_value'), re.IGNORECASE):
-                error = f"The input doesn\'t match the expected format " \
-                        f"(expected: {ioc_type.type_validation_expect or ioc_type.type_validation_regex})"
+                error = f"输入与格式要求不符 " \
+                        f"(需要: {ioc_type.type_validation_expect or ioc_type.type_validation_regex})"
                 raise marshmallow.exceptions.ValidationError(error, field_name="ioc_ioc_value")
 
         if data.get('ioc_tags'):
             for tag in data.get('ioc_tags').split(','):
                 if not isinstance(tag, str):
-                    raise marshmallow.exceptions.ValidationError("All items in list must be strings",
+                    raise marshmallow.exceptions.ValidationError("列表中的所有项目必须是字符串",
                                                                  field_name="ioc_tags")
                 add_db_tag(tag.strip())
 
@@ -1021,7 +1021,7 @@ class EventSchema(ma.SQLAlchemyAutoSchema):
             self.event_date = dateutil.parser.isoparse(date_time)
             self.event_date_wtz = dateutil.parser.isoparse(date_time_wtz)
         except Exception as e:
-            raise marshmallow.exceptions.ValidationError("Invalid date time", field_name="event_date")
+            raise marshmallow.exceptions.ValidationError("无效日期时间", field_name="event_date")
 
         return self.event_date, self.event_date_wtz
 
@@ -1044,11 +1044,11 @@ class EventSchema(ma.SQLAlchemyAutoSchema):
 
         """
         if data is None:
-            raise marshmallow.exceptions.ValidationError("Received empty data")
+            raise marshmallow.exceptions.ValidationError("接收到空数据")
 
         for field in ['event_title', 'event_date', 'event_tz', 'event_category_id', 'event_assets', 'event_iocs']:
             if field not in data:
-                raise marshmallow.exceptions.ValidationError(f"Missing field {field}", field_name=field)
+                raise marshmallow.exceptions.ValidationError(f"缺少字段 {field}", field_name=field)
 
         assert_type_mml(input_var=int(data.get('event_category_id')),
                         field_name='event_category_id',
@@ -1056,7 +1056,7 @@ class EventSchema(ma.SQLAlchemyAutoSchema):
 
         event_cat = EventCategory.query.filter(EventCategory.id == int(data.get('event_category_id'))).count()
         if not event_cat:
-            raise marshmallow.exceptions.ValidationError("Invalid event category ID", field_name="event_category_id")
+            raise marshmallow.exceptions.ValidationError("无效的事件类别 ID", field_name="event_category_id")
 
         assert_type_mml(input_var=data.get('event_assets'),
                         field_name='event_assets',
@@ -1070,7 +1070,7 @@ class EventSchema(ma.SQLAlchemyAutoSchema):
 
             ast = CaseAssets.query.filter(CaseAssets.asset_id == asset).count()
             if not ast:
-                raise marshmallow.exceptions.ValidationError("Invalid assets ID", field_name="event_assets")
+                raise marshmallow.exceptions.ValidationError("无效资产 ID", field_name="event_assets")
 
         assert_type_mml(input_var=data.get('event_iocs'),
                         field_name='event_iocs',
@@ -1084,7 +1084,7 @@ class EventSchema(ma.SQLAlchemyAutoSchema):
 
             ast = Ioc.query.filter(Ioc.ioc_id == ioc).count()
             if not ast:
-                raise marshmallow.exceptions.ValidationError("Invalid IOC ID", field_name="event_assets")
+                raise marshmallow.exceptions.ValidationError("无效 IOC ID", field_name="event_assets")
 
         if data.get('event_color') and data.get('event_color') not in ['#fff', '#1572E899', '#6861CE99', '#48ABF799',
                                                                        '#31CE3699', '#F2596199', '#FFAD4699']:
@@ -1093,7 +1093,7 @@ class EventSchema(ma.SQLAlchemyAutoSchema):
         if data.get('event_tags'):
             for tag in data.get('event_tags').split(','):
                 if not isinstance(tag, str):
-                    raise marshmallow.exceptions.ValidationError("All items in list must be strings",
+                    raise marshmallow.exceptions.ValidationError("列表中的所有项目必须是字符串",
                                                                  field_name="event_tags")
                 add_db_tag(tag.strip())
 
@@ -1244,7 +1244,7 @@ class DSFileSchema(ma.SQLAlchemyAutoSchema):
         """
         if file_storage is None:
             raise marshmallow.exceptions.ValidationError(
-                "No file provided",
+                "未提供文件",
                 field_name='file_content'
             )
 
@@ -1300,7 +1300,7 @@ class DSFileSchema(ma.SQLAlchemyAutoSchema):
 
         if location is None:
             raise marshmallow.exceptions.ValidationError(
-                f"Unable to save file in target location",
+                f"无法在目标位置保存文件",
                 field_name='file_content'
             )
 
@@ -1382,7 +1382,7 @@ class CaseClassificationSchema(ma.SQLAlchemyAutoSchema):
         ).first()
         if client:
             raise marshmallow.exceptions.ValidationError(
-                "Case classification name already exists",
+                "案例分类名称已存在",
                 field_name="name"
             )
 
@@ -1425,7 +1425,7 @@ class EvidenceTypeSchema(ma.SQLAlchemyAutoSchema):
         ).first()
         if client:
             raise marshmallow.exceptions.ValidationError(
-                "Evidence type already exists",
+                "证据类型已经存在",
                 field_name="name"
             )
 
@@ -1504,7 +1504,7 @@ class CaseSchema(ma.SQLAlchemyAutoSchema):
         if client:
             return data
 
-        raise marshmallow.exceptions.ValidationError("Invalid client id",
+        raise marshmallow.exceptions.ValidationError("客户 ID 无效",
                                                      field_name="case_customer")
 
     @post_load
@@ -1599,7 +1599,7 @@ class GlobalTasksSchema(ma.SQLAlchemyAutoSchema):
 
         user = User.query.filter(User.id == data.get('task_assignee_id')).count()
         if not user:
-            raise marshmallow.exceptions.ValidationError("Invalid user id for assignee",
+            raise marshmallow.exceptions.ValidationError("分配人的用户ID无效",
                                                          field_name="task_assignees_id")
 
         assert_type_mml(input_var=data.get('task_status_id'),
@@ -1607,7 +1607,7 @@ class GlobalTasksSchema(ma.SQLAlchemyAutoSchema):
                         type=int)
         status = TaskStatus.query.filter(TaskStatus.id == data.get('task_status_id')).count()
         if not status:
-            raise marshmallow.exceptions.ValidationError("Invalid task status ID",
+            raise marshmallow.exceptions.ValidationError("无效的任务状态ID",
                                                          field_name="task_status_id")
 
         return data
@@ -1663,7 +1663,7 @@ class CustomerSchema(ma.SQLAlchemyAutoSchema):
         ).first()
         if client:
             raise marshmallow.exceptions.ValidationError(
-                "Customer already exists",
+                "客户已存在",
                 field_name="customer_name"
             )
 
@@ -1758,13 +1758,13 @@ class CaseTaskSchema(ma.SQLAlchemyAutoSchema):
 
         status = TaskStatus.query.filter(TaskStatus.id == data.get('task_status_id')).count()
         if not status:
-            raise marshmallow.exceptions.ValidationError("Invalid task status ID",
+            raise marshmallow.exceptions.ValidationError("无效任务状态ID",
                                                          field_name="task_status_id")
 
         if data.get('task_tags'):
             for tag in data.get('task_tags').split(','):
                 if not isinstance(tag, str):
-                    raise marshmallow.exceptions.ValidationError("All items in list must be strings",
+                    raise marshmallow.exceptions.ValidationError("列表中的所有项目必须是字符串",
                                                                  field_name="task_tags")
                 add_db_tag(tag.strip())
 
@@ -1904,7 +1904,7 @@ class AuthorizationGroupSchema(ma.SQLAlchemyAutoSchema):
         for group in groups:
             if data.get('group_id') is None or group.group_id != data.get('group_id'):
                 raise marshmallow.exceptions.ValidationError(
-                    "Group already exists",
+                    "组已存在",
                     field_name="group_name"
                 )
 
@@ -1981,7 +1981,7 @@ class AuthorizationOrganisationSchema(ma.SQLAlchemyAutoSchema):
         for organisation in organisations:
             if data.get('org_id') is None or organisation.org_id != data.get('org_id'):
                 raise marshmallow.exceptions.ValidationError(
-                    "Organisation name already exists",
+                    "组织名称已存在",
                     field_name="org_name"
                 )
 
@@ -2023,7 +2023,7 @@ def validate_ioc_type(type_id: int) -> None:
 
     """
     if not IocType.query.get(type_id):
-        raise ValidationError("Invalid ioc_type ID")
+        raise ValidationError("无效 ioc_type ID")
 
 
 def validate_ioc_tlp(tlp_id: int) -> None:
@@ -2040,7 +2040,7 @@ def validate_ioc_tlp(tlp_id: int) -> None:
 
     """
     if not Tlp.query.get(tlp_id):
-        raise ValidationError("Invalid ioc_tlp ID")
+        raise ValidationError("无效 ioc_tlp ID")
 
 
 def validate_asset_type(asset_id: int) -> None:
@@ -2074,7 +2074,7 @@ def validate_asset_tlp(tlp_id: int) -> None:
 
     """
     if not Tlp.query.get(tlp_id):
-        raise ValidationError("Invalid asset_tlp ID")
+        raise ValidationError("无效 asset_tlp ID")
 
 
 class SeveritySchema(ma.SQLAlchemyAutoSchema):
@@ -2172,7 +2172,7 @@ class AlertSchema(ma.SQLAlchemyAutoSchema):
         if data.get('alert_tags'):
             for tag in data.get('alert_tags').split(','):
                 if not isinstance(tag, str):
-                    raise marshmallow.exceptions.ValidationError("All items in list must be strings",
+                    raise marshmallow.exceptions.ValidationError("列表中的所有项目必须是字符串",
                                                                  field_name="alert_tags")
                 add_db_tag(tag.strip())
 
