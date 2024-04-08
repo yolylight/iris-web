@@ -144,7 +144,7 @@ def case_add_ioc(caseid):
         link_existed = add_ioc_link(ioc.ioc_id, caseid)
 
         if link_existed:
-            return response_success("IOC already exists and linked to this case", data=add_ioc_schema.dump(ioc))
+            return response_success("IOC已存在并关联到此案例", data=add_ioc_schema.dump(ioc))
 
         if not link_existed:
             ioc = call_modules_hook('on_postload_ioc_create', data=ioc, caseid=caseid)
@@ -152,14 +152,14 @@ def case_add_ioc(caseid):
         if ioc:
             track_activity("added ioc \"{}\"".format(ioc.ioc_value), caseid=caseid)
 
-            msg = "IOC already existed in DB. Updated with info on DB." if existed else "IOC added"
+            msg = "IOC已存在于DB. 已更新DB中信息." if existed else "IOC已添加"
 
             return response_success(msg=msg, data=add_ioc_schema.dump(ioc))
 
-        return response_error("Unable to create IOC for internal reasons")
+        return response_error("内部原因无法创建IOC")
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @case_ioc_blueprint.route('/case/ioc/upload', methods=['POST'])
@@ -189,13 +189,13 @@ def case_upload_ioc(caseid):
 
             for e in headers.split(','):
                 if row.get(e) is None:
-                    errors.append(f"{e} is missing for row {index}")
+                    errors.append(f"行 {index} 缺少{e}")
                     index += 1
                     continue
 
             # IOC value must not be empty
             if not row.get("ioc_value"):
-                errors.append(f"Empty IOC value for row {index}")
+                errors.append(f"行{index} IOC值为空")
                 track_activity(f"Attempted to upload an empty IOC value")
                 index += 1
                 continue
@@ -211,7 +211,7 @@ def case_upload_ioc(caseid):
 
             type_id = get_ioc_type_id(row['ioc_type'].lower())
             if not type_id:
-                errors.append(f"{row['ioc_value']} (invalid ioc type: {row['ioc_type']}) for row {index}")
+                errors.append(f"{row['ioc_value']} (无效ioc类型: {row['ioc_type']}) 行 {index}")
                 log.error(f'Unrecognised IOC type {row["ioc_type"]}')
                 index += 1
                 continue
@@ -230,7 +230,7 @@ def case_upload_ioc(caseid):
             link_existed = add_ioc_link(ioc.ioc_id, caseid)
 
             if link_existed:
-                errors.append(f"{ioc.ioc_value} (already exists and linked to this case)")
+                errors.append(f"{ioc.ioc_value} (已经存在并与此案例相关联)")
                 log.error(f"IOC {ioc.ioc_value} already exists and linked to this case")
                 index += 1
                 continue
@@ -247,14 +247,14 @@ def case_upload_ioc(caseid):
             index += 1
 
         if len(errors) == 0:
-            msg = "Successfully imported data."
+            msg = "成功导入数据."
         else:
-            msg = "Data is imported but we got errors with the following rows:\n- " + "\n- ".join(errors)
+            msg = "数据已导入,但以下行出现错误:\n- " + "\n- ".join(errors)
 
         return response_success(msg=msg, data=ret)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @case_ioc_blueprint.route('/case/ioc/add/modal', methods=['GET'])
@@ -277,16 +277,16 @@ def case_delete_ioc(cur_id, caseid):
     ioc = get_ioc(cur_id, caseid)
 
     if not ioc:
-        return response_error('Not a valid IOC for this case')
+        return response_error('对于此案例不是有效的IOC')
 
     if not delete_ioc(ioc, caseid):
         track_activity(f"unlinked IOC ID {ioc.ioc_value}", caseid=caseid)
-        return response_success(f"IOC {cur_id} unlinked")
+        return response_success(f"IOC {cur_id} 已取消链接")
 
     call_modules_hook('on_postload_ioc_delete', data=cur_id, caseid=caseid)
 
     track_activity(f"deleted IOC \"{ioc.ioc_value}\"", caseid=caseid)
-    return response_success(f"IOC {cur_id} deleted")
+    return response_success(f"IOC {cur_id} 已删除")
 
 
 @case_ioc_blueprint.route('/case/ioc/<int:cur_id>/modal', methods=['GET'])
@@ -298,7 +298,7 @@ def case_view_ioc_modal(cur_id, caseid, url_redir):
     form = ModalAddCaseIOCForm()
     ioc = get_ioc(cur_id, caseid)
     if not ioc:
-        return response_error("Invalid IOC ID for this case")
+        return response_error("对于此案例不是有效的IOC")
 
     form.ioc_type_id.choices = [(row['type_id'], row['type_name']) for row in get_ioc_types_list()]
     form.ioc_tlp_id.choices = get_tlps()
@@ -319,7 +319,7 @@ def case_view_ioc(cur_id, caseid):
     ioc_schema = IocSchema()
     ioc = get_ioc(cur_id, caseid)
     if not ioc:
-        return response_error("Invalid IOC ID for this case")
+        return response_error("对于此案例不是有效的IOC")
 
     return response_success(data=ioc_schema.dump(ioc))
 
@@ -330,7 +330,7 @@ def case_update_ioc(cur_id, caseid):
     try:
         ioc = get_ioc(cur_id, caseid)
         if not ioc:
-            return response_error("Invalid IOC ID for this case")
+            return response_error("对于此案例不是有效的IOC")
 
         request_data = call_modules_hook('on_preload_ioc_update', data=request.get_json(), caseid=caseid)
 
@@ -341,7 +341,7 @@ def case_update_ioc(cur_id, caseid):
         ioc_sc.user_id = current_user.id
 
         if not check_ioc_type_id(type_id=ioc_sc.ioc_type_id):
-            return response_error("Not a valid IOC type")
+            return response_error("不是有效的IOC类型")
 
         update_ioc_state(caseid=caseid)
         db.session.commit()
@@ -350,12 +350,12 @@ def case_update_ioc(cur_id, caseid):
 
         if ioc_sc:
             track_activity(f"updated ioc \"{ioc_sc.ioc_value}\"", caseid=caseid)
-            return response_success(f"Updated ioc \"{ioc_sc.ioc_value}\"", data=ioc_schema.dump(ioc))
+            return response_success(f" ioc \"{ioc_sc.ioc_value}\"已更新", data=ioc_schema.dump(ioc))
 
-        return response_error("Unable to update ioc for internal reasons")
+        return response_error("由于内部原因无法更新ioc")
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @case_ioc_blueprint.route('/case/ioc/<int:cur_id>/comments/modal', methods=['GET'])
@@ -366,7 +366,7 @@ def case_comment_ioc_modal(cur_id, caseid, url_redir):
 
     ioc = get_ioc(cur_id, caseid=caseid)
     if not ioc:
-        return response_error('Invalid ioc ID')
+        return response_error('无效 ioc ID')
 
     return render_template("modal_conversation.html", element_id=cur_id, element_type='ioc',
                            title=ioc.ioc_value)
@@ -378,7 +378,7 @@ def case_comment_ioc_list(cur_id, caseid):
 
     ioc_comments = get_case_ioc_comments(cur_id)
     if ioc_comments is None:
-        return response_error('Invalid ioc ID')
+        return response_error('无效 ioc ID')
 
     return response_success(data=CommentSchema(many=True).dump(ioc_comments))
 
@@ -390,7 +390,7 @@ def case_comment_ioc_add(cur_id, caseid):
     try:
         ioc = get_ioc(cur_id, caseid=caseid)
         if not ioc:
-            return response_error('Invalid ioc ID')
+            return response_error('无效 ioc ID')
 
         comment_schema = CommentSchema()
 
@@ -413,10 +413,10 @@ def case_comment_ioc_add(cur_id, caseid):
         call_modules_hook('on_postload_ioc_commented', data=hook_data, caseid=caseid)
 
         track_activity(f"ioc \"{ioc.ioc_value}\" commented", caseid=caseid)
-        return response_success("Event commented", data=comment_schema.dump(comment))
+        return response_success("事件已评论", data=comment_schema.dump(comment))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.normalized_messages(), status=400)
+        return response_error(msg="数据错误", data=e.normalized_messages(), status=400)
 
 
 @case_ioc_blueprint.route('/case/ioc/<int:cur_id>/comments/<int:com_id>', methods=['GET'])
@@ -425,7 +425,7 @@ def case_comment_ioc_get(cur_id, com_id, caseid):
 
     comment = get_case_ioc_comment(cur_id, com_id)
     if not comment:
-        return response_error("Invalid comment ID")
+        return response_error("无效评论ID")
 
     return response_success(data=comment._asdict())
 
@@ -447,5 +447,5 @@ def case_comment_ioc_delete(cur_id, com_id, caseid):
 
     call_modules_hook('on_postload_ioc_comment_delete', data=com_id, caseid=caseid)
 
-    track_activity(f"comment {com_id} on ioc {cur_id} deleted", caseid=caseid)
+    track_activity(f"ioc {cur_id} 的评论{com_id}已删除", caseid=caseid)
     return response_success(msg)
