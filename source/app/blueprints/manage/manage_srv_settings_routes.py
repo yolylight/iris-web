@@ -67,10 +67,10 @@ def manage_make_db_backup(caseid):
 
     has_error, logs = backup_iris_db()
     if has_error:
-        rep = response_error('Backup failed', data=logs)
+        rep = response_error('备份失败', data=logs)
 
     else:
-        rep = response_success('Backup done', data=logs)
+        rep = response_success('备份完成', data=logs)
 
     return rep
 
@@ -114,7 +114,7 @@ def manage_settings(caseid, url_redir):
 @ac_api_requires(Permissions.server_administrator, no_cid_required=True)
 def manage_update_settings(caseid):
     if not request.is_json:
-        return response_error('Invalid request')
+        return response_error('无效请求')
 
     srv_settings_schema = ServerSettingsSchema()
     server_settings = get_srv_settings()
@@ -133,7 +133,7 @@ def manage_update_settings(caseid):
 
         if srv_settings_sc:
             track_activity("Server settings updated", caseid=caseid)
-            return response_success("Server settings updated", srv_settings_sc)
+            return response_success("服务器设置已更新", srv_settings_sc)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
