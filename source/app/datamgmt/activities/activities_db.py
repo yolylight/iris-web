@@ -40,10 +40,10 @@ def get_auto_activities(caseid):
         and_(
             UserActivity.case_id == caseid,
             UserActivity.activity_desc.notlike('[Unbound]%'),
-            UserActivity.activity_desc.notlike('Started a search for %'),
-            UserActivity.activity_desc.notlike('Updated global task %'),
-            UserActivity.activity_desc.notlike('Created new global task %'),
-            UserActivity.activity_desc.notlike('Started a new case creation %'),
+            UserActivity.activity_desc.notlike('已开始搜索 %'),
+            UserActivity.activity_desc.notlike('已更新全局任务 %'),
+            UserActivity.activity_desc.notlike('已创建新全局任务 %'),
+            UserActivity.activity_desc.notlike('开始新案例创建 %'),
             UserActivity.user_input == False
         )
     ).order_by(
