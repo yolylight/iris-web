@@ -139,7 +139,7 @@ def customer_edit_contact_modal(client_id, contact_id, caseid, url_redir):
 
     contact = get_client_contact(client_id, contact_id)
     if not contact:
-        return response_error(f"Invalid Contact ID {contact_id}")
+        return response_error(f"无效联系ID {contact_id}")
 
     form = ContactForm()
     form.contact_name.render_kw = {'value': contact.contact_name}
@@ -158,27 +158,27 @@ def customer_edit_contact_modal(client_id, contact_id, caseid, url_redir):
 def customer_update_contact(client_id, contact_id, caseid):
 
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     if not get_client(client_id):
-        return response_error(f"Invalid Customer ID {client_id}")
+        return response_error(f"无效客户ID {client_id}")
 
     try:
 
         contact = update_contact(request.json, contact_id, client_id)
 
     except ValidationError as e:
-        return response_error(msg='Error update contact', data=e.messages, status=400)
+        return response_error(msg='更新联系信息错误', data=e.messages, status=400)
 
     except Exception as e:
         print(traceback.format_exc())
-        return response_error(f'An error occurred during contact update. {e}')
+        return response_error(f'联系人更新过程中发生错误. {e}')
 
     track_activity(f"Updated contact {contact.contact_name}", caseid=caseid, ctx_less=True)
 
     # Return the customer
     contact_schema = ContactSchema()
-    return response_success("Added successfully", data=contact_schema.dump(contact))
+    return response_success("添加成功", data=contact_schema.dump(contact))
 
 
 @manage_customers_blueprint.route('/manage/customers/<int:client_id>/contacts/add', methods=['POST'])
@@ -187,27 +187,27 @@ def customer_update_contact(client_id, contact_id, caseid):
 def customer_add_contact(client_id, caseid):
 
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     if not get_client(client_id):
-        return response_error(f"Invalid Customer ID {client_id}")
+        return response_error(f"无效客户ID {client_id}")
 
     try:
 
         contact = create_contact(request.json, client_id)
 
     except ValidationError as e:
-        return response_error(msg='Error adding contact', data=e.messages, status=400)
+        return response_error(msg='添加联系人出错', data=e.messages, status=400)
 
     except Exception as e:
         print(traceback.format_exc())
-        return response_error(f'An error occurred during contact addition. {e}')
+        return response_error(f'添加联系人时发生错误. {e}')
 
     track_activity(f"Added contact {contact.contact_name}", caseid=caseid, ctx_less=True)
 
     # Return the customer
     contact_schema = ContactSchema()
-    return response_success("Added successfully", data=contact_schema.dump(contact))
+    return response_success("添加成功", data=contact_schema.dump(contact))
 
 
 @manage_customers_blueprint.route('/manage/customers/<int:client_id>/cases', methods=['GET'])
@@ -304,7 +304,7 @@ def view_customer_modal(client_id, caseid, url_redir):
     form = AddCustomerForm()
     customer = get_client(client_id)
     if not customer:
-        return response_error("Invalid Customer ID")
+        return response_error("无效客户ID")
 
     form.customer_name.render_kw = {'value': customer.name}
     form.customer_description.data = customer.description
@@ -319,23 +319,23 @@ def view_customer_modal(client_id, caseid, url_redir):
 @ac_api_requires_client_access()
 def view_customers(client_id, caseid):
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     try:
         client = update_client(client_id, request.json)
 
     except ElementNotFoundException:
-        return response_error('Invalid Customer ID')
+        return response_error('无效客户ID')
 
     except ValidationError as e:
         return response_error("", data=e.messages)
 
     except Exception as e:
         print(traceback.format_exc())
-        return response_error(f'An error occurred during Customer update. {e}')
+        return response_error(f'客户更新时发生错误. {e}')
 
     client_schema = CustomerSchema()
-    return response_success("Customer updated", client_schema.dump(client))
+    return response_success("客户已更新", client_schema.dump(client))
 
 
 @manage_customers_blueprint.route('/manage/customers/add/modal', methods=['GET'])
@@ -354,21 +354,21 @@ def add_customers_modal(caseid, url_redir):
 @ac_api_requires_client_access()
 def add_customers(caseid):
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     try:
         client = create_client(request.json)
     except ValidationError as e:
-        return response_error(msg='Error adding customer', data=e.messages, status=400)
+        return response_error(msg='添加客户出错', data=e.messages, status=400)
     except Exception as e:
         print(traceback.format_exc())
-        return response_error(f'An error occurred during customer addition. {e}')
+        return response_error(f'添加客户时出现错误. {e}')
 
     track_activity(f"Added customer {client.name}", caseid=caseid, ctx_less=True)
 
     # Return the customer
     client_schema = CustomerSchema()
-    return response_success("Added successfully", data=client_schema.dump(client))
+    return response_success("添加成功", data=client_schema.dump(client))
 
 
 @manage_customers_blueprint.route('/manage/customers/delete/<int:client_id>', methods=['POST'])
@@ -380,17 +380,17 @@ def delete_customers(client_id, caseid):
         delete_client(client_id)
 
     except ElementNotFoundException:
-        return response_error('Invalid Customer ID')
+        return response_error('无效客户ID')
 
     except ElementInUseException:
-        return response_error('Cannot delete a referenced customer')
+        return response_error('无法删除引用的客户')
 
     except Exception:
-        return response_error('An error occurred during customer deletion')
+        return response_error('删除客户时发生错误')
 
     track_activity(f"Deleted Customer with ID {client_id}", caseid=caseid, ctx_less=True)
 
-    return response_success("Deleted successfully")
+    return response_success("删除成功")
 
 
 @manage_customers_blueprint.route('/manage/customers/<int:client_id>/contacts/<int:contact_id>/delete', methods=['POST'])
@@ -402,14 +402,14 @@ def delete_contact_route(client_id, contact_id, caseid):
         delete_contact(contact_id)
 
     except ElementNotFoundException:
-        return response_error('Invalid contact ID')
+        return response_error('无效联系人ID')
 
     except ElementInUseException:
-        return response_error('Cannot delete a referenced contact')
+        return response_error('无法删除已引用的联系人')
 
     except Exception:
-        return response_error('An error occurred during contact deletion')
+        return response_error('删除联系人时出错')
 
     track_activity(f"Deleted Customer with ID {contact_id}", caseid=caseid, ctx_less=True)
 
-    return response_success("Deleted successfully")
+    return response_success("删除成功")
