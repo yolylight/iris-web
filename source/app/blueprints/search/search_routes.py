@@ -136,7 +136,7 @@ def search_file_post(caseid: int):
 
         files = [row._asdict() for row in comments]
 
-    return response_success("Results fetched", files)
+    return response_success("结果已获取", files)
 
 
 @search_blueprint.route('/search', methods=['GET'])
