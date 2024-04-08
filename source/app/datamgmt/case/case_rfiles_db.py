@@ -153,7 +153,7 @@ def delete_evidence_comment(evidence_id, comment_id):
         Comments.comment_user_id == current_user.id
     ).first()
     if not comment:
-        return False, "You are not allowed to delete this comment"
+        return False, "你不允许删除评论"
 
     EvidencesComments.query.filter(
         EvidencesComments.comment_evidence_id == evidence_id,
@@ -163,4 +163,4 @@ def delete_evidence_comment(evidence_id, comment_id):
     db.session.delete(comment)
     db.session.commit()
 
-    return True, "Comment deleted"
+    return True, "评论已删除"
