@@ -55,7 +55,7 @@ def get_event_category(cur_id, caseid):
     ).first()
 
     if not lcat:
-        return response_error(f"Event category ID {cur_id} not found")
+        return response_error(f"事件分类ID {cur_id}未找到")
 
     data = lcat._asdict()
 
@@ -66,18 +66,18 @@ def get_event_category(cur_id, caseid):
 @ac_api_requires(no_cid_required=True)
 def search_event_category(caseid):
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     event_category = request.json.get('event_category')
     if event_category is None:
-        return response_error("Invalid category. Got None")
+        return response_error("无效分类. 为None")
 
     exact_match = request.json.get('exact_match', False)
 
     # Search for event category with a name that contains the specified search term
     event_category = search_event_category_by_name(event_category, exact_match=exact_match)
     if not event_category:
-        return response_error("No category found")
+        return response_error("未找到分类")
 
     # Serialize the event category and return them in a JSON response
     schema = EventCategorySchema(many=True)
