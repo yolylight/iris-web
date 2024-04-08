@@ -324,7 +324,7 @@ def api_case_close(cur_id, caseid):
 
     # Close the related alerts
     if case.alerts:
-        close_status = get_alert_status_by_name('Closed')
+        close_status = get_alert_status_by_name('已关闭')
         case_status_id_mapped = map_alert_resolution_to_case_status(case.status_id)
 
         for alert in case.alerts:
@@ -389,7 +389,7 @@ def api_add_case(caseid):
             if case is None:
                 return response_error(msg=f"无效案例模板ID {case_template_id}", status=400)
 
-        case.state_id = get_case_state_by_name('Open').state_id
+        case.state_id = get_case_state_by_name('开放').state_id
 
         case.save()
 
@@ -446,7 +446,7 @@ def update_case_info(cur_id, caseid):
         request_data = request.get_json()
         previous_case_state = case_i.state_id
         case_previous_reviewer_id = case_i.reviewer_id
-        closed_state_id = get_case_state_by_name('Closed').state_id
+        closed_state_id = get_case_state_by_name('已关闭').state_id
 
         # If user tries to update the customer, check if the user has access to the new customer
         if request_data.get('case_customer') and request_data.get('case_customer') != case_i.client_id:
@@ -472,7 +472,7 @@ def update_case_info(cur_id, caseid):
 
                 # Close the related alerts
                 if case.alerts:
-                    close_status = get_alert_status_by_name('Closed')
+                    close_status = get_alert_status_by_name('已关闭')
                     case_status_id_mapped = map_alert_resolution_to_case_status(case.status_id)
 
                     for alert in case.alerts:
