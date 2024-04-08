@@ -146,7 +146,7 @@ def case_assets_state(caseid):
     if os:
         return response_success(data=os)
     else:
-        return response_error('No assets state for this case.')
+        return response_error('本案例无资产状态.')
 
 
 @case_assets_blueprint.route('/case/assets/add/modal', methods=['GET'])
@@ -184,18 +184,18 @@ def add_asset(caseid):
         if request_data.get('ioc_links'):
             errors, logs = set_ioc_links(request_data.get('ioc_links'), asset.asset_id)
             if errors:
-                return response_error(f'Encountered errors while linking IOC. Asset has still been updated.')
+                return response_error(f'链接IOC时遇到错误.资产仍已更新.')
 
         asset = call_modules_hook('on_postload_asset_create', data=asset, caseid=caseid)
 
         if asset:
             track_activity(f"added asset \"{asset.asset_name}\"", caseid=caseid)
-            return response_success("Asset added", data=add_asset_schema.dump(asset))
+            return response_success("资产已添加", data=add_asset_schema.dump(asset))
 
-        return response_error("Unable to create asset for internal reasons")
+        return response_error("由于内部原因无法创建资产")
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @case_assets_blueprint.route('/case/assets/upload', methods=['POST'])
@@ -229,7 +229,7 @@ def case_upload_ioc(caseid):
             missing_field = False
             for e in headers.split(','):
                 if row.get(e) is None:
-                    errors.append(f"{e} is missing for row {index}")
+                    errors.append(f" {index}行缺少{e} ")
                     missing_field = True
                     continue
 
@@ -238,7 +238,7 @@ def case_upload_ioc(caseid):
 
             # Asset name must not be empty
             if not row.get("asset_name"):
-                errors.append(f"Empty asset name for row {index}")
+                errors.append(f"行 {index} 资产名称为空")
                 track_activity(f"Attempted to upload an empty asset name")
                 index += 1
                 continue
@@ -247,7 +247,7 @@ def case_upload_ioc(caseid):
                 row["asset_tags"] = row.get("asset_tags").replace("|", ",")  # Reformat Tags
 
             if not row.get('asset_type_name'):
-                errors.append(f"Empty asset type for row {index}")
+                errors.append(f"行{index}资产类型为空")
                 track_activity(f"Attempted to upload an empty asset type")
                 index += 1
                 continue
@@ -275,24 +275,24 @@ def case_upload_ioc(caseid):
             asset = call_modules_hook('on_postload_asset_create', data=asset, caseid=caseid)
 
             if not asset:
-                errors.append(f"Unable to add asset for internal reason")
+                errors.append(f"由于内部原因无法创建资产")
                 index += 1
                 continue
 
             ret.append(request_data)
-            track_activity(f"added asset {asset.asset_name}", caseid=caseid)
+            track_activity(f" {asset.asset_name} 资产已添加", caseid=caseid)
 
             index += 1
 
         if len(errors) == 0:
-            msg = "Successfully imported data."
+            msg = "成功导入数据."
         else:
-            msg = "Data is imported but we got errors with the following rows:\n- " + "\n- ".join(errors)
+            msg = "数据已导入，但以下行出现错误:\n- " + "\n- ".join(errors)
 
         return response_success(msg=msg, data=ret)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @case_assets_blueprint.route('/case/assets/<int:cur_id>', methods=['GET'])
@@ -306,7 +306,7 @@ def asset_view(cur_id, caseid):
 
     asset = get_asset(cur_id, caseid)
     if not asset:
-        return response_error("Invalid asset ID for this case")
+        return response_error("此案例下资产 ID 无效")
 
     asset_schema = CaseAssetsSchema()
     data = asset_schema.dump(asset)
@@ -355,7 +355,7 @@ def asset_update(cur_id, caseid):
     try:
         asset = get_asset(cur_id, caseid)
         if not asset:
-            return response_error("Invalid asset ID for this case")
+            return response_error("此案例下资产 ID 无效")
 
         # validate before saving
         add_asset_schema = CaseAssetsSchema()
@@ -371,19 +371,19 @@ def asset_update(cur_id, caseid):
         if hasattr(asset_schema, 'ioc_links'):
             errors, logs = set_ioc_links(asset_schema.ioc_links, asset.asset_id)
             if errors:
-                return response_error(f'Encountered errors while linking IOC. Asset has still been updated.')
+                return response_error(f'链接 IOC 时遇到错误。资产仍已更新.')
 
         asset_schema = call_modules_hook('on_postload_asset_update', data=asset_schema, caseid=caseid)
 
         if asset_schema:
             track_activity(f"updated asset \"{asset_schema.asset_name}\"", caseid=caseid)
-            return response_success("Updated asset {}".format(asset_schema.asset_name),
+            return response_success("资产 {} 已更新".format(asset_schema.asset_name),
                                     add_asset_schema.dump(asset_schema))
 
-        return response_error("Unable to update asset for internal reasons")
+        return response_error("由于内部原因无法更新资产")
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @case_assets_blueprint.route('/case/assets/delete/<int:cur_id>', methods=['POST'])
@@ -394,16 +394,16 @@ def asset_delete(cur_id, caseid):
 
     asset = get_asset(cur_id, caseid)
     if not asset:
-        return response_error("Invalid asset ID for this case")
+        return response_error("此案例下资产 ID 无效")
 
     # Deletes an asset and the potential links with the IoCs from the database
     delete_asset(cur_id, caseid)
 
     call_modules_hook('on_postload_asset_delete', data=cur_id, caseid=caseid)
 
-    track_activity(f"removed asset ID {asset.asset_name}", caseid=caseid)
+    track_activity(f"资产ID {asset.asset_name} 已移除", caseid=caseid)
 
-    return response_success("Deleted")
+    return response_success("已删除")
 
 
 @case_assets_blueprint.route('/case/assets/<int:cur_id>/comments/modal', methods=['GET'])
@@ -414,7 +414,7 @@ def case_comment_asset_modal(cur_id, caseid, url_redir):
 
     asset = get_asset(cur_id, caseid=caseid)
     if not asset:
-        return response_error('Invalid asset ID')
+        return response_error('资产 ID 无效')
 
     return render_template("modal_conversation.html", element_id=cur_id, element_type='assets',
                            title=asset.asset_name)
@@ -426,7 +426,7 @@ def case_comment_asset_list(cur_id, caseid):
 
     asset_comments = get_case_asset_comments(cur_id)
     if asset_comments is None:
-        return response_error('Invalid asset ID')
+        return response_error('资产 ID 无效')
 
     # CommentSchema(many=True).dump(task_comments)
     # res = [com._asdict() for com in task_comments]
@@ -440,7 +440,7 @@ def case_comment_asset_add(cur_id, caseid):
     try:
         asset = get_asset(cur_id, caseid=caseid)
         if not asset:
-            return response_error('Invalid asset ID')
+            return response_error('资产 ID 无效')
 
         comment_schema = CommentSchema()
 
@@ -463,10 +463,10 @@ def case_comment_asset_add(cur_id, caseid):
         call_modules_hook('on_postload_asset_commented', data=hook_data, caseid=caseid)
 
         track_activity(f"asset \"{asset.asset_name}\" commented", caseid=caseid)
-        return response_success("Asset commented", data=comment_schema.dump(comment))
+        return response_success("资产已评论", data=comment_schema.dump(comment))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.normalized_messages(), status=400)
+        return response_error(msg="数据错误", data=e.normalized_messages(), status=400)
 
 
 @case_assets_blueprint.route('/case/assets/<int:cur_id>/comments/<int:com_id>', methods=['GET'])
