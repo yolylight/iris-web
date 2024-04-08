@@ -375,7 +375,7 @@ def get_user_cases_fast(user_id):
 
 def remove_cases_access_from_user(user_id, cases_list):
     if not user_id or type(user_id) is not int:
-        return False, 'Invalid user id'
+        return False, '无效用户id'
 
     if not cases_list or type(cases_list[0]) is not int:
         return False, "Invalid cases list"
@@ -394,10 +394,10 @@ def remove_cases_access_from_user(user_id, cases_list):
 
 def remove_case_access_from_user(user_id, case_id):
     if not user_id or type(user_id) is not int:
-        return False, 'Invalid user id'
+        return False, '无效用户id'
 
     if not case_id or type(case_id) is not int:
-        return False, "Invalid case id"
+        return False, "无效案例id"
 
     UserCaseAccess.query.filter(
         and_(
@@ -408,21 +408,21 @@ def remove_case_access_from_user(user_id, case_id):
     db.session.commit()
 
     ac_remove_case_access_from_user(user_id, case_id)
-    return True, 'Case access removed'
+    return True, '案例访问权限已移除'
 
 
 def set_user_case_access(user_id, case_id, access_level):
     if user_id is None or type(user_id) is not int:
-        return False, 'Invalid user id'
+        return False, '无效用户id'
 
     if case_id is None or type(case_id) is not int:
-        return False, "Invalid case id"
+        return False, "无效案例id"
 
     if access_level is None or type(access_level) is not int:
-        return False, "Invalid access level"
+        return False, "无效访问级别"
 
     if CaseAccessLevel.has_value(access_level) is False:
-        return False, "Invalid access level"
+        return False, "无效访问级别"
 
     uca = UserCaseAccess.query.filter(
         UserCaseAccess.user_id == user_id,
