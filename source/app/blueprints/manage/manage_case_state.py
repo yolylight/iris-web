@@ -69,7 +69,7 @@ def get_case_state(state_id: int, caseid: int) -> Response:
     schema = CaseStateSchema()
     case_state = get_case_state_by_id(state_id)
     if not case_state:
-        return response_error(f"Invalid case state ID {state_id}")
+        return response_error(f"无效案例状态ID {state_id}")
 
     return response_success("", data=schema.dump(case_state))
 
@@ -95,7 +95,7 @@ def update_case_state_modal(state_id: int, caseid: int, url_redir: bool) -> Unio
     state_form = CaseStateForm()
     case_state = get_case_state_by_id(state_id)
     if not case_state:
-        return response_error(f"Invalid case state ID {state_id}")
+        return response_error(f"无效案例状态ID {state_id}")
 
     state_form.state_name.render_kw = {'value': case_state.state_name}
     state_form.state_description.render_kw = {'value': case_state.state_description}
@@ -118,14 +118,14 @@ def update_case_state(state_id: int, caseid: int) -> Response:
         Flask Response object
     """
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     case_state = get_case_state_by_id(state_id)
     if not case_state:
-        return response_error(f"Invalid case state ID {state_id}")
+        return response_error(f"无效案例状态ID {state_id}")
 
     if case_state.protected:
-        return response_error(f"Case state {case_state.state_name} is protected")
+        return response_error(f"案例状态 {case_state.state_name} 受保护")
 
     ccl = CaseStateSchema()
 
@@ -135,12 +135,12 @@ def update_case_state(state_id: int, caseid: int) -> Response:
 
         if ccls:
             track_activity(f"updated case state {ccls.state_id}", caseid=caseid)
-            return response_success("Case state updated", ccl.dump(ccls))
+            return response_success("案例状态已更新", ccl.dump(ccls))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
-    return response_error("Unexpected error server-side. Nothing updated", data=case_state)
+    return response_error("服务器端出现意外错误。未更新", data=case_state)
 
 
 @manage_case_state_blueprint.route('/manage/case-states/add/modal', methods=['GET'])
@@ -176,7 +176,7 @@ def add_case_state(caseid: int) -> Response:
         Flask Response object
     """
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     ccl = CaseStateSchema()
 
@@ -189,12 +189,12 @@ def add_case_state(caseid: int) -> Response:
             db.session.commit()
 
             track_activity(f"added case state {ccls.state_name}", caseid=caseid)
-            return response_success("Case state added", ccl.dump(ccls))
+            return response_success("案例状态已添加", ccl.dump(ccls))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
-    return response_error("Unexpected error server-side. Nothing added", data=None)
+    return response_error("服务器端出现意外错误。未添加", data=None)
 
 
 @manage_case_state_blueprint.route('/manage/case-states/delete/<int:state_id>',
@@ -212,18 +212,18 @@ def delete_case_state(state_id: int, caseid: int) -> Response:
     """
     case_state = get_case_state_by_id(state_id)
     if not case_state:
-        return response_error(f"Invalid case state ID {state_id}")
+        return response_error(f"无效案例状态ID {state_id}")
 
     if case_state.protected:
-        return response_error(f"Case state {case_state.state_name} is protected")
+        return response_error(f"案例状态{case_state.state_name} 受保护")
 
     cases = get_cases_using_state(case_state.state_id)
     if cases:
-        return response_error(f"Case state {case_state.state_name} is in use by case(s)"
+        return response_error(f"案例状态{case_state.state_name} 被案例使用"
                               f" {','.join([str(c.case_id) for c in cases])}")
 
     db.session.delete(case_state)
     db.session.commit()
 
     track_activity(f"deleted case state {case_state.state_name}", caseid=caseid)
-    return response_success("Case state deleted")
+    return response_success("案例状态已删除")
