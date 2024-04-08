@@ -168,7 +168,7 @@ def update_user_orgs(user_id, orgs):
             primary_org = org.org_id
 
     if primary_org == 0:
-        return False, 'User does not have primary organisation. Set one before managing its organisations'
+        return False, '用户没有主要组织。在管理其组织之前先设置一个'
 
     set_cur_orgs = set([org.org_id for org in cur_orgs])
     set_new_orgs = set(int(org) for org in orgs)
@@ -191,13 +191,13 @@ def update_user_orgs(user_id, orgs):
             ).delete()
         else:
             db.session.rollback()
-            return False, f'Cannot delete user from primary organisation {org}. Change it before deleting.'
+            return False, f'无法从主组织{org}删除用户 . 删除前修改.'
         updated = True
 
     db.session.commit()
 
     ac_auto_update_user_effective_access(user_id)
-    return True, f'Organisations membership updated' if updated else "Nothing changed"
+    return True, f'组织关系已更新' if updated else "无更改"
 
 
 def change_user_primary_org(user_id, old_org_id, new_org_id):
@@ -448,7 +448,7 @@ def set_user_case_access(user_id, case_id, access_level):
 
     ac_set_case_access_for_user(user_id, case_id, access_level)
 
-    return True, 'Case access set to {} for user {}'.format(access_level, user_id)
+    return True, '用户{}的案例访问设置为{}'.format(user_id, access_level)
 
 
 def get_user_details(user_id, include_api_key=False):
@@ -484,12 +484,12 @@ def get_user_details(user_id, include_api_key=False):
 
 def add_case_access_to_user(user, cases_list, access_level):
     if not user:
-        return None, "Invalid user"
+        return None, "无效用户"
 
     for case_id in cases_list:
         case = get_case(case_id)
         if not case:
-            return None, "Invalid case ID"
+            return None, "无效用户ID"
 
         access_level_mask = ac_access_level_mask_from_val_list([access_level])
 
@@ -511,7 +511,7 @@ def add_case_access_to_user(user, cases_list, access_level):
     db.session.commit()
     ac_auto_update_user_effective_access(user.id)
 
-    return user, "Updated"
+    return user, "已更新"
 
 
 def get_user_by_username(username):
