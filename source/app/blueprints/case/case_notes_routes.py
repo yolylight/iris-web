@@ -110,7 +110,7 @@ def case_note_detail(cur_id, caseid):
     try:
         note = get_note(cur_id, caseid=caseid)
         if not note:
-            return response_error(msg="Invalid note ID")
+            return response_error(msg="笔记ID无效")
 
         note_comments = get_case_note_comments(cur_id)
 
@@ -123,7 +123,7 @@ def case_note_detail(cur_id, caseid):
         return response_success(data=note)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @case_notes_blueprint.route('/case/notes/delete/<int:cur_id>', methods=['POST'])
@@ -134,19 +134,19 @@ def case_note_delete(cur_id, caseid):
 
     note = get_note(cur_id, caseid)
     if not note:
-        return response_error("Invalid note ID for this case")
+        return response_error("对于此案例笔记ID无效")
 
     try:
 
         delete_note(cur_id, caseid)
 
     except Exception as e:
-        return response_error("Unable to remove note", data=e.__traceback__)
+        return response_error("无法移除笔记", data=e.__traceback__)
 
     call_modules_hook('on_postload_note_delete', data=cur_id, caseid=caseid)
 
     track_activity(f"deleted note \"{note.note_title}\"", caseid=caseid)
-    return response_success(f"Note deleted {cur_id}")
+    return response_success(f"笔记已删除 {cur_id}")
 
 
 @case_notes_blueprint.route('/case/notes/update/<int:cur_id>', methods=['POST'])
@@ -159,7 +159,7 @@ def case_note_save(cur_id, caseid):
 
         note = get_note(cur_id, caseid=caseid)
         if not note:
-            return response_error("Invalid note ID for this case")
+            return response_error("对于此案例笔记ID无效")
 
         request_data = call_modules_hook('on_preload_note_update', data=request.get_json(), caseid=caseid)
 
@@ -172,10 +172,10 @@ def case_note_save(cur_id, caseid):
         note = call_modules_hook('on_postload_note_update', data=note, caseid=caseid)
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
     track_activity(f"updated note \"{note.note_title}\"", caseid=caseid)
-    return response_success(f"Note ID {cur_id} saved", data=addnote_schema.dump(note))
+    return response_success(f"笔记ID {cur_id} 已保存", data=addnote_schema.dump(note))
 
 
 @case_notes_blueprint.route('/case/notes/add', methods=['POST'])
@@ -187,7 +187,7 @@ def case_note_add(caseid):
         request_data = request.get_json()
 
         if request_data.get('group_id'):
-            return response_error('Group ID is deprecated, please use directory_id instead')
+            return response_error('组ID已废弃，请使用 directory_id 代替')
 
         request_data = call_modules_hook('on_preload_note_create', data=request.get_json(), caseid=caseid)
 
@@ -208,13 +208,13 @@ def case_note_add(caseid):
         new_note = call_modules_hook('on_postload_note_create', data=new_note, caseid=caseid)
 
         if new_note:
-            track_activity(f"added note \"{new_note.note_title}\"", caseid=caseid)
-            return response_success('Note added', data=addnote_schema.dump(new_note))
+            track_activity(f"笔记\"{new_note.note_title}\"已添加", caseid=caseid)
+            return response_success('笔记已添加', data=addnote_schema.dump(new_note))
 
-        return response_error("Unable to create note for internal reasons")
+        return response_error("由于内部原因无法创建笔记")
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @case_notes_blueprint.route('/case/notes/directories/add', methods=['POST'])
@@ -237,10 +237,10 @@ def case_directory_add(caseid):
         db.session.commit()
 
         track_activity(f"added directory \"{new_directory.name}\"", caseid=caseid)
-        return response_success('Directory added', data=directory_schema.dump(new_directory))
+        return response_success('目录已添加', data=directory_schema.dump(new_directory))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @case_notes_blueprint.route('/case/notes/directories/update/<dir_id>', methods=['POST'])
@@ -250,7 +250,7 @@ def case_directory_update(dir_id, caseid):
 
         directory = get_directory(dir_id, caseid)
         if not directory:
-            return response_error(msg="Invalid directory ID")
+            return response_error(msg="目录ID无效")
 
         directory_schema = CaseNoteDirectorySchema()
         request_data = request.get_json()
@@ -265,15 +265,15 @@ def case_directory_update(dir_id, caseid):
 
         db.session.commit()
 
-        track_activity(f"modified directory \"{new_directory.name}\"", caseid=caseid)
-        return response_success('Directory modified', data=directory_schema.dump(new_directory))
+        track_activity(f"目录\"{new_directory.name}\"已修改", caseid=caseid)
+        return response_success('目录已修改', data=directory_schema.dump(new_directory))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
     except Exception as e:
         app.logger.exception(f"Failed to update directory: {e}")
-        return response_error(msg="Internal error", status=500)
+        return response_error(msg="内部错误", status=500)
 
 
 @case_notes_blueprint.route('/case/notes/directories/delete/<dir_id>', methods=['POST'])
@@ -283,18 +283,18 @@ def case_directory_delete(dir_id, caseid):
 
         directory = get_directory(dir_id, caseid)
         if not directory:
-            return response_error(msg="Invalid directory ID")
+            return response_error(msg="目录ID无效")
 
         # Proceed to delete directory, but remove all associated notes and subdirectories recursively
         has_succeed = delete_directory(directory, caseid)
         if has_succeed:
             track_activity(f"deleted directory \"{directory.name}\"", caseid=caseid)
-            return response_success('Directory deleted')
+            return response_success('目录已删除')
 
-        return response_error('Unable to delete directory')
+        return response_error('无法删除目录')
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
 
 @case_notes_blueprint.route('/case/notes/groups/list', methods=['GET'])
@@ -311,7 +311,7 @@ def case_notes_state(caseid):
     if os:
         return response_success(data=os)
     else:
-        return response_error('No notes state for this case.')
+        return response_error('此案例无笔记状态.')
 
 
 @case_notes_blueprint.route('/case/notes/search', methods=['GET'])
@@ -357,7 +357,7 @@ def case_get_notes_group(cur_id, caseid):
 def case_filter_notes_directories(caseid):
 
     if not get_case(caseid=caseid):
-        return response_error("Invalid case ID")
+        return response_error("案例ID无效")
 
     directories = get_directories_with_note_count(caseid)
 
@@ -379,7 +379,7 @@ def case_comment_note_modal(cur_id, caseid, url_redir):
 
     note = get_note(cur_id, caseid=caseid)
     if not note:
-        return response_error('Invalid note ID')
+        return response_error('笔记ID无效')
 
     return render_template("modal_conversation.html", element_id=cur_id, element_type='notes',
                            title=note.note_title)
@@ -391,7 +391,7 @@ def case_comment_note_list(cur_id, caseid):
 
     note_comments = get_case_note_comments(cur_id)
     if note_comments is None:
-        return response_error('Invalid note ID')
+        return response_error('笔记ID无效')
 
     return response_success(data=CommentSchema(many=True).dump(note_comments))
 
@@ -403,7 +403,7 @@ def case_comment_note_add(cur_id, caseid):
     try:
         note = get_note(cur_id, caseid=caseid)
         if not note:
-            return response_error('Invalid note ID')
+            return response_error('笔记ID无效')
 
         comment_schema = CommentSchema()
 
@@ -426,10 +426,10 @@ def case_comment_note_add(cur_id, caseid):
         call_modules_hook('on_postload_note_commented', data=hook_data, caseid=caseid)
 
         track_activity("note \"{}\" commented".format(note.note_title), caseid=caseid)
-        return response_success("Event commented", data=comment_schema.dump(comment))
+        return response_success("事件已评论", data=comment_schema.dump(comment))
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.normalized_messages(), status=400)
+        return response_error(msg="数据错误", data=e.normalized_messages(), status=400)
 
 
 @case_notes_blueprint.route('/case/notes/<int:cur_id>/comments/<int:com_id>', methods=['GET'])
@@ -438,7 +438,7 @@ def case_comment_note_get(cur_id, com_id, caseid):
 
     comment = get_case_note_comment(cur_id, com_id)
     if not comment:
-        return response_error("Invalid comment ID")
+        return response_error("评论ID无效")
 
     return response_success(data=comment._asdict())
 
@@ -495,7 +495,7 @@ def socket_join_note(data):
     join_room(room=room)
 
     emit('join-notes', {
-        'message': f"{current_user.user} just joined",
+        'message': f"{current_user.user} 已加入",
         "user": current_user.user
     }, room=room)
 
@@ -529,7 +529,7 @@ def socket_join_overview(data):
     join_room(room=room)
 
     emit('join-notes-overview', {
-        'message': f"{current_user.user} just joined",
+        'message': f"{current_user.user} 已加入",
         "user": current_user.user
     }, room=room)
 
