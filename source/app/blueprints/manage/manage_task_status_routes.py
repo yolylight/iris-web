@@ -58,6 +58,6 @@ def view_task_status(cur_id, caseid):
     ).first()
 
     if not lstatus:
-        return response_error(f"Task status ID #{cur_id} not found")
+        return response_error(f"任务状态ID #{cur_id}未找到")
 
     return response_success(data=lstatus._asdict())
