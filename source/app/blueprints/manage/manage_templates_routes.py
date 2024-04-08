@@ -145,7 +145,7 @@ def add_template(caseid):
             template_file.save(os.path.join(app.config['TEMPLATES_PATH'], filename))
 
         except Exception as e:
-            return response_error(f"Unable to add template. {e}")
+            return response_error(f"无法添加模板. {e}")
 
         report_template.internal_reference = filename
 
@@ -163,9 +163,9 @@ def add_template(caseid):
             "report_type_id": report_template.report_type_id
         }
 
-        return response_success("Added successfully", data=ret)
+        return response_success("添加成功", data=ret)
 
-    return response_error("File is invalid")
+    return response_error("文件无效")
 
 
 @manage_templates_blueprint.route('/manage/templates/download/<report_id>', methods=['GET'])
@@ -181,7 +181,7 @@ def download_template(report_id, caseid):
         return resp
 
     else:
-        return response_error("Unable to download file")
+        return response_error("无法下载文件")
 
 
 @manage_templates_blueprint.route('/manage/templates/delete/<report_id>', methods=['POST'])
@@ -191,7 +191,7 @@ def delete_template(report_id, caseid):
 
     report_template = CaseTemplateReport.query.filter(CaseTemplateReport.id == report_id).first()
     if report_template is None:
-        return response_error('Template not found')
+        return response_error('模板未找到')
 
     report_name = report_template.name
 
@@ -200,7 +200,7 @@ def delete_template(report_id, caseid):
         os.unlink(os.path.join(app.config['TEMPLATES_PATH'], report_template.internal_reference))
 
     except Exception as e:
-        error = f"Template reference will be deleted but there has been some errors. {e}"
+        error = f"模板引用将被删除，但存在一些错误. {e}"
 
     finally:
         CaseTemplateReport.query.filter(CaseTemplateReport.id == report_id).delete()
@@ -210,4 +210,4 @@ def delete_template(report_id, caseid):
         return response_error(error)
 
     track_activity(f"report template '{report_name}' deleted", caseid=caseid, ctx_less=True)
-    return response_success("Deleted successfully", data=error)
+    return response_success("删除成功", data=error)
