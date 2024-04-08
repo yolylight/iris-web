@@ -80,7 +80,7 @@ def manage_groups_view_modal(cur_id, caseid, url_redir):
     form = AddGroupForm()
     group = get_group_details(cur_id)
     if not group:
-        return response_error("Invalid group ID")
+        return response_error("无效组ID")
 
     all_perms = ac_get_all_permissions()
 
@@ -108,11 +108,11 @@ def manage_groups_add_modal(caseid, url_redir):
 def manage_groups_add(caseid):
 
     if not request.is_json:
-        return response_error("Invalid request, expecting JSON")
+        return response_error("无效请求, 需要JSON")
 
     data = request.get_json()
     if not data:
-        return response_error("Invalid request, expecting JSON")
+        return response_error("无效请求, 需要JSON")
 
     ags = AuthorizationGroupSchema()
 
@@ -125,7 +125,7 @@ def manage_groups_add(caseid):
         db.session.commit()
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
     track_activity(message=f"added group {ags_c.group_name}", caseid=caseid, ctx_less=True)
 
@@ -137,15 +137,15 @@ def manage_groups_add(caseid):
 def manage_groups_update(cur_id, caseid):
 
     if not request.is_json:
-        return response_error("Invalid request, expecting JSON")
+        return response_error("无效请求, 需要JSON")
 
     data = request.get_json()
     if not data:
-        return response_error("Invalid request, expecting JSON")
+        return response_error("无效请求, 需要JSON")
 
     group = get_group(cur_id)
     if not group:
-        return response_error("Invalid group ID")
+        return response_error("无效组ID")
 
     if protect_demo_mode_group(group):
         return ac_api_return_access_denied(caseid=caseid)
@@ -162,13 +162,13 @@ def manage_groups_update(cur_id, caseid):
 
             if ac_ldp_group_update(current_user.id):
                 db.session.rollback()
-                return response_error(msg="That might not be a good idea Dave",
-                                      data="Update the group permissions will lock you out")
+                return response_error(msg="这不是个好主意",
+                                      data="更新组权限将让你无法访问")
 
         db.session.commit()
 
     except marshmallow.exceptions.ValidationError as e:
-        return response_error(msg="Data error", data=e.messages, status=400)
+        return response_error(msg="数据错误", data=e.messages, status=400)
 
     return response_success('', data=ags.dump(ags_c))
 
@@ -179,17 +179,17 @@ def manage_groups_delete(cur_id, caseid):
 
     group = get_group(cur_id)
     if not group:
-        return response_error("Invalid group ID")
+        return response_error("无效组ID")
 
     if protect_demo_mode_group(group):
         return ac_api_return_access_denied(caseid=caseid)
 
     if ac_ldp_group_removal(current_user.id, group_id=group.group_id):
-        return response_error("I can't let you do that Dave", data="Removing this group will lock you out")
+        return response_error("不能那样做", data="移除这个组将让你无法访问")
 
     delete_group(group)
 
-    return response_success('Group deleted')
+    return response_success('组已删除')
 
 
 @manage_groups_blueprint.route('/manage/groups/<int:cur_id>', methods=['GET'])
@@ -198,7 +198,7 @@ def manage_groups_view(cur_id, caseid):
 
     group = get_group_details(cur_id)
     if not group:
-        return response_error("Invalid group ID")
+        return response_error("无效组ID")
 
     ags = AuthorizationGroupSchema()
     return response_success('', data=ags.dump(group))
@@ -212,7 +212,7 @@ def manage_groups_members_modal(cur_id, caseid, url_redir):
 
     group = get_group_with_members(cur_id)
     if not group:
-        return response_error("Invalid group ID")
+        return response_error("无效组ID")
 
     users = get_users_list_restricted()
 
@@ -225,20 +225,20 @@ def manage_groups_members_update(cur_id, caseid):
 
     group = get_group_with_members(cur_id)
     if not group:
-        return response_error("Invalid group ID")
+        return response_error("无效组ID")
 
     if protect_demo_mode_group(group):
         return ac_api_return_access_denied(caseid=caseid)
 
     if not request.is_json:
-        return response_error("Invalid request, expecting JSON")
+        return response_error("无效请求, 需要JSON")
 
     data = request.get_json()
     if not data:
-        return response_error("Invalid request, expecting JSON")
+        return response_error("无效请求, 需要JSON")
 
     if not isinstance(data.get('group_members'), list):
-        return response_error("Expecting a list of IDs")
+        return response_error("需要ID列表")
 
     update_group_members(group, data.get('group_members'))
     group = get_group_with_members(cur_id)
@@ -252,23 +252,22 @@ def manage_groups_members_delete(cur_id, cur_id_2, caseid):
 
     group = get_group_with_members(cur_id)
     if not group:
-        return response_error("Invalid group ID")
+        return response_error("无效组ID")
 
     if protect_demo_mode_group(group):
         return ac_api_return_access_denied(caseid=caseid)
 
     user = get_user(cur_id_2)
     if not user:
-        return response_error("Invalid user ID")
+        return response_error("无效用户ID")
 
     if ac_ldp_group_removal(user_id=user.id, group_id=group.group_id):
-        return response_error('I cannot let you do that Dave', data="Removing you from the group will make you "
-                                                                    "loose your access rights")
+        return response_error('不能那样做', data="将你移出组会使你丢失访问权限")
 
     remove_user_from_group(group, user)
     group = get_group_with_members(cur_id)
 
-    return response_success('Member deleted from group', data=group)
+    return response_success('成员已从组删除', data=group)
 
 
 @manage_groups_blueprint.route('/manage/groups/<int:cur_id>/cases-access/modal', methods=['GET'])
@@ -279,7 +278,7 @@ def manage_groups_cac_modal(cur_id, caseid, url_redir):
 
     group = get_group_details(cur_id)
     if not group:
-        return response_error("Invalid group ID")
+        return response_error("无效组ID")
 
     cases_list = list_cases_dict(current_user.id)
     group_cases_access = [case.get('case_id') for case in group.group_cases_access]
@@ -301,15 +300,15 @@ def manage_groups_cac_modal(cur_id, caseid, url_redir):
 @ac_api_requires(Permissions.server_administrator, no_cid_required=True)
 def manage_groups_cac_add_case(cur_id, caseid):
     if not request.is_json:
-        return response_error("Invalid request, expecting JSON")
+        return response_error("无效请求, 需要JSON")
 
     data = request.get_json()
     if not data:
-        return response_error("Invalid request, expecting JSON")
+        return response_error("无效请求, 需要JSON")
 
     group = get_group_with_members(cur_id)
     if not group:
-        return response_error("Invalid group ID")
+        return response_error("无效组ID")
 
     if protect_demo_mode_group(group):
         return ac_api_return_access_denied(caseid=caseid)
@@ -318,10 +317,10 @@ def manage_groups_cac_add_case(cur_id, caseid):
         try:
             data['access_level'] = int(data.get('access_level'))
         except:
-            return response_error("Expecting access_level as int")
+            return response_error("access_level应为int")
 
     if not isinstance(data.get('cases_list'), list) and data.get('auto_follow_cases') is False:
-        return response_error("Expecting cases_list as list")
+        return response_error("cases_list应为list")
 
     if data.get('auto_follow_cases') is True:
         group, logs = add_all_cases_access_to_group(group, data.get('access_level'))
@@ -349,20 +348,20 @@ def manage_groups_cac_delete_case(cur_id, caseid):
 
     group = get_group_with_members(cur_id)
     if not group:
-        return response_error("Invalid group ID")
+        return response_error("无效组ID")
 
     if protect_demo_mode_group(group):
         return ac_api_return_access_denied(caseid=caseid)
 
     if not request.is_json:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     data = request.get_json()
     if not data:
-        return response_error("Invalid request")
+        return response_error("无效请求")
 
     if not isinstance(data.get('cases'), list):
-        return response_error("Expecting cases as list")
+        return response_error("case应为list")
 
     try:
 
@@ -376,6 +375,6 @@ def manage_groups_cac_delete_case(cur_id, caseid):
 
     if success:
         ac_recompute_effective_ac_from_users_list(group.group_members)
-        return response_success(msg="Cases access removed from group")
+        return response_success(msg="案例已从组移除")
 
     return response_error(msg=logs)
