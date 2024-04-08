@@ -328,7 +328,7 @@ def delete_ioc_comment(ioc_id, comment_id):
         Comments.comment_user_id == current_user.id
     ).first()
     if not comment:
-        return False, "You are not allowed to delete this comment"
+        return False, "你没有权利删除此评论"
 
     IocComments.query.filter(
         IocComments.comment_ioc_id == ioc_id,
@@ -338,7 +338,7 @@ def delete_ioc_comment(ioc_id, comment_id):
     db.session.delete(comment)
     db.session.commit()
 
-    return True, "Comment deleted"
+    return True, "评论已删除"
 
 def get_ioc_by_value(ioc_value, caseid=None):
     if caseid:
