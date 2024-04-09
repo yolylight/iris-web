@@ -104,7 +104,7 @@
                                 <span type="text" class="">{{ data.user.user_name }}</span>
                             </div>
                             <div class="form-group mt--3">
-                                <label>拥有者 :</label>
+                                <label>负责人 :</label>
                                 <span type="text" class="">{{ data.owner.user_name }}</span>
                             </div>
                             {% if data.reviewer %}
@@ -115,7 +115,7 @@
                             {% endif %}
                             {% if data.review_status %}
                                 <div class="form-group mt--3">
-                                    <label>审核人 :</label>
+                                    <label>审核状态:</label>
                                     <span type="text" class="">{{ data.review_status.status_name }}</span>
                                 </div>
                             {% endif %}
@@ -177,7 +177,7 @@
                                     <div class="col-xs-12 col-6">
                                         <div class="input-group mb-4">
                                             <div class="input-group-prepend fix-label-item">
-                                                <span class="input-group-text">拥有者</span>
+                                                <span class="input-group-text">负责人</span>
                                             </div>
                                             <select class="selectpicker form-control"
                                                   id="case_quick_owner" name="owner_id">
@@ -208,8 +208,8 @@
                                                   id="case_quick_status" name="status_id">
                                               <option value="0" {% if data.status_id == 0 %}selected{% endif %} class="badge-text">未知</option>
                                               <option value="1" {% if data.status_id == 1 %}selected{% endif %} class="badge-text">误报</option>
-                                              <option value="2" {% if data.status_id == 2 %}selected{% endif %} class="badge-text">存在问题有影响</option>
-                                              <option value="4" {% if data.status_id == 4 %}selected{% endif %} class="badge-text">存在问题无影响</option>
+                                              <option value="2" {% if data.status_id == 2 %}selected{% endif %} class="badge-text">有问题有影响</option>
+                                              <option value="4" {% if data.status_id == 4 %}selected{% endif %} class="badge-text">有问题无影响</option>
                                               <option value="3" {% if data.status_id == 3 %}selected{% endif %} class="badge-text">不适用</option>
                                           </select>
                                         </div>
@@ -415,7 +415,7 @@
     });
     $('#case_quick_owner').selectpicker({
         liveSearch: true,
-        title: "所有人",
+        title: "负责人",
         style: "btn-outline-white"
     });
     $('#case_quick_reviewer').selectpicker({
