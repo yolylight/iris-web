@@ -225,7 +225,7 @@ let OverviewTable = $("#overview_table").DataTable({
                 let div_anchor = $('<div>');
                 div_anchor.addClass('row');
                 div_anchor.append(get_avatar_initials(sdata, false, null, true));
-                div_anchor.append($('<span/>').addClass('ml-1').text(sdata));
+                div_anchor.append($('<span/>').addClass('ml-1')(sdata));
                 return div_anchor.html();
             }
             if ((type === 'filter' || type === 'sort') && data !== null) {
@@ -282,7 +282,7 @@ function get_cases_overview(silent, show_full=false) {
     show_loader();
     show_full = show_full || $('#overviewLoadClosedCase').prop('checked');
 
-     $('#overviewTableTitle').text(show_full ? '所有案例' : '开放案例');
+     $('#overviewTableTitle')(show_full ? '所有案例' : '开放案例');
 
     get_raw_request_api('/overview/filter?cid=' + get_caseid() + (show_full ? '&show_closed=true' : ''))
     .done((data) => {
@@ -303,8 +303,8 @@ function get_cases_overview(silent, show_full=false) {
 
 function show_case_view(row_index) {
     let case_data = OverviewTable.row(row_index).data();
-    $('#caseViewModal').find('.modal-title').text(case_data.name);
-    $('#caseViewModal').find('.modal-subtitle').text(case_data.case_uuid);
+    $('#caseViewModal').find('.modal-title')(case_data.name);
+    $('#caseViewModal').find('.modal-subtitle')(case_data.case_uuid);
 
     let body = $('#caseViewModal').find('.modal-body .container');
     body.empty();
@@ -312,7 +312,7 @@ function show_case_view(row_index) {
     // Owner Card
     let owner_card = $('<div/>').addClass('card mb-3');
     let owner_body = $('<div/>').addClass('card-body');
-    owner_body.append($('<h2/>').addClass('card-title mb-2').text('元数据'));
+    owner_body.append($('<h2/>').addClass('card-title mb-2')('元数据'));
 
     let owner_row = $('<div/>').addClass('row');
     let owner_col1 = $('<div/>').addClass('col-md-6');
@@ -352,11 +352,11 @@ function show_case_view(row_index) {
     }
 
     let owner_dl1 = $('<dl class="row"/>');
-    owner_dl1.append($('<dt class="col-sm-3"/>').text('Owner:'));
+    owner_dl1.append($('<dt class="col-sm-3"/>').text('负责人:'));
     owner_dl1.append($('<dd class="col-sm-8"/>').text(case_data.owner.user_name));
-    owner_dl1.append($('<dt class="col-sm-3"/>').text('Opening User:'));
+    owner_dl1.append($('<dt class="col-sm-3"/>').text('创建用户:'));
     owner_dl1.append($('<dd class="col-sm-8"/>').text(case_data.user.user_name));
-    owner_dl1.append($('<dt class="col-sm-3"/>').text('Open Date:'));
+    owner_dl1.append($('<dt class="col-sm-3"/>').text('创建日期:'));
     owner_dl1.append($('<dd class="col-sm-8"/>').text(case_data.open_date));
 
     if (case_data.close_date != null) {
@@ -365,7 +365,7 @@ function show_case_view(row_index) {
     }
     owner_dl1.append($('<dt class="col-sm-3"/>').text('标签:'));
     owner_dl1.append($('<dd class="col-sm-8"/>').html(tagsStr !== ''? tagsStr : '无标签'));
-    owner_dl1.append($('<dt class="col-sm-3"/>').text('State:'));
+    owner_dl1.append($('<dt class="col-sm-3"/>').text('状态:'));
     owner_dl1.append($('<dd class="col-sm-8"/>').text(case_data.state ? case_data.state.state_description: 'None'));
     owner_dl1.append($('<dt class="col-sm-3"/>').text('最后更新:'));
     owner_dl1.append($('<dd class="col-sm-8"/>').text(timeSinceLastUpdateStr));
@@ -390,7 +390,7 @@ function show_case_view(row_index) {
     owner_dl2.append($('<dd class="col-sm-8"/>').text(case_data.soc_id !== '' ? case_data.soc_id : 'None'));
     owner_dl2.append($('<dt class="col-sm-3"/>').text('相关告警:'));
     owner_dl2.append($('<dd class="col-sm-8"/>').html(`<a target="_blank" rel="noopener" href='/alerts?case_id=${case_data.case_id}'>${case_data.alerts.length} 相关告警 <i class="fa-solid fa-up-right-from-square ml-2"></i></a>`));
-    owner_dl2.append($('<dt class="col-sm-3"/>').text('Tasks:'));
+    owner_dl2.append($('<dt class="col-sm-3"/>').text('任务:'));
     if (case_data.tasks_status != null) {
         owner_dl2.append($('<dd class="col-sm-8"/>').html(`<a target="_blank" rel="noopener" href='/case/tasks?cid=${case_data.case_id}'>${case_data.tasks_status.closed_tasks}/${case_data.tasks_status.open_tasks + case_data.tasks_status.closed_tasks} 任务 <i class="fa-solid fa-up-right-from-square ml-2"></i></a>`));
     } else {
@@ -421,7 +421,7 @@ function show_case_view(row_index) {
     // Description Card
     let desc_card = $('<div/>').addClass('card mb-3');
     let desc_body = $('<div/>').addClass('card-body');
-    desc_body.append($('<h2/>').addClass('card-title mb-3').text('Summary'));
+    desc_body.append($('<h2/>').addClass('card-title mb-3').text('摘要'));
     let converter = get_showdown_convert();
     let html = converter.makeHtml(case_data.description);
     desc_body.append($('<div/>').addClass('card-text').html(html));
