@@ -812,13 +812,13 @@ function alertResolutionToARC(resolution) {
         return '';
     }
     switch (resolution.resolution_status_name) {
-        case 'True Positive With Impact':
-            return `<span class="badge alert-bade-status badge-pill badge-danger mr-2">有影响的真实告警</span>`
-        case 'True Positive Without Impact':
-            return `<span class="badge alert-bade-status badge-pill badge-warning mr-2">无影响真实告警</span>`
-        case 'False Positive':
+        case '有问题有影响':
+            return `<span class="badge alert-bade-status badge-pill badge-danger mr-2">有问题有影响</span>`
+        case '有问题无影响':
+            return `<span class="badge alert-bade-status badge-pill badge-warning mr-2">有问题无影响</span>`
+        case '误报':
             return `<span class="badge alert-bade-status badge-pill badge-success mr-2">误报</span>`
-        case 'Unknown':
+        case '未知':
             return `<span class="badge alert-bade-status badge-pill badge-light mr-2">未知</span>`
     }
 }
