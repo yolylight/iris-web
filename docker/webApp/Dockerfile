@@ -23,9 +23,6 @@
 FROM python:3.9 AS compile-image
 RUN apt-get update
 
-RUN [ ! -d ~/.pip ] && mkdir -p ~/.pip || :
-COPY docker/webApp/pip.conf ~/.pip/pip.conf
-
 RUN python -m venv /opt/venv
 # Make sure we use the virtualenv:
 ENV PATH="/opt/venv/bin:$PATH"
@@ -33,6 +30,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 COPY source/dependencies /dependencies
 COPY source/requirements.txt /
 
+RUN pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 RUN pip3 install -r requirements.txt
 
 ###############
