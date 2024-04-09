@@ -172,7 +172,7 @@ def close_case(case_id):
     if res:
         res.close_date = datetime.utcnow()
 
-        res.state_id = get_case_state_by_name('Closed').state_id
+        res.state_id = get_case_state_by_name('已关闭').state_id
 
         db.session.commit()
         return res
@@ -211,7 +211,7 @@ def reopen_case(case_id):
     if res:
         res.close_date = None
 
-        res.state_id = get_case_state_by_name('Open').state_id
+        res.state_id = get_case_state_by_name('开放').state_id
 
         db.session.commit()
         return res
