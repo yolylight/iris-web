@@ -57,11 +57,11 @@ class CaseStatus(enum.Enum):
 
 
 class ReviewStatusList:
-    no_review_required = "No review required"
-    not_reviewed = "Not reviewed"
-    pending_review = "Pending review"
-    review_in_progress = "Review in progress"
-    reviewed = "Reviewed"
+    no_review_required = "无需审核"
+    not_reviewed = "未审核"
+    pending_review = "审核待定"
+    review_in_progress = "审核中"
+    reviewed = "已审核"
 
 
 class CompromiseStatus(enum.Enum):
