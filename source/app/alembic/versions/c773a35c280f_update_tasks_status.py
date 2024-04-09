@@ -43,7 +43,7 @@ def upgrade():
             sa.Column('task_status', sa.Text),
             sa.Column('task_status_id', sa.ForeignKey('task_status.id')),
         )
-        to_update = ['To do', 'In progress', 'On hold', 'Done', 'Canceled']
+        to_update = ['待完成', '处理中', '暂停', '完成', '取消']
 
         # Migrate existing IOCs
         for update in to_update:
