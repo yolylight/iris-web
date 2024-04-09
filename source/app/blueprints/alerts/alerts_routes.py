@@ -573,7 +573,7 @@ def alerts_escalate_route(alert_id, caseid) -> Response:
             return response_error('无权为客户端创建告警的用户', status=403)
 
         # Escalate the alert to a case
-        alert.alert_status_id = AlertStatus.query.filter_by(status_name='Escalated').first().status_id
+        alert.alert_status_id = AlertStatus.query.filter_by(status_name='已升级').first().status_id
         db.session.commit()
 
         # Create a new case from the alert
@@ -588,11 +588,11 @@ def alerts_escalate_route(alert_id, caseid) -> Response:
 
         case = call_modules_hook('on_postload_case_create', data=case, caseid=caseid)
 
-        add_obj_history_entry(case, 'created')
-        track_activity("new case {case_name} created from alert".format(case_name=case.name),
+        add_obj_history_entry(case, '已创建')
+        track_activity("新案例{case_name} 从告警创建".format(case_name=case.name),
                        ctx_less=True)
 
-        add_obj_history_entry(alert, f"Alert escalated to case #{case.case_id}")
+        add_obj_history_entry(alert, f"告警已升级到案例#{case.case_id}")
 
         alert = call_modules_hook('on_postload_alert_escalate', data=alert, caseid=caseid)
 
