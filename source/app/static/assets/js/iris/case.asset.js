@@ -149,7 +149,7 @@ function get_case_assets() {
 
             } else {
                 Table.clear().draw();
-                swal("Oh no !", data.message, "error")
+                swal("不好!", data.message, "error")
             }
         } else {
             Table.clear().draw()
@@ -169,7 +169,7 @@ function delete_asset(asset_id) {
                     $('#modal_add_asset').modal('hide');
                     notify_success('资产已删除');
                 } else {
-                    swal("Oh no !", data.message, "error")
+                    swal("不好!", data.message, "error")
                 }
             });
         }
@@ -291,7 +291,7 @@ function update_asset(do_close){
             notify_success('资产已更新');
         } else {
             $('#submit_new_asset').text('再次保存');
-            swal("Oh no !", data.message, "error")
+            swal("不好!", data.message, "error")
         }
     })
 
@@ -407,7 +407,7 @@ $(document).ready(function(){
                     let link = $('<a>')
                         .attr('href', 'javascript:void(0);')
                         .attr('data-asset_id', row['asset_id'])
-                        .attr('title', 'Asset ID #' + row['asset_id'])
+                        .attr('title', '资产ID #' + row['asset_id'])
                         .addClass('asset_details_link')
                         .text(datak);
 
