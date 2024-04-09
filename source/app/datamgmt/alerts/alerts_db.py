@@ -245,7 +245,7 @@ def get_unspecified_event_category():
     Get the id of the 'Unspecified' event category
     """
     event_cat = EventCategory.query.filter(
-        EventCategory.name == 'Unspecified'
+        EventCategory.name == '未指定'
     ).first()
 
     return event_cat
