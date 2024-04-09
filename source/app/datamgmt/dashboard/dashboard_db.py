@@ -91,8 +91,8 @@ def list_user_reviews():
         Cases.review_status
     ).filter(
         Cases.reviewer_id == current_user.id,
-        ReviewStatus.status_name != 'Reviewed',
-        ReviewStatus.status_name != 'Not reviewed'
+        ReviewStatus.status_name != '已审核',
+        ReviewStatus.status_name != '未审核'
     ).all()
 
     return ct
