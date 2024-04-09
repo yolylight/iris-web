@@ -102,7 +102,7 @@ def get_default_cat():
         EventCategory.id,
         EventCategory.name
     ).filter(
-        EventCategory.name == "Unspecified"
+        EventCategory.name == "未指定"
     ).first()
 
     return [cat._asdict()]
@@ -400,6 +400,6 @@ def get_default_category():
         EventCategory.id,
         EventCategory.name
     ).filter(
-        EventCategory.name == "Unspecified"
+        EventCategory.name == "未指定"
     ).first()
 
