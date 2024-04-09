@@ -27,7 +27,7 @@ function get_hash() {
     }
     getMD5(
         document.getElementById("input_autofill").files[0],
-        prog => $('#btn_rfile_proc').text("Processing "+ (prog * 100).toFixed(2) + "%")
+        prog => $('#btn_rfile_proc').text("处理中 "+ (prog * 100).toFixed(2) + "%")
     ).then(
         res => on_done_hash(res),
         err => console.error(err)
@@ -211,7 +211,7 @@ function edit_rfiles(rfiles_id) {
                             function() {
                                 $('#last_saved').addClass('btn-danger').removeClass('btn-success');
                                 $('#last_saved > i').attr('class', "fa-solid fa-file-circle-exclamation");
-                                $('#submit_new_evidence').text("Unsaved").removeClass('btn-success').addClass('btn-outline-warning').removeClass('btn-outline-danger');
+                                $('#submit_new_evidence').text("未保存").removeClass('btn-success').addClass('btn-outline-warning').removeClass('btn-outline-danger');
                             }, null);
 
         g_evidence_desc_editor.setOption("minLines", "6");
@@ -387,7 +387,7 @@ $(document).ready(function(){
                     let anchor = $('<a>')
                         .attr('href', 'javascript:void(0);')
                         .attr('data-evidence_id', row['id'])
-                        .attr('title', `Evidence ID #${row['id']} - ${data}`)
+                        .attr('title', `证据 ID #${row['id']} - ${data}`)
                         .addClass('evidence_details_link')
 
                     if (isWhiteSpace(data)) {
@@ -410,7 +410,7 @@ $(document).ready(function(){
                   if (row['type'] !== null && row['type'] !== undefined) {
                       data = sanitizeHTML(row['type'].name)
                   } else {
-                      data = 'Unspecified'
+                      data = '未指定'
                   }
               }
               return data;
@@ -481,7 +481,7 @@ $(document).ready(function(){
     /* Modal to add rfiles is closed, clear its contents */
     $('.modal').on('hidden.bs.modal', function () {
         $(this).find('form').trigger('reset');
-        $('#btn_rfile_proc').text('Process');
+        $('#btn_rfile_proc').text('处理');
     })
 
     shared_id = getSharedLink();
