@@ -730,15 +730,15 @@ async function fetchAlerts(page, per_page, filters_string = {}, sort_order= 'des
 
 function alert_severity_to_color(severity) {
   switch (severity) {
-    case 'Critical':
+    case '严重':
       return 'critical';
-    case 'High':
+    case '高':
       return 'danger';
-    case 'Medium':
+    case '中':
       return 'warning';
-    case 'Low':
+    case '低':
       return 'low';
-    case 'Informational':
+    case '信息':
       return 'info';
     default:
       return 'muted';
@@ -747,15 +747,15 @@ function alert_severity_to_color(severity) {
 
 function alertStatusToColor(status) {
     switch (status) {
-        case 'Closed':
+        case '已关闭':
             return 'alert-card-done';
-        case 'Dismissed':
+        case '驳回':
             return 'alert-card-done';
-        case 'Merged':
+        case '已合并':
             return 'alert-card-done';
-        case 'Escalated':
+        case '已升级':
             return 'alert-card-done';
-        case 'New':
+        case '新建':
             return 'alert-card-new';
         default:
             return '';
