@@ -1329,7 +1329,7 @@ async function updateAlerts(page, per_page, filters = {}, paging=false){
   // Check if the selection mode is active
    const selectionModeActive = $('body').hasClass('selection-mode');
    selectionModeActive ? $('body').removeClass('selection-mode') : '';
-   $('#toggle-selection-mode').text('Select');
+   $('#toggle-selection-mode').text('选择');
    $('body').removeClass('selection-mode');
    $('#select-deselect-all').hide();
    $('#alerts-batch-actions').hide();
@@ -1464,11 +1464,11 @@ function collapseAlerts(isExpanded) {
 
     if (isExpanded) {
         alertsContainer.collapse('show');
-        toggleAllBtn.text('Collapse All');
+        toggleAllBtn.text('全部折叠');
         toggleAllBtn.data('is-expanded', true);
     } else {
         alertsContainer.collapse('hide');
-        toggleAllBtn.text('Expand All');
+        toggleAllBtn.text('展开全部');
         toggleAllBtn.data('is-expanded', false);
     }
 }
@@ -1554,13 +1554,13 @@ async function editAlert(alert_id, close=false) {
     $('#editAlertNote').val($(`#alertNote-${alert_id}`).text());
 
     if (close) {
-        confirmAlertEdition.text('Close alert');
+        confirmAlertEdition.text('关闭告警');
         $('.alert-edition-part').hide();
         $('#closeAlertModalLabel').text(`关闭告警 #${alert_id}`);
     } else {
         $('.alert-edition-part').show();
         $('#closeAlertModalLabel').text(`修改告警 #${alert_id}`);
-        confirmAlertEdition.text('Save')
+        confirmAlertEdition.text('保存')
     }
 
     fetchSelectOptions('editAlertClassification', selectsConfig['alert_classification_id']).then(() => {
