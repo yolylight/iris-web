@@ -23,7 +23,7 @@ function Collaborator( session_id ) {
         delta = JSON.parse( data.delta ) ;
         console.log(delta);
         last_applied_change = delta ;
-        $("#content_typing").text(data.last_change + " is typing..");
+        $("#content_typing").text(data.last_change + " 正在输入..");
         editor.getSession().getDocument().applyDeltas( [delta] ) ;
     }.bind() ) ;
 
@@ -189,7 +189,7 @@ function sync_editor(no_check) {
                         $('#content_last_sync').text("最后同步: " + new Date().toLocaleTimeString());
                     } else {
                         // We have a conflict
-                        $('#last_saved').text('Conflict !').addClass('badge-danger').removeClass('badge-success');
+                        $('#last_saved').text('冲突!').addClass('badge-danger').removeClass('badge-success');
                         swal ( "Oh no !" ,
                         "我们与远程内容有冲突.可能有人同时更改了描述.\n本地内容将被复制到剪贴板\n远程内容将被更新。." ,
                         "error"
@@ -415,12 +415,12 @@ $(document).ready(function() {
     if (review_state.length > 0) {
         let current_review_state = review_state.data('review-state');
 
-        if (current_review_state === '正在审核') {
+        if (current_review_state === '审核中') {
             $(".btn-start-review").hide();
             $(".btn-confirm-review").show();
             $(".btn-cancel-review").show();
             $('#reviewSubtitle').text('您开始了这次审核。完成后按 "确认审核"');
-        } else if (current_review_state === '审核完成') {
+        } else if (current_review_state === '已审核') {
             $(".btn-start-review").hide();
             $(".btn-confirm-review").hide();
             $(".btn-cancel-review").hide();
@@ -464,8 +464,8 @@ $(document).ready(function() {
 
         if (reviewer_id !== "None") {
             swal({
-                title: "请求审查",
-                text: "请求由" + reviewer_name + "进行案例审查?",
+                title: "请求审核",
+                text: "请求由" + reviewer_name + "进行案例审核?",
                 icon: "info",
                 buttons: true,
                 dangerMode: false,
