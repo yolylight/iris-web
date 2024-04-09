@@ -64,7 +64,7 @@
                                 {% if case.state %}<h5 title="案例状态" onclick="case_detail('{{ case.case_id }}', true);" style="cursor:pointer;"><span class="btn-rounded badge-pill hidden-caret btn-sm btn-light" title="Case state"><i class="fa-solid fa-business-time  mr-1"></i> {{ case.state.state_name }}</span></h5>{% endif %}
                                 {% if case.classification %}<h5 title="分类" onclick="case_detail('{{ case.case_id }}', true);" style="cursor:pointer;"><span class="btn-rounded badge-pill hidden-caret btn-sm btn-light ml-2"><i class="fa-solid fa-shield-virus mr-1"></i>{{ case.classification.name_expanded }}</span></h5>{% endif %}
                                 {% if case.alerts| length > 0 %}<h5 title="告警"><a class="btn-rounded badge-pill hidden-caret btn-sm btn-dark ml-2 bg-warning-gradient text-dark" href="/alerts?cid={{ case.case_id }}&sort=desc&case_id={{ case.case_id }}" target="_blank" rel="noopener"><i class="fa-solid fa-bell mr-1"></i> {{ case.alerts| length }} 相关告警</a></h5>{% endif %}
-                                {% if case.review_status.status_name == "Reviewed" %}
+                                {% if case.review_status.status_name == "已审核" %}
                                 <h5 title="已审核"> <a class="text-white btn-rounded badge-pill hidden-caret btn-sm ml-2 badge-success"><i class="fa-regular fa-circle-check mr-2"></i>案例由{% if case.reviewer.id == current_user.id %} 你 {% else %} {{ case.reviewer.name }} {% endif %}审核</a></h5>
                                 {% endif %}
                             </div>
@@ -86,7 +86,7 @@
                 </div>
                 <div id="caseReviewState" data-review-state="{{ case.review_status.status_name }}" data-reviewer-id="{{ case.reviewer_id }}" data-reviewer-name="{{ case.reviewer.name }}" style="display: none;"></div>
 
-                {% if case.reviewer_id == current_user.id and case.review_status.status_name != "Reviewed" and case.review_status.status_name != "Not reviewed" %}
+                {% if case.reviewer_id == current_user.id and case.review_status.status_name != "已审核" and case.review_status.status_name != "未审核" %}
                     <div class="row row-card-no-pd review-card mt--3 mb--3 bg-warning-gradient" style="display: none;">
                         <div class="col-md-12">
                             <h4 class="font-weight-bold"><i class="fa-solid fa-triangle-exclamation text-danger ml-2 mr-2"></i>已请求审核
@@ -97,13 +97,13 @@
                             <span class="ml-2" id="reviewSubtitle">您被请求审核此案例.</span>
                         </div>
                     </div>
-                {% elif case.review_status.status_name == "Review in progress" %}
+                {% elif case.review_status.status_name == "审核中" %}
                     <div class="row row-card-no-pd mt--3 mb--3 bg-warning-gradient">
                         <div class="col-md-12">
                             <h4 class="font-weight-bold mt-1"><i class="fa-solid fa-list-check ml-2 mr-2"></i>正在由{{ case.reviewer.name }}审核</h4>
                         </div>
                     </div>
-                {% elif case.review_status.status_name == "Pending review" %}
+                {% elif case.review_status.status_name == "审核待定" %}
                     <div class="row row-card-no-pd mt--3 mb--3 bg-warning-gradient">
                         <div class="col-md-12">
                             <h4 class="font-weight-bold mt-1"><i class="fa-solid fa-triangle-exclamation text-danger ml-2 mr-2"></i>{{ case.reviewer.name }}审核待处理</h4>
