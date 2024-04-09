@@ -287,7 +287,7 @@ def api_reopen_case(cur_id, caseid):
 
     # Reopen the related alerts
     if case.alerts:
-        merged_status = get_alert_status_by_name('Merged')
+        merged_status = get_alert_status_by_name('已合并')
         for alert in case.alerts:
             if alert.alert_status_id != merged_status.status_id:
                 alert.alert_status_id = merged_status.status_id
@@ -343,8 +343,8 @@ def api_case_close(cur_id, caseid):
     
     case = call_modules_hook('on_postload_case_update', data=case, caseid=caseid)
 
-    add_obj_history_entry(case, 'case closed')
-    track_activity("closed case ID {}".format(cur_id), caseid=caseid, ctx_less=False)
+    add_obj_history_entry(case, '案例已关闭')
+    track_activity("已关闭案例 ID {}".format(cur_id), caseid=caseid, ctx_less=False)
     case_schema = CaseSchema()
 
     return response_success("案例关闭成功", data=case_schema.dump(res))
