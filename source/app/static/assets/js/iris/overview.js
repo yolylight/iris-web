@@ -129,7 +129,7 @@ let OverviewTable = $("#overview_table").DataTable({
                 let datar = sanitizeHTML(data.state_name);
                 let review_status = row['review_status'] ? row['review_status'].status_name : 'Not reviewed';
                 datar = `${datar} ${review_status === "Not reviewed"? '' : ' - ' + review_status}`;
-                if (data.state_name === 'Closed') {
+                if (data.state_name === '已关闭') {
                     datar = `<span class="badge badge-light"> 已关闭 - ${review_status}</span>`;
                 }
                 return datar;
@@ -137,7 +137,7 @@ let OverviewTable = $("#overview_table").DataTable({
                 let datar = sanitizeHTML(data.state_name);
                 let review_status = row['review_status'] ? row['review_status'].status_name : 'Not reviewed';
                 datar = `${datar} ${review_status === "Not reviewed"? '' : ' - ' + review_status}`;
-                if (data.state_name === 'Closed') {
+                if (data.state_name === '已关闭') {
                     datar = `已关闭 - ${review_status}`;
                 }
                 return datar;
