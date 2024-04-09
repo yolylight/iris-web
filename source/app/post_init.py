@@ -166,63 +166,58 @@ def run_post_init(development=False):
 
             # Create base languages, OS types, IOC types, attributes, report types, TLP, event categories, assets,
             # analysis status, case classification, task status, severities, alert status, case states, and hooks
-            log.info("Creating base languages")
-            create_safe_languages()
-
-            log.info("Creating base os types")
-            create_safe_os_types()
-
+            if not prevent_objects:
+                log.info("Creating base languages")
+                create_safe_languages()
+                log.info("Creating base os types")
+                create_safe_os_types()
+                
             if not prevent_objects:
                 log.info("Creating base IOC types")
                 create_safe_ioctypes()
-
-            log.info("Creating base attributes")
-            create_safe_attributes()
-
-            log.info("Creating base report types")
-            create_safe_report_types()
-
-            log.info("Creating base TLP")
-            create_safe_tlp()
-
-            log.info("Creating base events categories")
-            create_safe_events_cats()
+            if not prevent_objects:
+                log.info("Creating base attributes")
+                create_safe_attributes()               
+                log.info("Creating base report types")
+                create_safe_report_types()    
+                log.info("Creating base TLP")
+                create_safe_tlp()
+                log.info("Creating base events categories")
+                create_safe_events_cats()
 
             if not prevent_objects:
                 log.info("Creating base assets")
                 create_safe_assets()
 
-            log.info("Creating base analysis status")
-            create_safe_analysis_status()
+            if not prevent_objects:
+                log.info("Creating base analysis status")
+                create_safe_analysis_status()
 
             if not prevent_objects:
                 log.info("Creating base case classification")
                 create_safe_classifications()
 
-            log.info("Creating base tasks status")
-            create_safe_task_status()
-
-            log.info("Creating base severities")
-            create_safe_severities()
-
-            log.info("Creating base alert status")
-            create_safe_alert_status()
-
-            log.info("Creating base evidence types")
-            create_safe_evidence_types()
-
-            log.info("Creating base alert resolution status")
-            create_safe_alert_resolution_status()
+            if not prevent_objects:
+                log.info("Creating base tasks status")
+                create_safe_task_status()
+                log.info("Creating base severities")
+                create_safe_severities()
+                log.info("Creating base alert status")
+                create_safe_alert_status()
+                log.info("Creating base evidence types")
+                create_safe_evidence_types()
+                log.info("Creating base alert resolution status")
+                create_safe_alert_resolution_status()
 
             if not prevent_objects:
                 log.info("Creating base case states")
                 create_safe_case_states()
 
-            log.info("Creating base review status")
-            create_safe_review_status()
-
-            log.info("Creating base hooks")
-            create_safe_hooks()
+            if not prevent_objects:
+                log.info("Creating base review status")
+                create_safe_review_status() 
+                log.info("Creating base hooks")
+                create_safe_hooks()
 
             # Create initial authorization model, administrative user, and customer
             log.info("Creating initial authorisation model")
@@ -235,19 +230,18 @@ def run_post_init(development=False):
                 log.info("Registering default modules")
                 register_default_modules()
 
-            log.info("Creating initial customer")
-            client = create_safe_client()
-
-            log.info("Creating initial case")
-            create_safe_case(
-                user=admin,
-                client=client,
-                groups=[gadm, ganalysts]
-            )
-
-            # Setup symlinks for custom_assets
-            log.info("Creating symlinks for custom asset icons")
-            custom_assets_symlinks()
+            if not prevent_objects:
+                log.info("Creating initial customer")
+                client = create_safe_client()
+                log.info("Creating initial case")
+                create_safe_case(
+                    user=admin,
+                    client=client,
+                    groups=[gadm, ganalysts]
+                )    
+                # Setup symlinks for custom_assets
+                log.info("Creating symlinks for custom asset icons")
+                custom_assets_symlinks()
 
             # If demo mode is enabled, create demo users and cases
             if app.config.get('DEMO_MODE_ENABLED') == 'True':
