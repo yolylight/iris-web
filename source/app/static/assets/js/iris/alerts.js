@@ -1590,7 +1590,7 @@ async function editAlert(alert_id, close=false) {
         };
 
         if (close) {
-            data['alert_status_id'] = getAlertStatusId('Closed');
+            data['alert_status_id'] = getAlertStatusId('已关闭');
         }
 
         updateAlert(alert_id, data, true, true)
@@ -1623,7 +1623,7 @@ function closeBatchAlerts() {
         };
 
         if (close) {
-            data['alert_status_id'] = getAlertStatusId('Closed');
+            data['alert_status_id'] = getAlertStatusId('已关闭');
         }
 
         updateBatchAlerts(data)
