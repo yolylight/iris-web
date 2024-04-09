@@ -900,7 +900,7 @@ def get_related_alerts_details(customer_id, assets, iocs, open_alerts, closed_al
     added_cases = set()
 
     for alert_id, alert_info in alerts_dict.items():
-        alert_color = '#c95029' if alert_info['alert'].status.status_name in ['Closed', 'Merged', 'Escalated'] else ''
+        alert_color = '#c95029' if alert_info['alert'].status.status_name in ['已关闭', '已合并', '已升级'] else ''
 
         nodes.append({
             'id': f'alert_{alert_id}',
