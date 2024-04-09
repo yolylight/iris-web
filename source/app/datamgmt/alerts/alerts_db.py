@@ -853,13 +853,13 @@ def get_related_alerts_details(customer_id, assets, iocs, open_alerts, closed_al
     if open_alerts:
         open_alert_status_ids = AlertStatus.query.with_entities(
             AlertStatus.status_id
-        ).filter(AlertStatus.status_name.in_(['New', 'Assigned', 'In progress', 'Pending', 'Unspecified'])).all()
+        ).filter(AlertStatus.status_name.in_(['新建', '已分配', '处理中', '待定', '未指定'])).all()
         alert_status_filter += open_alert_status_ids
 
     if closed_alerts:
         closed_alert_status_ids = AlertStatus.query.with_entities(
             AlertStatus.status_id
-        ).filter(AlertStatus.status_name.in_(['Closed', 'Merged', 'Escalated'])).all()
+        ).filter(AlertStatus.status_name.in_(['已关闭', '已合并', '已升级'])).all()
         alert_status_filter += closed_alert_status_ids
 
     alert_status_filter = [status_id[0] for status_id in alert_status_filter]
