@@ -78,9 +78,9 @@ class IrisReportMaker(object):
         Returns:
             _type_: case info
         """
-        if doc_type == 'Investigation':
+        if doc_type == '调查':
             case_info = self._get_case_info()
-        elif doc_type == 'Activities':
+        elif doc_type == '活动':
             case_info = self._get_activity_info()
         else:
             log.error("Unknown report type")
