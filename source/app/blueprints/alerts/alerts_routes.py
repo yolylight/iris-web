@@ -653,7 +653,7 @@ def alerts_merge_route(alert_id, caseid) -> Response:
             return response_error('用户无权为案例合并告警', status=403)
 
         # Merge the alert into a case
-        alert.alert_status_id = AlertStatus.query.filter_by(status_name='Merged').first().status_id
+        alert.alert_status_id = AlertStatus.query.filter_by(status_name='已合并').first().status_id
         db.session.commit()
 
         # Merge alert in the case
@@ -783,7 +783,7 @@ def alerts_batch_merge_route(caseid) -> Response:
             if not user_has_client_access(current_user.id, alert.alert_customer_id):
                 return response_error('用户无权从客户端合并告警', status=403)
 
-            alert.alert_status_id = AlertStatus.query.filter_by(status_name='Merged').first().status_id
+            alert.alert_status_id = AlertStatus.query.filter_by(status_name='已合并').first().status_id
             db.session.commit()
 
             # Merge alert in the case
@@ -853,7 +853,7 @@ def alerts_batch_escalate_route(caseid) -> Response:
             if not user_has_client_access(current_user.id, alert.alert_customer_id):
                 return response_error('用户无权为客户端升级告警', status=403)
 
-            alert.alert_status_id = AlertStatus.query.filter_by(status_name='Merged').first().status_id
+            alert.alert_status_id = AlertStatus.query.filter_by(status_name='已合并').first().status_id
             db.session.commit()
             alert = call_modules_hook('on_postload_alert_merge', data=alert, caseid=caseid)
 
