@@ -524,11 +524,11 @@ function buildEvent(event_data, compact, comments_map, tree, tesk, tmb, idx, rea
         nb_comments = '';
     }
 
-    if(evt.category_name && evt.category_name != 'Unspecified') {
+    if(evt.category_name && evt.category_name != '未指定') {
          if (!compact) {
              tags += `<span class="badge badge-light float-right ml-1 mt-2">${sanitizeHTML(evt.category_name)}</span>`;
          } else {
-             if (evt.category_name != 'Unspecified') {
+             if (evt.category_name != '未指定') {
                  cats += `<span class="badge badge-light float-right ml-1 mt-1 mr-2 mb-1">${sanitizeHTML(evt.category_name)}</span>`;
              }
          }
@@ -1359,7 +1359,7 @@ function handleCollabNotifications(collab_data) {
 
 function generate_events_sample_csv(){
     csv_data = "event_date,event_tz,event_title,event_category,event_content,event_raw,event_source,event_assets,event_iocs,event_tags\n"
-    csv_data += '"2023-03-26T03:00:30.000","+00:00","An event","Unspecified","Event description","raw","source","","","defender|malicious"\n'
+    csv_data += '"2023-03-26T03:00:30.000","+00:00","An event","未指定","Event description","raw","source","","","defender|malicious"\n'
     csv_data += '"2023-03-26T03:00:35.000","+00:00","An event","Legitimate","Event description","raw","source","","","defender|malicious"\n'
     download_file("sample_events.csv", "text/csv", csv_data);
 }
