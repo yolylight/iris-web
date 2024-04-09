@@ -221,7 +221,7 @@ def case_upload_ioc(caseid):
         ret = []
         errors = []
 
-        analysis_status = AnalysisStatus.query.filter(AnalysisStatus.name == 'Unspecified').first()
+        analysis_status = AnalysisStatus.query.filter(AnalysisStatus.name == '未指定').first()
         analysis_status_id = analysis_status.id
 
         index = 0
@@ -394,7 +394,7 @@ def asset_delete(cur_id, caseid):
 
     asset = get_asset(cur_id, caseid)
     if not asset:
-        return response_error("此案例下资产 ID 无效")
+        return response_error("此案例下资产ID 无效")
 
     # Deletes an asset and the potential links with the IoCs from the database
     delete_asset(cur_id, caseid)
@@ -414,7 +414,7 @@ def case_comment_asset_modal(cur_id, caseid, url_redir):
 
     asset = get_asset(cur_id, caseid=caseid)
     if not asset:
-        return response_error('资产 ID 无效')
+        return response_error('资产ID无效')
 
     return render_template("modal_conversation.html", element_id=cur_id, element_type='assets',
                            title=asset.asset_name)
@@ -426,7 +426,7 @@ def case_comment_asset_list(cur_id, caseid):
 
     asset_comments = get_case_asset_comments(cur_id)
     if asset_comments is None:
-        return response_error('资产 ID 无效')
+        return response_error('资产ID无效')
 
     # CommentSchema(many=True).dump(task_comments)
     # res = [com._asdict() for com in task_comments]
@@ -440,7 +440,7 @@ def case_comment_asset_add(cur_id, caseid):
     try:
         asset = get_asset(cur_id, caseid=caseid)
         if not asset:
-            return response_error('资产 ID 无效')
+            return response_error('资产ID无效')
 
         comment_schema = CommentSchema()
 
@@ -475,7 +475,7 @@ def case_comment_asset_get(cur_id, com_id, caseid):
 
     comment = get_case_asset_comment(cur_id, com_id)
     if not comment:
-        return response_error("Invalid comment ID")
+        return response_error("无效评论ID")
 
     return response_success(data=comment._asdict())
 
