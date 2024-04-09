@@ -616,21 +616,21 @@ def create_safe_events_cats():
 
     """
     # Create new EventCategory objects for each category
-    create_safe(db.session, EventCategory, name="Unspecified")
-    create_safe(db.session, EventCategory, name="Legitimate")
-    create_safe(db.session, EventCategory, name="Remediation")
-    create_safe(db.session, EventCategory, name="Initial Access")
-    create_safe(db.session, EventCategory, name="Execution")
-    create_safe(db.session, EventCategory, name="Persistence")
-    create_safe(db.session, EventCategory, name="Privilege Escalation")
-    create_safe(db.session, EventCategory, name="Defense Evasion")
-    create_safe(db.session, EventCategory, name="Credential Access")
-    create_safe(db.session, EventCategory, name="Discovery")
-    create_safe(db.session, EventCategory, name="Lateral Movement")
-    create_safe(db.session, EventCategory, name="Collection")
-    create_safe(db.session, EventCategory, name="Command and Control")
-    create_safe(db.session, EventCategory, name="Exfiltration")
-    create_safe(db.session, EventCategory, name="Impact")
+    create_safe(db.session, EventCategory, name="未指定")
+    create_safe(db.session, EventCategory, name="合规")
+    create_safe(db.session, EventCategory, name="补救")
+    create_safe(db.session, EventCategory, name="初始访问")
+    create_safe(db.session, EventCategory, name="执行")
+    create_safe(db.session, EventCategory, name="持久化")
+    create_safe(db.session, EventCategory, name="权限提升")
+    create_safe(db.session, EventCategory, name="防御绕过")
+    create_safe(db.session, EventCategory, name="凭据访问")
+    create_safe(db.session, EventCategory, name="发现")
+    create_safe(db.session, EventCategory, name="横向移动")
+    create_safe(db.session, EventCategory, name="手机")
+    create_safe(db.session, EventCategory, name="命令与控制")
+    create_safe(db.session, EventCategory, name="泄露")
+    create_safe(db.session, EventCategory, name="影响")
 
 
 def create_safe_classifications():
@@ -666,12 +666,12 @@ def create_safe_analysis_status():
 
     """
     # Create new AnalysisStatus objects for each status
-    create_safe(db.session, AnalysisStatus, name='Unspecified')
-    create_safe(db.session, AnalysisStatus, name='To be done')
-    create_safe(db.session, AnalysisStatus, name='Started')
-    create_safe(db.session, AnalysisStatus, name='Pending')
-    create_safe(db.session, AnalysisStatus, name='Canceled')
-    create_safe(db.session, AnalysisStatus, name='Done')
+    create_safe(db.session, AnalysisStatus, name='未指定')
+    create_safe(db.session, AnalysisStatus, name='待完成')
+    create_safe(db.session, AnalysisStatus, name='已开始')
+    create_safe(db.session, AnalysisStatus, name='待定')
+    create_safe(db.session, AnalysisStatus, name='已取消')
+    create_safe(db.session, AnalysisStatus, name='已完成')
 
 
 def create_safe_task_status():
@@ -682,11 +682,11 @@ def create_safe_task_status():
 
     """
     # Create new TaskStatus objects for each status
-    create_safe(db.session, TaskStatus, status_name='To do', status_description="", status_bscolor="danger")
-    create_safe(db.session, TaskStatus, status_name='In progress', status_description="", status_bscolor="warning")
-    create_safe(db.session, TaskStatus, status_name='On hold', status_description="", status_bscolor="muted")
-    create_safe(db.session, TaskStatus, status_name='Done', status_description="", status_bscolor="success")
-    create_safe(db.session, TaskStatus, status_name='Canceled', status_description="", status_bscolor="muted")
+    create_safe(db.session, TaskStatus, status_name='待完成', status_description="", status_bscolor="danger")
+    create_safe(db.session, TaskStatus, status_name='处理中', status_description="", status_bscolor="warning")
+    create_safe(db.session, TaskStatus, status_name='暂停', status_description="", status_bscolor="muted")
+    create_safe(db.session, TaskStatus, status_name='已完成', status_description="", status_bscolor="success")
+    create_safe(db.session, TaskStatus, status_name='已取消', status_description="", status_bscolor="muted")
 
 
 def create_safe_severities():
@@ -697,12 +697,12 @@ def create_safe_severities():
 
     """
     # Create new Severity objects for each severity level
-    create_safe(db.session, Severity, severity_name='Unspecified', severity_description="Unspecified")
-    create_safe(db.session, Severity, severity_name='Informational', severity_description="Informational")
-    create_safe(db.session, Severity, severity_name='Low', severity_description="Low")
-    create_safe(db.session, Severity, severity_name='Medium', severity_description="Medium")
-    create_safe(db.session, Severity, severity_name='High', severity_description="High")
-    create_safe(db.session, Severity, severity_name='Critical', severity_description="Critical")
+    create_safe(db.session, Severity, severity_name='未指定', severity_description="Unspecified")
+    create_safe(db.session, Severity, severity_name='信息', severity_description="Informational")
+    create_safe(db.session, Severity, severity_name='低', severity_description="Low")
+    create_safe(db.session, Severity, severity_name='中', severity_description="Medium")
+    create_safe(db.session, Severity, severity_name='高', severity_description="High")
+    create_safe(db.session, Severity, severity_name='严重', severity_description="Critical")
 
 
 def create_safe_alert_status():
@@ -713,15 +713,15 @@ def create_safe_alert_status():
 
     """
     # Create new AlertStatus objects for each status
-    create_safe(db.session, AlertStatus, status_name='Unspecified', status_description="Unspecified")
-    create_safe(db.session, AlertStatus, status_name='New', status_description="Alert is new and unassigned")
-    create_safe(db.session, AlertStatus, status_name='Assigned', status_description="Alert is assigned to a user and "
-                                                                                    "pending investigation")
-    create_safe(db.session, AlertStatus, status_name='In progress', status_description="Alert is being investigated")
-    create_safe(db.session, AlertStatus, status_name='Pending', status_description="Alert is in a pending state")
-    create_safe(db.session, AlertStatus, status_name='Closed', status_description="Alert closed, no action taken")
-    create_safe(db.session, AlertStatus, status_name='Merged', status_description="Alert merged into an existing case")
-    create_safe(db.session, AlertStatus, status_name='Escalated', status_description="Alert converted to a new case")
+    create_safe(db.session, AlertStatus, status_name='未指定', status_description="未指定")
+    create_safe(db.session, AlertStatus, status_name='新建', status_description="告警新建并且未分配")
+    create_safe(db.session, AlertStatus, status_name='已分配', status_description="告警已分配用户并"
+                                                                                    "待调查")
+    create_safe(db.session, AlertStatus, status_name='处理中', status_description="告警调查中")
+    create_safe(db.session, AlertStatus, status_name='待定', status_description="告警待定状态")
+    create_safe(db.session, AlertStatus, status_name='已关闭', status_description="告警关闭,未采取动作")
+    create_safe(db.session, AlertStatus, status_name='已合并', status_description="告警合并到已有案例")
+    create_safe(db.session, AlertStatus, status_name='已升级', status_description="告警转换为新案例")
 
 
 def create_safe_evidence_types():
@@ -732,9 +732,9 @@ def create_safe_evidence_types():
 
     """
     # Create new EvidenceType objects for each status
-    create_safe(db.session, EvidenceTypes, name='Unspecified', description="Unspecified")
+    create_safe(db.session, EvidenceTypes, name='未指定', description="未指定")
 
-    create_safe(db.session, EvidenceTypes, name='HDD image - Generic', description="Generic copy of an hard drive")
+    create_safe(db.session, EvidenceTypes, name='HDD 映像- 通用', description="硬盘的通用副本")
     create_safe(db.session, EvidenceTypes, name='HDD image - DD - Other', description="DD copy of an hard drive")
     create_safe(db.session, EvidenceTypes, name='HDD image - DD - Windows', description="DD copy of an hard drive")
     create_safe(db.session, EvidenceTypes, name='HDD image - DD - Unix', description="DD copy of an hard drive")
@@ -815,16 +815,16 @@ def create_safe_alert_resolution_status():
     and resolution_status_description if they do not already exist in the database.
 
     """
-    create_safe(db.session, AlertResolutionStatus, resolution_status_name='False Positive',
-                resolution_status_description="The alert was a false positive")
-    create_safe(db.session, AlertResolutionStatus, resolution_status_name='True Positive With Impact',
-                resolution_status_description="The alert was a true positive and had an impact")
-    create_safe(db.session, AlertResolutionStatus, resolution_status_name='True Positive Without Impact',
-                resolution_status_description="The alert was a true positive but had no impact")
-    create_safe(db.session, AlertResolutionStatus, resolution_status_name='Not Applicable',
-                resolution_status_description="The alert is not applicable")
-    create_safe(db.session, AlertResolutionStatus, resolution_status_name='Unknown',
-                resolution_status_description="Unknown resolution status")
+    create_safe(db.session, AlertResolutionStatus, resolution_status_name='误报',
+                resolution_status_description="告警是误报")
+    create_safe(db.session, AlertResolutionStatus, resolution_status_name='有问题有影响',
+                resolution_status_description="告警是真实的并造成了影响")
+    create_safe(db.session, AlertResolutionStatus, resolution_status_name='有问题无影响',
+                resolution_status_description="告警是真实的但没有影响")
+    create_safe(db.session, AlertResolutionStatus, resolution_status_name='不适用',
+                resolution_status_description="告警不适用")
+    create_safe(db.session, AlertResolutionStatus, resolution_status_name='未知',
+                resolution_status_description="未知解决状态")
 
 
 def create_safe_case_states():
@@ -835,10 +835,10 @@ def create_safe_case_states():
 
     """
     # Create new CaseState objects for each state
-    create_safe(db.session, CaseState, state_name='Unspecified', state_description="Unspecified", protected=True)
-    create_safe(db.session, CaseState, state_name='In progress', state_description="Case is being investigated")
-    create_safe(db.session, CaseState, state_name='Open', state_description="Case is open", protected=True)
-    create_safe(db.session, CaseState, state_name='Containment', state_description="Containment is in progress")
+    create_safe(db.session, CaseState, state_name='未指定', state_description="未指定", protected=True)
+    create_safe(db.session, CaseState, state_name='处理中', state_description="案例正在调查")
+    create_safe(db.session, CaseState, state_name='开放', state_description="案例开放中", protected=True)
+    create_safe(db.session, CaseState, state_name='遏制', state_description="Containment is in progress")
     create_safe(db.session, CaseState, state_name='Eradication', state_description="Eradication is in progress")
     create_safe(db.session, CaseState, state_name='Recovery', state_description="Recovery is in progress")
     create_safe(db.session, CaseState, state_name='Post-Incident', state_description="Post-incident phase")
