@@ -183,19 +183,19 @@ def close_case(case_id):
 def map_alert_resolution_to_case_status(case_status_id):
 
     if case_status_id == CaseStatus.false_positive.value:
-        ares = search_alert_resolution_by_name('False Positive', exact_match=True)
+        ares = search_alert_resolution_by_name('误报', exact_match=True)
 
     elif case_status_id == CaseStatus.true_positive_with_impact.value:
-        ares = search_alert_resolution_by_name('True Positive With Impact', exact_match=True)
+        ares = search_alert_resolution_by_name('有问题有影响', exact_match=True)
 
     elif case_status_id == CaseStatus.true_positive_without_impact.value:
-        ares = search_alert_resolution_by_name('True Positive Without Impact', exact_match=True)
+        ares = search_alert_resolution_by_name('有问题无影响', exact_match=True)
 
     elif case_status_id == CaseStatus.unknown.value:
-        ares = search_alert_resolution_by_name('Unknown', exact_match=True)
+        ares = search_alert_resolution_by_name('未知', exact_match=True)
 
     else:
-        ares = search_alert_resolution_by_name('Not Applicable', exact_match=True)
+        ares = search_alert_resolution_by_name('不适用', exact_match=True)
 
     if ares:
         return ares.resolution_status_id
