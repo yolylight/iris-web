@@ -735,77 +735,76 @@ def create_safe_evidence_types():
     create_safe(db.session, EvidenceTypes, name='未指定', description="未指定")
 
     create_safe(db.session, EvidenceTypes, name='HDD 映像- 通用', description="硬盘的通用副本")
-    create_safe(db.session, EvidenceTypes, name='HDD image - DD - Other', description="DD copy of an hard drive")
-    create_safe(db.session, EvidenceTypes, name='HDD image - DD - Windows', description="DD copy of an hard drive")
-    create_safe(db.session, EvidenceTypes, name='HDD image - DD - Unix', description="DD copy of an hard drive")
-    create_safe(db.session, EvidenceTypes, name='HDD image - DD - MacOS', description="DD copy of an hard drive")
+    create_safe(db.session, EvidenceTypes, name='HDD 映像- DD - 其他', description="DD生成的硬盘拷贝")
+    create_safe(db.session, EvidenceTypes, name='HDD 映像- DD - Windows', description="DD生成的硬盘拷贝")
+    create_safe(db.session, EvidenceTypes, name='HDD 映像- DD - Unix', description="DD生成的硬盘拷贝")
+    create_safe(db.session, EvidenceTypes, name='HDD 映像- DD - MacOS', description="DD生成的硬盘拷贝")
 
-    create_safe(db.session, EvidenceTypes, name='HDD image - E01 - Other', description="E01 acquisition of an hard drive")
-    create_safe(db.session, EvidenceTypes, name='HDD image - E01 - Windows', description="E01 acquisition of an hard drive")
-    create_safe(db.session, EvidenceTypes, name='HDD image - E01 - Unix', description="E01 acquisition of an hard drive")
-    create_safe(db.session, EvidenceTypes, name='HDD image - E01 - MacOS', description="E01 acquisition of an hard drive")
+    create_safe(db.session, EvidenceTypes, name='HDD 映像- E01 - 其他', description="E01生成的硬盘映像")
+    create_safe(db.session, EvidenceTypes, name='HDD 映像- E01 - Windows', description="E01生成的硬盘映像")
+    create_safe(db.session, EvidenceTypes, name='HDD 映像- E01 - Unix', description="E01生成的硬盘映像")
+    create_safe(db.session, EvidenceTypes, name='HDD 映像- E01 - MacOS', description="E01生成的硬盘映像")
 
-    create_safe(db.session, EvidenceTypes, name='HDD image - AFF4 - Other', description="AFF4 acquisition of an hard drive")
-    create_safe(db.session, EvidenceTypes, name='HDD image - AFF4 - Windows', description="AFF4 acquisition of an hard drive")
-    create_safe(db.session, EvidenceTypes, name='HDD image - AFF4 - Unix', description="AFF4 acquisition of an hard drive")
-    create_safe(db.session, EvidenceTypes, name='HDD image - AFF4 - MacOS', description="AFF4 acquisition of an hard drive")
+    create_safe(db.session, EvidenceTypes, name='HDD 映像- AFF4 - 其他', description="AFF4生成的硬盘映像")
+    create_safe(db.session, EvidenceTypes, name='HDD 映像- AFF4 - Windows', description="AFF4生成的硬盘映像")
+    create_safe(db.session, EvidenceTypes, name='HDD 映像- AFF4 - Unix', description="AFF4生成的硬盘映像")
+    create_safe(db.session, EvidenceTypes, name='HDD 映像 - AFF4 - MacOS', description="AFF4生成的硬盘映像")
 
-    create_safe(db.session, EvidenceTypes, name='SSD image - Generic', description="Generic copy of an solid state drive")
-    create_safe(db.session, EvidenceTypes, name='SSD image - DD - Other', description="DD copy of an solid state drive")
-    create_safe(db.session, EvidenceTypes, name='SSD image - DD - Windows', description="DD copy of an solid state drive")
-    create_safe(db.session, EvidenceTypes, name='SSD image - DD - Unix', description="DD copy of an solid state drive")
-    create_safe(db.session, EvidenceTypes, name='SSD image - DD - MacOS', description="DD copy of an solid state drive")
+    create_safe(db.session, EvidenceTypes, name='SSD 镜像- 通用', description="固态硬盘的通用副本")
+    create_safe(db.session, EvidenceTypes, name='SSD 镜像- DD - 其他', description="固态硬盘的 DD 副本")
+    create_safe(db.session, EvidenceTypes, name='SSD 镜像- DD - Windows', description="固态硬盘的 DD 副本")
+    create_safe(db.session, EvidenceTypes, name='SSD 镜像- DD - Unix', description="固态硬盘的 DD 副本")
+    create_safe(db.session, EvidenceTypes, name='SSD 镜像- DD - MacOS', description="固态硬盘的 DD 副本")
 
-    create_safe(db.session, EvidenceTypes, name='SSD image - E01 - Other', description="EO1 copy of a solid state drive")
-    create_safe(db.session, EvidenceTypes, name='SSD image - E01 - Windows', description="EO1 copy of a solid state drive")
-    create_safe(db.session, EvidenceTypes, name='SSD image - E01 - Unix', description="EO1 copy of a solid state drive")
-    create_safe(db.session, EvidenceTypes, name='SSD image - E01 - MacOS', description="EO1 copy of MacOS on a solid state drive")
+    create_safe(db.session, EvidenceTypes, name='SSD 镜像 - E01 - 其他', description="固态硬盘的 EO1 副本")
+    create_safe(db.session, EvidenceTypes, name='SSD 镜像 - E01 - Windows', description="固态硬盘的 EO1 副本")
+    create_safe(db.session, EvidenceTypes, name='SSD 镜像 - E01 - Unix', description="固态硬盘的 EO1 副本")
+    create_safe(db.session, EvidenceTypes, name='SSD 镜像 - E01 - MacOS', description="固态硬盘上的 MacOS EO1 副本")
 
-    create_safe(db.session, EvidenceTypes, name='SSD image - AFF4 - Other', description="AFF4 copy of an solid state drive")
-    create_safe(db.session, EvidenceTypes, name='SSD image - AFF4 - Windows', description="AFF4 copy of an solid state drive")
-    create_safe(db.session, EvidenceTypes, name='SSD image - AFF4 - Unix', description="AFF4 copy of an solid state drive")
-    create_safe(db.session, EvidenceTypes, name='SSD image - AFF4 - MacOS', description="AFF4 copy of an solid state drive")
+    create_safe(db.session, EvidenceTypes, name='SSD 镜像 - AFF4 - Other', description="AFF4 生成固态硬盘副本")
+    create_safe(db.session, EvidenceTypes, name='SSD 镜像 - AFF4 - Windows', description="AFF4 生成固态硬盘副本")
+    create_safe(db.session, EvidenceTypes, name='SSD 镜像 - AFF4 - Unix', description="AFF4 生成固态硬盘副本")
+    create_safe(db.session, EvidenceTypes, name='SSD 镜像 - AFF4 - MacOS', description="AFF4 生成固态硬盘副本")
 
-    create_safe(db.session, EvidenceTypes, name='VM image - Generic', description="Generic copy of a VM ")
-    create_safe(db.session, EvidenceTypes, name='VM image - Linux Server', description="Copy of a Linux Server VM")
-    create_safe(db.session, EvidenceTypes, name='VM image - Windows Server', description="Copy of a Windows Server VM")
-    create_safe(db.session, EvidenceTypes, name='VM image - Windows Server', description="Copy of a Windows Server VM")
+    create_safe(db.session, EvidenceTypes, name='VM 镜像 - 通用', description="通用的虚拟机副本")
+    create_safe(db.session, EvidenceTypes, name='VM 镜像 - Linux 服务器', description="Linux 服务器虚拟机副本")
+    create_safe(db.session, EvidenceTypes, name='VM 镜像 - Windows 服务器', description="Windows 服务器虚拟机副本")
 
-    create_safe(db.session, EvidenceTypes, name='Phone Image - Android', description="Copy of an Android phone")
-    create_safe(db.session, EvidenceTypes, name='Phone Image - iPhone', description="Copy of an iPhone")
-    create_safe(db.session, EvidenceTypes, name='Phone backup - Android (adb)', description="adb backup of an Android")
-    create_safe(db.session, EvidenceTypes, name='Phone backup - iPhone (iTunes)', description="iTunes backup of an iPhone")
+    create_safe(db.session, EvidenceTypes, name='电话映像 - Android', description="Android手机的副本")
+    create_safe(db.session, EvidenceTypes, name='电话映像 - iPhone', description="iPhone 的副本")
+    create_safe(db.session, EvidenceTypes, name='电话备份 - Android (adb)', description="Android 系统的 adb 备份")
+    create_safe(db.session, EvidenceTypes, name='电话备份 - iPhone (iTunes)', description="iPhone 的 iTunes 备份")
 
-    create_safe(db.session, EvidenceTypes, name='Tablet Image - Android', description="Copy of an Android tablet")
-    create_safe(db.session, EvidenceTypes, name='Tablet Image - iPad', description="Copy of an iPad tablet")
-    create_safe(db.session, EvidenceTypes, name='Tablet backup - Android (adb)', description="adb backup of an Android tablet")
-    create_safe(db.session, EvidenceTypes, name='Tablet backup - iPad (iTunes)', description="iTunes backup of an iPad")
+    create_safe(db.session, EvidenceTypes, name='平板映像 - Android', description="Android平板电脑副本")
+    create_safe(db.session, EvidenceTypes, name='平板映像 - iPad', description="iPad 平板电脑副本")
+    create_safe(db.session, EvidenceTypes, name='平板备份 - Android (adb)', description="Android 平板电脑的 adb 备份")
+    create_safe(db.session, EvidenceTypes, name='平板备份 - iPad (iTunes)', description="iTunes 备份 iPad")
 
-    create_safe(db.session, EvidenceTypes, name='Collection - Velociraptor', description="Velociraptor collection")
-    create_safe(db.session, EvidenceTypes, name='Collection - ORC', description="ORC collection")
-    create_safe(db.session, EvidenceTypes, name='Collection - KAPE', description="KAPE collection")
+    create_safe(db.session, EvidenceTypes, name='集合 - Velociraptor', description="Velociraptor 集合")
+    create_safe(db.session, EvidenceTypes, name='集合 - ORC', description="ORC 集合")
+    create_safe(db.session, EvidenceTypes, name='集合 - KAPE', description="KAPE 集合")
 
-    create_safe(db.session, EvidenceTypes, name="Memory acquisition - Physical RAM", description="Physical RAM acquisition")
-    create_safe(db.session, EvidenceTypes, name="Memory acquisition - VMEM", description="vmem file")
+    create_safe(db.session, EvidenceTypes, name="内存取证 - 物理RAM", description="物理 RAM 取证")
+    create_safe(db.session, EvidenceTypes, name="内存取证 - VMEM", description="vmem 文件")
 
-    create_safe(db.session, EvidenceTypes, name="Logs - Linux", description="Standard Linux logs")
-    create_safe(db.session, EvidenceTypes, name="Logs - Windows EVTX", description="Standard Windows EVTX logs")
-    create_safe(db.session, EvidenceTypes, name="Logs - Windows EVT", description="Standard Windows EVT logs")
-    create_safe(db.session, EvidenceTypes, name="Logs - MacOS", description="Standard MacOS logs")
-    create_safe(db.session, EvidenceTypes, name="Logs - Generic", description="Generic logs")
-    create_safe(db.session, EvidenceTypes, name="Logs - Firewall", description="Firewall logs")
-    create_safe(db.session, EvidenceTypes, name="Logs - Proxy", description="Proxy logs")
-    create_safe(db.session, EvidenceTypes, name="Logs - DNS", description="DNS logs")
-    create_safe(db.session, EvidenceTypes, name="Logs - Email", description="Email logs")
+    create_safe(db.session, EvidenceTypes, name="Logs - Linux", description="标准Linux日志")
+    create_safe(db.session, EvidenceTypes, name="Logs - Windows EVTX", description="标准Windows EVTX日志")
+    create_safe(db.session, EvidenceTypes, name="Logs - Windows EVT", description="标准Windows EVT日志")
+    create_safe(db.session, EvidenceTypes, name="Logs - MacOS", description="标准MacOS日志")
+    create_safe(db.session, EvidenceTypes, name="Logs - 通用", description="通用日志")
+    create_safe(db.session, EvidenceTypes, name="Logs - 防火墙", description="防火墙日志")
+    create_safe(db.session, EvidenceTypes, name="Logs - Proxy", description="代理日志")
+    create_safe(db.session, EvidenceTypes, name="Logs - DNS", description="DNS日志")
+    create_safe(db.session, EvidenceTypes, name="Logs - Email", description="Email日志")
 
-    create_safe(db.session, EvidenceTypes, name="Executable - Windows (PE)", description="Generic Windows executable")
-    create_safe(db.session, EvidenceTypes, name="Executable - Linux (ELF)", description="Generic Linux executable")
-    create_safe(db.session, EvidenceTypes, name="Executable - MacOS (Mach-O)", description="Generic MacOS executable")
-    create_safe(db.session, EvidenceTypes, name="Executable - Generic", description="Generic executable")
+    create_safe(db.session, EvidenceTypes, name="可执行文件 - Windows (PE)", description="通用 Windows 可执行文件")
+    create_safe(db.session, EvidenceTypes, name="可执行文件 - Linux (ELF)", description="通用 Linux 可执行文件")
+    create_safe(db.session, EvidenceTypes, name="可执行文件 - MacOS (Mach-O)", description="通用 MacOS 可执行文件")
+    create_safe(db.session, EvidenceTypes, name="可执行文件 - 通用", description="通用可执行文件")
 
-    create_safe(db.session, EvidenceTypes, name="Script - Generic", description="Generic script")
+    create_safe(db.session, EvidenceTypes, name="脚本 - 通用", description="通用脚本")
 
-    create_safe(db.session, EvidenceTypes, name="Generic - Data blob", description="Generic blob of data")
+    create_safe(db.session, EvidenceTypes, name="通用 - 数据块", description="通用数据块")
 
 
 def create_safe_alert_resolution_status():
@@ -838,12 +837,12 @@ def create_safe_case_states():
     create_safe(db.session, CaseState, state_name='未指定', state_description="未指定", protected=True)
     create_safe(db.session, CaseState, state_name='处理中', state_description="案例正在调查")
     create_safe(db.session, CaseState, state_name='开放', state_description="案例开放中", protected=True)
-    create_safe(db.session, CaseState, state_name='遏制', state_description="Containment is in progress")
-    create_safe(db.session, CaseState, state_name='Eradication', state_description="Eradication is in progress")
-    create_safe(db.session, CaseState, state_name='Recovery', state_description="Recovery is in progress")
-    create_safe(db.session, CaseState, state_name='Post-Incident', state_description="Post-incident phase")
-    create_safe(db.session, CaseState, state_name='Reporting', state_description="Reporting is in progress")
-    create_safe(db.session, CaseState, state_name='Closed', state_description="Case is closed", protected=True)
+    create_safe(db.session, CaseState, state_name='遏制', state_description="遏制进行中")
+    create_safe(db.session, CaseState, state_name='根除', state_description="根除进行中")
+    create_safe(db.session, CaseState, state_name='恢复', state_description="恢复进行中")
+    create_safe(db.session, CaseState, state_name='事件后', state_description="事件后阶段")
+    create_safe(db.session, CaseState, state_name='报告中', state_description="报告正在进行")
+    create_safe(db.session, CaseState, state_name='已关闭', state_description="案例已关闭", protected=True)
 
 
 def create_safe_review_status():
@@ -867,64 +866,64 @@ def create_safe_assets():
 
     """
     # Create new AssetsType objects for each asset type
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Account",
-                           asset_description="Generic Account", asset_icon_not_compromised="user.png",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="账户",
+                           asset_description="通用账户", asset_icon_not_compromised="user.png",
                            asset_icon_compromised="ioc_user.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Firewall", asset_description="Firewall",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="防火墙", asset_description="防火墙",
                            asset_icon_not_compromised="firewall.png", asset_icon_compromised="ioc_firewall.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Linux - Server",
-                           asset_description="Linux server", asset_icon_not_compromised="server.png",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Linux - 服务器",
+                           asset_description="Linux服务器", asset_icon_not_compromised="server.png",
                            asset_icon_compromised="ioc_server.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Linux - Computer",
-                           asset_description="Linux computer", asset_icon_not_compromised="desktop.png",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Linux - 计算机",
+                           asset_description="Linux 计算机", asset_icon_not_compromised="desktop.png",
                            asset_icon_compromised="ioc_desktop.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Linux Account",
-                           asset_description="Linux Account", asset_icon_not_compromised="user.png",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Linux 账户",
+                           asset_description="Linux 账户", asset_icon_not_compromised="user.png",
                            asset_icon_compromised="ioc_user.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Mac - Computer",
-                           asset_description="Mac computer", asset_icon_not_compromised="desktop.png",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Mac - 计算机",
+                           asset_description="Mac 计算机", asset_icon_not_compromised="desktop.png",
                            asset_icon_compromised="ioc_desktop.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Phone - Android",
-                           asset_description="Android Phone", asset_icon_not_compromised="phone.png",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="电话 - Android",
+                           asset_description="Android 电话", asset_icon_not_compromised="phone.png",
                            asset_icon_compromised="ioc_phone.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Phone - IOS",
-                           asset_description="Apple Phone", asset_icon_not_compromised="phone.png",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="电话 - IOS",
+                           asset_description="Apple 电话", asset_icon_not_compromised="phone.png",
                            asset_icon_compromised="ioc_phone.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows - Computer",
-                           asset_description="Standard Windows Computer",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows - 计算机",
+                           asset_description="标准 Windows 计算机",
                            asset_icon_not_compromised="windows_desktop.png",
                            asset_icon_compromised="ioc_windows_desktop.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows - Server",
-                           asset_description="Standard Windows Server", asset_icon_not_compromised="windows_server.png",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows - 服务器",
+                           asset_description="标准 Windows 服务器", asset_icon_not_compromised="windows_server.png",
                            asset_icon_compromised="ioc_windows_server.png")
     get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows - DC",
-                           asset_description="Domain Controller", asset_icon_not_compromised="windows_server.png",
+                           asset_description="域控", asset_icon_not_compromised="windows_server.png",
                            asset_icon_compromised="ioc_windows_server.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Router", asset_description="Router",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="路由器", asset_description="路由器",
                            asset_icon_not_compromised="router.png", asset_icon_compromised="ioc_router.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Switch", asset_description="Switch",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="交换机", asset_description="交换机",
                            asset_icon_not_compromised="switch.png", asset_icon_compromised="ioc_switch.png")
     get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="VPN", asset_description="VPN",
                            asset_icon_not_compromised="vpn.png", asset_icon_compromised="ioc_vpn.png")
     get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="WAF", asset_description="WAF",
                            asset_icon_not_compromised="firewall.png", asset_icon_compromised="ioc_firewall.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows Account - Local",
-                           asset_description="Windows Account - Local", asset_icon_not_compromised="user.png",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows 账户 - 本地",
+                           asset_description="Windows 账户 - 本地", asset_icon_not_compromised="user.png",
                            asset_icon_compromised="ioc_user.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows Account - Local - Admin",
-                           asset_description="Windows Account - Local - Admin", asset_icon_not_compromised="user.png",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows 账户 - 本地 - 管理员",
+                           asset_description="Windows 账户 - 本地 - 管理员", asset_icon_not_compromised="user.png",
                            asset_icon_compromised="ioc_user.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows Account - AD",
-                           asset_description="Windows Account - AD", asset_icon_not_compromised="user.png",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows 账户 - AD",
+                           asset_description="Windows 账户 - AD", asset_icon_not_compromised="user.png",
                            asset_icon_compromised="ioc_user.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows Account - AD - Admin",
-                           asset_description="Windows Account - AD - Admin", asset_icon_not_compromised="user.png",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows 账户 - AD - 管理员",
+                           asset_description="Windows 账户 - AD - 管理员", asset_icon_not_compromised="user.png",
                            asset_icon_compromised="ioc_user.png")
-    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows Account - AD - krbtgt",
-                           asset_description="Windows Account - AD - krbtgt", asset_icon_not_compromised="user.png",
+    get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows 账户 - AD - krbtgt",
+                           asset_description="Windows 账户 - AD - krbtgt", asset_icon_not_compromised="user.png",
                            asset_icon_compromised="ioc_user.png")
     get_by_value_or_create(db.session, AssetsType, "asset_name", asset_name="Windows Account - AD - Service",
-                           asset_description="Windows Account - AD - krbtgt", asset_icon_not_compromised="user.png",
+                           asset_description="Windows 账户 - AD - krbtgt", asset_icon_not_compromised="user.png",
                            asset_icon_compromised="ioc_user.png")
 
 
@@ -937,7 +936,7 @@ def create_safe_client():
     """
     # Create a new Client object if it does not already exist
     client = get_or_create(db.session, Client,
-                           name="IrisInitialClient")
+                           name="示例客户")
 
     return client
 
@@ -952,12 +951,12 @@ def create_safe_auth_model():
 
     """
     # Create new Organisation object
-    def_org = get_or_create(db.session, Organisation, org_name="Default Org",
-                            org_description="Default Organisation")
+    def_org = get_or_create(db.session, Organisation, org_name="默认组织",
+                            org_description="默认组织")
 
     # Create new Administrator Group object
     try:
-        gadm = get_or_create(db.session, Group, group_name="Administrators", group_description="Administrators",
+        gadm = get_or_create(db.session, Group, group_name="Administrators", group_description="管理员",
                              group_auto_follow=True, group_auto_follow_access_level=CaseAccessLevel.full_access.value,
                              group_permissions=ac_get_mask_full_permissions())
 
@@ -982,7 +981,7 @@ def create_safe_auth_model():
 
     # Create new Analysts Group object
     try:
-        ganalysts = get_or_create(db.session, Group, group_name="Analysts", group_description="Standard Analysts",
+        ganalysts = get_or_create(db.session, Group, group_name="Analysts", group_description="分析师",
                                   group_auto_follow=False,
                                   group_auto_follow_access_level=CaseAccessLevel.full_access.value,
                                   group_permissions=ac_get_mask_analyst())
@@ -1096,8 +1095,8 @@ def create_safe_case(user, client, groups):
     if not case:
         # Create a new case for the client
         case = Cases(
-            name="Initial Demo",
-            description="This is a demonstration.",
+            name="示例案例",
+            description="这是一个示例.",
             soc_id="soc_id_demo",
             user=user,
             client_id=client.client_id
@@ -1128,8 +1127,8 @@ def create_safe_report_types():
     exist in the database.
 
     """
-    create_safe(db.session, ReportType, name="Investigation")
-    create_safe(db.session, ReportType, name="Activities")
+    create_safe(db.session, ReportType, name="调查")
+    create_safe(db.session, ReportType, name="活动")
 
 
 def create_safe_attributes():
@@ -1140,496 +1139,496 @@ def create_safe_attributes():
 
     """
     create_safe_attr(db.session, attribute_display_name='IOC',
-                     attribute_description='Defines default attributes for IOCs', attribute_for='ioc',
+                     attribute_description='定义IOC默认属性', attribute_for='ioc',
                      attribute_content={})
     create_safe_attr(db.session, attribute_display_name='Events',
-                     attribute_description='Defines default attributes for Events', attribute_for='event',
+                     attribute_description='定义Event默认属性', attribute_for='event',
                      attribute_content={})
     create_safe_attr(db.session, attribute_display_name='Assets',
-                     attribute_description='Defines default attributes for Assets', attribute_for='asset',
+                     attribute_description='定义Asset默认属性', attribute_for='asset',
                      attribute_content={})
     create_safe_attr(db.session, attribute_display_name='Tasks',
-                     attribute_description='Defines default attributes for Tasks', attribute_for='task',
+                     attribute_description='定义Task默认属性', attribute_for='task',
                      attribute_content={})
     create_safe_attr(db.session, attribute_display_name='Notes',
-                     attribute_description='Defines default attributes for Notes', attribute_for='note',
+                     attribute_description='定义Note默认属性', attribute_for='note',
                      attribute_content={})
     create_safe_attr(db.session, attribute_display_name='Evidences',
-                     attribute_description='Defines default attributes for Evidences', attribute_for='evidence',
+                     attribute_description='定义Evidences默认属性', attribute_for='evidence',
                      attribute_content={})
     create_safe_attr(db.session, attribute_display_name='Cases',
-                     attribute_description='Defines default attributes for Cases', attribute_for='case',
+                     attribute_description='定义Case默认属性', attribute_for='case',
                      attribute_content={})
     create_safe_attr(db.session, attribute_display_name='Customers',
-                     attribute_description='Defines default attributes for Customers', attribute_for='client',
+                     attribute_description='定义Customer默认属性', attribute_for='client',
                      attribute_content={})
 
 
 def create_safe_ioctypes():
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="AS",
-                        type_description="Autonomous system", type_taxonomy="")
+                        type_description="自治系统", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="aba-rtn",
-                        type_description="ABA routing transit number",
+                        type_description="ABA 路由转接号码",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="account",
-                        type_description="Account of any type",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="账户",
+                        type_description="任何类型的账户",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="anonymised",
-                        type_description="Anonymised value - described with the anonymisation object via a relationship",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="匿名",
+                        type_description="匿名值 - 通过关系描述匿名对象",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="attachment",
-                        type_description="Attachment with external information",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="附件",
+                        type_description="外部信息附件",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="authentihash",
-                        type_description="Authenticode executable signature hash", type_taxonomy="",
+                        type_description="可执行文件认证代码签名哈希", type_taxonomy="",
                         type_validation_regex="[a-f0-9]{64}", type_validation_expect="64 hexadecimal characters"
                         )
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="boolean",
-                        type_description="Boolean value - to be used in objects",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="布尔值",
+                        type_description="	布尔值 -在对象内使用",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="btc",
-                        type_description="Bitcoin Address", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="campaign-id",
-                        type_description="Associated campaign ID",
+                        type_description="比特币钱包地址", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="活动-id",
+                        type_description="关联活动ID",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="campaign-name",
-                        type_description="Associated campaign name",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="活动-名称",
+                        type_description="关联活动名称",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="cdhash",
-                        type_description="An Apple Code Directory Hash, identifying a code-signed Mach-O executable file",
+                        type_description="苹果代码目录散列，用于识别代码签名的 Mach-O 可执行文件",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="chrome-extension-id",
-                        type_description="Chrome extension id",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="chrome-扩展-id",
+                        type_description="Chrome 扩展 id",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="community-id",
-                        type_description="a community ID flow hashing algorithm to map multiple traffic monitors into common flow id",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="社区-id",
+                        type_description="社区 ID 流量散列算法，将多个流量监控器映射为共同的流量 ID",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="cookie",
-                        type_description="HTTP cookie as often stored on the user web client. This can include authentication cookie or session cookie.",
+                        type_description="通常存储在用户网络客户端上的 HTTP cookie.这可能包括认证 cookie 或会话 cookie.",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="dash",
-                        type_description="Dash Address", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="datetime",
-                        type_description="Datetime in the ISO 8601 format",
+                        type_description="Dash地址", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="日期时间",
+                        type_description="ISO 8601 格式的日期时间",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="dkim",
-                        type_description="DKIM public key", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="dkim-signature",
-                        type_description="DKIM signature", type_taxonomy="")
+                        type_description="DKIM公钥", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="dkim-签名",
+                        type_description="DKIM签名", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="dns-soa-email",
-                        type_description="RFC1035 mandates that DNS zones should have a SOA (Statement Of Authority) record that contains an email address where a PoC for the domain could be contacted. This can sometimes be used for attribution/linkage between different domains even if protected by whois privacy",
+                        type_description="RFC1035 规定，DNS 区域应有一个 SOA（权威声明）记录，其中包含一个电子邮件地址，可与该域的 PoC 取得联系。这有时可用于不同域名之间的归属/链接，即使受到 whois 隐私保护也是如此。",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="domain",
-                        type_description="A domain name used in the malware",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="域名",
+                        type_description="恶意软件中使用的域名",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="domain|ip",
-                        type_description="A domain name and its IP address (as found in DNS lookup) separated by a |",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="域名|ip",
+                        type_description="域名及其 IP 地址（在 DNS 解析中找到），用 | 分隔",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email",
-                        type_description="An e-mail address", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-attachment",
-                        type_description="File name of the email attachment.", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-body",
-                        type_description="Email body", type_taxonomy="")
+                        type_description="电子邮件地址", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-附件",
+                        type_description="电子邮件附件的文件名。", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-正文",
+                        type_description="Email正文", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-dst",
-                        type_description="The destination email address. Used to describe the recipient when describing an e-mail.",
+                        type_description="目的电子邮件地址。在描述电子邮件时用于描述收件人。",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-dst-display-name",
-                        type_description="Email destination display name", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-header",
-                        type_description="Email header", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-message-id",
-                        type_description="The email message ID",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-dst-显示名称",
+                        type_description="Email收件人显示名称", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-头部",
+                        type_description="Email头部", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-消息-id",
+                        type_description="电子邮件消息ID",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-mime-boundary",
-                        type_description="The email mime boundary separating parts in a multipart email",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-mime-边界",
+                        type_description="在多部分电子邮件中分隔各部分的电子邮件 MIME 边界",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-reply-to",
-                        type_description="Email reply to header",
+                        type_description="电子邮件回复头",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-src",
-                        type_description="The source email address. Used to describe the sender when describing an e-mail.",
+                        type_description="源电子邮件地址。在描述电子邮件时用于描述发件人。",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-src-display-name",
-                        type_description="Email source display name",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-src-显示名称",
+                        type_description="电子邮件来源显示名称",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-subject",
-                        type_description="The subject of the email",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-主题",
+                        type_description="电子邮件的主题",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-thread-index",
-                        type_description="The email thread index header",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-索引标题",
+                        type_description="电子邮件主题索引标题",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="email-x-mailer",
-                        type_description="Email x-mailer header",
+                        type_description="电子邮件 x-mailer 标头",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="favicon-mmh3",
-                        type_description="favicon-mmh3 is the murmur3 hash of a favicon as used in Shodan.",
+                        type_description="favicon-mmh3 是 Shodan 中使用的 favicon 的 murmur3 哈希值。",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename",
-                        type_description="Filename", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename-pattern",
-                        type_description="A pattern in the name of a file",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名",
+                        type_description="文件名", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名-模式",
+                        type_description="文件名中的模式",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|authentihash",
-                        type_description="A checksum in md5 format",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|authentihash",
+                        type_description="以 md5 格式表示的校验和",
                         type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{64}',
                         type_validation_expect="filename|64 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|impfuzzy",
-                        type_description="Import fuzzy hash - a fuzzy hash created based on the imports in the sample.",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|impfuzzy",
+                        type_description="导入fuzzy哈希 - 基于导入样本生成的fuzzy哈希",
                         type_taxonomy="", )
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|imphash",
-                        type_description="Import hash - a hash created based on the imports in the sample.",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|imphash",
+                        type_description="导入哈希 - 根据样本中的导入数据创建的哈希值。",
                         type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{32}',
                         type_validation_expect="filename|32 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|md5",
-                        type_description="A filename and an md5 hash separated by a |", type_taxonomy="",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|md5",
+                        type_description="用 | 分隔的文件名和 md5 哈希值", type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{32}',
                         type_validation_expect="filename|32 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|pehash",
-                        type_description="A filename and a PEhash separated by a |", type_taxonomy="",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|pehash",
+                        type_description="用 | 分隔的文件名和 PEhash", type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{40}',
                         type_validation_expect="filename|40 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|sha1",
-                        type_description="A filename and an sha1 hash separated by a |", type_taxonomy="",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|sha1",
+                        type_description="用 | 分隔的文件名和 sha1 哈希值", type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{40}',
                         type_validation_expect="filename|40 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|sha224",
-                        type_description="A filename and a sha-224 hash separated by a |", type_taxonomy="",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|sha224",
+                        type_description="用 | 分隔的文件名和 sha-224 哈希值", type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{56}',
                         type_validation_expect="filename|56 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|sha256",
-                        type_description="A filename and an sha256 hash separated by a |", type_taxonomy="",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|sha256",
+                        type_description="用 | 分隔的文件名和 sha256 哈希值", type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{64}',
                         type_validation_expect="filename|64 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|sha3-224",
-                        type_description="A filename and an sha3-224 hash separated by a |", type_taxonomy="",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|sha3-224",
+                        type_description="用 | 分隔的文件名和 sha3-224 哈希值", type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{56}',
                         type_validation_expect="filename|56 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|sha3-256",
-                        type_description="A filename and an sha3-256 hash separated by a |", type_taxonomy="",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|sha3-256",
+                        type_description="用 | 分隔的文件名和 sha3-256 哈希值", type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{64}',
                         type_validation_expect="filename|64 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|sha3-384",
-                        type_description="A filename and an sha3-384 hash separated by a |", type_taxonomy="",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|sha3-384",
+                        type_description="用 | 分隔的文件名和 sha3-384 哈希值", type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{96}',
                         type_validation_expect="filename|96 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|sha3-512",
-                        type_description="A filename and an sha3-512 hash separated by a |", type_taxonomy="",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|sha3-512",
+                        type_description="用 | 分隔的文件名和 sha3-512 哈希值", type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{128}',
                         type_validation_expect="filename|128 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|sha384",
-                        type_description="A filename and a sha-384 hash separated by a |", type_taxonomy="",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|sha384",
+                        type_description="用 | 分隔的文件名和 sha-384哈希值", type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{96}',
                         type_validation_expect="filename|96 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|sha512",
-                        type_description="A filename and a sha-512 hash separated by a |", type_taxonomy="",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|sha512",
+                        type_description="文件名和用 | 分隔的 sha-512 哈希值", type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{128}',
                         type_validation_expect="filename|128 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|sha512/224",
-                        type_description="A filename and a sha-512/224 hash separated by a |", type_taxonomy="",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|sha512/224",
+                        type_description="文件名和用 | 分隔的 sha-512/224 哈希值", type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{56}',
                         type_validation_expect="filename|56 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|sha512/256",
-                        type_description="A filename and a sha-512/256 hash separated by a |", type_taxonomy="",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|sha512/256",
+                        type_description="文件名和用 | 分隔的 sha-512/256 哈希值", type_taxonomy="",
                         type_validation_regex='.+\|[a-f0-9]{64}',
                         type_validation_expect="filename|64 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|ssdeep",
-                        type_description="A checksum in ssdeep format",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|ssdeep",
+                        type_description="ssdeep格式的校验和",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|tlsh",
-                        type_description="A filename and a Trend Micro Locality Sensitive Hash separated by a |",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|tlsh",
+                        type_description="用 | 分隔的文件名和趋势科技敏感位置哈希值",
                         type_taxonomy="",
                         type_validation_regex='.+\|t?[a-f0-9]{35,}',
                         type_validation_expect="filename|at least 35 hexadecimal characters, optionally starting with t1 instead of hexadecimal characters"
                         )
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="filename|vhash",
-                        type_description="A filename and a VirusTotal hash separated by a |", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="first-name",
-                        type_description="First name of a natural person",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="文件名|vhash",
+                        type_description="用 | 分隔的文件名和 VirusTotal 哈希值", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="名字",
+                        type_description="自然人的名字",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="float",
-                        type_description="A floating point value.", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="full-name",
-                        type_description="Full name of a natural person",
+                        type_description="浮点数值.", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="全名",
+                        type_description="自然人的全名",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="gene",
                         type_description="GENE - Go Evtx sigNature Engine",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="git-commit-id",
-                        type_description="A git commit ID.", type_taxonomy="",
+                        type_description="git 提交 ID.", type_taxonomy="",
                         type_validation_regex="[a-f0-9]{40}", type_validation_expect="40 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="github-organisation",
-                        type_description="A github organisation",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="github-组织",
+                        type_description="一个 github 组织",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="github-repository",
-                        type_description="A github repository",
+                        type_description="一个 github 仓库",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="github-username",
-                        type_description="A github user name",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="github-用户名",
+                        type_description="github 用户名",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="hassh-md5",
-                        type_description="hassh is a network fingerprinting standard which can be used to identify specific Client SSH implementations. The fingerprints can be easily stored, searched and shared in the form of an MD5 fingerprint.",
+                        type_description="hassh 是一种网络指纹标准，可用于识别特定的客户端 SSH 实现。指纹可以以 MD5 指纹的形式轻松存储、搜索和共享.",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{32}", type_validation_expect="32 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="hasshserver-md5",
-                        type_description="hasshServer is a network fingerprinting standard which can be used to identify specific Server SSH implementations. The fingerprints can be easily stored, searched and shared in the form of an MD5 fingerprint.",
+                        type_description="hasshServer 是一种网络指纹标准，可用于识别特定的服务器 SSH 实现。指纹可以以 MD5 指纹的形式轻松存储、搜索和共享.",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{32}", type_validation_expect="32 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="hex",
-                        type_description="A value in hexadecimal format",
+                        type_description="十六进制格式的数值",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="hostname",
-                        type_description="A full host/dnsname of an attacker",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="主机名",
+                        type_description="攻击者的完整主机/域名",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="hostname|port",
-                        type_description="Hostname and port number separated by a |", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="http-method",
-                        type_description="HTTP method used by the malware (e.g. POST, GET, …).", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="主机名|端口",
+                        type_description="用 | 分隔的主机名和端口号", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="http-方法",
+                        type_description="恶意软件使用的 HTTP 方法（如 POST、GET...）.", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="iban",
                         type_description="International Bank Account Number",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="identity-card-number",
-                        type_description="Identity card number",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="身份证号码",
+                        type_description="身份证号码",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="impfuzzy",
-                        type_description="A fuzzy hash of import table of Portable Executable format", type_taxonomy="")
+                        type_description="便携式可执行文件格式导入表的模糊哈希值", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="imphash",
-                        type_description="Import hash - a hash created based on the imports in the sample.",
+                        type_description="导入哈希值 - 根据样本中的导入创建的哈希值。",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{32}", type_validation_expect="32 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="ip-any",
-                        type_description="A source or destination IP address of the attacker or C&C server",
+                        type_description="攻击者或 C&C 服务器的源 IP 地址或目标 IP 地址",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="ip-dst",
-                        type_description="A destination IP address of the attacker or C&C server", type_taxonomy="")
+                        type_description="攻击者或 C&C 服务器的目标 IP 地址", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="ip-dst|port",
-                        type_description="IP destination and port number separated by a |", type_taxonomy="")
+                        type_description="用 | 分隔的 IP 目的地和端口号", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="ip-src",
-                        type_description="A source IP address of the attacker",
+                        type_description="攻击者的源 IP 地址",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="ip-src|port",
-                        type_description="IP source and port number separated by a |", type_taxonomy="")
+                        type_description="用 | 分隔的 IP 源和端口号", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="ja3-fingerprint-md5",
-                        type_description="JA3 is a method for creating SSL/TLS client fingerprints that should be easy to produce on any platform and can be easily shared for threat intelligence.",
+                        type_description="JA3 是一种创建 SSL/TLS 客户端指纹的方法，可以在任何平台上轻松生成，并可轻松共享，以获取威胁情报。",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{32}", type_validation_expect="32 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="jabber-id",
                         type_description="Jabber ID", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="jarm-fingerprint",
-                        type_description="JARM is a method for creating SSL/TLS server fingerprints.", type_taxonomy="",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="jarm-指纹",
+                        type_description="JARM 是一种创建 SSL/TLS 服务器指纹的方法。", type_taxonomy="",
                         type_validation_regex="[a-f0-9]{62}", type_validation_expect="62 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="kusto-query",
-                        type_description="Kusto query - Kusto from Microsoft Azure is a service for storing and running interactive analytics over Big Data.",
+                        type_description="Kusto 查询 - Microsoft Azure 的 Kusto 是一项用于存储和运行大数据交互式分析的服务。",
                         type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="link",
-                        type_description="Link to an external information",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="链接",
+                        type_description="链接到外部信息",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="mac-address",
-                        type_description="Mac address", type_taxonomy="")
+                        type_description="Mac 地址", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="mac-eui-64",
-                        type_description="Mac EUI-64 address", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="malware-sample",
-                        type_description="Attachment containing encrypted malware sample", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="malware-type",
-                        type_description="Malware type", type_taxonomy="")
+                        type_description="Mac EUI-64 地址", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="恶意软件-样本",
+                        type_description="包含恶意软件样本的加密附件", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="恶意软件-类型",
+                        type_description="恶意软件类型", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="md5",
-                        type_description="A checksum in md5 format", type_taxonomy="",
+                        type_description="md5 格式的校验和", type_taxonomy="",
                         type_validation_regex="[a-f0-9]{32}", type_validation_expect="32 hexadecimal characters")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="middle-name",
-                        type_description="Middle name of a natural person",
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="中间名",
+                        type_description="自然人的中间名",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="mime-type",
-                        type_description="A media type (also MIME type and content type) is a two-part identifier for file formats and format contents transmitted on the Internet",
+                        type_description="媒体类型（也称 MIME 类型和内容类型）是互联网上传输的文件格式和格式内容的两部分标识符",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="mobile-application-id",
-                        type_description="The application id of a mobile application", type_taxonomy="")
+                        type_description="移动应用程序的应用程序 ID", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="mutex",
-                        type_description="Mutex, use the format \BaseNamedObjects<Mutex>", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="named pipe",
-                        type_description="Named pipe, use the format .\pipe<PipeName>", type_taxonomy="")
+                        type_description="Mutex，使用格式 \BaseNamedObjects<Mutex>", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="命名管道",
+                        type_description="命名管道，使用 .\pipe<PipeName> 格式", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="other",
-                        type_description="Other attribute", type_taxonomy="")
+                        type_description="其他属性", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="file-path",
-                        type_description="Path of file", type_taxonomy="")
+                        type_description="文件路径", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="pattern-in-file",
-                        type_description="Pattern in file that identifies the malware", type_taxonomy="")
+                        type_description="文件中可识别恶意软件的模式", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="pattern-in-memory",
-                        type_description="Pattern in memory dump that identifies the malware", type_taxonomy="")
+                        type_description="可识别恶意软件的内存转储模式", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="pattern-in-traffic",
-                        type_description="Pattern in network traffic that identifies the malware", type_taxonomy="")
+                        type_description="可识别恶意软件的网络流量模式", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="pdb",
-                        type_description="Microsoft Program database (PDB) path information", type_taxonomy="")
+                        type_description="微软程序数据库 (PDB) 路径信息", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="pehash",
-                        type_description="PEhash - a hash calculated based of certain pieces of a PE executable file",
+                        type_description="PEhash - 根据 PE 可执行文件的某些片段计算出的哈希值",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{40}", type_validation_expect="40 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="pgp-private-key",
-                        type_description="A PGP private key",
+                        type_description="PGP 私钥",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="pgp-public-key",
-                        type_description="A PGP public key", type_taxonomy="")
+                        type_description="PGP 公钥", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="phone-number",
-                        type_description="Telephone Number", type_taxonomy="")
+                        type_description="电话号码", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="port",
-                        type_description="Port number", type_taxonomy="")
+                        type_description="端口号", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="process-state",
-                        type_description="State of a process", type_taxonomy="")
+                        type_description="进程的状态", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="prtn",
-                        type_description="Premium-Rate Telephone Number",
+                        type_description="特费电话号码",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="regkey",
-                        type_description="Registry key or value", type_taxonomy="")
+                        type_description="注册表键或值", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="regkey|value",
-                        type_description="Registry value + data separated by |",
+                        type_description="注册表键 + 值用 | 分隔的数据",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="sha1",
-                        type_description="A checksum in sha1 format", type_taxonomy="",
+                        type_description="sha1 格式的校验和", type_taxonomy="",
                         type_validation_regex="[a-f0-9]{40}", type_validation_expect="40 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="sha224",
-                        type_description="A checksum in sha-224 format",
+                        type_description="sha-224 格式的校验和",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{56}", type_validation_expect="56 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="sha256",
-                        type_description="A checksum in sha256 format",
+                        type_description="sha256格式的校验和",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{64}", type_validation_expect="64 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="sha3-224",
-                        type_description="A checksum in sha3-224 format",
+                        type_description="sha3-224格式的校验和",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{56}", type_validation_expect="56 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="sha3-256",
-                        type_description="A checksum in sha3-256 format",
+                        type_description="sha3-256格式的校验和",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{64}", type_validation_expect="64 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="sha3-384",
-                        type_description="A checksum in sha3-384 format",
+                        type_description="sha3-384格式的校验和",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{96}", type_validation_expect="96 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="sha3-512",
-                        type_description="A checksum in sha3-512 format",
+                        type_description="sha3-512格式的校验和",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{128}", type_validation_expect="128 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="sha384",
-                        type_description="A checksum in sha-384 format",
+                        type_description="sha-384格式的校验和",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{96}", type_validation_expect="96 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="sha512",
-                        type_description="A checksum in sha-512 format",
+                        type_description="sha-512格式的校验和",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{128}", type_validation_expect="128 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="sha512/224",
-                        type_description="A checksum in the sha-512/224 format",
+                        type_description="sha-512/224格式的校验和",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{56}", type_validation_expect="56 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="sha512/256",
-                        type_description="A checksum in the sha-512/256 format",
+                        type_description="sha-512/256格式的校验和",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{64}", type_validation_expect="64 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="sigma",
-                        type_description="Sigma - Generic Signature Format for SIEM Systems", type_taxonomy="")
+                        type_description="Sigma - SIEM 系统通用签名格式", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="size-in-bytes",
-                        type_description="Size expressed in bytes",
+                        type_description="大小以字节表示",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="snort",
-                        type_description="An IDS rule in Snort rule-format",
+                        type_description="Snort 规则格式的 IDS 规则",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="ssdeep",
-                        type_description="A checksum in ssdeep format",
+                        type_description="ssdeep格式的校验和",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="ssh-fingerprint",
-                        type_description="A fingerprint of SSH key material",
+                        type_description="SSH 密钥材料的指纹",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="stix2-pattern",
-                        type_description="STIX 2 pattern", type_taxonomy="")
+                        type_description="STIX 2 模式", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="target-email",
-                        type_description="Attack Targets Email(s)",
+                        type_description="攻击目标电子邮件",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="target-external",
-                        type_description="External Target Organizations Affected by this Attack", type_taxonomy="")
+                        type_description="受此攻击影响的外部目标组织", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="target-location",
-                        type_description="Attack Targets Physical Location(s)", type_taxonomy="")
+                        type_description="攻击目标物理位置", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="target-machine",
-                        type_description="Attack Targets Machine Name(s)",
+                        type_description="攻击目标机器名称",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="target-org",
-                        type_description="Attack Targets Department or Organization(s)", type_taxonomy="")
+                        type_description="攻击目标部门或组织", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="target-user",
-                        type_description="Attack Targets Username(s)",
+                        type_description="攻击目标用户名",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="telfhash",
-                        type_description="telfhash is symbol hash for ELF files, just like imphash is imports hash for PE files.",
+                        type_description="telfhash 是 ELF 文件的符号散列，就像 imphash 是 PE 文件的导入散列一样.",
                         type_taxonomy="",
                         type_validation_regex="[a-f0-9]{70}", type_validation_expect="70 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="text",
-                        type_description="Name, ID or a reference", type_taxonomy="")
+                        type_description="姓名、身份证或参考资料", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="threat-actor",
-                        type_description="A string identifying the threat actor",
+                        type_description="识别威胁行为者的字符串",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="tlsh",
-                        type_description="A checksum in the Trend Micro Locality Sensitive Hash format",
+                        type_description="趋势科技位置敏感散列格式的校验和",
                         type_taxonomy="",
                         type_validation_regex="^t?[a-f0-9]{35,}",
                         type_validation_expect="at least 35 hexadecimal characters, optionally starting with t1 instead of hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="travel-details",
-                        type_description="Travel details", type_taxonomy="")
+                        type_description="旅行详情", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="twitter-id",
                         type_description="Twitter ID", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="uri",
-                        type_description="Uniform Resource Identifier", type_taxonomy="")
+                        type_description="统一资源标识符", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="url", type_description="url",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="user-agent",
-                        type_description="The user-agent used by the malware in the HTTP request.", type_taxonomy="")
+                        type_description="恶意软件在 HTTP 请求中使用的用户代理.", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="vhash",
-                        type_description="A VirusTotal checksum", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="vulnerability",
-                        type_description="A reference to the vulnerability used in the exploit", type_taxonomy="")
-    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="weakness",
-                        type_description="A reference to the weakness used in the exploit", type_taxonomy="")
+                        type_description="VirusTotal 校验和", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="漏洞",
+                        type_description="对漏洞利用中使用的漏洞的引用", type_taxonomy="")
+    create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="弱点",
+                        type_description="利用漏洞时使用的弱点", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="whois-creation-date",
-                        type_description="The date of domain’s creation, obtained from the WHOIS information.",
+                        type_description="从 WHOIS 信息中获取的域名创建日期.",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="whois-registrant-email",
-                        type_description="The e-mail of a domain’s registrant, obtained from the WHOIS information.",
+                        type_description="从 WHOIS 信息中获取的域名注册人的电子邮件.",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="whois-registrant-name",
-                        type_description="The name of a domain’s registrant, obtained from the WHOIS information.",
+                        type_description="从 WHOIS 信息中获取的域名注册人姓名.",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="whois-registrant-org",
-                        type_description="The org of a domain’s registrant, obtained from the WHOIS information.",
+                        type_description="从 WHOIS 信息中获取的域名注册人的组织.",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="whois-registrant-phone",
-                        type_description="The phone number of a domain’s registrant, obtained from the WHOIS information.",
+                        type_description="域名注册人的电话号码，从 WHOIS 信息中获取.",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="whois-registrar",
-                        type_description="The registrar of the domain, obtained from the WHOIS information.",
+                        type_description="从 WHOIS 信息中获得的域名注册商.",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="windows-scheduled-task",
-                        type_description="A scheduled task in windows",
+                        type_description="windows 中的计划任务",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="windows-service-displayname",
-                        type_description="A windows service’s displayname, not to be confused with the windows-service-name. This is the name that applications will generally display as the service’s name in applications.",
+                        type_description="windows服务的显示名称，不要与windows服务名称混淆。应用程序通常会将此名称显示为应用程序中的服务名称.",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="windows-service-name",
-                        type_description="A windows service name. This is the name used internally by windows. Not to be confused with the windows-service-displayname.",
+                        type_description="Windows 服务名称。这是 Windows 内部使用的名称。不要与 windows-service-显示名称混淆.",
                         type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="x509-fingerprint-md5",
-                        type_description="X509 fingerprint in MD5 format", type_taxonomy="",
+                        type_description="MD5 格式的 X509 指纹", type_taxonomy="",
                         type_validation_regex="[a-f0-9]{32}", type_validation_expect="32 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="x509-fingerprint-sha1",
-                        type_description="X509 fingerprint in SHA-1 format", type_taxonomy="",
+                        type_description="SHA-1 格式的 X509 指纹", type_taxonomy="",
                         type_validation_regex="[a-f0-9]{40}", type_validation_expect="40 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="x509-fingerprint-sha256",
-                        type_description="X509 fingerprint in SHA-256 format", type_taxonomy="",
+                        type_description="SHA-256 格式的 X509 指纹", type_taxonomy="",
                         type_validation_regex="[a-f0-9]{64}", type_validation_expect="64 hexadecimal characters")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="xmr",
-                        type_description="Monero Address", type_taxonomy="")
+                        type_description="门罗币地址", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="yara",
-                        type_description="Yara signature", type_taxonomy="")
+                        type_description="Yara签名", type_taxonomy="")
     create_safe_limited(db.session, IocType, ["type_name", "type_description"], type_name="zeek",
-                        type_description="An NIDS rule in the Zeek rule-format",
+                        type_description="Zeek 规则格式的 NIDS 规则",
                         type_taxonomy="")
 
 
