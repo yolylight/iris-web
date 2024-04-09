@@ -415,16 +415,16 @@ $(document).ready(function() {
     if (review_state.length > 0) {
         let current_review_state = review_state.data('review-state');
 
-        if (current_review_state === 'Review in progress') {
+        if (current_review_state === '正在审核') {
             $(".btn-start-review").hide();
             $(".btn-confirm-review").show();
             $(".btn-cancel-review").show();
             $('#reviewSubtitle').text('您开始了这次审核。完成后按 "确认审核"');
-        } else if (current_review_state === 'Review completed') {
+        } else if (current_review_state === '审核完成') {
             $(".btn-start-review").hide();
             $(".btn-confirm-review").hide();
             $(".btn-cancel-review").hide();
-        } else if (current_review_state === 'Pending review') {
+        } else if (current_review_state === '审核待定') {
             $(".btn-start-review").show();
             $(".btn-confirm-review").hide();
             $(".btn-cancel-review").hide();
