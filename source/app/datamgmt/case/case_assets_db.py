@@ -181,7 +181,7 @@ def get_unspecified_analysis_status_id():
     Get the id of the 'Unspecified' analysis status
     """
     analysis_status = AnalysisStatus.query.filter(
-        AnalysisStatus.name == 'Unspecified'
+        AnalysisStatus.name == '未指定'
     ).first()
 
     return analysis_status.id if analysis_status else None
