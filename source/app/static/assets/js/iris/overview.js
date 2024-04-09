@@ -225,7 +225,7 @@ let OverviewTable = $("#overview_table").DataTable({
                 let div_anchor = $('<div>');
                 div_anchor.addClass('row');
                 div_anchor.append(get_avatar_initials(sdata, false, null, true));
-                div_anchor.append($('<span/>').addClass('ml-1')(sdata));
+                div_anchor.append($('<span/>').addClass('ml-1').text(sdata));
                 return div_anchor.html();
             }
             if ((type === 'filter' || type === 'sort') && data !== null) {
@@ -282,7 +282,7 @@ function get_cases_overview(silent, show_full=false) {
     show_loader();
     show_full = show_full || $('#overviewLoadClosedCase').prop('checked');
 
-     $('#overviewTableTitle')(show_full ? '所有案例' : '开放案例');
+     $('#overviewTableTitle').text(show_full ? '所有案例' : '开放案例');
 
     get_raw_request_api('/overview/filter?cid=' + get_caseid() + (show_full ? '&show_closed=true' : ''))
     .done((data) => {
@@ -303,8 +303,8 @@ function get_cases_overview(silent, show_full=false) {
 
 function show_case_view(row_index) {
     let case_data = OverviewTable.row(row_index).data();
-    $('#caseViewModal').find('.modal-title')(case_data.name);
-    $('#caseViewModal').find('.modal-subtitle')(case_data.case_uuid);
+    $('#caseViewModal').find('.modal-title').text(case_data.name);
+    $('#caseViewModal').find('.modal-subtitle').text(case_data.case_uuid);
 
     let body = $('#caseViewModal').find('.modal-body .container');
     body.empty();
@@ -312,7 +312,7 @@ function show_case_view(row_index) {
     // Owner Card
     let owner_card = $('<div/>').addClass('card mb-3');
     let owner_body = $('<div/>').addClass('card-body');
-    owner_body.append($('<h2/>').addClass('card-title mb-2')('元数据'));
+    owner_body.append($('<h2/>').addClass('card-title mb-2').text('元数据'));
 
     let owner_row = $('<div/>').addClass('row');
     let owner_col1 = $('<div/>').addClass('col-md-6');
