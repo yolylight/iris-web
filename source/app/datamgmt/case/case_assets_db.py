@@ -197,15 +197,18 @@ def get_analysis_status_list():
 
 
 def get_compromise_status_list():
-    return [(e.value, e.name.replace('_', ' ').capitalize()) for e in CompromiseStatus]
+    return [(0, '待定'), (1, '已入侵'), (2, '未入侵'), (3, '未知')]
+    #return [(e.value, e.name.replace('_', ' ').capitalize()) for e in CompromiseStatus]
 
 
 def get_compromise_status_dict():
-    return [{'value': e.value, 'name': e.name.replace('_', ' ').capitalize()} for e in CompromiseStatus]
+    return [{'value': 0, 'name': '待定'}, {'value': 1, 'name': '已入侵'}, {'value': 2, 'name': '未入侵'}, {'value': 3, 'name': '未知'}]
+    #return [{'value': e.value, 'name': e.name.replace('_', ' ').capitalize()} for e in CompromiseStatus]
 
 
 def get_case_outcome_status_dict():
-    return [{'value': e.value, 'name': e.name.replace('_', ' ').capitalize()} for e in CaseStatus]
+    return [{'value': 0, 'name': '未知'}, {'value': 1, 'name': '误报'}, {'value': 2, 'name': '有问题有影响'}, {'value': 3, 'name': '不适用'}, {'value': 4, 'name': '有问题无影响'}]
+    #return [{'value': e.value, 'name': e.name.replace('_', ' ').capitalize()} for e in CaseStatus]
 
 
 def get_asset_type_id(asset_type_name):
