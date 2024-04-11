@@ -467,9 +467,17 @@ def export_case_assets_json(case_id):
 
         if row['asset_compromise_status_id'] is None:
             row['asset_compromise_status_id'] = CompromiseStatus.unknown.value
-            status_text = CompromiseStatus.unknown.name.replace('_', ' ').title()
+            status_text = "未知"
+            #status_text = CompromiseStatus.unknown.name.replace('_', ' ').title()
         else:
-            status_text = CompromiseStatus(row['asset_compromise_status_id']).name.replace('_', ' ').title()
+            if row['asset_compromise_status_id'] == 2:
+                status_text = "未被入侵"
+            elif row['asset_compromise_status_id'] == 1:
+                status_text = "已入侵"
+            else:
+                status_text = "待定"
+            
+            #status_text = CompromiseStatus(row['asset_compromise_status_id']).name.replace('_', ' ').title()
 
         row['asset_compromise_status'] = status_text
 
