@@ -1402,7 +1402,9 @@ var TL;
             return t ? t = (t = t.replace(/<a\b[^>]*>/i, "")).replace(/<\/a>/i, "") : t
         }
         function q(t) {
-            return (t = t.replace(/(<[^>]*>)+/g, "")).replace(/"/g, "'")
+            if (!t) return t;
+            t = DOMPurify.sanitize(t, { ALLOWED_TAGS: [] });
+            return t.replace(/"/g, "'");
         }
         function $(t, e, i) {
             var a = function(t, e, i) {
