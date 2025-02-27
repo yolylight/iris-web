@@ -868,8 +868,8 @@ function build_timeline(data) {
             console.log('Ignoring IOC with length 0 or > 64')
             continue;
         }
-        let capture_start = "(^|;|:|||>|<|[|]|(|)|\s|\>)(";
-        let capture_end = ")(;|:|||>|<|[|]|(|)|\s|>|$|<br/>)";
+        let capture_start = "(^|;|:|||>|<|[|]|(|)|\\s|\\>)(";
+        let capture_end = ")(;|:|||>|<|[|]|(|)|\\s|>|$|<br/>)";
         // When an IOC contains another IOC in its description, we want to avoid to replace that particular pattern
         var avoid_inception_start = "(?!<span[^>]*?>)" + capture_start;
         var avoid_inception_end = "(?![^<]*?<\/span>)" + capture_end;
