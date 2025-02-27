@@ -3131,7 +3131,7 @@ var TL;
             }
         }(dt),
         function(t) {
-            var e, i, a = 0, s = window.document, n = /<script\b[^<]*(?:(?!<\/script\s*>)<[^<]*)*<\/script\s*>/gi, o = /^(?:text|application)\/javascript/i, r = /^(?:text|application)\/xml/i, l = "application/json", h = "text/html", d = /^\s*$/;
+            var e, i, a = 0, s = window.document, n = /<script\b[^<]*(?:(?!<\/script\b)[^<]*)*<\/script\b[^>]*>/gi, o = /^(?:text|application)\/javascript/i, r = /^(?:text|application)\/xml/i, l = "application/json", h = "text/html", d = /^\s*$/;
             function c(e, i, a, n) {
                 if (e.global)
                     return function(e, i, a) {
@@ -3368,8 +3368,11 @@ var TL;
                 return r.length > 1 && (l.url = r[0],
                 s = r[1]),
                 l.success = function(e) {
-                    o.html(s ? t("<div>").html(e.replace(n, "")).find(s) : e),
-                    h && h.apply(o, arguments)
+                    var safeHTML = DOMPurify.sanitize(e);
+                    o.html(s
+                        ? t("<div>").html(safeHTML).find(s)
+                        : safeHTML);
+                    h && h.apply(o, arguments);
                 }
                 ,
                 t.ajax(l),
